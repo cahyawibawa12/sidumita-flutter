@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widget/BackgroundImage.dart';
+
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
 
@@ -11,20 +13,13 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: Get.width,
-            height: Get.height,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage("assets/images/bg2.png"),
-            )),
-          )
-        ],
-      ),
+    return Stack(
+      children: [
+        BackgroundImage(),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+        )
+      ],
     );
   }
 }
