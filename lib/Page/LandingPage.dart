@@ -119,9 +119,38 @@ class _LandingPageState extends State<LandingPage> {
                         }).toList(),
                       ),
                     ],
-                  )
+                  ),
                 ],
-              )
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    Container(
+                      // padding: EdgeInsets.only(
+                      //     left: 15, bottom: 20, right: 20, top: 10),
+                      margin: EdgeInsets.all(5),
+                      height: 150,
+                      width: 200,
+                      decoration: BoxDecoration(color: Colors.white),
+                    ),
+                    Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(color: Colors.red),
+                    ),
+                    Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(color: Colors.blue),
+                    ),
+                    Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
             ],
           )),
         )
