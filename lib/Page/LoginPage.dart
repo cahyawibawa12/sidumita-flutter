@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/Balita/HomePageBalita.dart';
 import 'package:posyandu/Page/LandingPage.dart';
 import 'package:posyandu/widget/widgets.dart';
@@ -29,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => const HomePageBalita(),
+              builder: (BuildContext context) => const BottomNavBarBalita(),
             ));
       } else {
         errorSnackBar(context, responseMap.values.first);

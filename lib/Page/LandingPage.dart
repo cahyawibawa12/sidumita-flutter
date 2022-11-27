@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:posyandu/Page/LoginPage.dart';
 
 import 'package:posyandu/widget/widgets.dart';
 
@@ -76,6 +80,21 @@ class _LandingPageState extends State<LandingPage> {
                           Text("Sistem Informasi Ibu Hamil dan Balita"),
                         ],
                       ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      IconButton(
+                        onPressed: (() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          );
+                        }),
+                        icon: const Icon(CupertinoIcons.person_crop_circle),
+                        iconSize: 35,
+                        color: Color.fromARGB(255, 24, 98, 26),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -122,31 +141,188 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                 ],
               ),
+              Row(
+                children: [
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Informasi Menarik',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
               Expanded(
                 child: ListView(
                   children: [
                     Container(
-                      // padding: EdgeInsets.only(
-                      //     left: 15, bottom: 20, right: 20, top: 10),
-                      margin: EdgeInsets.all(5),
-                      height: 150,
-                      width: 200,
-                      decoration: BoxDecoration(color: Colors.white),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      margin: EdgeInsets.all(20),
+                      // height: 150,
+                      // width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color.fromARGB(194, 255, 255, 255)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: AssetImage('assets/images/bg.png'),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Makanan Kesehatan',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                width: 200,
+                                child: Text(
+                                  'Makanan Kesehatan Untuk Ibu hamil merupakan',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(color: Colors.red),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      margin: EdgeInsets.all(20),
+                      // height: 150,
+                      // width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color.fromARGB(194, 255, 255, 255)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: AssetImage('assets/images/bg.png'),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Makanan Kesehatan',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                width: 200,
+                                child: Text(
+                                  'Makanan Kesehatan Untuk Ibu hamil merupakan',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(color: Colors.blue),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      margin: EdgeInsets.all(20),
+                      // height: 150,
+                      // width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color.fromARGB(194, 255, 255, 255)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: AssetImage('assets/images/bg.png'),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Makanan Kesehatan',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                width: 200,
+                                child: Text(
+                                  'Makanan Kesehatan Untuk Ibu hamil merupakan',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     Container(
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(color: Colors.white),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      margin: EdgeInsets.all(20),
+                      // height: 150,
+                      // width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color.fromARGB(194, 255, 255, 255)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: AssetImage('assets/images/bg.png'),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Makanan Kesehatan',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                width: 200,
+                                child: Text(
+                                  'Makanan Kesehatan Untuk Ibu hamil merupakan',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
