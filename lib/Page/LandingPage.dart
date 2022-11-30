@@ -81,7 +81,7 @@ class _LandingPageState extends State<LandingPage> {
                         ],
                       ),
                       SizedBox(
-                        width: 50,
+                        width: 40,
                       ),
                       IconButton(
                         onPressed: (() {
