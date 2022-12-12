@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
+import 'package:posyandu/Page/Balita/ProfilBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,8 @@ import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../Controller/PemeriksaanBalitaController.dart';
 
 class HomePageBalita extends StatefulWidget {
   const HomePageBalita({super.key});
@@ -51,6 +54,15 @@ class _HomePageBalitaState extends State<HomePageBalita> {
       child: Text('text5'),
     )
   ];
+
+  var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
+
+  @override
+  void initState() {
+    super.initState();
+    pemeriksaanbalita.getPemeriksaanBalita(2);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -99,6 +111,21 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                               ),
                             ),
                           ],
+                        ),
+                        SizedBox(
+                          width: 100,
+                        ),
+                        IconButton(
+                          onPressed: (() {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfilBalitaPage()),
+                            );
+                          }),
+                          icon: const Icon(CupertinoIcons.bell),
+                          iconSize: 35,
+                          color: Color.fromARGB(255, 24, 98, 26),
                         )
                       ],
                     ),
@@ -126,7 +153,17 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Text('2 Kg'),
+                                  Obx(() {
+                                    if (pemeriksaanbalita
+                                            .listPemeriksaanBalita.length !=
+                                        0) {
+                                      return Text(pemeriksaanbalita
+                                          .listPemeriksaanBalita[0].berat_badan
+                                          .toString());
+                                    } else {
+                                      return Text('Loading');
+                                    }
+                                  }),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -137,9 +174,15 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                         borderRadius: BorderRadius.circular(5),
                                         color: Colors.green),
                                     child: Center(child: Text('Normal')),
-                                  )
+                                  ),
                                 ],
                               ),
+                              // VerticalDivider(
+                              //   color: Colors.black,
+                              //   indent: 10,
+                              //   thickness: 2,
+                              //   endIndent: 10,
+                              // ),
                               Column(
                                 children: [
                                   Text(
@@ -149,7 +192,17 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Text('38 Cm'),
+                                  Obx(() {
+                                    if (pemeriksaanbalita
+                                            .listPemeriksaanBalita.length !=
+                                        0) {
+                                      return Text(pemeriksaanbalita
+                                          .listPemeriksaanBalita[0].tinggi_badan
+                                          .toString());
+                                    } else {
+                                      return Text('Loading');
+                                    }
+                                  }),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -172,7 +225,18 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Text('34 Cm'),
+                                  Obx(() {
+                                    if (pemeriksaanbalita
+                                            .listPemeriksaanBalita.length !=
+                                        0) {
+                                      return Text(pemeriksaanbalita
+                                          .listPemeriksaanBalita[0]
+                                          .lingkar_kepala
+                                          .toString());
+                                    } else {
+                                      return Text('Loading');
+                                    }
+                                  }),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -194,7 +258,18 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text('Date: dd/mm/y'),
+                              Obx(() {
+                                if (pemeriksaanbalita
+                                        .listPemeriksaanBalita.length !=
+                                    0) {
+                                  return Text('Date : ' +
+                                      pemeriksaanbalita.listPemeriksaanBalita[0]
+                                          .tanggal_pemeriksaan
+                                          .toString());
+                                } else {
+                                  return Text('Loading');
+                                }
+                              }),
                               Container(
                                 width: 180,
                                 height: 30,

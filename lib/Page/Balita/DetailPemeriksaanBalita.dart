@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../widget/BackgroundImage.dart';
+import '../../widget/widgets.dart';
 
-class ImunisasiBalitaPage extends StatefulWidget {
-  const ImunisasiBalitaPage({super.key});
+class DetailPemeriksaanBalita extends StatefulWidget {
+  const DetailPemeriksaanBalita({super.key});
 
   @override
-  State<ImunisasiBalitaPage> createState() => _ImunisasiBalitaPageState();
+  State<DetailPemeriksaanBalita> createState() =>
+      _DetailPemeriksaanBalitaState();
 }
 
-class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
+class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
   @override
   Widget build(BuildContext context) {
     return Stack(

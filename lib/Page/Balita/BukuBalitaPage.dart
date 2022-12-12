@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:posyandu/Controller/GetTwoLastDataPemeriksaanController.dart';
 import 'package:posyandu/Page/Balita/ImunisasiBalitaPage.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
@@ -9,14 +11,26 @@ import 'package:flutter/cupertino.dart';
 
 import '../../widget/widgets.dart';
 
-class BukuBalitaBage extends StatefulWidget {
-  const BukuBalitaBage({super.key});
+class BukuBalitaPage extends StatefulWidget {
+  BukuBalitaPage({super.key});
 
   @override
-  State<BukuBalitaBage> createState() => _BukuBalitaBageState();
+  State<BukuBalitaPage> createState() => _BukuBalitaPageState();
 }
 
-class _BukuBalitaBageState extends State<BukuBalitaBage> {
+class _BukuBalitaPageState extends State<BukuBalitaPage> {
+  var getTwoLastDataPemeriksaanBalita =
+      Get.put(GetTwoLastDataPemeriksaanBalitaController());
+
+  @override
+  void initState() {
+    super.initState();
+    getTwoLastDataPemeriksaanBalita.getTwoLastDataPemeriksaanBalita(2);
+    // print('frompage' +
+    //     getTwoLastDataPemeriksaanBalita.listTwoLastDataPemeriksaanBalita.length
+    //         .toString());
+  }
+
   int _current = 0;
   final CarouselController _controller = CarouselController();
 
@@ -52,6 +66,7 @@ class _BukuBalitaBageState extends State<BukuBalitaBage> {
       child: Text('text5'),
     )
   ];
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -159,7 +174,21 @@ class _BukuBalitaBageState extends State<BukuBalitaBage> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("3 Kg")
+                                    Obx(() {
+                                      if (getTwoLastDataPemeriksaanBalita
+                                              .listTwoLastDataPemeriksaanBalita
+                                              .length !=
+                                          0) {
+                                        return Text(
+                                            getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita[
+                                                    1]
+                                                .berat_badan
+                                                .toString());
+                                      } else {
+                                        return Text('Loading');
+                                      }
+                                    })
                                   ],
                                 ),
                               ),
@@ -179,7 +208,21 @@ class _BukuBalitaBageState extends State<BukuBalitaBage> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("35 Cm")
+                                    Obx(() {
+                                      if (getTwoLastDataPemeriksaanBalita
+                                              .listTwoLastDataPemeriksaanBalita
+                                              .length !=
+                                          0) {
+                                        return Text(
+                                            getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita[
+                                                    1]
+                                                .tinggi_badan
+                                                .toString());
+                                      } else {
+                                        return Text('Loading');
+                                      }
+                                    })
                                   ],
                                 ),
                               ),
@@ -199,14 +242,41 @@ class _BukuBalitaBageState extends State<BukuBalitaBage> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("34 Cm")
+                                    Obx(() {
+                                      if (getTwoLastDataPemeriksaanBalita
+                                              .listTwoLastDataPemeriksaanBalita
+                                              .length !=
+                                          0) {
+                                        return Text(
+                                            getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita[
+                                                    1]
+                                                .lingkar_kepala
+                                                .toString());
+                                      } else {
+                                        return Text('Loading');
+                                      }
+                                    })
                                   ],
                                 ),
                               ),
                               SizedBox(
                                 height: 15,
                               ),
-                              Text('Date: dd/mm/y'),
+                              Obx(() {
+                                if (getTwoLastDataPemeriksaanBalita
+                                        .listTwoLastDataPemeriksaanBalita
+                                        .length !=
+                                    0) {
+                                  return Text('Date : ' +
+                                      getTwoLastDataPemeriksaanBalita
+                                          .listTwoLastDataPemeriksaanBalita[1]
+                                          .tanggal_pemeriksaan
+                                          .toString());
+                                } else {
+                                  return Text('Loading');
+                                }
+                              })
                             ],
                           ),
                           SizedBox(
@@ -231,7 +301,21 @@ class _BukuBalitaBageState extends State<BukuBalitaBage> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("3 Kg")
+                                    Obx(() {
+                                      if (getTwoLastDataPemeriksaanBalita
+                                              .listTwoLastDataPemeriksaanBalita
+                                              .length !=
+                                          0) {
+                                        return Text(
+                                            getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita[
+                                                    0]
+                                                .berat_badan
+                                                .toString());
+                                      } else {
+                                        return Text('Loading');
+                                      }
+                                    })
                                   ],
                                 ),
                               ),
@@ -251,7 +335,21 @@ class _BukuBalitaBageState extends State<BukuBalitaBage> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("35 Cm")
+                                    Obx(() {
+                                      if (getTwoLastDataPemeriksaanBalita
+                                              .listTwoLastDataPemeriksaanBalita
+                                              .length !=
+                                          0) {
+                                        return Text(
+                                            getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita[
+                                                    0]
+                                                .tinggi_badan
+                                                .toString());
+                                      } else {
+                                        return Text('Loading');
+                                      }
+                                    })
                                   ],
                                 ),
                               ),
@@ -271,14 +369,41 @@ class _BukuBalitaBageState extends State<BukuBalitaBage> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("34 Cm")
+                                    Obx(() {
+                                      if (getTwoLastDataPemeriksaanBalita
+                                              .listTwoLastDataPemeriksaanBalita
+                                              .length !=
+                                          0) {
+                                        return Text(
+                                            getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita[
+                                                    0]
+                                                .lingkar_kepala
+                                                .toString());
+                                      } else {
+                                        return Text('Loading');
+                                      }
+                                    })
                                   ],
                                 ),
                               ),
                               SizedBox(
                                 height: 15,
                               ),
-                              Text('Date: dd/mm/y'),
+                              Obx(() {
+                                if (getTwoLastDataPemeriksaanBalita
+                                        .listTwoLastDataPemeriksaanBalita
+                                        .length !=
+                                    0) {
+                                  return Text('Date : ' +
+                                      getTwoLastDataPemeriksaanBalita
+                                          .listTwoLastDataPemeriksaanBalita[0]
+                                          .tanggal_pemeriksaan
+                                          .toString());
+                                } else {
+                                  return Text('Loading');
+                                }
+                              })
                             ],
                           )
                         ],

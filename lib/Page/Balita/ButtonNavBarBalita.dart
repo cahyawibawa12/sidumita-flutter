@@ -7,14 +7,14 @@ import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/ProfilBalitaPage.dart';
 import 'package:posyandu/Page/Balita/RiwayatBalitaPage.dart';
 
-class BottomNavBarBalita extends StatefulWidget {
-  const BottomNavBarBalita({super.key});
+class ButtonNavBarBalita extends StatefulWidget {
+  const ButtonNavBarBalita({super.key});
 
   @override
-  State<BottomNavBarBalita> createState() => _BottomNavBarState();
+  State<ButtonNavBarBalita> createState() => _ButtonNavBarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBarBalita> {
+class _ButtonNavBarState extends State<ButtonNavBarBalita> {
   @override
   Widget build(BuildContext context) {
     PersistentTabController _controller;
@@ -25,8 +25,8 @@ class _BottomNavBarState extends State<BottomNavBarBalita> {
       return [
         const HomePageBalita(),
         const JadwalBalitaPage(),
-        const BukuBalitaBage(),
-        const RiwayatBalitaPage(),
+        BukuBalitaPage(),
+        RiwayatBalitaPage(),
         const ProfilBalitaPage()
       ];
     }

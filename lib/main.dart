@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/BottomNavBar1.dart';
-import 'package:posyandu/Page/landingpage.dart';
+import 'package:posyandu/Page/LandingPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LandingPage(),
+      home: ButtonNavBarBalita(),
     );
   }
 }
