@@ -158,8 +158,10 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                             .listPemeriksaanBalita.length !=
                                         0) {
                                       return Text(pemeriksaanbalita
-                                          .listPemeriksaanBalita[0].berat_badan
-                                          .toString());
+                                              .listPemeriksaanBalita[0]
+                                              .berat_badan
+                                              .toString() +
+                                          ' Kg');
                                     } else {
                                       return Text('Loading');
                                     }
@@ -167,14 +169,39 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    width: 60,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: Colors.green),
-                                    child: Center(child: Text('Normal')),
-                                  ),
+                                  Obx((() {
+                                    if (pemeriksaanbalita
+                                            .listPemeriksaanBalita.length !=
+                                        0) {
+                                      if (pemeriksaanbalita
+                                              .listPemeriksaanBalita[0]
+                                              .berat_badan <=
+                                          4) {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.green),
+                                          child: Center(child: Text('Normal')),
+                                        );
+                                      } else {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.green),
+                                          child: Center(
+                                              child: Text('Tidak Normal')),
+                                        );
+                                      }
+                                    } else {
+                                      return Text('Loading');
+                                    }
+                                  }))
                                 ],
                               ),
                               // VerticalDivider(
@@ -197,8 +224,10 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                             .listPemeriksaanBalita.length !=
                                         0) {
                                       return Text(pemeriksaanbalita
-                                          .listPemeriksaanBalita[0].tinggi_badan
-                                          .toString());
+                                              .listPemeriksaanBalita[0]
+                                              .tinggi_badan
+                                              .toString() +
+                                          ' Cm');
                                     } else {
                                       return Text('Loading');
                                     }
@@ -206,14 +235,39 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    width: 100,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: Colors.green),
-                                    child: Center(child: Text('Tidak Normal')),
-                                  )
+                                  Obx((() {
+                                    if (pemeriksaanbalita
+                                            .listPemeriksaanBalita.length !=
+                                        0) {
+                                      if (pemeriksaanbalita
+                                              .listPemeriksaanBalita[0]
+                                              .tinggi_badan <=
+                                          40) {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.green),
+                                          child: Center(child: Text('Normal')),
+                                        );
+                                      } else {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.green),
+                                          child: Center(
+                                              child: Text('Tidak Normal')),
+                                        );
+                                      }
+                                    } else {
+                                      return Text('Loading');
+                                    }
+                                  }))
                                 ],
                               ),
                               Column(
@@ -230,9 +284,10 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                             .listPemeriksaanBalita.length !=
                                         0) {
                                       return Text(pemeriksaanbalita
-                                          .listPemeriksaanBalita[0]
-                                          .lingkar_kepala
-                                          .toString());
+                                              .listPemeriksaanBalita[0]
+                                              .lingkar_kepala
+                                              .toString() +
+                                          ' Cm');
                                     } else {
                                       return Text('Loading');
                                     }
@@ -240,14 +295,39 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    width: 60,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: Colors.green),
-                                    child: Center(child: Text('Normal')),
-                                  )
+                                  Obx((() {
+                                    if (pemeriksaanbalita
+                                            .listPemeriksaanBalita.length !=
+                                        0) {
+                                      if (pemeriksaanbalita
+                                              .listPemeriksaanBalita[0]
+                                              .lingkar_kepala <=
+                                          4) {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.green),
+                                          child: Center(child: Text('Normal')),
+                                        );
+                                      } else {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.green),
+                                          child: Center(
+                                              child: Text('Tidak Normal')),
+                                        );
+                                      }
+                                    } else {
+                                      return Text('Loading');
+                                    }
+                                  }))
                                 ],
                               ),
                             ],

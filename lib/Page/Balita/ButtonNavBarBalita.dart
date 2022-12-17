@@ -26,7 +26,7 @@ class _ButtonNavBarState extends State<ButtonNavBarBalita> {
         const HomePageBalita(),
         const JadwalBalitaPage(),
         BukuBalitaPage(),
-        RiwayatBalitaPage(),
+        const RiwayatBalitaPage(),
         const ProfilBalitaPage()
       ];
     }
@@ -96,6 +96,7 @@ class _ButtonNavBarState extends State<ButtonNavBarBalita> {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
+
       navBarStyle:
           NavBarStyle.style1, // Choose the nav bar style with this property.
     );

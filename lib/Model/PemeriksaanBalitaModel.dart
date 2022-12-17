@@ -28,4 +28,21 @@ class PemeriksaanBalitaModel {
     required this.created_at,
     required this.updated_at,
   });
+
+  factory PemeriksaanBalitaModel.fromJson(Map<String, dynamic> json) =>
+      PemeriksaanBalitaModel(
+        id: json["id"],
+        tanggal_pemeriksaan: json["tanggal_pemeriksaan"],
+        lingkar_kepala: json["lingkar_kepala"],
+        lingkar_lengan: json["lingkar_lengan"],
+        tinggi_badan: json["tinggi_badan"],
+        berat_badan: json["berat_badan"],
+        penanganan: json["penanganan"],
+        keluhan: json["keluhan"],
+        bulan_imunisasi_id: json["bulan_imunisasi_id"],
+        balita_id: json["balita_id"],
+        petugas_kesehatan_id: json["petugas_kesehatan_id"],
+        created_at: json["created_at"],
+        updated_at: json["updated_at"],
+      );
 }

@@ -5,7 +5,7 @@ import 'package:posyandu/Page/Balita/DetailPemeriksaanBalita.dart';
 import 'package:posyandu/widget/widgets.dart';
 
 class RiwayatBalitaPage extends StatefulWidget {
-  RiwayatBalitaPage({super.key});
+  const RiwayatBalitaPage({super.key});
 
   @override
   State<RiwayatBalitaPage> createState() => _RiwayatBalitaPageState();
@@ -18,7 +18,8 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
   void initState() {
     super.initState();
     pemeriksaanbalita.getPemeriksaanBalita(2);
-    print(pemeriksaanbalita.listPemeriksaanBalita.length);
+    print('from page ' +
+        pemeriksaanbalita.listPemeriksaanBalita.length.toString());
   }
 
   @override
@@ -132,7 +133,58 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  DetailPemeriksaanBalita()));
+                                                  DetailPemeriksaanBalita(
+                                                    id: pemeriksaanbalita
+                                                        .listPemeriksaanBalita[
+                                                            index]
+                                                        .id,
+                                                    tanggal_pemeriksaan:
+                                                        pemeriksaanbalita
+                                                            .listPemeriksaanBalita[
+                                                                index]
+                                                            .tanggal_pemeriksaan,
+                                                    lingkar_kepala:
+                                                        pemeriksaanbalita
+                                                            .listPemeriksaanBalita[
+                                                                index]
+                                                            .lingkar_kepala
+                                                            .toString(),
+                                                    lingkar_lengan:
+                                                        pemeriksaanbalita
+                                                            .listPemeriksaanBalita[
+                                                                index]
+                                                            .lingkar_lengan
+                                                            .toString(),
+                                                    berat_badan: pemeriksaanbalita
+                                                        .listPemeriksaanBalita[
+                                                            index]
+                                                        .berat_badan
+                                                        .toString(),
+                                                    tinggi_badan: pemeriksaanbalita
+                                                        .listPemeriksaanBalita[
+                                                            index]
+                                                        .tinggi_badan
+                                                        .toString(),
+                                                    keluhan: pemeriksaanbalita
+                                                        .listPemeriksaanBalita[
+                                                            index]
+                                                        .keluhan,
+                                                    penanganan: pemeriksaanbalita
+                                                        .listPemeriksaanBalita[
+                                                            index]
+                                                        .penanganan,
+                                                    balita_id: pemeriksaanbalita
+                                                        .listPemeriksaanBalita[
+                                                            index]
+                                                        .balita_id
+                                                        .toString(),
+                                                    petugas_kesehatan_id:
+                                                        pemeriksaanbalita
+                                                            .listPemeriksaanBalita[
+                                                                index]
+                                                            .petugas_kesehatan_id
+                                                            .toString(),
+                                                  )));
                                     },
                                     icon: const Icon(
                                       Icons.search,

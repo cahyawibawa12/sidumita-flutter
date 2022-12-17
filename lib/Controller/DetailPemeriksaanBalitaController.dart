@@ -2,20 +2,20 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:posyandu/Model/PemeriksaanBalitaModel.dart';
-import 'package:posyandu/Service/PemeriksaanBalitaService.dart';
+import 'package:posyandu/Service/DetailPemeriksaanBalitaService.dart';
 
-class PemeriksaanBalitaController extends GetxController
+class DetailPemeriksaanBalitaController extends GetxController
     implements GetxService {
-  var listPemeriksaanBalita = <PemeriksaanBalitaModel>[].obs;
-  final service = PemeriksaanBalitaService();
-  RxBool isLang = false.obs;
+  var listDetailPemeriksaanBalita = <PemeriksaanBalitaModel>[].obs;
+  final service = DetailPemeriksaanBalitaService();
 
-  Future<void> getPemeriksaanBalita(int balita_id) async {
-    var response = await service.pemeriksaanbalita(balita_id);
+  Future<void> getDetailPemeriksaanBalita(int balita_id) async {
+    var response = await service.detailpemeriksaanbalita(balita_id);
     var responsedecode = jsonDecode(response.body);
-    listPemeriksaanBalita.clear();
+
     for (var i = 0; i < responsedecode['data'].length; i++) {
-      PemeriksaanBalitaModel pemeriksaanBalitaModel = PemeriksaanBalitaModel(
+      PemeriksaanBalitaModel detailPemeriksaanBalitaModel =
+          PemeriksaanBalitaModel(
         id: responsedecode['data'][i]["id"],
         tanggal_pemeriksaan: responsedecode['data'][i]["tanggal_pemeriksaan"],
         lingkar_kepala: responsedecode['data'][i]["lingkar_kepala"].toDouble(),
@@ -30,10 +30,10 @@ class PemeriksaanBalitaController extends GetxController
         created_at: responsedecode['data'][i]["created_at"],
         updated_at: responsedecode['data'][i]["updated_at"],
       );
-      listPemeriksaanBalita.add(pemeriksaanBalitaModel);
+      listDetailPemeriksaanBalita.add(detailPemeriksaanBalitaModel);
     }
-    listPemeriksaanBalita.refresh();
-    print('from pemeriksaan controller' +
-        listPemeriksaanBalita.length.toString());
+    listDetailPemeriksaanBalita.refresh();
+    // print('from pemeriksaan controller' +
+    //     listPemeriksaanBalita.length.toString());
   }
 }

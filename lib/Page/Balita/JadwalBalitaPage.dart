@@ -36,7 +36,7 @@ class _JadwalBalitaPageState extends State<JadwalBalitaPage> {
           startTime: DateTime(DateTime.now().year, DateTime.now().month,
               DateTime.now().day + 2, 14, 30),
           endTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day + 2, 17, 0),
+              DateTime.now().day + 2, 18, 0),
           color: Colors.pink),
     ],
   };
