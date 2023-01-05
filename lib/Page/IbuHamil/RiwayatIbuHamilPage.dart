@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
-import 'package:posyandu/Page/Balita/DetailPemeriksaanBalita.dart';
+import 'package:posyandu/Page/IbuHamil/DetailPemeriksaanIbuHamil.dart';
+
 import 'package:posyandu/widget/widgets.dart';
 
-class RiwayatBalitaPage extends StatefulWidget {
-  const RiwayatBalitaPage({super.key});
+import '../../Controller/PemeriksaanIbuHamilController.dart';
+
+class RiwayatIbuHamilPage extends StatefulWidget {
+  const RiwayatIbuHamilPage({super.key});
 
   @override
-  State<RiwayatBalitaPage> createState() => _RiwayatBalitaPageState();
+  State<RiwayatIbuHamilPage> createState() => _RiwayatIbuHamilPageState();
 }
 
-class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
-  var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
+class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
+  var pemeriksaanibuhamil = Get.put(PemeriksaanIbuHamilController());
 
   @override
   void initState() {
     super.initState();
-    pemeriksaanbalita.getPemeriksaanBalita(1);
+    pemeriksaanibuhamil.getPemeriksaanIbuHamil(1);
     print('from page ' +
-        pemeriksaanbalita.listPemeriksaanBalita.length.toString());
+        pemeriksaanibuhamil.listPemeriksaanIbuHamil.length.toString());
   }
 
   @override
@@ -61,20 +63,20 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                         ),
                         Column(
                           children: [
-                            Text("Berat"),
-                            Text("(Kg)"),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text("Tinggi"),
+                            Text("T. Fundus"),
                             Text("(Cm)"),
                           ],
                         ),
                         Column(
                           children: [
-                            Text("Lingkar Kepala"),
-                            Text("(Cm)"),
+                            Text("D. Jantung Bayi"),
+                            Text("(bpm)"),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text("Nadi Ibu"),
+                            Text("(bpm)"),
                           ],
                         ),
                       ],
@@ -102,27 +104,28 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                   SizedBox(
                                     width: 20,
                                   ),
-                                  Text(pemeriksaanbalita
-                                      .listPemeriksaanBalita[index]
+                                  Text(pemeriksaanibuhamil
+                                      .listPemeriksaanIbuHamil[index]
                                       .tanggalPemeriksaan),
                                   SizedBox(
                                     width: 40,
                                   ),
-                                  Text(pemeriksaanbalita
-                                      .listPemeriksaanBalita[index].beratBadan
+                                  Text(pemeriksaanibuhamil
+                                      .listPemeriksaanIbuHamil[index]
+                                      .lingkarPerut
                                       .toString()),
                                   SizedBox(
                                     width: 40,
                                   ),
-                                  Text(pemeriksaanbalita
-                                      .listPemeriksaanBalita[index].tinggiBadan
+                                  Text(pemeriksaanibuhamil
+                                      .listPemeriksaanIbuHamil[index]
+                                      .denyutJantungBayi
                                       .toString()),
                                   SizedBox(
                                     width: 50,
                                   ),
-                                  Text(pemeriksaanbalita
-                                      .listPemeriksaanBalita[index]
-                                      .lingkarKepala
+                                  Text(pemeriksaanibuhamil
+                                      .listPemeriksaanIbuHamil[index].denyutNadi
                                       .toString()),
                                   SizedBox(
                                     width: 10,
@@ -133,54 +136,61 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  DetailPemeriksaanBalita(
-                                                    id: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
+                                                  DetailPemeriksaanIbuHamil(
+                                                    id: pemeriksaanibuhamil
+                                                        .listPemeriksaanIbuHamil[
                                                             index]
                                                         .id,
                                                     tanggal_pemeriksaan:
-                                                        pemeriksaanbalita
-                                                            .listPemeriksaanBalita[
+                                                        pemeriksaanibuhamil
+                                                            .listPemeriksaanIbuHamil[
                                                                 index]
                                                             .tanggalPemeriksaan,
-                                                    lingkar_kepala:
-                                                        pemeriksaanbalita
-                                                            .listPemeriksaanBalita[
-                                                                index]
-                                                            .lingkarKepala
-                                                            .toString(),
-                                                    lingkar_lengan:
-                                                        pemeriksaanbalita
-                                                            .listPemeriksaanBalita[
-                                                                index]
-                                                            .lingkarLengan
-                                                            .toString(),
-                                                    berat_badan: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
+                                                    berat_badan: pemeriksaanibuhamil
+                                                        .listPemeriksaanIbuHamil[
                                                             index]
                                                         .beratBadan
                                                         .toString(),
-                                                    tinggi_badan: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
+                                                    tinggi_badan:
+                                                        pemeriksaanibuhamil
+                                                            .listPemeriksaanIbuHamil[
+                                                                index]
+                                                            .tinggiBadan
+                                                            .toString(),
+                                                    lingkar_perut:
+                                                        pemeriksaanibuhamil
+                                                            .listPemeriksaanIbuHamil[
+                                                                index]
+                                                            .lingkarPerut
+                                                            .toString(),
+                                                    denyut_jantung_bayi:
+                                                        pemeriksaanibuhamil
+                                                            .listPemeriksaanIbuHamil[
+                                                                index]
+                                                            .denyutJantungBayi
+                                                            .toString(),
+                                                    denyut_nadi: pemeriksaanibuhamil
+                                                        .listPemeriksaanIbuHamil[
                                                             index]
-                                                        .tinggiBadan
+                                                        .denyutNadi
                                                         .toString(),
-                                                    keluhan: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
+                                                    keluhan: pemeriksaanibuhamil
+                                                        .listPemeriksaanIbuHamil[
                                                             index]
                                                         .keluhan,
-                                                    penanganan: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
+                                                    penanganan: pemeriksaanibuhamil
+                                                        .listPemeriksaanIbuHamil[
                                                             index]
                                                         .penanganan,
-                                                    balita_id: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .balitaId
-                                                        .toString(),
+                                                    ibu_hamil_id:
+                                                        pemeriksaanibuhamil
+                                                            .listPemeriksaanIbuHamil[
+                                                                index]
+                                                            .ibuHamilId
+                                                            .toString(),
                                                     petugas_kesehatan_id:
-                                                        pemeriksaanbalita
-                                                            .listPemeriksaanBalita[
+                                                        pemeriksaanibuhamil
+                                                            .listPemeriksaanIbuHamil[
                                                                 index]
                                                             .petugasKesehatanId
                                                             .toString(),
@@ -197,8 +207,8 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                           },
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount:
-                              pemeriksaanbalita.listPemeriksaanBalita.length,
+                          itemCount: pemeriksaanibuhamil
+                              .listPemeriksaanIbuHamil.length,
                         ),
                       )))
             ],

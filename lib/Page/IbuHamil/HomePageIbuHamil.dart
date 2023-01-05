@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
-import 'package:posyandu/Page/Balita/ProfilBalitaPage.dart';
-import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
+import 'package:posyandu/Page/IbuHamil/JadwalIbuHamilPage.dart';
+import 'package:posyandu/Page/IbuHamil/ProfilIbuHamilPage.dart';
+import 'package:posyandu/Page/IbuHamil/StatistikIbuHamilPage.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:get/get.dart';
 import 'dart:math';
@@ -9,16 +9,16 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../Controller/PemeriksaanBalitaController.dart';
+import '../../Controller/PemeriksaanIbuHamilController.dart';
 
-class HomePageBalita extends StatefulWidget {
-  const HomePageBalita({super.key});
+class HomePageIbuHamil extends StatefulWidget {
+  const HomePageIbuHamil({super.key});
 
   @override
-  State<HomePageBalita> createState() => _HomePageBalitaState();
+  State<HomePageIbuHamil> createState() => _HomePageIbuHamilState();
 }
 
-class _HomePageBalitaState extends State<HomePageBalita> {
+class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
   int _current = 0;
   final CarouselController _controller = CarouselController();
 
@@ -55,12 +55,12 @@ class _HomePageBalitaState extends State<HomePageBalita> {
     )
   ];
 
-  var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
+  var pemeriksaanibuhamil = Get.put(PemeriksaanIbuHamilController());
 
   @override
   void initState() {
     super.initState();
-    pemeriksaanbalita.getPemeriksaanBalita(1);
+    pemeriksaanibuhamil.getPemeriksaanIbuHamil(1);
   }
 
   @override
@@ -95,7 +95,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                               margin: EdgeInsets.only(left: 20),
                               child: Center(
                                 child: Text(
-                                  "Putu Nyoman",
+                                  "Bu Wayan",
                                   style: TextStyle(
                                     fontSize: 15,
                                   ),
@@ -120,7 +120,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ProfilBalitaPage()),
+                                  builder: (context) => ProfilIbuHamilPage()),
                             );
                           }),
                           icon: const Icon(CupertinoIcons.bell),
@@ -147,21 +147,21 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                               Column(
                                 children: [
                                   Text(
-                                    'Berat Badan',
+                                    'Tinggi Fundus',
                                     style: TextStyle(fontSize: 14),
                                   ),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Obx(() {
-                                    if (pemeriksaanbalita
-                                            .listPemeriksaanBalita.length !=
+                                    if (pemeriksaanibuhamil
+                                            .listPemeriksaanIbuHamil.length !=
                                         0) {
-                                      return Text(pemeriksaanbalita
-                                              .listPemeriksaanBalita[0]
-                                              .beratBadan
+                                      return Text(pemeriksaanibuhamil
+                                              .listPemeriksaanIbuHamil[0]
+                                              .lingkarPerut
                                               .toString() +
-                                          ' Kg');
+                                          ' Cm');
                                     } else {
                                       return Text('Loading');
                                     }
@@ -170,12 +170,12 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                     height: 10,
                                   ),
                                   Obx((() {
-                                    if (pemeriksaanbalita
-                                            .listPemeriksaanBalita.length !=
+                                    if (pemeriksaanibuhamil
+                                            .listPemeriksaanIbuHamil.length !=
                                         0) {
-                                      if (pemeriksaanbalita
-                                              .listPemeriksaanBalita[0]
-                                              .beratBadan <=
+                                      if (pemeriksaanibuhamil
+                                              .listPemeriksaanIbuHamil[0]
+                                              .lingkarPerut <=
                                           4) {
                                         return Container(
                                           // width: 60,
@@ -193,7 +193,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(5),
-                                              color: Colors.green),
+                                              color: Colors.red),
                                           child: Center(
                                               child: Text('Tidak Normal')),
                                         );
@@ -213,21 +213,21 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                               Column(
                                 children: [
                                   Text(
-                                    'Tinggi Badan',
+                                    'D. Jantung Bayi',
                                     style: TextStyle(fontSize: 14),
                                   ),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Obx(() {
-                                    if (pemeriksaanbalita
-                                            .listPemeriksaanBalita.length !=
+                                    if (pemeriksaanibuhamil
+                                            .listPemeriksaanIbuHamil.length !=
                                         0) {
-                                      return Text(pemeriksaanbalita
-                                              .listPemeriksaanBalita[0]
-                                              .tinggiBadan
+                                      return Text(pemeriksaanibuhamil
+                                              .listPemeriksaanIbuHamil[0]
+                                              .denyutJantungBayi
                                               .toString() +
-                                          ' Cm');
+                                          ' bpm');
                                     } else {
                                       return Text('Loading');
                                     }
@@ -236,72 +236,12 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                     height: 10,
                                   ),
                                   Obx((() {
-                                    if (pemeriksaanbalita
-                                            .listPemeriksaanBalita.length !=
+                                    if (pemeriksaanibuhamil
+                                            .listPemeriksaanIbuHamil.length !=
                                         0) {
-                                      if (pemeriksaanbalita
-                                              .listPemeriksaanBalita[0]
-                                              .tinggiBadan <=
-                                          40) {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.green),
-                                          child: Center(child: Text('Normal')),
-                                        );
-                                      } else {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.green),
-                                          child: Center(
-                                              child: Text('Tidak Normal')),
-                                        );
-                                      }
-                                    } else {
-                                      return Text('Loading');
-                                    }
-                                  }))
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'Lingkar Kepala',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Obx(() {
-                                    if (pemeriksaanbalita
-                                            .listPemeriksaanBalita.length !=
-                                        0) {
-                                      return Text(pemeriksaanbalita
-                                              .listPemeriksaanBalita[0]
-                                              .lingkarKepala
-                                              .toString() +
-                                          ' Cm');
-                                    } else {
-                                      return Text('Loading');
-                                    }
-                                  }),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Obx((() {
-                                    if (pemeriksaanbalita
-                                            .listPemeriksaanBalita.length !=
-                                        0) {
-                                      if (pemeriksaanbalita
-                                              .listPemeriksaanBalita[0]
-                                              .lingkarKepala <=
+                                      if (pemeriksaanibuhamil
+                                              .listPemeriksaanIbuHamil[0]
+                                              .denyutJantungBayi <=
                                           4) {
                                         return Container(
                                           // width: 60,
@@ -319,7 +259,67 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(5),
+                                              color: Colors.red),
+                                          child: Center(
+                                              child: Text('Tidak Normal')),
+                                        );
+                                      }
+                                    } else {
+                                      return Text('Loading');
+                                    }
+                                  }))
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Nadi Ibu',
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() {
+                                    if (pemeriksaanibuhamil
+                                            .listPemeriksaanIbuHamil.length !=
+                                        0) {
+                                      return Text(pemeriksaanibuhamil
+                                              .listPemeriksaanIbuHamil[0]
+                                              .denyutNadi
+                                              .toString() +
+                                          ' bpm');
+                                    } else {
+                                      return Text('Loading');
+                                    }
+                                  }),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx((() {
+                                    if (pemeriksaanibuhamil
+                                            .listPemeriksaanIbuHamil.length !=
+                                        0) {
+                                      if (pemeriksaanibuhamil
+                                              .listPemeriksaanIbuHamil[0]
+                                              .denyutNadi >=
+                                          50) {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                               color: Colors.green),
+                                          child: Center(child: Text('Normal')),
+                                        );
+                                      } else {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.red),
                                           child: Center(
                                               child: Text('Tidak Normal')),
                                         );
@@ -339,11 +339,12 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Obx(() {
-                                if (pemeriksaanbalita
-                                        .listPemeriksaanBalita.length !=
+                                if (pemeriksaanibuhamil
+                                        .listPemeriksaanIbuHamil.length !=
                                     0) {
                                   return Text('Date : ' +
-                                      pemeriksaanbalita.listPemeriksaanBalita[0]
+                                      pemeriksaanibuhamil
+                                          .listPemeriksaanIbuHamil[0]
                                           .tanggalPemeriksaan
                                           .toString());
                                 } else {
@@ -351,6 +352,8 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                 }
                               }),
                               Container(
+                                width: 180,
+                                height: 30,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
                                     color: Color.fromARGB(119, 33, 149, 243)),
@@ -360,7 +363,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  StatistikBalitaPage()));
+                                                  StatistikIbuHamilPage()));
                                     },
                                     child: Text(
                                       'Lihat Grafik Pertumbuhan',
@@ -428,7 +431,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            JadwalBalitaPage()));
+                                            JadwalIbuHamilPage()));
                               },
                               child: Text(
                                 'Jadwal Pemeriksaan',

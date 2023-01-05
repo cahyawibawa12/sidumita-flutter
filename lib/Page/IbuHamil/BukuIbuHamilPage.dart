@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:posyandu/Controller/GetTwoLastDataPemeriksaanController.dart';
 import 'package:posyandu/Page/Balita/ImunisasiBalitaPage.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
@@ -8,24 +7,26 @@ import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:posyandu/Page/IbuHamil/JadwalIbuHamilPage.dart';
 
+import '../../Controller/GetTwoLastDataPemeriksaanIbuHamilController.dart';
 import '../../widget/widgets.dart';
 
-class BukuBalitaPage extends StatefulWidget {
-  BukuBalitaPage({super.key});
+class BukuIbuHamilPage extends StatefulWidget {
+  BukuIbuHamilPage({super.key});
 
   @override
-  State<BukuBalitaPage> createState() => _BukuBalitaPageState();
+  State<BukuIbuHamilPage> createState() => _BukuIbuHamilPageState();
 }
 
-class _BukuBalitaPageState extends State<BukuBalitaPage> {
-  var getTwoLastDataPemeriksaanBalita =
-      Get.put(GetTwoLastDataPemeriksaanBalitaController());
+class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
+  var getTwoLastDataPemeriksaanIbuHamil =
+      Get.put(GetTwoLastDataPemeriksaanIbuHamilController());
 
   @override
   void initState() {
     super.initState();
-    getTwoLastDataPemeriksaanBalita.getTwoLastDataPemeriksaanBalita(1);
+    getTwoLastDataPemeriksaanIbuHamil.getTwoLastDataPemeriksaanIbuHamil(1);
     // print('frompage' +
     //     getTwoLastDataPemeriksaanBalita.listTwoLastDataPemeriksaanBalita.length
     //         .toString());
@@ -100,7 +101,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                               margin: EdgeInsets.only(left: 20),
                               child: Center(
                                 child: Text(
-                                  "Putu Nyoman",
+                                  "Bu Wayan",
                                   style: TextStyle(
                                     fontSize: 15,
                                   ),
@@ -135,7 +136,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          JadwalBalitaPage()));
+                                          JadwalIbuHamilPage()));
                             },
                             child: Text(
                               'Jadwal Pemeriksaan',
@@ -170,20 +171,20 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Berat"),
+                                    Text("Tinggi Fundus"),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
+                                      if (getTwoLastDataPemeriksaanIbuHamil
+                                              .listTwoLastDataPemeriksaanIbuHamil
                                               .length !=
                                           0) {
                                         return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
+                                            getTwoLastDataPemeriksaanIbuHamil
+                                                .listTwoLastDataPemeriksaanIbuHamil[
                                                     1]
-                                                .beratBadan
+                                                .lingkarPerut
                                                 .toString());
                                       } else {
                                         return Text('Loading');
@@ -204,20 +205,20 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Tinggi"),
+                                    Text("D. Jantung Bayi"),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
+                                      if (getTwoLastDataPemeriksaanIbuHamil
+                                              .listTwoLastDataPemeriksaanIbuHamil
                                               .length !=
                                           0) {
                                         return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
+                                            getTwoLastDataPemeriksaanIbuHamil
+                                                .listTwoLastDataPemeriksaanIbuHamil[
                                                     1]
-                                                .tinggiBadan
+                                                .denyutJantungBayi
                                                 .toString());
                                       } else {
                                         return Text('Loading');
@@ -238,20 +239,20 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Lingkar Kepala"),
+                                    Text("Nadi Ibu"),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
+                                      if (getTwoLastDataPemeriksaanIbuHamil
+                                              .listTwoLastDataPemeriksaanIbuHamil
                                               .length !=
                                           0) {
                                         return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
+                                            getTwoLastDataPemeriksaanIbuHamil
+                                                .listTwoLastDataPemeriksaanIbuHamil[
                                                     1]
-                                                .lingkarKepala
+                                                .denyutNadi
                                                 .toString());
                                       } else {
                                         return Text('Loading');
@@ -264,13 +265,13 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 height: 15,
                               ),
                               Obx(() {
-                                if (getTwoLastDataPemeriksaanBalita
-                                        .listTwoLastDataPemeriksaanBalita
+                                if (getTwoLastDataPemeriksaanIbuHamil
+                                        .listTwoLastDataPemeriksaanIbuHamil
                                         .length !=
                                     0) {
                                   return Text('Date : ' +
-                                      getTwoLastDataPemeriksaanBalita
-                                          .listTwoLastDataPemeriksaanBalita[1]
+                                      getTwoLastDataPemeriksaanIbuHamil
+                                          .listTwoLastDataPemeriksaanIbuHamil[1]
                                           .tanggalPemeriksaan
                                           .toString());
                                 } else {
@@ -297,20 +298,20 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Berat"),
+                                    Text("Tinggi Fundus"),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
+                                      if (getTwoLastDataPemeriksaanIbuHamil
+                                              .listTwoLastDataPemeriksaanIbuHamil
                                               .length !=
                                           0) {
                                         return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
+                                            getTwoLastDataPemeriksaanIbuHamil
+                                                .listTwoLastDataPemeriksaanIbuHamil[
                                                     0]
-                                                .beratBadan
+                                                .lingkarPerut
                                                 .toString());
                                       } else {
                                         return Text('Loading');
@@ -331,20 +332,20 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Tinggi"),
+                                    Text("D. Jantung Bayi"),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
+                                      if (getTwoLastDataPemeriksaanIbuHamil
+                                              .listTwoLastDataPemeriksaanIbuHamil
                                               .length !=
                                           0) {
                                         return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
+                                            getTwoLastDataPemeriksaanIbuHamil
+                                                .listTwoLastDataPemeriksaanIbuHamil[
                                                     0]
-                                                .tinggiBadan
+                                                .denyutJantungBayi
                                                 .toString());
                                       } else {
                                         return Text('Loading');
@@ -365,20 +366,20 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Lingkar Kepala"),
+                                    Text("Nadi Ibu"),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
+                                      if (getTwoLastDataPemeriksaanIbuHamil
+                                              .listTwoLastDataPemeriksaanIbuHamil
                                               .length !=
                                           0) {
                                         return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
+                                            getTwoLastDataPemeriksaanIbuHamil
+                                                .listTwoLastDataPemeriksaanIbuHamil[
                                                     0]
-                                                .lingkarKepala
+                                                .denyutNadi
                                                 .toString());
                                       } else {
                                         return Text('Loading');
@@ -391,13 +392,13 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 height: 15,
                               ),
                               Obx(() {
-                                if (getTwoLastDataPemeriksaanBalita
-                                        .listTwoLastDataPemeriksaanBalita
+                                if (getTwoLastDataPemeriksaanIbuHamil
+                                        .listTwoLastDataPemeriksaanIbuHamil
                                         .length !=
                                     0) {
                                   return Text('Date : ' +
-                                      getTwoLastDataPemeriksaanBalita
-                                          .listTwoLastDataPemeriksaanBalita[0]
+                                      getTwoLastDataPemeriksaanIbuHamil
+                                          .listTwoLastDataPemeriksaanIbuHamil[0]
                                           .tanggalPemeriksaan
                                           .toString());
                                 } else {

@@ -17,18 +17,20 @@ class DetailPemeriksaanBalitaController extends GetxController
       PemeriksaanBalitaModel detailPemeriksaanBalitaModel =
           PemeriksaanBalitaModel(
         id: responsedecode['data'][i]["id"],
-        tanggal_pemeriksaan: responsedecode['data'][i]["tanggal_pemeriksaan"],
-        lingkar_kepala: responsedecode['data'][i]["lingkar_kepala"].toDouble(),
-        lingkar_lengan: responsedecode['data'][i]["lingkar_lengan"].toDouble(),
-        tinggi_badan: responsedecode['data'][i]["tinggi_badan"].toDouble(),
-        berat_badan: responsedecode['data'][i]["berat_badan"].toDouble(),
+        tanggalPemeriksaan: responsedecode['data'][i]["tanggal_pemeriksaan"],
+        lingkarKepala: responsedecode['data'][i]["lingkar_kepala"].toDouble(),
+        lingkarLengan: responsedecode['data'][i]["lingkar_lengan"].toDouble(),
+        tinggiBadan: responsedecode['data'][i]["tinggi_badan"].toDouble(),
+        beratBadan: responsedecode['data'][i]["berat_badan"].toDouble(),
         penanganan: responsedecode['data'][i]["penanganan"],
         keluhan: responsedecode['data'][i]["keluhan"],
-        bulan_imunisasi_id: responsedecode['data'][i]["bulan_imunisasi_id"],
-        balita_id: responsedecode['data'][i]["balita_id"],
-        petugas_kesehatan_id: responsedecode['data'][i]["petugas_kesehatan_id"],
-        created_at: responsedecode['data'][i]["created_at"],
-        updated_at: responsedecode['data'][i]["updated_at"],
+        catatan: responsedecode['data'][i]["catatan"],
+        vitaminId: responsedecode['data'][i]["vitamin_id"],
+        balitaId: responsedecode['data'][i]["balita_id"],
+        petugasKesehatanId: responsedecode['data'][i]["petugas_kesehatan_id"],
+        dokterId: responsedecode['data'][i]["dokter_id"],
+        createdAt: responsedecode['data'][i]["created_at"],
+        updatedAt: responsedecode['data'][i]["updated_at"],
       );
       listDetailPemeriksaanBalita.add(detailPemeriksaanBalitaModel);
     }
