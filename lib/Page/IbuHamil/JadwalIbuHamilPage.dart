@@ -65,6 +65,11 @@ class _JadwalIbuHamilPageState extends State<JadwalIbuHamilPage> {
           backgroundColor: Colors.transparent,
           body: SafeArea(
               child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            margin: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Color.fromARGB(161, 249, 240, 240)),
             child: Calendar(
               startOnMonday: true,
               selectedColor: Colors.blue,
@@ -82,11 +87,11 @@ class _JadwalIbuHamilPageState extends State<JadwalIbuHamilPage> {
               isExpanded: true,
               dayOfWeekStyle: TextStyle(
                 fontSize: 15,
-                color: Colors.black12,
-                fontWeight: FontWeight.w100,
+                color: Colors.black,
+                fontWeight: FontWeight.w900,
               ),
               bottomBarTextStyle: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
               ),
               hideBottomBar: false,
               hideArrows: false,

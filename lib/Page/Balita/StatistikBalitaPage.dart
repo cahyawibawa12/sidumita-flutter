@@ -32,7 +32,17 @@ class _StatistikBalitaPageState extends State<StatistikBalitaPage> {
             body: SafeArea(
               child: Column(
                 children: [
+                  Text("Statistik",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500)),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Container(
+                    // padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    margin: EdgeInsets.all(10),
                     height: 45,
                     decoration: BoxDecoration(
                         color: Colors.grey[300],

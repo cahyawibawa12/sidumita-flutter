@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/LoginPage.dart';
 
 import 'package:posyandu/widget/widgets.dart';
@@ -88,7 +89,7 @@ class _LandingPageState extends State<LandingPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginPage()),
+                                builder: (context) => LandingLogin()),
                           );
                         }),
                         icon: const Icon(CupertinoIcons.person_crop_circle),

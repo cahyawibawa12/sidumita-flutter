@@ -183,8 +183,9 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(5),
-                                              color: Colors.green),
-                                          child: Center(child: Text('Normal')),
+                                              color: Colors.red),
+                                          child: Center(
+                                              child: Text('Tidak Normal')),
                                         );
                                       } else {
                                         return Container(
@@ -194,8 +195,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                               color: Colors.green),
-                                          child: Center(
-                                              child: Text('Tidak Normal')),
+                                          child: Center(child: Text('Normal')),
                                         );
                                       }
                                     } else {
@@ -249,8 +249,9 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(5),
-                                              color: Colors.green),
-                                          child: Center(child: Text('Normal')),
+                                              color: Colors.red),
+                                          child: Center(
+                                              child: Text('Tidak Normal')),
                                         );
                                       } else {
                                         return Container(
@@ -260,8 +261,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                               color: Colors.green),
-                                          child: Center(
-                                              child: Text('Tidak Normal')),
+                                          child: Center(child: Text('Normal')),
                                         );
                                       }
                                     } else {
@@ -309,8 +309,9 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(5),
-                                              color: Colors.green),
-                                          child: Center(child: Text('Normal')),
+                                              color: Colors.red),
+                                          child: Center(
+                                              child: Text('Tidak Normal')),
                                         );
                                       } else {
                                         return Container(
@@ -320,8 +321,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                               color: Colors.green),
-                                          child: Center(
-                                              child: Text('Tidak Normal')),
+                                          child: Center(child: Text('Normal')),
                                         );
                                       }
                                     } else {

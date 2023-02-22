@@ -48,7 +48,7 @@ class _ButtonNavBarState extends State<ButtonNavBarIbuHamil> {
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.book_fill),
-          title: ("Buku Anak"),
+          title: ("Buku Ibu"),
           activeColorPrimary: Color.fromARGB(255, 0, 62, 16),
           inactiveColorPrimary: CupertinoColors.black,
         ),

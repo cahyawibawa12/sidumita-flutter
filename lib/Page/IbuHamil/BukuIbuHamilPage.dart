@@ -447,37 +447,6 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                             ],
                           ),
                         ),
-                        Container(
-                          height: 180,
-                          width: 150,
-                          padding: EdgeInsets.only(top: 20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white),
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundImage:
-                                    AssetImage('assets/images/bg.png'),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ImunisasiBalitaPage()));
-                                  },
-                                  child: Text(
-                                    'Imunisasi',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontStyle: FontStyle.normal),
-                                  )),
-                            ],
-                          ),
-                        )
                       ],
                     )
                   ],

@@ -65,33 +65,37 @@ class _JadwalBalitaPageState extends State<JadwalBalitaPage> {
           backgroundColor: Colors.transparent,
           body: SafeArea(
               child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            margin: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Color.fromARGB(255, 201, 251, 191)),
             child: Calendar(
-              startOnMonday: true,
-              selectedColor: Colors.blue,
-              todayColor: Colors.red,
-              eventColor: Colors.white,
-              eventDoneColor: Colors.amber,
-              bottomBarColor: Colors.deepOrange,
-              onRangeSelected: (range) {
-                print('selected Day ${range.from},${range.to}');
-              },
-              onDateSelected: (date) {
-                return _handleData(date);
-              },
-              events: events,
-              isExpanded: true,
-              dayOfWeekStyle: TextStyle(
-                fontSize: 15,
-                color: Colors.black12,
-                fontWeight: FontWeight.w100,
-              ),
-              bottomBarTextStyle: TextStyle(
-                color: Colors.black,
-              ),
-              hideBottomBar: false,
-              hideArrows: false,
-              weekDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            ),
+                startOnMonday: true,
+                selectedColor: Colors.blue,
+                todayColor: Colors.red,
+                eventColor: Colors.green,
+                eventDoneColor: Colors.amber,
+                bottomBarColor: Colors.deepOrange,
+                onRangeSelected: (range) {
+                  print('selected Day ${range.from},${range.to}');
+                },
+                onDateSelected: (date) {
+                  return _handleData(date);
+                },
+                events: events,
+                isExpanded: true,
+                dayOfWeekStyle: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w900,
+                ),
+                bottomBarTextStyle: TextStyle(
+                  color: Colors.white,
+                ),
+                hideBottomBar: false,
+                hideArrows: false,
+                weekDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']),
           )),
         )
       ],

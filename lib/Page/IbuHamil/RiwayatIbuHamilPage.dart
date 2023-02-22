@@ -115,14 +115,14 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                       .lingkarPerut
                                       .toString()),
                                   SizedBox(
-                                    width: 40,
+                                    width: 45,
                                   ),
                                   Text(pemeriksaanibuhamil
                                       .listPemeriksaanIbuHamil[index]
                                       .denyutJantungBayi
                                       .toString()),
                                   SizedBox(
-                                    width: 50,
+                                    width: 30,
                                   ),
                                   Text(pemeriksaanibuhamil
                                       .listPemeriksaanIbuHamil[index].denyutNadi
