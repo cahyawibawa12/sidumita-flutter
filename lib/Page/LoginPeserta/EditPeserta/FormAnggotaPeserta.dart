@@ -196,9 +196,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                   suffixIcon: Icon(Icons.date_range),
                                 ),
-                                onChanged: (value) {
-                                  _datePicked.toString();
-                                },
+                                onChanged: (value) {},
                               ),
                             ),
                             TextFormField(
