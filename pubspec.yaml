@@ -32,6 +32,7 @@ dependencies:
   carousel_slider: ^4.1.1
   convex_bottom_bar: ^3.1.0+1
   cupertino_icons: ^1.0.2
+  dio: ^5.0.2
   flutter:
     sdk: flutter
   flutter_clean_calendar: ^1.1.0
@@ -39,6 +40,8 @@ dependencies:
   google_fonts: ^3.0.1
   http: ^0.13.5
   persistent_bottom_nav_bar: ^5.0.2
+  shared_preferences: ^2.0.18
+  syncfusion_flutter_charts: ^20.4.53
   table_calendar: ^3.0.8
 
 dev_dependencies:

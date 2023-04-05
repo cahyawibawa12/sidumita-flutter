@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:posyandu/Page/LoginPeserta/EditPeserta/EditPeserta.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingBalita.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingIbuHamil.dart';
+import 'package:posyandu/Service/AuthService.dart';
 import 'package:posyandu/widget/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'LoginPagePeserta.dart';
 
 class LandinLoginPeserta extends StatefulWidget {
   const LandinLoginPeserta({super.key});
@@ -16,6 +23,24 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
   String _alamat = '';
   String _kepalakeluarga = '';
   String _jumlah = '';
+  String name = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  _loadUserData() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var user = jsonDecode(localStorage.getString('user')!);
+
+    if (user != null) {
+      setState(() {
+        name = user['name'];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,30 +52,34 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
               child: SingleChildScrollView(
                   child: Column(
             children: <Widget>[
-              Column(children: [
-                Row(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
                   SizedBox(
-                    width: 30,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "SIDUMITA",
-                        style: TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold),
-                      ),
-                      Text("Sistem Informasi Ibu Hamil dan Balita"),
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 10),
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage('assets/images/bg.png'),
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Selamat Datang " + '${name}',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                            "Pada Sistem Informasi Posyandu Ibu Hamil dan Balita")
+                      ],
                     ),
                   ),
-                ]),
-              ]),
+                  IconButton(
+                    onPressed: (() {
+                      logout();
+                    }),
+                    icon: const Icon(CupertinoIcons.bell),
+                    iconSize: 35,
+                    color: Color.fromARGB(255, 24, 98, 26),
+                  )
+                ],
+              ),
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   margin: EdgeInsets.all(20),
@@ -104,7 +133,19 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                         height: 20,
                       ),
                       RoundedButton(
-                        btnText: 'Edit Data Keluarga',
+                        btnText: 'Save',
+                        onBtnPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditPeserta()));
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      RoundedButton(
+                        btnText: 'Data Keluarga',
                         onBtnPressed: () {
                           Navigator.push(
                               context,
@@ -177,5 +218,17 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
             ],
           ))))
     ]);
+  }
+
+  void logout() async {
+    var res = await Network().getData('auth/logout');
+    var body = json.decode(res.body);
+    if (body['success'] == true) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.remove('user');
+      localStorage.remove('token');
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginPagePeserta()));
+    }
   }
 }

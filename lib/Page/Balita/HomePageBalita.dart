@@ -1,15 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/ProfilBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
+import 'package:posyandu/Page/LoginPeserta/LoginPagePeserta.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:get/get.dart';
 import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Controller/PemeriksaanBalitaController.dart';
+import '../../Service/AuthService.dart';
 
 class HomePageBalita extends StatefulWidget {
   const HomePageBalita({super.key});
@@ -117,11 +122,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                         ),
                         IconButton(
                           onPressed: (() {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfilBalitaPage()),
-                            );
+                            logout();
                           }),
                           icon: const Icon(CupertinoIcons.bell),
                           iconSize: 35,
@@ -447,5 +448,17 @@ class _HomePageBalitaState extends State<HomePageBalita> {
         )
       ],
     );
+  }
+
+  void logout() async {
+    var res = await Network().getData('auth/logout');
+    var body = json.decode(res.body);
+    if (body['success'] == true) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.remove('user');
+      localStorage.remove('token');
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginPagePeserta()));
+    }
   }
 }

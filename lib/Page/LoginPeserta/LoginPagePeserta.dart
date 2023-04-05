@@ -1,15 +1,18 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/Balita/HomePageBalita.dart';
 import 'package:posyandu/Page/LandingPage.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingLoginPeserta.dart';
 import 'package:posyandu/Page/LoginPeserta/RegisterPeserta.dart';
 import 'package:posyandu/Page/LupaPassPage.dart';
+import 'package:posyandu/Service/AuthService.dart';
 import 'package:posyandu/widget/widgets.dart';
 import 'package:posyandu/globals.dart';
 import 'package:posyandu/AuthService.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widget/BackgroundImage.dart';
 
@@ -21,27 +24,23 @@ class LoginPagePeserta extends StatefulWidget {
 }
 
 class _LoginPagePesertaState extends State<LoginPagePeserta> {
-  String _username = '';
-  String _password = '';
+  bool _isLoading = false;
+  final _formKey = GlobalKey<FormState>();
+  var email, password;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _secureText = true;
 
-  // loginPressed() async {
-  //   if (_email.isNotEmpty && _password.isNotEmpty) {
-  //     http.Response response = await AuthServices.login(_email, _password);
-  //     print(response.statusCode);
-  //     Map responseMap = jsonDecode(response.body);
-  //     if (response.statusCode == 200) {
-  //       Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //             builder: (BuildContext context) => const ButtonNavBarBalita(),
-  //           ));
-  //     } else {
-  //       errorSnackBar(context, responseMap.values.first);
-  //     }
-  //   } else {
-  //     errorSnackBar(context, 'enter all required fields');
-  //   }
-  // }
+  showHide() {
+    setState(() {
+      _secureText = !_secureText;
+    });
+  }
+
+  _showMsg(msg) {
+    final snackBar = SnackBar(
+      content: Text(msg),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +48,7 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
       children: [
         BackgroundImage(),
         Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Colors.transparent,
           body: SafeArea(
               child: SingleChildScrollView(
@@ -95,75 +95,116 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: Color.fromARGB(162, 255, 255, 255)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text('Email'),
-                          TextField(
-                            // decoration: const InputDecoration(hintText: 'email'),
-                            onChanged: (value) {
-                              _username = value;
-                            },
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Text("Password"),
-                          TextField(
-                            obscureText: true,
-                            // decoration:
-                            //     const InputDecoration(hintText: 'password'),
-                            onChanged: (value) {
-                              _password = value;
-                            },
-                          ),
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LupaPassPage()));
-                                    },
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text('Email'),
+                            TextFormField(
+                                cursorColor: Colors.blue,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: "Email",
+                                ),
+                                validator: (emailValue) {
+                                  if (emailValue!.isEmpty) {
+                                    return 'Please enter your email';
+                                  }
+                                  email = emailValue;
+                                  return null;
+                                }),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Text("Password"),
+                            TextFormField(
+                                cursorColor: Colors.blue,
+                                keyboardType: TextInputType.text,
+                                obscureText: _secureText,
+                                decoration: InputDecoration(
+                                  hintText: "Password",
+                                  suffixIcon: IconButton(
+                                    onPressed: showHide,
+                                    icon: Icon(_secureText
+                                        ? Icons.visibility_off
+                                        : Icons.visibility),
+                                  ),
+                                ),
+                                validator: (passwordValue) {
+                                  if (passwordValue!.isEmpty) {
+                                    return 'Please enter your password';
+                                  }
+                                  password = passwordValue;
+                                  return null;
+                                }),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LupaPassPage()));
+                                      },
+                                      child: Text(
+                                        'Forgot Password',
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontStyle: FontStyle.normal),
+                                      )),
+                                ]),
+                            // const SizedBox(
+                            //   height: 30,
+                            // ),
+                            Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.green),
+                                child: TextButton(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 18, vertical: 10),
                                     child: Text(
-                                      'Forgot Password',
+                                      _isLoading ? 'Proccessing..' : 'Login',
+                                      textDirection: TextDirection.ltr,
                                       style: TextStyle(
-                                          color: Colors.blue,
-                                          fontStyle: FontStyle.normal),
-                                    )),
-                              ]),
-                          // const SizedBox(
-                          //   height: 30,
-                          // ),
-                          RoundedButton(
-                            btnText: 'LOGIN',
-                            onBtnPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          LandinLoginPeserta()));
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          RoundedButton(
-                            btnText: 'REGISTER',
-                            onBtnPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RegisterPeserta()));
-                            },
-                          ),
-                        ],
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                        decoration: TextDecoration.none,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      _login();
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            RoundedButton(
+                              btnText: 'REGISTER',
+                              onBtnPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegisterPeserta()));
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -174,5 +215,47 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
         )
       ],
     );
+  }
+
+  void _login() async {
+    setState(() {
+      _isLoading = true;
+    });
+    var data = {'email': email, 'password': password};
+
+    var res = await Network().auth(data, 'auth/login');
+    var body = json.decode(res.body);
+    print(json.encode(body['access_token']));
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    if (body['success'] == true) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('token', json.encode(body['access_token']));
+      localStorage.setString('user', json.encode(body['user']));
+      if (body['user']['role_id'] == 4) {
+        Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(builder: (context) => LandinLoginPeserta()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(builder: (context) => LoginPagePeserta()),
+        );
+        Get.snackbar(
+          'Test',
+          "Display the message here",
+          colorText: Colors.white,
+          backgroundColor: Colors.lightBlue,
+        );
+      }
+    } else {
+      _showMsg(body['message']);
+    }
+    var token = jsonDecode(localStorage.getString('token') ?? '');
+    print('localstorage: $token');
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
