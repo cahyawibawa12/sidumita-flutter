@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Page/Balita/Statistik/BeratBadanPage.dart';
 import 'package:posyandu/Page/Balita/Statistik/LingkarKepalaPage.dart';
 import 'package:posyandu/Page/Balita/Statistik/TinggiBadanPage.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 
+import '../../Controller/PemeriksaanBalitaController.dart';
+
 class StatistikBalitaPage extends StatefulWidget {
-  const StatistikBalitaPage({super.key});
+  StatistikBalitaPage({super.key, required this.balitaModel});
+
+  BalitaModel balitaModel;
 
   @override
   State<StatistikBalitaPage> createState() => _StatistikBalitaPageState();
@@ -20,6 +26,11 @@ class _StatistikBalitaPageState extends State<StatistikBalitaPage> {
   //     const TinggiBadanPage(),
   //   ];
   // }
+  var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
+
+  void initState() {
+    pemeriksaanbalita.getPemeriksaanBalita(widget.balitaModel.id!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +77,13 @@ class _StatistikBalitaPageState extends State<StatistikBalitaPage> {
                       ],
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                       child: TabBarView(children: <Widget>[
-                    BeratBadanPage(),
-                    LingkarKepalaPage(),
-                    TinggiBadanPage()
+                    BeratBadanPage(
+                      balitaModel: widget.balitaModel,
+                    ),
+                    LingkarKepalaPage(balitaModel: widget.balitaModel),
+                    TinggiBadanPage(balitaModel: widget.balitaModel)
                   ]))
                 ],
               ),

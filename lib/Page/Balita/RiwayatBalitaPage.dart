@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
+import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Page/Balita/DetailPemeriksaanBalita.dart';
 import 'package:posyandu/widget/widgets.dart';
 
 class RiwayatBalitaPage extends StatefulWidget {
-  const RiwayatBalitaPage({super.key});
+  RiwayatBalitaPage({super.key, required this.balitaModel});
+
+  BalitaModel balitaModel;
 
   @override
   State<RiwayatBalitaPage> createState() => _RiwayatBalitaPageState();
@@ -17,7 +20,7 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
   @override
   void initState() {
     super.initState();
-    pemeriksaanbalita.getPemeriksaanBalita(1);
+    pemeriksaanbalita.getPemeriksaanBalita(widget.balitaModel.id!);
     print('from page ' +
         pemeriksaanbalita.listPemeriksaanBalita.length.toString());
   }

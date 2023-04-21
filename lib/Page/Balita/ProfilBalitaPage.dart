@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/widget/widgets.dart';
 
 class ProfilBalitaPage extends StatefulWidget {
-  const ProfilBalitaPage({super.key});
+  ProfilBalitaPage({super.key, required this.balitaModel});
 
+  BalitaModel balitaModel;
   @override
   State<ProfilBalitaPage> createState() => _ProfilBalitaPageState();
 }

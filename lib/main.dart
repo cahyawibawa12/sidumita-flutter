@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/BottomNavBar1.dart';
 import 'package:posyandu/Page/IbuHamil/ButtonNavBarIbuHamil.dart';
 import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/LandingPage.dart';
-import 'package:posyandu/Page/LoginPeserta/EditPeserta/EditPeserta.dart';
+import 'package:posyandu/Page/LoginPeserta/EditPeserta/Peserta.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingLoginPeserta.dart';
 import 'package:posyandu/Page/LoginPeserta/LoginPagePeserta.dart';
 import 'package:posyandu/Page/LoginPeserta/RegisterPeserta.dart';
@@ -24,13 +25,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPagePeserta(),
+      home: LandingLogin(),
     );
   }
 }

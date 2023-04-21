@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:posyandu/Controller/IbuHamil.dart';
 import 'package:posyandu/Page/IbuHamil/ButtonNavBarIbuHamil.dart';
 import 'package:posyandu/widget/widgets.dart';
 
@@ -10,6 +12,14 @@ class LandingIbuHamil extends StatefulWidget {
 }
 
 class _LandingIbuHamilState extends State<LandingIbuHamil> {
+  var ibuHamil = Get.put(IbuHamilController());
+
+  @override
+  void initState() {
+    super.initState();
+    ibuHamil.ShowIbuHamil();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -55,47 +65,64 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                         )
                       ],
                     ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                      margin: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Color.fromARGB(162, 255, 255, 255)),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "List Ibu Hamil :",
-                              style: TextStyle(
-                                fontSize: 15.0,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  padding: EdgeInsets.all(10),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  minimumSize: Size(300, 40),
+                    Expanded(
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        margin: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Color.fromARGB(162, 255, 255, 255)),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "List Balita :",
+                                style: TextStyle(
+                                  fontSize: 15.0,
                                 ),
-                                onPressed: (() {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ButtonNavBarIbuHamil()),
-                                  );
-                                }),
-                                child: Text("Bu Wayan",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    )))
-                          ]),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Expanded(
+                                child: Obx(() => ibuHamil.isLoading.value
+                                    ? CircularProgressIndicator()
+                                    : SingleChildScrollView(
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              ibuHamil.listIbuHamil.length,
+                                          physics: const ScrollPhysics(),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Card(
+                                              child: ListTile(
+                                                title: Text(ibuHamil
+                                                    .listIbuHamil[index]
+                                                    .detailKeluarga!
+                                                    .namaLengkap
+                                                    .toString()),
+                                                // subtitle: Text(detailKeluarga
+                                                //     .listDetailKeluarga[index].nik!),
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ButtonNavBarIbuHamil(
+                                                                ibuHamilModel:
+                                                                    ibuHamil.listIbuHamil[
+                                                                        index],
+                                                              )));
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      )),
+                              ),
+                            ]),
+                      ),
                     ),
                   ],
                 )

@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
+import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../widget/listchart/listchartLingkarKepala.dart';
 import '../../../widget/widgets.dart';
 
 class LingkarKepalaPage extends StatefulWidget {
-  const LingkarKepalaPage({super.key});
+  LingkarKepalaPage({super.key, required this.balitaModel});
 
+  BalitaModel balitaModel;
   @override
   State<LingkarKepalaPage> createState() => _LingkarKepalaPageState();
 }
 
 class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
+  var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
+  late ZoomPanBehavior _zoomPanBehavior;
+
+  @override
+  void initState() {
+    // super.initState();
+    // pemeriksaanbalita.getPemeriksaanBalita(widget.balitaModel.id!);
+    _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      zoomMode: ZoomMode.x,
+      enablePanning: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -44,8 +63,23 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                               Column(
                                 children: [
                                   Text("Data Terkini:"),
-                                  Text("Lingkar Kepala"),
-                                  Text("tanggal")
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() => Text(
+                                        pemeriksaanbalita
+                                            .listPemeriksaanBalita[0]
+                                            .lingkarKepala
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.green),
+                                      )),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() => Text(pemeriksaanbalita
+                                      .listPemeriksaanBalita[0]
+                                      .tanggalPemeriksaan))
                                 ],
                               )
                             ],
@@ -57,56 +91,93 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                             children: [
                               Builder(
                                 builder: (context) {
-                                  final List<Map> chartData = [
-                                    {
-                                      "umur": 1,
-                                      "berat": 2,
-                                    },
-                                    {
-                                      "umur": 2,
-                                      "berat": 3,
-                                    },
-                                    {
-                                      "umur": 3,
-                                      "berat": 4,
-                                    },
-                                    {
-                                      "umur": 4,
-                                      "berat": 5,
-                                    },
-                                    {
-                                      "umur": 5,
-                                      "berat": 6,
-                                    },
-                                    {
-                                      "umur": 6,
-                                      "berat": 7,
-                                    },
-                                    {
-                                      "umur": 8,
-                                      "berat": 9,
-                                    },
-                                    {
-                                      "umur": 9,
-                                      "berat": 10,
-                                    },
-                                  ];
-
                                   return Container(
                                     color: Theme.of(context).cardColor,
                                     padding: const EdgeInsets.all(12.0),
-                                    child: SfCartesianChart(
-                                      series: <ChartSeries>[
-                                        // Renders line chart
-                                        LineSeries<Map, int>(
-                                          dataSource: chartData,
-                                          xValueMapper: (Map data, _) =>
-                                              data["umur"],
-                                          yValueMapper: (Map data, _) =>
-                                              data["berat"],
-                                        )
-                                      ],
-                                    ),
+                                    child: Obx(() {
+                                      if (pemeriksaanbalita.isLoading.value) {
+                                        return CircularProgressIndicator();
+                                      } else {
+                                        return SfCartesianChart(
+                                          zoomPanBehavior: _zoomPanBehavior,
+                                          primaryXAxis: NumericAxis(
+                                            interval: 1,
+                                          ),
+                                          primaryYAxis: NumericAxis(
+                                              interval: 0.5, minimum: 28),
+                                          series: <ChartSeries>[
+                                            LineSeries<Map, int>(
+                                                dataSource:
+                                                    pemeriksaanbalita.data,
+                                                xValueMapper: (Map data, _) =>
+                                                    int.parse(
+                                                        data["umur_balita"]),
+                                                yValueMapper: (Map data, _) =>
+                                                    data["lingkar_kepala"],
+                                                dataLabelMapper:
+                                                    (Map data, _) =>
+                                                        data["umur_balita"] +
+                                                        ': ' +
+                                                        data["lingkar_kepala"]
+                                                            .toString(),
+                                                dataLabelSettings:
+                                                    DataLabelSettings(
+                                                  // Renders the data label
+                                                  isVisible: true,
+                                                )),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartKepalan3l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartKepalan2l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartKepalan1l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartKepalaNormall,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartKepala1l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartKepala2l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartKepala3l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            )
+                                          ],
+                                        );
+                                      }
+                                    }),
                                   );
                                 },
                               ),

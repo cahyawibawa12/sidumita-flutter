@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:posyandu/Model/BalitaModel.dart';
+import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/ProfilBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
@@ -17,7 +19,9 @@ import '../../Controller/PemeriksaanBalitaController.dart';
 import '../../Service/AuthService.dart';
 
 class HomePageBalita extends StatefulWidget {
-  const HomePageBalita({super.key});
+  HomePageBalita({super.key, required this.balitaModel});
+
+  BalitaModel balitaModel;
 
   @override
   State<HomePageBalita> createState() => _HomePageBalitaState();
@@ -65,7 +69,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
   @override
   void initState() {
     super.initState();
-    pemeriksaanbalita.getPemeriksaanBalita(1);
+    pemeriksaanbalita.getPemeriksaanBalita(widget.balitaModel.id!);
   }
 
   @override
@@ -100,7 +104,8 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                               margin: EdgeInsets.only(left: 20),
                               child: Center(
                                 child: Text(
-                                  "Putu Nyoman",
+                                  widget.balitaModel.detailKeluarga!.namaLengkap
+                                      .toString(),
                                   style: TextStyle(
                                     fontSize: 15,
                                   ),
@@ -361,7 +366,10 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  StatistikBalitaPage()));
+                                                  StatistikBalitaPage(
+                                                    balitaModel:
+                                                        widget.balitaModel,
+                                                  )));
                                     },
                                     child: Text(
                                       'Lihat Grafik Pertumbuhan',
@@ -425,11 +433,15 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                         children: [
                           TextButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            JadwalBalitaPage()));
+                                var buttonNavBalitaController =
+                                    Get.put(ButtonNavBalitaController());
+                                buttonNavBalitaController
+                                    .tabController.value.index = 1;
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             JadwalBalitaPage()));
                               },
                               child: Text(
                                 'Jadwal Pemeriksaan',

@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
+import 'package:posyandu/Model/BalitaModel.dart';
+import 'package:posyandu/widget/listchart/listchartBerat.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../Controller/GetTwoLastDataPemeriksaanController.dart';
 import '../../../widget/widgets.dart';
 
 class BeratBadanPage extends StatefulWidget {
-  const BeratBadanPage({super.key});
+  BeratBadanPage({super.key, required this.balitaModel});
+
+  BalitaModel balitaModel;
 
   @override
   State<BeratBadanPage> createState() => _BeratBadanPageState();
 }
 
 class _BeratBadanPageState extends State<BeratBadanPage> {
-  var getTwoLastDataPemeriksaanBalita =
-      Get.put(GetTwoLastDataPemeriksaanBalitaController());
+  var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
+  late ZoomPanBehavior _zoomPanBehavior;
 
   @override
   void initState() {
-    super.initState();
-    getTwoLastDataPemeriksaanBalita.getTwoLastDataPemeriksaanBalita(1);
-    // print('frompage' +
-    //     getTwoLastDataPemeriksaanBalita.listTwoLastDataPemeriksaanBalita.length
-    //         .toString());
+    // super.initState();
+    // pemeriksaanbalita.getPemeriksaanBalita(widget.balitaModel.id!);
+    _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      zoomMode: ZoomMode.x,
+      enablePanning: true,
+    );
   }
 
   @override
@@ -58,8 +64,22 @@ class _BeratBadanPageState extends State<BeratBadanPage> {
                               Column(
                                 children: [
                                   Text("Data Terkini:"),
-                                  Text("berat"),
-                                  Text("tanggal")
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() => Text(
+                                        pemeriksaanbalita
+                                            .listPemeriksaanBalita[0].beratBadan
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.green),
+                                      )),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() => Text(pemeriksaanbalita
+                                      .listPemeriksaanBalita[0]
+                                      .tanggalPemeriksaan))
                                 ],
                               )
                             ],
@@ -71,56 +91,93 @@ class _BeratBadanPageState extends State<BeratBadanPage> {
                             children: [
                               Builder(
                                 builder: (context) {
-                                  final List<Map> chartData = [
-                                    {
-                                      "umur": 0,
-                                      "berat": 5.1,
-                                    },
-                                    {
-                                      "umur": 2,
-                                      "berat": 3,
-                                    },
-                                    {
-                                      "umur": 3,
-                                      "berat": 4,
-                                    },
-                                    {
-                                      "umur": 4,
-                                      "berat": 5,
-                                    },
-                                    {
-                                      "umur": 5,
-                                      "berat": 6,
-                                    },
-                                    {
-                                      "umur": 6,
-                                      "berat": 7,
-                                    },
-                                    {
-                                      "umur": 8,
-                                      "berat": 9,
-                                    },
-                                    {
-                                      "umur": 9,
-                                      "berat": 10,
-                                    },
-                                  ];
-
                                   return Container(
                                     color: Theme.of(context).cardColor,
                                     padding: const EdgeInsets.all(12.0),
-                                    child: SfCartesianChart(
-                                      series: <ChartSeries>[
-                                        // Renders line chart
-                                        LineSeries<Map, int>(
-                                          dataSource: chartData,
-                                          xValueMapper: (Map data, _) =>
-                                              data["umur"],
-                                          yValueMapper: (Map data, _) =>
-                                              data["berat"],
-                                        )
-                                      ],
-                                    ),
+                                    child: Obx(() {
+                                      if (pemeriksaanbalita.isLoading.value) {
+                                        return CircularProgressIndicator();
+                                      } else {
+                                        return SfCartesianChart(
+                                          zoomPanBehavior: _zoomPanBehavior,
+                                          primaryXAxis: NumericAxis(
+                                            interval: 1,
+                                          ),
+                                          primaryYAxis:
+                                              NumericAxis(interval: 0.5),
+                                          series: <ChartSeries>[
+                                            LineSeries<Map, int>(
+                                                dataSource:
+                                                    pemeriksaanbalita.data,
+                                                xValueMapper: (Map data, _) =>
+                                                    int.parse(
+                                                        data["umur_balita"]),
+                                                yValueMapper: (Map data, _) =>
+                                                    data["berat_badan"],
+                                                dataLabelMapper:
+                                                    (Map data, _) =>
+                                                        data["umur_balita"] +
+                                                        ': ' +
+                                                        data["berat_badan"]
+                                                            .toString(),
+                                                dataLabelSettings:
+                                                    DataLabelSettings(
+                                                  // Renders the data label
+                                                  isVisible: true,
+                                                )),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartBeratn3l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartBeratn2l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartBeratn1l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartBeratNormall,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartBerat1l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartBerat2l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            ),
+                                            LineSeries<Map, int>(
+                                              dataSource: chartBerat3l,
+                                              xValueMapper: (Map data, _) =>
+                                                  data["umur"],
+                                              yValueMapper: (Map data, _) =>
+                                                  data["data"],
+                                            )
+                                          ],
+                                        );
+                                      }
+                                    }),
                                   );
                                 },
                               ),

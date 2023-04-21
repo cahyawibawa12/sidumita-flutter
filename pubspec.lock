@@ -136,6 +136,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  focus_detector_v2:
+    dependency: "direct main"
+    description:
+      name: focus_detector_v2
+      sha256: "4fed0ad4ef4996711880e26bd8450eb86199acc4f25eafbf49a17d4758f9d139"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0+2"
   get:
     dependency: "direct main"
     description:
@@ -461,6 +469,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  visibility_detector:
+    dependency: transitive
+    description:
+      name: visibility_detector
+      sha256: "15c54a459ec2c17b4705450483f3d5a2858e733aee893dcee9d75fd04814940d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.3"
   win32:
     dependency: transitive
     description:

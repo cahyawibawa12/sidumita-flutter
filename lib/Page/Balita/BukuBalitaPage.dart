@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/GetTwoLastDataPemeriksaanController.dart';
+import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Page/Balita/ImunisasiBalitaPage.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
@@ -12,8 +13,8 @@ import 'package:flutter/cupertino.dart';
 import '../../widget/widgets.dart';
 
 class BukuBalitaPage extends StatefulWidget {
-  BukuBalitaPage({super.key});
-
+  BukuBalitaPage({super.key, required this.balitaModel});
+  BalitaModel balitaModel;
   @override
   State<BukuBalitaPage> createState() => _BukuBalitaPageState();
 }
@@ -25,7 +26,8 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
   @override
   void initState() {
     super.initState();
-    getTwoLastDataPemeriksaanBalita.getTwoLastDataPemeriksaanBalita(1);
+    getTwoLastDataPemeriksaanBalita
+        .getTwoLastDataPemeriksaanBalita(widget.balitaModel.id!);
     // print('frompage' +
     //     getTwoLastDataPemeriksaanBalita.listTwoLastDataPemeriksaanBalita.length
     //         .toString());

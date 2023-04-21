@@ -242,14 +242,19 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
           new MaterialPageRoute(builder: (context) => LoginPagePeserta()),
         );
         Get.snackbar(
-          'Test',
-          "Display the message here",
+          'User Tidak Sesuai',
+          "Mohon menggun",
           colorText: Colors.white,
           backgroundColor: Colors.lightBlue,
         );
       }
     } else {
-      _showMsg(body['message']);
+      Get.snackbar(
+        'Login Gagal',
+        "Mohon periksa email dan password",
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      );
     }
     var token = jsonDecode(localStorage.getString('token') ?? '');
     print('localstorage: $token');

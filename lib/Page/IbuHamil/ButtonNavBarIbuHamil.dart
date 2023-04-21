@@ -8,8 +8,12 @@ import 'package:posyandu/Page/IbuHamil/JadwalIbuHamilPage.dart';
 import 'package:posyandu/Page/IbuHamil/ProfilIbuHamilPage.dart';
 import 'package:posyandu/Page/IbuHamil/RiwayatIbuHamilPage.dart';
 
+import '../../Model/IbuHamilModel.dart';
+
 class ButtonNavBarIbuHamil extends StatefulWidget {
-  const ButtonNavBarIbuHamil({super.key});
+  ButtonNavBarIbuHamil({super.key, required this.ibuHamilModel});
+
+  IbuHamilModel ibuHamilModel;
 
   @override
   State<ButtonNavBarIbuHamil> createState() => _ButtonNavBarState();
@@ -24,7 +28,7 @@ class _ButtonNavBarState extends State<ButtonNavBarIbuHamil> {
 
     List<Widget> _buildScreens() {
       return [
-        const HomePageIbuHamil(),
+        // const HomePageIbuHamil(),
         const JadwalIbuHamilPage(),
         BukuIbuHamilPage(),
         const RiwayatIbuHamilPage(),

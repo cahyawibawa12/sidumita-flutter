@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:posyandu/Controller/DetailKeluargaController.dart';
 
 import '../../../widget/widgets.dart';
 
@@ -11,7 +15,21 @@ class FormAnggotaKeluarga extends StatefulWidget {
 }
 
 class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
-  DateTime _datePicked = DateTime.now();
+  var detailKeluarga = Get.put(DetailKeluargaController());
+
+  @override
+  void initState() {
+    super.initState();
+    detailKeluarga.StoreDetailKeluarga();
+  }
+
+  @override
+  void dispose() {
+    // Get.delete<DetailKeluargaController>();
+    super.dispose();
+  }
+
+  var tanggal = '';
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +59,6 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                         child: Column(
                           children: [
                             TextFormField(
-                              initialValue: 'John Doe',
                               maxLength: 50,
                               decoration: const InputDecoration(
                                 labelText: 'Nama Lengkap',
@@ -54,10 +71,9 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                               ),
-                              onChanged: (value) {},
+                              controller: detailKeluarga.nama_lengkap,
                             ),
                             TextFormField(
-                              initialValue: '5102091234200001',
                               maxLength: 16,
                               decoration: const InputDecoration(
                                 labelText: 'NIK',
@@ -70,7 +86,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                               ),
-                              onChanged: (value) {},
+                              controller: detailKeluarga.det_nik,
                             ),
                             LayoutBuilder(builder: (context, constraint) {
                               List<String> itemStringList = [
@@ -92,7 +108,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                         alignedDropdown: false,
                                         child: DropdownButton<String>(
                                           isExpanded: true,
-                                          value: "Perempuan",
+                                          value: detailKeluarga.jenis_kelamin,
                                           icon: Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 10.0),
@@ -125,7 +141,12 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                             height: 0,
                                             color: Colors.grey[300],
                                           ),
-                                          onChanged: (String? newValue) {},
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              detailKeluarga.jenis_kelamin =
+                                                  newValue!;
+                                            });
+                                          },
                                           items: itemStringList
                                               .map<DropdownMenuItem<String>>(
                                                   (String value) {
@@ -151,7 +172,6 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                               );
                             }),
                             TextFormField(
-                              initialValue: 'Denpasar',
                               maxLength: 20,
                               decoration: const InputDecoration(
                                 labelText: 'Tempat Lahir',
@@ -164,7 +184,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                               ),
-                              onChanged: (value) {},
+                              controller: detailKeluarga.tempat_lahir,
                             ),
                             InkWell(
                               onTap: () async {
@@ -173,15 +193,18 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2100),
-                                ).then((pickedDate) {
-                                  setState(() {
-                                    _datePicked = pickedDate!;
-                                  });
+                                );
+                                setState(() {
+                                  tanggal = detailKeluarga.tanggal_lahir.text;
+                                  detailKeluarga.tanggal_lahir.text =
+                                      DateFormat('y-M-d').format(pickedDate!);
                                 });
-                                print("pickedDate: $_datePicked");
+                                tanggal =
+                                    DateFormat('y-M-d').format(pickedDate!);
+                                print("pickedDate: $tanggal");
                               },
                               child: TextFormField(
-                                initialValue: _datePicked.toString(),
+                                controller: detailKeluarga.tanggal_lahir,
                                 maxLength: 20,
                                 enabled: false,
                                 decoration: const InputDecoration(
@@ -196,11 +219,10 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                   suffixIcon: Icon(Icons.date_range),
                                 ),
-                                onChanged: (value) {},
+                                // onChanged: (value) {},
                               ),
                             ),
                             TextFormField(
-                              initialValue: 'Hindu',
                               maxLength: 20,
                               decoration: const InputDecoration(
                                 labelText: 'Agama',
@@ -213,10 +235,9 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                               ),
-                              onChanged: (value) {},
+                              controller: detailKeluarga.agama,
                             ),
                             TextFormField(
-                              initialValue: '081',
                               maxLength: 13,
                               decoration: const InputDecoration(
                                 labelText: 'No Telp',
@@ -229,7 +250,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                               ),
-                              onChanged: (value) {},
+                              controller: detailKeluarga.no_telp,
                             ),
                             LayoutBuilder(builder: (context, constraint) {
                               List<String> itemStringList = [
@@ -253,7 +274,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                         alignedDropdown: false,
                                         child: DropdownButton<String>(
                                           isExpanded: true,
-                                          value: "O",
+                                          value: detailKeluarga.golongan_darah,
                                           icon: Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 10.0),
@@ -286,7 +307,12 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                             height: 0,
                                             color: Colors.grey[300],
                                           ),
-                                          onChanged: (String? newValue) {},
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              detailKeluarga.golongan_darah =
+                                                  newValue!;
+                                            });
+                                          },
                                           items: itemStringList
                                               .map<DropdownMenuItem<String>>(
                                                   (String value) {
@@ -312,7 +338,6 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                               );
                             }),
                             TextFormField(
-                              initialValue: 'Siswa',
                               maxLength: 20,
                               decoration: const InputDecoration(
                                 labelText: 'Jenis Pekerjaan',
@@ -325,7 +350,22 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                               ),
-                              onChanged: (value) {},
+                              controller: detailKeluarga.jenis_pekerjaan,
+                            ),
+                            TextFormField(
+                              maxLength: 20,
+                              decoration: const InputDecoration(
+                                labelText: 'Pendidikan Terakhir',
+                                labelStyle: TextStyle(
+                                  color: Colors.blueGrey,
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.blueGrey,
+                                  ),
+                                ),
+                              ),
+                              controller: detailKeluarga.pendidikan,
                             ),
                             LayoutBuilder(builder: (context, constraint) {
                               List<String> itemStringList = [
@@ -347,7 +387,8 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                         alignedDropdown: false,
                                         child: DropdownButton<String>(
                                           isExpanded: true,
-                                          value: "Menikah",
+                                          value:
+                                              detailKeluarga.status_perkawinan,
                                           icon: Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 10.0),
@@ -380,7 +421,12 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                             height: 0,
                                             color: Colors.grey[300],
                                           ),
-                                          onChanged: (String? newValue) {},
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              detailKeluarga.status_perkawinan =
+                                                  newValue!;
+                                            });
+                                          },
                                           items: itemStringList
                                               .map<DropdownMenuItem<String>>(
                                                   (String value) {
@@ -426,7 +472,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                         alignedDropdown: false,
                                         child: DropdownButton<String>(
                                           isExpanded: true,
-                                          value: "Anak",
+                                          value: detailKeluarga.status_keluarga,
                                           icon: Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 10.0),
@@ -459,7 +505,12 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                             height: 0,
                                             color: Colors.grey[300],
                                           ),
-                                          onChanged: (String? newValue) {},
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              detailKeluarga.status_keluarga =
+                                                  newValue!;
+                                            });
+                                          },
                                           items: itemStringList
                                               .map<DropdownMenuItem<String>>(
                                                   (String value) {
@@ -485,7 +536,6 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                               );
                             }),
                             TextFormField(
-                              initialValue: 'Indonesia',
                               maxLength: 20,
                               decoration: const InputDecoration(
                                 labelText: 'Kewarganegaraan',
@@ -498,13 +548,15 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                               ),
-                              onChanged: (value) {},
+                              controller: detailKeluarga.kewarganegaraan,
                             ),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blueGrey,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                detailKeluarga.StoreDetailKeluarga();
+                              },
                               child: const Text("Save"),
                             ),
                           ],

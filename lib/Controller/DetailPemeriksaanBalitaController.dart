@@ -12,6 +12,7 @@ class DetailPemeriksaanBalitaController extends GetxController
   Future<void> getDetailPemeriksaanBalita(int balita_id) async {
     var response = await service.detailpemeriksaanbalita(balita_id);
     var responsedecode = jsonDecode(response.body);
+    // List<Map<dynamic, dynamic>> tinggi = [];
 
     for (var i = 0; i < responsedecode['data'].length; i++) {
       PemeriksaanBalitaModel detailPemeriksaanBalitaModel =
@@ -33,6 +34,8 @@ class DetailPemeriksaanBalitaController extends GetxController
         updatedAt: responsedecode['data'][i]["updated_at"],
       );
       listDetailPemeriksaanBalita.add(detailPemeriksaanBalitaModel);
+      // Map obj = responsedecode['data'];
+      // tinggi = List<Map<dynamic, dynamic>>.from(obj["data"]);
     }
     listDetailPemeriksaanBalita.refresh();
     // print('from pemeriksaan controller' +

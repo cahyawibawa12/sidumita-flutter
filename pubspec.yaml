@@ -36,6 +36,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_clean_calendar: ^1.1.0
+  focus_detector_v2: ^3.0.0+2
   get: null
   google_fonts: ^3.0.1
   http: ^0.13.5

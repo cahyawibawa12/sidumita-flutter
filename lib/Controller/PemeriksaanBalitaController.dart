@@ -8,9 +8,12 @@ class PemeriksaanBalitaController extends GetxController
     implements GetxService {
   var listPemeriksaanBalita = <PemeriksaanBalitaModel>[].obs;
   final service = PemeriksaanBalitaService();
+  var isLoading = false.obs;
   RxBool isLang = false.obs;
+  List<Map<dynamic, dynamic>> data = [];
 
   Future<void> getPemeriksaanBalita(int balita_id) async {
+    isLoading.value = true;
     var response = await service.pemeriksaanbalita(balita_id);
     var responsedecode = jsonDecode(response.body);
     listPemeriksaanBalita.clear();
@@ -33,9 +36,16 @@ class PemeriksaanBalitaController extends GetxController
         updatedAt: responsedecode['data'][i]["updated_at"],
       );
       listPemeriksaanBalita.add(pemeriksaanBalitaModel);
+      // Map obj = responsedecode['data'];
+      // tinggi.add(obj);
+      // tinggi = List<Map<dynamic, dynamic>>.from(obj["data"]);
     }
+    Map obj = responsedecode;
+    data = List<Map<dynamic, dynamic>>.from(obj["data"]);
+
     listPemeriksaanBalita.refresh();
     print('from pemeriksaan controller' +
         listPemeriksaanBalita.length.toString());
+    isLoading.value = false;
   }
 }

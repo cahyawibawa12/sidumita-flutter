@@ -2,7 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:posyandu/Page/LoginPeserta/EditPeserta/EditPeserta.dart';
+import 'package:get/get.dart';
+import 'package:posyandu/Controller/DusunController.dart';
+import 'package:posyandu/Controller/KeluargaController.dart';
+import 'package:posyandu/Model/KeluargaModel.dart';
+import 'package:posyandu/Page/LoginPeserta/EditPeserta/Peserta.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingBalita.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingIbuHamil.dart';
 import 'package:posyandu/Service/AuthService.dart';
@@ -19,15 +23,21 @@ class LandinLoginPeserta extends StatefulWidget {
 }
 
 class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
+  var keluarga = Get.put(KeluargaController());
+  var listDusun = Get.put(DusunController());
+
   String _nikkaka = '';
   String _alamat = '';
   String _kepalakeluarga = '';
   String _jumlah = '';
+  String? dusun_id;
   String name = '';
 
   @override
   void initState() {
     super.initState();
+    keluarga.ShowKeluarga();
+    listDusun.getDusun();
     _loadUserData();
   }
 
@@ -86,75 +96,166 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color.fromARGB(162, 255, 255, 255)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text('NIK Kartu Keluarga'),
-                      TextField(
-                        // decoration: const InputDecoration(hintText: 'email'),
-                        onChanged: (value) {
-                          _nikkaka = value;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text('Alamat'),
-                      TextField(
-                        // decoration: const InputDecoration(hintText: 'email'),
-                        onChanged: (value) {
-                          _alamat = value;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text('Kepala Keluarga'),
-                      TextField(
-                        // decoration: const InputDecoration(hintText: 'email'),
-                        onChanged: (value) {
-                          _kepalakeluarga = value;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text('Jumlah'),
-                      TextField(
-                        // decoration: const InputDecoration(hintText: 'email'),
-                        onChanged: (value) {
-                          _jumlah = value;
-                        },
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      RoundedButton(
-                        btnText: 'Save',
-                        onBtnPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditPeserta()));
-                        },
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      RoundedButton(
-                        btnText: 'Data Keluarga',
-                        onBtnPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditPeserta()));
-                        },
-                      ),
-                    ],
-                  )),
+                  child: Obx(() => keluarga.isLoading.value ||
+                          listDusun.isLoading.value
+                      ? CircularProgressIndicator()
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text('NIK Kartu Keluarga'),
+                            TextField(
+                              controller: keluarga.nikKeluarga,
+                              // decoration: const InputDecoration(hintText: 'email'),
+                              onChanged: (value) {
+                                _nikkaka = value;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text('Alamat'),
+                            TextField(
+                              controller: keluarga.alamat,
+                              // decoration: const InputDecoration(hintText: 'email'),
+                              onChanged: (value) {
+                                _alamat = value;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            // Text('Dusun'),
+                            // TextField(
+                            //   controller: keluarga.dusun,
+                            //   // decoration: const InputDecoration(hintText: 'email'),
+                            //   onChanged: (value) {
+                            //     _dusun = value;
+                            //   },
+                            // ),
+                            LayoutBuilder(builder: (context, constraint) {
+                              return FormField(
+                                initialValue: false,
+                                enabled: true,
+                                builder: (FormFieldState<bool> field) {
+                                  return InputDecorator(
+                                    decoration: InputDecoration(
+                                      labelText: "Dusun",
+                                      errorText: field.errorText,
+                                    ),
+                                    child: DropdownButtonHideUnderline(
+                                      child: ButtonTheme(
+                                        alignedDropdown: false,
+                                        child: DropdownButton<String>(
+                                            isExpanded: true,
+                                            value: dusun_id == null
+                                                ? keluarga
+                                                    .keluarga.value.dusun!.id!
+                                                    .toString()
+                                                : dusun_id,
+                                            icon: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10.0),
+                                              child: Icon(
+                                                Icons.arrow_drop_down_outlined,
+                                                size: 24.0,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .color,
+                                              ),
+                                            ),
+                                            iconSize: 16,
+                                            elevation: 16,
+                                            style: TextStyle(
+                                              fontSize: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontSize,
+                                              fontFamily: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontFamily,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .color,
+                                            ),
+                                            underline: Container(
+                                              height: 0,
+                                              color: Colors.grey[300],
+                                            ),
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                dusun_id = newValue!;
+                                                keluarga.dusun_id =
+                                                    int.parse(newValue)!;
+                                              });
+                                            },
+                                            items: [
+                                              for (var data
+                                                  in listDusun.listDusun.value)
+                                                DropdownMenuItem(
+                                                  child: new Text(
+                                                    data.namaDusun!,
+                                                  ),
+                                                  value: data.id.toString(),
+                                                )
+                                            ]),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text('Kepala Keluarga'),
+                            TextField(
+                              controller: keluarga.kepalaKeluarga,
+                              // decoration: const InputDecoration(hintText: 'email'),
+                              onChanged: (value) {
+                                _kepalakeluarga = value;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text('Jumlah'),
+                            TextField(
+                              controller: keluarga.jumlah,
+                              enabled: false,
+                              // decoration: const InputDecoration(hintText: 'email'),
+                              onChanged: (value) {
+                                _jumlah = value;
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            RoundedButton(
+                              btnText: 'Save',
+                              onBtnPressed: () {
+                                keluarga.UpdateKeluarga();
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            RoundedButton(
+                              btnText: 'Data Keluarga',
+                              onBtnPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Peserta()));
+                              },
+                            ),
+                          ],
+                        ))),
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   margin: EdgeInsets.all(20),

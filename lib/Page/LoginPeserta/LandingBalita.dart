@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:posyandu/Controller/BalitaController.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
+import 'package:posyandu/Page/Balita/HomePageBalita.dart';
 import 'package:posyandu/widget/widgets.dart';
 
 class LandingBalita extends StatefulWidget {
@@ -10,6 +13,14 @@ class LandingBalita extends StatefulWidget {
 }
 
 class _LandingBalitaState extends State<LandingBalita> {
+  var balita = Get.put(BalitaController());
+
+  @override
+  void initState() {
+    super.initState();
+    balita.ShowBalita();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -18,10 +29,10 @@ class _LandingBalitaState extends State<LandingBalita> {
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
-              child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Column(
+              child: Column(
+            children: [
+              Expanded(
+                child: Column(
                   children: <Widget>[
                     Column(
                       children: [
@@ -55,52 +66,68 @@ class _LandingBalitaState extends State<LandingBalita> {
                         )
                       ],
                     ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                      margin: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Color.fromARGB(162, 255, 255, 255)),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "List Balita :",
-                              style: TextStyle(
-                                fontSize: 15.0,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  padding: EdgeInsets.all(10),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  minimumSize: Size(300, 40),
+                    Expanded(
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        margin: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Color.fromARGB(162, 255, 255, 255)),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "List Balita :",
+                                style: TextStyle(
+                                  fontSize: 15.0,
                                 ),
-                                onPressed: (() {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ButtonNavBarBalita()),
-                                  );
-                                }),
-                                child: Text("Putu Nyoman",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    )))
-                          ]),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Expanded(
+                                child: Obx(() => balita.isLoading.value
+                                    ? CircularProgressIndicator()
+                                    : SingleChildScrollView(
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: balita.listBalita.length,
+                                          physics: const ScrollPhysics(),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Card(
+                                              child: ListTile(
+                                                title: Text(balita
+                                                    .listBalita[index]
+                                                    .detailKeluarga!
+                                                    .namaLengkap
+                                                    .toString()),
+                                                // subtitle: Text(detailKeluarga
+                                                //     .listDetailKeluarga[index].nik!),
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ButtonNavBarBalita(
+                                                                balitaModel:
+                                                                    balita.listBalita[
+                                                                        index],
+                                                              )));
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      )),
+                              ),
+                            ]),
+                      ),
                     ),
                   ],
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           )),
         )
       ],
