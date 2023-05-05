@@ -9,9 +9,11 @@ class PemeriksaanIbuHamilController extends GetxController
     implements GetxService {
   var listPemeriksaanIbuHamil = <PemeriksaanIbuHamilModel>[].obs;
   final service = PemeriksaanIbuHamilService();
+  var isLoading = false.obs;
   RxBool isLang = false.obs;
 
   Future<void> getPemeriksaanIbuHamil(int ibu_hamil_id) async {
+    isLoading.value = true;
     var response = await service.pemeriksaanibuhamil(ibu_hamil_id);
     var responsedecode = jsonDecode(response.body);
     listPemeriksaanIbuHamil.clear();
@@ -31,13 +33,15 @@ class PemeriksaanIbuHamilController extends GetxController
         catatan: responsedecode['data'][i]["catatan"],
         ibuHamilId: responsedecode['data'][i]["ibu_hamil_id"],
         petugasKesehatanId: responsedecode['data'][i]["petugas_kesehatan_id"],
-        createdAt: responsedecode['data'][i]["created_at"],
-        updatedAt: responsedecode['data'][i]["updated_at"],
+        // createdAt: responsedecode['data'][i]["created_at"],
+        // updatedAt: responsedecode['data'][i]["updated_at"],
       );
       listPemeriksaanIbuHamil.add(pemeriksaanIbuHamilModel);
     }
     listPemeriksaanIbuHamil.refresh();
     print('from pemeriksaan controller' +
         listPemeriksaanIbuHamil.length.toString());
+
+    isLoading.value = false;
   }
 }

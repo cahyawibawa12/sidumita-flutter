@@ -43,4 +43,12 @@ class DetailKeluargaService {
     print(response.body);
     return response;
   }
+
+  Future<http.Response> GetUmur(int id) async {
+    var token = await getToken();
+    var url = Uri.parse(baseURL + 'umur/' + id.toString());
+    http.Response response = await http.get(url, headers: setHeaders(token));
+    print(response.body);
+    return response;
+  }
 }

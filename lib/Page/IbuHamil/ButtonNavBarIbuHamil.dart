@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import 'package:posyandu/Page/IbuHamil/BukuIbuHamilPage.dart';
@@ -9,6 +10,11 @@ import 'package:posyandu/Page/IbuHamil/ProfilIbuHamilPage.dart';
 import 'package:posyandu/Page/IbuHamil/RiwayatIbuHamilPage.dart';
 
 import '../../Model/IbuHamilModel.dart';
+
+class ButtonNavIbuHamilController extends GetxController {
+  Rx<PersistentTabController> tabController =
+      PersistentTabController(initialIndex: 0).obs;
+}
 
 class ButtonNavBarIbuHamil extends StatefulWidget {
   ButtonNavBarIbuHamil({super.key, required this.ibuHamilModel});
@@ -20,6 +26,7 @@ class ButtonNavBarIbuHamil extends StatefulWidget {
 }
 
 class _ButtonNavBarState extends State<ButtonNavBarIbuHamil> {
+  var buttonNavIbuHamilController = Get.put(ButtonNavIbuHamilController());
   @override
   Widget build(BuildContext context) {
     PersistentTabController _controller;
@@ -28,11 +35,13 @@ class _ButtonNavBarState extends State<ButtonNavBarIbuHamil> {
 
     List<Widget> _buildScreens() {
       return [
-        // const HomePageIbuHamil(),
+        HomePageIbuHamil(
+          ibuHamilModel: widget.ibuHamilModel,
+        ),
         const JadwalIbuHamilPage(),
-        BukuIbuHamilPage(),
-        const RiwayatIbuHamilPage(),
-        const ProfilIbuHamilPage(),
+        BukuIbuHamilPage(ibuHamilModel: widget.ibuHamilModel),
+        RiwayatIbuHamilPage(ibuHamilModel: widget.ibuHamilModel),
+        ProfilIbuHamilPage(ibuHamilModel: widget.ibuHamilModel),
       ];
     }
 
@@ -73,7 +82,7 @@ class _ButtonNavBarState extends State<ButtonNavBarIbuHamil> {
 
     return PersistentTabView(
       context,
-      controller: _controller,
+      controller: buttonNavIbuHamilController.tabController.value,
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,

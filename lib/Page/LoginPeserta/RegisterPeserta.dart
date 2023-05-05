@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:posyandu/Controller/DusunController.dart';
+import 'package:posyandu/Controller/MasterData/DusunController.dart';
 import 'package:posyandu/Page/LoginPeserta/LoginPagePeserta.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -148,7 +148,8 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                           Text('Nomor Kartu Keluarga'),
                                           TextFormField(
                                               cursorColor: Colors.blue,
-                                              keyboardType: TextInputType.text,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               decoration: InputDecoration(
                                                 hintText: "5012...",
                                               ),
@@ -271,6 +272,9 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                               },
                                             );
                                           }),
+                                          const SizedBox(
+                                            height: 30,
+                                          ),
                                           Text("Password"),
                                           TextFormField(
                                               cursorColor: Colors.blue,
@@ -304,7 +308,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                               child: TextButton(
                                                 child: Padding(
                                                   padding: EdgeInsets.symmetric(
-                                                      horizontal: 18,
+                                                      horizontal: 60,
                                                       vertical: 10),
                                                   child: Text(
                                                     _isLoading

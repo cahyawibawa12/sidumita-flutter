@@ -44,7 +44,7 @@ class _ButtonNavBarState extends State<ButtonNavBarBalita> {
         RiwayatBalitaPage(
           balitaModel: widget.balitaModel,
         ),
-        ProfilBalitaPage(
+        ProfilBalita(
           balitaModel: widget.balitaModel,
         )
       ];

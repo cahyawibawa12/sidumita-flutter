@@ -13,6 +13,7 @@ class GetTwoLastDataPemeriksaanBalitaController extends GetxController
   Future<void> getTwoLastDataPemeriksaanBalita(int balita_id) async {
     var response = await service.twolastdatapemeriksaanbalita(balita_id);
     var responsedecode = jsonDecode(response.body);
+    listTwoLastDataPemeriksaanBalita.clear();
 
     for (var i = 0; i < responsedecode['data'].length; i++) {
       GetTwoLastDataPemeriksaanModel twoLastDataPemeriksaanBalitaModel =

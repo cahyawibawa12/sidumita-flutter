@@ -28,10 +28,10 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
-              child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Column(
+              child: Column(
+            children: [
+              Expanded(
+                child: Column(
                   children: <Widget>[
                     Column(
                       children: [
@@ -77,7 +77,7 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "List Balita :",
+                                "List Ibu Hamil :",
                                 style: TextStyle(
                                   fontSize: 15.0,
                                 ),
@@ -125,9 +125,9 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                       ),
                     ),
                   ],
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           )),
         )
       ],

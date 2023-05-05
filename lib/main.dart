@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LandingLogin(),
+      // home: LandingLogin(),
+      home: LandingPage(),
+      // home: HomePagePetugas(),
     );
   }
 }

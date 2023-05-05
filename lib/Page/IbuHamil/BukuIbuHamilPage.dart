@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:posyandu/Controller/DetailKeluargaController.dart';
+import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/Page/Balita/ImunisasiBalitaPage.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
@@ -8,12 +11,14 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:posyandu/Page/IbuHamil/JadwalIbuHamilPage.dart';
+import 'package:posyandu/Page/IbuHamil/StatistikIbuHamilPage.dart';
 
 import '../../Controller/GetTwoLastDataPemeriksaanIbuHamilController.dart';
 import '../../widget/widgets.dart';
 
 class BukuIbuHamilPage extends StatefulWidget {
-  BukuIbuHamilPage({super.key});
+  BukuIbuHamilPage({super.key, required this.ibuHamilModel});
+  IbuHamilModel ibuHamilModel;
 
   @override
   State<BukuIbuHamilPage> createState() => _BukuIbuHamilPageState();
@@ -22,14 +27,17 @@ class BukuIbuHamilPage extends StatefulWidget {
 class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
   var getTwoLastDataPemeriksaanIbuHamil =
       Get.put(GetTwoLastDataPemeriksaanIbuHamilController());
+  var umur = Get.put(DetailKeluargaController());
 
   @override
   void initState() {
     super.initState();
-    getTwoLastDataPemeriksaanIbuHamil.getTwoLastDataPemeriksaanIbuHamil(1);
+    getTwoLastDataPemeriksaanIbuHamil
+        .getTwoLastDataPemeriksaanIbuHamil(widget.ibuHamilModel.id!);
     // print('frompage' +
     //     getTwoLastDataPemeriksaanBalita.listTwoLastDataPemeriksaanBalita.length
     //         .toString());
+    umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
   }
 
   int _current = 0;
@@ -81,47 +89,27 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
               children: <Widget>[
                 Column(
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: CircleAvatar(
-                            radius: 28,
-                            backgroundImage: AssetImage('assets/images/bg.png'),
+                    Container(
+                      height: 100,
+                      padding: EdgeInsets.all(10),
+                      child: Card(
+                        color: Color.fromARGB(255, 185, 246, 188),
+                        child: ListTile(
+                          title: Text(
+                            widget.ibuHamilModel.detailKeluarga!.namaLengkap
+                                .toString(),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                          subtitle: Text(
+                            umur.umurPeserta.value.umur.toString() +
+                                " Tahun " +
+                                (umur.umurPeserta.value.usiaBulan! % 12)
+                                    .toString() +
+                                " Bulan",
                           ),
                         ),
-                        Column(
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white),
-                              margin: EdgeInsets.only(left: 20),
-                              child: Center(
-                                child: Text(
-                                  "Bu Wayan",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 20),
-                              child: Text(
-                                "0 Tahun 6 Bulan",
-                                textAlign: TextAlign.start,
-                                // style: Padding(padding: EdgeInsets.only(left: 10)),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -432,11 +420,15 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                               ),
                               TextButton(
                                   onPressed: () {
-                                    Navigator.push(
+                                    PersistentNavBarNavigator.pushNewScreen(
                                         context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ImunisasiBalitaPage()));
+                                        screen: StatistikIbuHamilPage(
+                                            ibuHamilModel:
+                                                widget.ibuHamilModel),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino);
                                   },
                                   child: Text(
                                     'Pertumbuhan',

@@ -11,8 +11,8 @@ class GetTwoLastDataPemeriksaanIbuHamilModel {
   String catatan;
   int ibuHamilId;
   int petugasKesehatanId;
-  String createdAt;
-  String updatedAt;
+  // String createdAt;
+  // String updatedAt;
 
   GetTwoLastDataPemeriksaanIbuHamilModel({
     required this.id,
@@ -27,7 +27,7 @@ class GetTwoLastDataPemeriksaanIbuHamilModel {
     required this.catatan,
     required this.ibuHamilId,
     required this.petugasKesehatanId,
-    required this.createdAt,
-    required this.updatedAt,
+    // required this.createdAt,
+    // required this.updatedAt,
   });
 }

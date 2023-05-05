@@ -14,6 +14,7 @@ class GetTwoLastDataPemeriksaanIbuHamilController extends GetxController
   Future<void> getTwoLastDataPemeriksaanIbuHamil(int ibu_hamil_id) async {
     var response = await service.twolastdatapemeriksaanibuhamil(ibu_hamil_id);
     var responsedecode = jsonDecode(response.body);
+    listTwoLastDataPemeriksaanIbuHamil.clear();
 
     for (var i = 0; i < responsedecode['data'].length; i++) {
       GetTwoLastDataPemeriksaanIbuHamilModel
@@ -32,8 +33,8 @@ class GetTwoLastDataPemeriksaanIbuHamilController extends GetxController
         catatan: responsedecode['data'][i]["catatan"],
         ibuHamilId: responsedecode['data'][i]["ibu_hamil_id"],
         petugasKesehatanId: responsedecode['data'][i]["petugas_kesehatan_id"],
-        createdAt: responsedecode['data'][i]["created_at"],
-        updatedAt: responsedecode['data'][i]["updated_at"],
+        // createdAt: responsedecode['data'][i]["created_at"],
+        // updatedAt: responsedecode['data'][i]["updated_at"],
       );
       listTwoLastDataPemeriksaanIbuHamil
           .add(twoLastDataPemeriksaanIbuHamilModel);

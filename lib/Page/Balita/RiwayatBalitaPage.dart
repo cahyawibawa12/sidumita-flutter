@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Page/Balita/DetailPemeriksaanBalita.dart';
@@ -132,62 +133,54 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                   ),
                                   IconButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailPemeriksaanBalita(
-                                                    id: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .id,
-                                                    tanggal_pemeriksaan:
-                                                        pemeriksaanbalita
-                                                            .listPemeriksaanBalita[
-                                                                index]
-                                                            .tanggalPemeriksaan,
-                                                    lingkar_kepala:
-                                                        pemeriksaanbalita
-                                                            .listPemeriksaanBalita[
-                                                                index]
-                                                            .lingkarKepala
-                                                            .toString(),
-                                                    lingkar_lengan:
-                                                        pemeriksaanbalita
-                                                            .listPemeriksaanBalita[
-                                                                index]
-                                                            .lingkarLengan
-                                                            .toString(),
-                                                    berat_badan: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .beratBadan
-                                                        .toString(),
-                                                    tinggi_badan: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .tinggiBadan
-                                                        .toString(),
-                                                    keluhan: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .keluhan,
-                                                    penanganan: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .penanganan,
-                                                    balita_id: pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .balitaId
-                                                        .toString(),
-                                                    petugas_kesehatan_id:
-                                                        pemeriksaanbalita
-                                                            .listPemeriksaanBalita[
-                                                                index]
-                                                            .petugasKesehatanId
-                                                            .toString(),
-                                                  )));
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: DetailPemeriksaanBalita(
+                                          id: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index].id,
+                                          tanggal_pemeriksaan: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .tanggalPemeriksaan,
+                                          lingkar_kepala: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .lingkarKepala
+                                              .toString(),
+                                          lingkar_lengan: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .lingkarLengan
+                                              .toString(),
+                                          berat_badan: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .beratBadan
+                                              .toString(),
+                                          tinggi_badan: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .tinggiBadan
+                                              .toString(),
+                                          keluhan: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .keluhan,
+                                          penanganan: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .penanganan,
+                                          catatan: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .catatan,
+                                          balita_id: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .balitaId
+                                              .toString(),
+                                          petugas_kesehatan_id:
+                                              pemeriksaanbalita
+                                                  .listPemeriksaanBalita[index]
+                                                  .petugasKesehatanId
+                                                  .toString(),
+                                        ),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino,
+                                      );
                                     },
                                     icon: const Icon(
                                       Icons.search,

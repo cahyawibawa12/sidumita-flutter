@@ -170,7 +170,7 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
                                 child: TextButton(
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 18, vertical: 10),
+                                        horizontal: 60, vertical: 10),
                                     child: Text(
                                       _isLoading ? 'Proccessing..' : 'Login',
                                       textDirection: TextDirection.ltr,
@@ -193,16 +193,46 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
                             SizedBox(
                               height: 10,
                             ),
-                            RoundedButton(
-                              btnText: 'REGISTER',
-                              onBtnPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            RegisterPeserta()));
-                              },
+                            Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.green),
+                                child: TextButton(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 50, vertical: 10),
+                                    child: Text(
+                                      _isLoading ? 'Proccessing..' : 'Register',
+                                      textDirection: TextDirection.ltr,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                        decoration: TextDecoration.none,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegisterPeserta()));
+                                  },
+                                ),
+                              ),
                             ),
+                            // RoundedButton(
+                            //   btnText: 'REGISTER',
+                            //   onBtnPressed: () {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) =>
+                            //                 RegisterPeserta()));
+                            //   },
+                            // ),
                           ],
                         ),
                       ),

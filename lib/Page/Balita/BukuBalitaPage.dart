@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:posyandu/Controller/DetailKeluargaController.dart';
 import 'package:posyandu/Controller/GetTwoLastDataPemeriksaanController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
+import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/Balita/ImunisasiBalitaPage.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
@@ -22,6 +25,7 @@ class BukuBalitaPage extends StatefulWidget {
 class _BukuBalitaPageState extends State<BukuBalitaPage> {
   var getTwoLastDataPemeriksaanBalita =
       Get.put(GetTwoLastDataPemeriksaanBalitaController());
+  var umur = Get.put(DetailKeluargaController());
 
   @override
   void initState() {
@@ -31,6 +35,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
     // print('frompage' +
     //     getTwoLastDataPemeriksaanBalita.listTwoLastDataPemeriksaanBalita.length
     //         .toString());
+    umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
 
   int _current = 0;
@@ -82,47 +87,27 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
               children: <Widget>[
                 Column(
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: CircleAvatar(
-                            radius: 28,
-                            backgroundImage: AssetImage('assets/images/bg.png'),
+                    Container(
+                      height: 100,
+                      padding: EdgeInsets.all(10),
+                      child: Card(
+                        color: Color.fromARGB(255, 185, 246, 188),
+                        child: ListTile(
+                          title: Text(
+                            widget.balitaModel.detailKeluarga!.namaLengkap
+                                .toString(),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                          subtitle: Text(
+                            umur.umurPeserta.value.umur.toString() +
+                                " Tahun " +
+                                (umur.umurPeserta.value.usiaBulan! % 12)
+                                    .toString() +
+                                " Bulan",
                           ),
                         ),
-                        Column(
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white),
-                              margin: EdgeInsets.only(left: 20),
-                              child: Center(
-                                child: Text(
-                                  "Putu Nyoman",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 20),
-                              child: Text(
-                                "0 Tahun 6 Bulan",
-                                textAlign: TextAlign.start,
-                                // style: Padding(padding: EdgeInsets.only(left: 10)),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -133,11 +118,10 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          JadwalBalitaPage()));
+                              var buttonNavBalitaController =
+                                  Get.put(ButtonNavBalitaController());
+                              buttonNavBalitaController
+                                  .tabController.value.index = 1;
                             },
                             child: Text(
                               'Jadwal Pemeriksaan',
@@ -179,16 +163,26 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                     Obx(() {
                                       if (getTwoLastDataPemeriksaanBalita
                                               .listTwoLastDataPemeriksaanBalita
-                                              .length !=
-                                          0) {
+                                              .length >=
+                                          2) {
                                         return Text(
                                             getTwoLastDataPemeriksaanBalita
                                                 .listTwoLastDataPemeriksaanBalita[
                                                     1]
                                                 .beratBadan
                                                 .toString());
+                                      } else if (getTwoLastDataPemeriksaanBalita
+                                              .listTwoLastDataPemeriksaanBalita
+                                              .length ==
+                                          1) {
+                                        return Text(
+                                            getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita[
+                                                    0]
+                                                .beratBadan
+                                                .toString());
                                       } else {
-                                        return Text('Loading');
+                                        return Text('Empty');
                                       }
                                     })
                                   ],
@@ -213,16 +207,26 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                     Obx(() {
                                       if (getTwoLastDataPemeriksaanBalita
                                               .listTwoLastDataPemeriksaanBalita
-                                              .length !=
-                                          0) {
+                                              .length >=
+                                          2) {
                                         return Text(
                                             getTwoLastDataPemeriksaanBalita
                                                 .listTwoLastDataPemeriksaanBalita[
                                                     1]
                                                 .tinggiBadan
                                                 .toString());
+                                      } else if (getTwoLastDataPemeriksaanBalita
+                                              .listTwoLastDataPemeriksaanBalita
+                                              .length ==
+                                          1) {
+                                        return Text(
+                                            getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita[
+                                                    0]
+                                                .tinggiBadan
+                                                .toString());
                                       } else {
-                                        return Text('Loading');
+                                        return Text('Empty');
                                       }
                                     })
                                   ],
@@ -247,16 +251,26 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                     Obx(() {
                                       if (getTwoLastDataPemeriksaanBalita
                                               .listTwoLastDataPemeriksaanBalita
-                                              .length !=
-                                          0) {
+                                              .length >=
+                                          2) {
                                         return Text(
                                             getTwoLastDataPemeriksaanBalita
                                                 .listTwoLastDataPemeriksaanBalita[
                                                     1]
                                                 .lingkarKepala
                                                 .toString());
+                                      } else if (getTwoLastDataPemeriksaanBalita
+                                              .listTwoLastDataPemeriksaanBalita
+                                              .length ==
+                                          1) {
+                                        return Text(
+                                            getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita[
+                                                    0]
+                                                .lingkarKepala
+                                                .toString());
                                       } else {
-                                        return Text('Loading');
+                                        return Text('Empty');
                                       }
                                     })
                                   ],
@@ -268,15 +282,24 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                               Obx(() {
                                 if (getTwoLastDataPemeriksaanBalita
                                         .listTwoLastDataPemeriksaanBalita
-                                        .length !=
-                                    0) {
+                                        .length >=
+                                    2) {
                                   return Text('Date : ' +
                                       getTwoLastDataPemeriksaanBalita
                                           .listTwoLastDataPemeriksaanBalita[1]
                                           .tanggalPemeriksaan
                                           .toString());
+                                } else if (getTwoLastDataPemeriksaanBalita
+                                        .listTwoLastDataPemeriksaanBalita
+                                        .length ==
+                                    1) {
+                                  return Text('Date : ' +
+                                      getTwoLastDataPemeriksaanBalita
+                                          .listTwoLastDataPemeriksaanBalita[0]
+                                          .tanggalPemeriksaan
+                                          .toString());
                                 } else {
-                                  return Text('Loading');
+                                  return Text('Empty');
                                 }
                               })
                             ],
@@ -306,8 +329,8 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                     Obx(() {
                                       if (getTwoLastDataPemeriksaanBalita
                                               .listTwoLastDataPemeriksaanBalita
-                                              .length !=
-                                          0) {
+                                              .length >=
+                                          2) {
                                         return Text(
                                             getTwoLastDataPemeriksaanBalita
                                                 .listTwoLastDataPemeriksaanBalita[
@@ -315,7 +338,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                 .beratBadan
                                                 .toString());
                                       } else {
-                                        return Text('Loading');
+                                        return Text('Empty');
                                       }
                                     })
                                   ],
@@ -340,8 +363,8 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                     Obx(() {
                                       if (getTwoLastDataPemeriksaanBalita
                                               .listTwoLastDataPemeriksaanBalita
-                                              .length !=
-                                          0) {
+                                              .length >=
+                                          2) {
                                         return Text(
                                             getTwoLastDataPemeriksaanBalita
                                                 .listTwoLastDataPemeriksaanBalita[
@@ -349,7 +372,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                 .tinggiBadan
                                                 .toString());
                                       } else {
-                                        return Text('Loading');
+                                        return Text('Empty');
                                       }
                                     })
                                   ],
@@ -374,8 +397,8 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                     Obx(() {
                                       if (getTwoLastDataPemeriksaanBalita
                                               .listTwoLastDataPemeriksaanBalita
-                                              .length !=
-                                          0) {
+                                              .length >=
+                                          2) {
                                         return Text(
                                             getTwoLastDataPemeriksaanBalita
                                                 .listTwoLastDataPemeriksaanBalita[
@@ -383,7 +406,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                 .lingkarKepala
                                                 .toString());
                                       } else {
-                                        return Text('Loading');
+                                        return Text('Empty');
                                       }
                                     })
                                   ],
@@ -395,15 +418,15 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                               Obx(() {
                                 if (getTwoLastDataPemeriksaanBalita
                                         .listTwoLastDataPemeriksaanBalita
-                                        .length !=
-                                    0) {
+                                        .length >=
+                                    2) {
                                   return Text('Date : ' +
                                       getTwoLastDataPemeriksaanBalita
                                           .listTwoLastDataPemeriksaanBalita[0]
                                           .tanggalPemeriksaan
                                           .toString());
                                 } else {
-                                  return Text('Loading');
+                                  return Text('Empty');
                                 }
                               })
                             ],
@@ -433,11 +456,16 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                               ),
                               TextButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ImunisasiBalitaPage()));
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: StatistikBalitaPage(
+                                        balitaModel: widget.balitaModel,
+                                      ),
+                                      withNavBar:
+                                          false, // OPTIONAL VALUE. True by default.
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.cupertino,
+                                    );
                                   },
                                   child: Text(
                                     'Pertumbuhan',

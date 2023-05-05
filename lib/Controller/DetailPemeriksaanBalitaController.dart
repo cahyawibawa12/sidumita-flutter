@@ -19,6 +19,7 @@ class DetailPemeriksaanBalitaController extends GetxController
           PemeriksaanBalitaModel(
         id: responsedecode['data'][i]["id"],
         tanggalPemeriksaan: responsedecode['data'][i]["tanggal_pemeriksaan"],
+        umurBalita: responsedecode['data'][i]["umur_balita"],
         lingkarKepala: responsedecode['data'][i]["lingkar_kepala"].toDouble(),
         lingkarLengan: responsedecode['data'][i]["lingkar_lengan"].toDouble(),
         tinggiBadan: responsedecode['data'][i]["tinggi_badan"].toDouble(),

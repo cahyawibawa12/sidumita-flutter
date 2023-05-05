@@ -1,14 +1,37 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:posyandu/widget/widgets.dart';
+import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:posyandu/Controller/DetailKeluargaController.dart';
+import 'package:posyandu/Controller/PetugasController.dart';
+import 'package:posyandu/Model/BalitaModel.dart';
+import 'package:posyandu/Model/IbuHamilModel.dart';
+import 'package:posyandu/Page/Balita/BiodataBalita.dart';
+import 'package:posyandu/Page/IbuHamil/BiodataIbuHamil.dart';
+import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
+import 'package:posyandu/Page/Petugas/ProfilPetugas/BiodataPetugas.dart';
+import 'package:posyandu/Page/Petugas/ProfilPetugas/EditBiodataPetugas.dart';
+import 'package:posyandu/widget/BackgroundImage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilIbuHamilPage extends StatefulWidget {
-  const ProfilIbuHamilPage({super.key});
+  ProfilIbuHamilPage({super.key, required this.ibuHamilModel});
+  IbuHamilModel ibuHamilModel;
 
   @override
   State<ProfilIbuHamilPage> createState() => _ProfilIbuHamilPageState();
 }
 
 class _ProfilIbuHamilPageState extends State<ProfilIbuHamilPage> {
+  var umur = Get.put(DetailKeluargaController());
+
+  @override
+  void initState() {
+    super.initState();
+    umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -18,41 +41,148 @@ class _ProfilIbuHamilPageState extends State<ProfilIbuHamilPage> {
           backgroundColor: Colors.transparent,
           body: SafeArea(
               child: Column(
-            children: <Widget>[
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: CircleAvatar(
-                          radius: 28,
-                          backgroundImage: AssetImage('assets/images/bg.png'),
-                        ),
+            children: [
+              Container(
+                height: 100,
+                padding: EdgeInsets.all(10),
+                child: Card(
+                  color: Color.fromARGB(255, 185, 246, 188),
+                  child: ListTile(
+                    title: Text(
+                      widget.ibuHamilModel.detailKeluarga!.namaLengkap
+                          .toString(),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text(
+                      umur.umurPeserta.value.umur.toString() +
+                          " Tahun " +
+                          (umur.umurPeserta.value.usiaBulan! % 12).toString() +
+                          " Bulan",
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        16.0,
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            width: 150,
-                            height: 20,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white),
-                            margin: EdgeInsets.only(left: 20),
-                            child: Center(
-                              child: Text(
-                                "Bu Wayan",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
+                    )),
+                child: Column(
+                  children: [
+                    InkWell(
+                      child: Card(
+                        child: ListTile(
+                          title: const Text("Biodata Ibu"),
+                          trailing: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.arrow_right_sharp,
+                              size: 24.0,
                             ),
                           ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
+                        ),
+                      ),
+                      onTap: () {
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: BiodataIbuHamil(
+                            ibuHamilModel: widget.ibuHamilModel,
+                          ),
+                          withNavBar: false, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    InkWell(
+                      child: Card(
+                        child: ListTile(
+                          title: const Text("Data PraKehamilan"),
+                          trailing: IconButton(
+                            onPressed: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => ));
+                            },
+                            icon: const Icon(
+                              Icons.arrow_right_sharp,
+                              size: 24.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => HomePagePetugas()));
+                      },
+                    ),
+                    InkWell(
+                      child: Card(
+                        child: ListTile(
+                          title: const Text("Berita"),
+                          trailing: IconButton(
+                            onPressed: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => ));
+                            },
+                            icon: const Icon(
+                              Icons.arrow_right_sharp,
+                              size: 24.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => HomePagePetugas()));
+                      },
+                    ),
+                    InkWell(
+                      child: Card(
+                        child: ListTile(
+                          title: const Text("Logout"),
+                          trailing: IconButton(
+                            onPressed: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => HomePagePetugas()));
+                            },
+                            icon: const Icon(
+                              Icons.arrow_right_sharp,
+                              size: 24.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => HomePagePetugas()));
+                      },
+                    ),
+                  ],
+                ),
               )
             ],
           )),

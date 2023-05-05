@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Model/DetailKeluargaModel.dart';
+import 'package:posyandu/Model/UmurModel.dart';
 import 'package:posyandu/Service/DetailKeluargaService.dart';
 
 class DetailKeluargaController extends GetxController implements GetxService {
   var listDetailKeluarga = <DetailKeluargaModel>[].obs;
   var detailKeluarga = DetailKeluargaModel().obs;
+  var umurPeserta = UmurModel().obs;
   final service = DetailKeluargaService();
   var isLoading = false.obs;
 
@@ -39,6 +41,8 @@ class DetailKeluargaController extends GetxController implements GetxService {
   TextEditingController jenis_pekerjaan = TextEditingController();
   TextEditingController kewarganegaraan = TextEditingController();
   TextEditingController pendidikan = TextEditingController();
+  TextEditingController jenis_kelamins = TextEditingController();
+  TextEditingController golongan_darahs = TextEditingController();
 
   Future<void> showDetailKeluarga() async {
     isLoading.value = true;
@@ -114,6 +118,16 @@ class DetailKeluargaController extends GetxController implements GetxService {
         backgroundColor: Colors.red,
       );
     }
+    isLoading.value = false;
+  }
+
+  Future<void> GetUmur(int id) async {
+    isLoading.value = true;
+    var response = await service.GetUmur(id);
+    var responsedecode = jsonDecode(response.body);
+
+    umurPeserta.value = UmurModel.fromJson(responsedecode['data']);
+
     isLoading.value = false;
   }
 }

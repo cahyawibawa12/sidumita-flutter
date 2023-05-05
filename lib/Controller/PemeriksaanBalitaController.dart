@@ -17,10 +17,13 @@ class PemeriksaanBalitaController extends GetxController
     var response = await service.pemeriksaanbalita(balita_id);
     var responsedecode = jsonDecode(response.body);
     listPemeriksaanBalita.clear();
+    data.clear();
+
     for (var i = 0; i < responsedecode['data'].length; i++) {
       PemeriksaanBalitaModel pemeriksaanBalitaModel = PemeriksaanBalitaModel(
         id: responsedecode['data'][i]["id"],
         tanggalPemeriksaan: responsedecode['data'][i]["tanggal_pemeriksaan"],
+        umurBalita: responsedecode['data'][i]["umur_balita"],
         lingkarKepala: responsedecode['data'][i]["lingkar_kepala"].toDouble(),
         lingkarLengan: responsedecode['data'][i]["lingkar_lengan"].toDouble(),
         tinggiBadan: responsedecode['data'][i]["tinggi_badan"].toDouble(),

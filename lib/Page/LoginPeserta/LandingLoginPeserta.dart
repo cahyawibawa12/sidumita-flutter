@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:posyandu/Controller/DusunController.dart';
+import 'package:posyandu/Controller/MasterData/DusunController.dart';
 import 'package:posyandu/Controller/KeluargaController.dart';
 import 'package:posyandu/Model/KeluargaModel.dart';
 import 'package:posyandu/Page/LoginPeserta/EditPeserta/Peserta.dart';

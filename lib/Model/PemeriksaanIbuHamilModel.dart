@@ -11,8 +11,8 @@ class PemeriksaanIbuHamilModel {
   String catatan;
   int ibuHamilId;
   int petugasKesehatanId;
-  String createdAt;
-  String updatedAt;
+  // String createdAt;
+  // String updatedAt;
 
   PemeriksaanIbuHamilModel({
     required this.id,
@@ -27,25 +27,25 @@ class PemeriksaanIbuHamilModel {
     required this.catatan,
     required this.ibuHamilId,
     required this.petugasKesehatanId,
-    required this.createdAt,
-    required this.updatedAt,
+    // required this.createdAt,
+    // required this.updatedAt,
   });
 
   factory PemeriksaanIbuHamilModel.fromJson(Map<String, dynamic> json) =>
       PemeriksaanIbuHamilModel(
         id: json['id'],
         tanggalPemeriksaan: json['tanggal_pemeriksaan'],
-        tinggiBadan: json['tinggi_badan'],
-        beratBadan: json['berat_badan'],
-        lingkarPerut: json['lingkar_perut'],
-        denyutJantungBayi: json['denyut_jantung_bayi'],
-        denyutNadi: json['denyut_nadi'],
+        tinggiBadan: json['tinggi_badan'].toDouble(),
+        beratBadan: json['berat_badan'].toDouble(),
+        lingkarPerut: json['lingkar_perut'].toDouble(),
+        denyutJantungBayi: json['denyut_jantung_bayi'].toDouble(),
+        denyutNadi: json['denyut_nadi'].toDouble(),
         penanganan: json['penanganan'],
         keluhan: json['keluhan'],
         catatan: json['catatan'],
         ibuHamilId: json['ibu_hamil_id'],
         petugasKesehatanId: json['petugas_kesehatan_id'],
-        createdAt: json['created_at'],
-        updatedAt: json['updated_at'],
+        // createdAt: json['created_at'],
+        // updatedAt: json['updated_at'],
       );
 }

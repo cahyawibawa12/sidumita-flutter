@@ -3,6 +3,7 @@ import 'dart:ffi';
 class PemeriksaanBalitaModel {
   int id;
   String tanggalPemeriksaan;
+  String umurBalita;
   double lingkarKepala;
   double lingkarLengan;
   double tinggiBadan;
@@ -20,6 +21,7 @@ class PemeriksaanBalitaModel {
   PemeriksaanBalitaModel({
     required this.id,
     required this.tanggalPemeriksaan,
+    required this.umurBalita,
     required this.lingkarKepala,
     required this.lingkarLengan,
     required this.tinggiBadan,
@@ -39,6 +41,7 @@ class PemeriksaanBalitaModel {
       PemeriksaanBalitaModel(
         id: json["id"],
         tanggalPemeriksaan: json["tanggal_pemeriksaan"],
+        umurBalita: json["umur_balita"],
         lingkarKepala: json["lingkar_kepala"],
         lingkarLengan: json["lingkar_lengan"],
         tinggiBadan: json["tinggi_badan"],

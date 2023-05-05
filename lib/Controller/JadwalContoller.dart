@@ -42,7 +42,7 @@ class JadwalController extends GetxController implements GetxService {
       var eventName = event["jenis_pemeriksaan"];
       var startEvent = DateTime.parse(event["waktu_mulai"]);
       var endEvent = DateTime.parse(event["waktu_berakhir"]);
-      var locationName = event["dusun"]["nama_dusun"];
+      var locationName = event["nama_dusun"];
       events.value[startEvent] = [
         Event(
           title: eventName + " - " + locationName,

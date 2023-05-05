@@ -13,6 +13,7 @@ class DetailPemeriksaanBalita extends StatefulWidget {
   final String berat_badan;
   final String penanganan;
   final String keluhan;
+  final String catatan;
   final String balita_id;
   final String petugas_kesehatan_id;
 
@@ -25,6 +26,7 @@ class DetailPemeriksaanBalita extends StatefulWidget {
       required this.berat_badan,
       required this.penanganan,
       required this.keluhan,
+      required this.catatan,
       required this.balita_id,
       required this.petugas_kesehatan_id});
 
@@ -215,6 +217,25 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                                   height: 10,
                                 ),
                                 Text(widget.penanganan)
+                              ]),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          height: 60,
+                          width: 330,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Color.fromARGB(111, 23, 196, 98)),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Catatan Khusus"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(widget.catatan)
                               ]),
                         ),
                         SizedBox(
