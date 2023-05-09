@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:posyandu/Controller/PemeriksaanIbuHamilController.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanIbuHamil/FormPemeriksaanIbuHamil.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 
 class RiwayatPemeriksaanIbuHamil extends StatefulWidget {
-  const RiwayatPemeriksaanIbuHamil({super.key});
+  RiwayatPemeriksaanIbuHamil(
+      {super.key, required this.petugasWithIbuHamilModel});
+  final Map petugasWithIbuHamilModel;
 
   @override
   State<RiwayatPemeriksaanIbuHamil> createState() =>
@@ -12,6 +16,17 @@ class RiwayatPemeriksaanIbuHamil extends StatefulWidget {
 
 class _RiwayatPemeriksaanIbuHamilState
     extends State<RiwayatPemeriksaanIbuHamil> {
+  var pemeriksaanibuhamil = Get.put(PemeriksaanIbuHamilController());
+
+  @override
+  void initState() {
+    super.initState();
+    pemeriksaanibuhamil
+        .getPemeriksaanIbuHamil(widget.petugasWithIbuHamilModel["id"]);
+    print('from page ' +
+        pemeriksaanibuhamil.listPemeriksaanIbuHamil.length.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -82,55 +97,70 @@ class _RiwayatPemeriksaanIbuHamilState
                 ],
               ),
               Expanded(
-                child: InkWell(
-                  child: SingleChildScrollView(
-                    physics: ScrollPhysics(),
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 3, vertical: 3),
-                          margin: EdgeInsets.only(left: 20, right: 20, top: 8),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white),
-                          child: Row(
-                            // mainAxisAlignment:
-                            //     MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text("tanggal"),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Text("fundus"),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Text("jantung"),
-                              SizedBox(
-                                width: 50,
-                              ),
-                              Text("nadi"),
-                              SizedBox(
-                                width: 10,
-                              ),
-                            ],
+                child: Obx(() => pemeriksaanibuhamil.isLoading.value
+                    ? CircularProgressIndicator()
+                    : InkWell(
+                        child: SingleChildScrollView(
+                          physics: ScrollPhysics(),
+                          child: ListView.builder(
+                            itemBuilder: (context, index) {
+                              return Container(
+                                height: 40,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 3, vertical: 3),
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, top: 8),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.white),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      // SizedBox(
+                                      //   width: 20,
+                                      // ),
+                                      Text(pemeriksaanibuhamil
+                                          .listPemeriksaanIbuHamil[index]
+                                          .tanggalPemeriksaan),
+                                      // SizedBox(
+                                      //   width: 40,
+                                      // ),
+                                      Text(pemeriksaanibuhamil
+                                          .listPemeriksaanIbuHamil[index]
+                                          .lingkarPerut
+                                          .toString()),
+                                      // SizedBox(
+                                      //   width: 45,
+                                      // ),
+                                      Text(pemeriksaanibuhamil
+                                          .listPemeriksaanIbuHamil[index]
+                                          .denyutJantungBayi
+                                          .toString()),
+                                      // SizedBox(
+                                      //   width: 30,
+                                      // ),
+                                      Text(pemeriksaanibuhamil
+                                          .listPemeriksaanIbuHamil[index]
+                                          .denyutNadi
+                                          .toString()),
+                                      // SizedBox(
+                                      //   width: 10,
+                                      // ),
+                                    ]),
+                              );
+                            },
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: pemeriksaanibuhamil
+                                .listPemeriksaanIbuHamil.length,
                           ),
-                        );
-                      },
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: 10,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => FormPemeriksaanIbuHamil()));
-                  },
-                ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => FormPemeriksaanIbuHamil()));
+                        },
+                      )),
               )
             ],
           )),

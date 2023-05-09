@@ -37,7 +37,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
     // print('frompage' +
     //     getTwoLastDataPemeriksaanBalita.listTwoLastDataPemeriksaanBalita.length
     //         .toString());
-    umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
+    // umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
   }
 
   int _current = 0;

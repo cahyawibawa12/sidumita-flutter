@@ -9,6 +9,7 @@ import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/Page/Balita/BiodataBalita.dart';
 import 'package:posyandu/Page/IbuHamil/BiodataIbuHamil.dart';
+import 'package:posyandu/Page/IbuHamil/PagePraKehamilan.dart';
 import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/BiodataPetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/EditBiodataPetugas.dart';
@@ -29,7 +30,7 @@ class _ProfilIbuHamilPageState extends State<ProfilIbuHamilPage> {
   @override
   void initState() {
     super.initState();
-    umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
+    // umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
   }
 
   @override
@@ -83,7 +84,18 @@ class _ProfilIbuHamilPageState extends State<ProfilIbuHamilPage> {
                         child: ListTile(
                           title: const Text("Biodata Ibu"),
                           trailing: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: BiodataIbuHamil(
+                                  ibuHamilModel: widget.ibuHamilModel,
+                                ),
+                                withNavBar:
+                                    false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
                             icon: const Icon(
                               Icons.arrow_right_sharp,
                               size: 24.0,
@@ -125,10 +137,15 @@ class _ProfilIbuHamilPageState extends State<ProfilIbuHamilPage> {
                         ),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => HomePagePetugas()));
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: PagePraKehamilan(
+                            ibuHamilModel: widget.ibuHamilModel,
+                          ),
+                          withNavBar: false, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
                       },
                     ),
                     InkWell(

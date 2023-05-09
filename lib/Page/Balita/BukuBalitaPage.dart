@@ -35,7 +35,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
     // print('frompage' +
     //     getTwoLastDataPemeriksaanBalita.listTwoLastDataPemeriksaanBalita.length
     //         .toString());
-    umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
+    // umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
 
   int _current = 0;

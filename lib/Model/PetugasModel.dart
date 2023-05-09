@@ -82,15 +82,6 @@ class PetugasModel {
     data['dusun_id'] = this.dusunId;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['nama_dusun'] = this.namaDusun;
-    data['desa_id'] = this.desaId;
-    data['nama_desa'] = this.namaDesa;
-    data['kecamatan_id'] = this.kecamatanId;
-    data['nama_kecamatan'] = this.namaKecamatan;
-    data['kabupaten_id'] = this.kabupatenId;
-    data['nama_kabupaten'] = this.namaKabupaten;
-    data['provinsi_id'] = this.provinsiId;
-    data['nama_provinsi'] = this.namaProvinsi;
     return data;
   }
 }

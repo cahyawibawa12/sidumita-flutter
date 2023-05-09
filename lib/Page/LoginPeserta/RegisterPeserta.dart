@@ -2,7 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:posyandu/Controller/MasterData/DesaController.dart';
 import 'package:posyandu/Controller/MasterData/DusunController.dart';
+import 'package:posyandu/Controller/MasterData/KabupatenController.dart';
+import 'package:posyandu/Controller/MasterData/KecamatanController.dart';
+import 'package:posyandu/Controller/MasterData/Provinsi.dart';
 import 'package:posyandu/Page/LoginPeserta/LoginPagePeserta.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,12 +28,18 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
   bool _secureText = true;
   String? name, email, password, no_kk, alamat;
   String? dusun_id;
+  String? provinsi_id, kabupaten_id, kecamatan_id, desa_id;
   var listDusun = Get.put(DusunController());
+  var provinsi = Get.put(ProvinsiController());
+  var kabupaten = Get.put(KabupatenController());
+  var kecamatan = Get.put(KecamatanController());
+  var desa = Get.put(DesaController());
 
   @override
   void initState() {
     super.initState();
     listDusun.getDusun();
+    provinsi.getProvinsi();
   }
 
   showHide() {
@@ -91,255 +101,651 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                               )
                             ],
                           ),
-                          Obx(
-                            () => listDusun.isLoading.value
-                                ? CircularProgressIndicator()
-                                : Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 16),
-                                    margin: EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color:
-                                            Color.fromARGB(162, 255, 255, 255)),
-                                    child: Form(
-                                      key: _formKey,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Text('Nama Kepala Keluarga'),
-                                          TextFormField(
-                                              cursorColor: Colors.blue,
-                                              keyboardType: TextInputType.text,
-                                              decoration: InputDecoration(
-                                                hintText: "I Nyoman Cahya",
-                                              ),
-                                              validator: (nameValue) {
-                                                if (nameValue!.isEmpty) {
-                                                  return 'Mohon masukan nama lengkap anda';
-                                                }
-                                                name = nameValue;
-                                                return null;
-                                              }),
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                          Text('Email'),
-                                          TextFormField(
-                                              cursorColor: Colors.blue,
-                                              keyboardType: TextInputType.text,
-                                              decoration: InputDecoration(
-                                                hintText: "cahya@gmail.com",
-                                              ),
-                                              validator: (emailValue) {
-                                                if (emailValue!.isEmpty) {
-                                                  return 'Mohon masukan email';
-                                                }
-                                                email = emailValue;
-                                                return null;
-                                              }),
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                          Text('Nomor Kartu Keluarga'),
-                                          TextFormField(
-                                              cursorColor: Colors.blue,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              decoration: InputDecoration(
-                                                hintText: "5012...",
-                                              ),
-                                              validator: (noKKValue) {
-                                                if (noKKValue!.isEmpty) {
-                                                  return 'Mohon input nomor kartu keluarga anda';
-                                                }
-                                                no_kk = noKKValue;
-                                                return null;
-                                              }),
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                          Text('Alamat'),
-                                          TextFormField(
-                                              cursorColor: Colors.blue,
-                                              keyboardType: TextInputType.text,
-                                              decoration: InputDecoration(
-                                                hintText:
-                                                    "Jl. Doang Jadian Kagak",
-                                              ),
-                                              validator: (alamatValue) {
-                                                if (alamatValue!.isEmpty) {
-                                                  return 'Mohon input alamat anda';
-                                                }
-                                                alamat = alamatValue;
-                                                return null;
-                                              }),
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                          LayoutBuilder(
-                                              builder: (context, constraint) {
-                                            return FormField(
-                                              initialValue: false,
-                                              enabled: true,
-                                              builder:
-                                                  (FormFieldState<bool> field) {
-                                                return InputDecorator(
-                                                  decoration: InputDecoration(
-                                                    labelText: "Dusun",
-                                                    errorText: field.errorText,
-                                                  ),
-                                                  child:
-                                                      DropdownButtonHideUnderline(
-                                                    child: ButtonTheme(
-                                                      alignedDropdown: false,
-                                                      child: DropdownButton<
-                                                              String>(
-                                                          isExpanded: true,
-                                                          value:
-                                                              dusun_id == null
-                                                                  ? null
-                                                                  : dusun_id,
-                                                          icon: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    right:
-                                                                        10.0),
-                                                            child: Icon(
-                                                              Icons
-                                                                  .arrow_drop_down_outlined,
-                                                              size: 24.0,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyLarge!
-                                                                  .color,
-                                                            ),
-                                                          ),
-                                                          iconSize: 16,
-                                                          elevation: 16,
-                                                          style: TextStyle(
-                                                            fontSize: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyMedium!
-                                                                .fontSize,
-                                                            fontFamily:
-                                                                Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .bodyMedium!
-                                                                    .fontFamily,
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            margin: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Color.fromARGB(162, 255, 255, 255)),
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text('Nama Kepala Keluarga'),
+                                  TextFormField(
+                                      cursorColor: Colors.blue,
+                                      keyboardType: TextInputType.text,
+                                      decoration: InputDecoration(
+                                        hintText: "I Nyoman Cahya",
+                                      ),
+                                      validator: (nameValue) {
+                                        if (nameValue!.isEmpty) {
+                                          return 'Mohon masukan nama lengkap anda';
+                                        }
+                                        name = nameValue;
+                                        return null;
+                                      }),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Text('Email'),
+                                  TextFormField(
+                                      cursorColor: Colors.blue,
+                                      keyboardType: TextInputType.text,
+                                      decoration: InputDecoration(
+                                        hintText: "cahya@gmail.com",
+                                      ),
+                                      validator: (emailValue) {
+                                        if (emailValue!.isEmpty) {
+                                          return 'Mohon masukan email';
+                                        }
+                                        email = emailValue;
+                                        return null;
+                                      }),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Text('Nomor Kartu Keluarga'),
+                                  TextFormField(
+                                      cursorColor: Colors.blue,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        hintText: "5012...",
+                                      ),
+                                      validator: (noKKValue) {
+                                        if (noKKValue!.isEmpty) {
+                                          return 'Mohon input nomor kartu keluarga anda';
+                                        }
+                                        no_kk = noKKValue;
+                                        return null;
+                                      }),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Text('Alamat'),
+                                  TextFormField(
+                                      cursorColor: Colors.blue,
+                                      keyboardType: TextInputType.text,
+                                      decoration: InputDecoration(
+                                        hintText: "Jl. Doang Jadian Kagak",
+                                      ),
+                                      validator: (alamatValue) {
+                                        if (alamatValue!.isEmpty) {
+                                          return 'Mohon input alamat anda';
+                                        }
+                                        alamat = alamatValue;
+                                        return null;
+                                      }),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() => provinsi.isLoading.value
+                                      ? CircularProgressIndicator()
+                                      : LayoutBuilder(
+                                          builder: (context, constraint) {
+                                          // List<String> itemStringList = ["Female", "Male"];
+
+                                          return FormField(
+                                            initialValue: false,
+                                            enabled: true,
+                                            builder:
+                                                (FormFieldState<bool> field) {
+                                              return InputDecorator(
+                                                decoration: InputDecoration(
+                                                  labelText: "Provinsi",
+                                                  errorText: field.errorText,
+                                                  // helperText: "Your gender",
+                                                ),
+                                                child:
+                                                    DropdownButtonHideUnderline(
+                                                  child: ButtonTheme(
+                                                    alignedDropdown: false,
+                                                    child: DropdownButton<
+                                                            String>(
+                                                        isExpanded: true,
+                                                        value:
+                                                            provinsi_id == null
+                                                                ? null
+                                                                : provinsi_id,
+                                                        icon: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 10.0),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_drop_down_outlined,
+                                                            size: 24.0,
                                                             color: Theme.of(
                                                                     context)
                                                                 .textTheme
-                                                                .bodyMedium!
+                                                                .bodyLarge!
                                                                 .color,
                                                           ),
-                                                          underline: Container(
-                                                            height: 0,
-                                                            color: Colors
-                                                                .grey[300],
+                                                        ),
+                                                        iconSize: 16,
+                                                        elevation: 16,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontSize,
+                                                          fontFamily:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontFamily,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .color,
+                                                        ),
+                                                        underline: Container(
+                                                          height: 0,
+                                                          color:
+                                                              Colors.grey[300],
+                                                        ),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          setState(() {
+                                                            provinsi_id =
+                                                                newValue!;
+
+                                                            kabupaten.fetchProvinsi(
+                                                                provinsi_id:
+                                                                    int.parse(
+                                                                        newValue!));
+                                                          });
+                                                        },
+                                                        items: [
+                                                          for (var data
+                                                              in provinsi
+                                                                  .listProvinsi
+                                                                  .value)
+                                                            DropdownMenuItem(
+                                                              child: new Text(
+                                                                data.namaProvinsi!,
+                                                              ),
+                                                              value: data.id
+                                                                  .toString(),
+                                                            )
+                                                        ]),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        })),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() => kabupaten.isLoading.value
+                                      ? CircularProgressIndicator()
+                                      : LayoutBuilder(
+                                          builder: (context, constraint) {
+                                          // List<String> itemStringList = ["Female", "Male"];
+
+                                          return FormField(
+                                            initialValue: false,
+                                            enabled: true,
+                                            builder:
+                                                (FormFieldState<bool> field) {
+                                              return InputDecorator(
+                                                decoration: InputDecoration(
+                                                  labelText: "Kabupaten",
+                                                  errorText: field.errorText,
+                                                  // helperText: "Your gender",
+                                                ),
+                                                child:
+                                                    DropdownButtonHideUnderline(
+                                                  child: ButtonTheme(
+                                                    alignedDropdown: false,
+                                                    child: DropdownButton<
+                                                            String>(
+                                                        isExpanded: true,
+                                                        value:
+                                                            kabupaten_id == null
+                                                                ? null
+                                                                : kabupaten_id,
+                                                        icon: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 10.0),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_drop_down_outlined,
+                                                            size: 24.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .color,
                                                           ),
-                                                          onChanged: (String?
-                                                              newValue) {
-                                                            setState(() {
-                                                              dusun_id =
-                                                                  newValue!;
-                                                            });
-                                                          },
-                                                          items: [
-                                                            for (var data
-                                                                in listDusun
-                                                                    .listDusun
-                                                                    .value)
-                                                              DropdownMenuItem(
-                                                                child: new Text(
-                                                                  data.namaDusun!,
-                                                                ),
-                                                                value: data.id
-                                                                    .toString(),
-                                                              )
-                                                          ]),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          }),
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                          Text("Password"),
-                                          TextFormField(
-                                              cursorColor: Colors.blue,
-                                              keyboardType: TextInputType.text,
-                                              obscureText: _secureText,
-                                              decoration: InputDecoration(
-                                                hintText: "xCahya.",
-                                                suffixIcon: IconButton(
-                                                  onPressed: showHide,
-                                                  icon: Icon(_secureText
-                                                      ? Icons.visibility_off
-                                                      : Icons.visibility),
-                                                ),
-                                              ),
-                                              validator: (passwordValue) {
-                                                if (passwordValue!.isEmpty) {
-                                                  return 'Please enter your password';
-                                                }
-                                                password = passwordValue;
-                                                return null;
-                                              }),
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                          Center(
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: Colors.green),
-                                              child: TextButton(
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 60,
-                                                      vertical: 10),
-                                                  child: Text(
-                                                    _isLoading
-                                                        ? 'Proccessing..'
-                                                        : 'Register',
-                                                    textDirection:
-                                                        TextDirection.ltr,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18.0,
-                                                      decoration:
-                                                          TextDecoration.none,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
+                                                        ),
+                                                        iconSize: 16,
+                                                        elevation: 16,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontSize,
+                                                          fontFamily:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontFamily,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .color,
+                                                        ),
+                                                        underline: Container(
+                                                          height: 0,
+                                                          color:
+                                                              Colors.grey[300],
+                                                        ),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          setState(() {
+                                                            kabupaten_id =
+                                                                newValue!;
+
+                                                            kecamatan.fetchKabupaten(
+                                                                kabupaten_id:
+                                                                    int.parse(
+                                                                        newValue));
+                                                          });
+                                                        },
+                                                        items: [
+                                                          for (var data
+                                                              in kabupaten
+                                                                  .listKabupaten
+                                                                  .value)
+                                                            DropdownMenuItem(
+                                                              child: new Text(
+                                                                data.namaKabupaten!,
+                                                              ),
+                                                              value: data.id
+                                                                  .toString(),
+                                                            )
+                                                        ]),
                                                   ),
                                                 ),
-                                                onPressed: () {
-                                                  if (_formKey.currentState!
-                                                      .validate()) {
-                                                    _register();
-                                                  }
-                                                },
-                                              ),
+                                              );
+                                            },
+                                          );
+                                        })),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() => kecamatan.isLoading.value
+                                      ? CircularProgressIndicator()
+                                      : LayoutBuilder(
+                                          builder: (context, constraint) {
+                                          // List<String> itemStringList = ["Female", "Male"];
+
+                                          return FormField(
+                                            initialValue: false,
+                                            enabled: true,
+                                            builder:
+                                                (FormFieldState<bool> field) {
+                                              return InputDecorator(
+                                                decoration: InputDecoration(
+                                                  labelText: "Kecamatan",
+                                                  errorText: field.errorText,
+                                                  // helperText: "Your gender",
+                                                ),
+                                                child:
+                                                    DropdownButtonHideUnderline(
+                                                  child: ButtonTheme(
+                                                    alignedDropdown: false,
+                                                    child: DropdownButton<
+                                                            String>(
+                                                        isExpanded: true,
+                                                        value:
+                                                            kecamatan_id == null
+                                                                ? null
+                                                                : kecamatan_id,
+                                                        icon: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 10.0),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_drop_down_outlined,
+                                                            size: 24.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .color,
+                                                          ),
+                                                        ),
+                                                        iconSize: 16,
+                                                        elevation: 16,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontSize,
+                                                          fontFamily:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontFamily,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .color,
+                                                        ),
+                                                        underline: Container(
+                                                          height: 0,
+                                                          color:
+                                                              Colors.grey[300],
+                                                        ),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          setState(() {
+                                                            kecamatan_id =
+                                                                newValue!;
+
+                                                            desa.fetchKecamatan(
+                                                                kecamatan_id:
+                                                                    int.parse(
+                                                                        newValue));
+                                                          });
+                                                        },
+                                                        items: [
+                                                          for (var data
+                                                              in kecamatan
+                                                                  .listKecamatan
+                                                                  .value)
+                                                            DropdownMenuItem(
+                                                              child: new Text(
+                                                                data.namaKecamatan!,
+                                                              ),
+                                                              value: data.id
+                                                                  .toString(),
+                                                            )
+                                                        ]),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        })),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() => desa.isLoading.value
+                                      ? CircularProgressIndicator()
+                                      : LayoutBuilder(
+                                          builder: (context, constraint) {
+                                          // List<String> itemStringList = ["Female", "Male"];
+
+                                          return FormField(
+                                            initialValue: false,
+                                            enabled: true,
+                                            builder:
+                                                (FormFieldState<bool> field) {
+                                              return InputDecorator(
+                                                decoration: InputDecoration(
+                                                  labelText: "Desa",
+                                                  errorText: field.errorText,
+                                                  // helperText: "Your gender",
+                                                ),
+                                                child:
+                                                    DropdownButtonHideUnderline(
+                                                  child: ButtonTheme(
+                                                    alignedDropdown: false,
+                                                    child: DropdownButton<
+                                                            String>(
+                                                        isExpanded: true,
+                                                        value: desa_id == null
+                                                            ? null
+                                                            : desa_id,
+                                                        icon: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 10.0),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_drop_down_outlined,
+                                                            size: 24.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .color,
+                                                          ),
+                                                        ),
+                                                        iconSize: 16,
+                                                        elevation: 16,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontSize,
+                                                          fontFamily:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontFamily,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .color,
+                                                        ),
+                                                        underline: Container(
+                                                          height: 0,
+                                                          color:
+                                                              Colors.grey[300],
+                                                        ),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          setState(() {
+                                                            desa_id = newValue!;
+
+                                                            listDusun.fetchDesa(
+                                                                desa_id: int.parse(
+                                                                    newValue));
+                                                          });
+                                                        },
+                                                        items: [
+                                                          for (var data in desa
+                                                              .listDesa.value)
+                                                            DropdownMenuItem(
+                                                              child: new Text(
+                                                                data.namaDesa!,
+                                                              ),
+                                                              value: data.id
+                                                                  .toString(),
+                                                            )
+                                                        ]),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        })),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Obx(() => listDusun.isLoading.value
+                                      ? CircularProgressIndicator()
+                                      : LayoutBuilder(
+                                          builder: (context, constraint) {
+                                          // List<String> itemStringList = ["Female", "Male"];
+
+                                          return FormField(
+                                            initialValue: false,
+                                            enabled: true,
+                                            builder:
+                                                (FormFieldState<bool> field) {
+                                              return InputDecorator(
+                                                decoration: InputDecoration(
+                                                  labelText: "Dusun",
+                                                  errorText: field.errorText,
+                                                  // helperText: "Your gender",
+                                                ),
+                                                child:
+                                                    DropdownButtonHideUnderline(
+                                                  child: ButtonTheme(
+                                                    alignedDropdown: false,
+                                                    child: DropdownButton<
+                                                            String>(
+                                                        isExpanded: true,
+                                                        value: dusun_id == null
+                                                            ? null
+                                                            : dusun_id,
+                                                        icon: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 10.0),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_drop_down_outlined,
+                                                            size: 24.0,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .color,
+                                                          ),
+                                                        ),
+                                                        iconSize: 16,
+                                                        elevation: 16,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontSize,
+                                                          fontFamily:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .fontFamily,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!
+                                                                  .color,
+                                                        ),
+                                                        underline: Container(
+                                                          height: 0,
+                                                          color:
+                                                              Colors.grey[300],
+                                                        ),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          setState(() {
+                                                            dusun_id =
+                                                                newValue!;
+                                                          });
+                                                        },
+                                                        items: [
+                                                          for (var data
+                                                              in listDusun
+                                                                  .listDusun
+                                                                  .value)
+                                                            DropdownMenuItem(
+                                                              child: new Text(
+                                                                data.namaDusun!,
+                                                              ),
+                                                              value: data.id
+                                                                  .toString(),
+                                                            )
+                                                        ]),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        })),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Text("Password"),
+                                  TextFormField(
+                                      cursorColor: Colors.blue,
+                                      keyboardType: TextInputType.text,
+                                      obscureText: _secureText,
+                                      decoration: InputDecoration(
+                                        hintText: "xCahya.",
+                                        suffixIcon: IconButton(
+                                          onPressed: showHide,
+                                          icon: Icon(_secureText
+                                              ? Icons.visibility_off
+                                              : Icons.visibility),
+                                        ),
+                                      ),
+                                      validator: (passwordValue) {
+                                        if (passwordValue!.isEmpty) {
+                                          return 'Please enter your password';
+                                        }
+                                        password = passwordValue;
+                                        return null;
+                                      }),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Colors.green),
+                                      child: TextButton(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 60, vertical: 10),
+                                          child: Text(
+                                            _isLoading
+                                                ? 'Proccessing..'
+                                                : 'Register',
+                                            textDirection: TextDirection.ltr,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18.0,
+                                              decoration: TextDecoration.none,
+                                              fontWeight: FontWeight.normal,
                                             ),
                                           ),
-                                        ],
+                                        ),
+                                        onPressed: () {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            _register();
+                                          }
+                                        },
                                       ),
                                     ),
                                   ),
-                          )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       )
                     ],

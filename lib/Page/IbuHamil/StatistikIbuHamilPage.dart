@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:posyandu/Controller/CekDataController.dart';
 import 'package:posyandu/Controller/PemeriksaanIbuHamilController.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/Page/Balita/Statistik/BeratBadanPage.dart';
@@ -21,13 +22,14 @@ class StatistikIbuHamilPage extends StatefulWidget {
 
 class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
   var pemeriksaanibuhamil = Get.put(PemeriksaanIbuHamilController());
+  var dataBeratIbu = Get.put(CekDataController());
 
   @override
   void initState() {
     super.initState();
-    pemeriksaanibuhamil.getPemeriksaanIbuHamil(widget.ibuHamilModel.id!);
-    print('from page ' +
-        pemeriksaanibuhamil.listPemeriksaanIbuHamil.length.toString());
+    pemeriksaanibuhamil
+        .getPemeriksaanIbuHamil(widget.ibuHamilModel.id!)
+        .then((value) => dataBeratIbu.getBeratIbu(widget.ibuHamilModel.id!));
   }
 
   @override
@@ -63,8 +65,11 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                             children: [
                               Column(
                                 children: [
-                                  Text("Usia: "),
-                                  Text("0 Tahun 6 Bulan"),
+                                  Text("Usia Kandungan: "),
+                                  Text(pemeriksaanibuhamil
+                                          .listPemeriksaanIbuHamil[0]
+                                          .umurKandungan +
+                                      " Minggu"),
                                 ],
                               ),
                               Column(
@@ -105,47 +110,62 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                                         interval: 1,
                                       ),
                                       primaryYAxis: NumericAxis(interval: 1),
-                                      series: <CartesianSeries<ChartData, num>>[
-                                        SplineRangeAreaSeries<ChartData, num>(
-                                          dataSource: underWeight,
-                                          xValueMapper: (ChartData data, _) =>
-                                              data.xValue,
-                                          lowValueMapper: (ChartData data, _) =>
-                                              data.lowValue,
-                                          highValueMapper:
-                                              (ChartData data, _) =>
-                                                  data.highValue,
+                                      series: <CartesianSeries>[
+                                        LineSeries<Map, int>(
+                                          dataSource: dataBeratIbu.data,
+                                          xValueMapper: (Map data, _) =>
+                                              int.parse(data["umur_kandungan"]),
+                                          yValueMapper: (Map data, _) =>
+                                              data["berat_badan"],
                                         ),
                                         SplineRangeAreaSeries<ChartData, num>(
-                                          dataSource: normalWeight,
-                                          xValueMapper: (ChartData data, _) =>
-                                              data.xValue,
-                                          lowValueMapper: (ChartData data, _) =>
-                                              data.lowValue,
-                                          highValueMapper:
-                                              (ChartData data, _) =>
-                                                  data.highValue,
-                                        ),
+                                            dataSource: underWeight,
+                                            xValueMapper: (ChartData data, _) =>
+                                                data.xValue,
+                                            lowValueMapper:
+                                                (ChartData data, _) =>
+                                                    data.lowValue,
+                                            highValueMapper:
+                                                (ChartData data, _) =>
+                                                    data.highValue,
+                                            opacity: 0.5,
+                                            color: Colors.blue[500]),
                                         SplineRangeAreaSeries<ChartData, num>(
-                                          dataSource: overWeight,
-                                          xValueMapper: (ChartData data, _) =>
-                                              data.xValue,
-                                          lowValueMapper: (ChartData data, _) =>
-                                              data.lowValue,
-                                          highValueMapper:
-                                              (ChartData data, _) =>
-                                                  data.highValue,
-                                        ),
+                                            dataSource: normalWeight,
+                                            xValueMapper: (ChartData data, _) =>
+                                                data.xValue,
+                                            lowValueMapper:
+                                                (ChartData data, _) =>
+                                                    data.lowValue,
+                                            highValueMapper:
+                                                (ChartData data, _) =>
+                                                    data.highValue,
+                                            opacity: 0.5,
+                                            color: Colors.green[500]),
                                         SplineRangeAreaSeries<ChartData, num>(
-                                          dataSource: obeseWeight,
-                                          xValueMapper: (ChartData data, _) =>
-                                              data.xValue,
-                                          lowValueMapper: (ChartData data, _) =>
-                                              data.lowValue,
-                                          highValueMapper:
-                                              (ChartData data, _) =>
-                                                  data.highValue,
-                                        ),
+                                            dataSource: overWeight,
+                                            xValueMapper: (ChartData data, _) =>
+                                                data.xValue,
+                                            lowValueMapper:
+                                                (ChartData data, _) =>
+                                                    data.lowValue,
+                                            highValueMapper:
+                                                (ChartData data, _) =>
+                                                    data.highValue,
+                                            opacity: 0.5,
+                                            color: Colors.red[500]),
+                                        SplineRangeAreaSeries<ChartData, num>(
+                                            dataSource: obeseWeight,
+                                            xValueMapper: (ChartData data, _) =>
+                                                data.xValue,
+                                            lowValueMapper:
+                                                (ChartData data, _) =>
+                                                    data.lowValue,
+                                            highValueMapper:
+                                                (ChartData data, _) =>
+                                                    data.highValue,
+                                            opacity: 0.5,
+                                            color: Colors.grey[500]),
                                       ],
                                     ),
                                   ),

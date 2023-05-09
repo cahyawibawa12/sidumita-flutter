@@ -182,3 +182,8 @@ class ChartData {
   final double lowValue;
   final double highValue;
 }
+
+class DataBeratIbu {
+  DataBeratIbu(this.yValue);
+  final double yValue;
+}

@@ -51,7 +51,7 @@ class _BiodataBalitaState extends State<BiodataBalita> {
     detailKeluarga.pendidikan.text =
         widget.balitaModel.detailKeluarga!.pendidikan.toString();
 
-    umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
+    // umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
 
   @override

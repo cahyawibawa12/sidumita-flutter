@@ -8,6 +8,7 @@ import '../Service/PemeriksaanIbuHamilService.dart';
 class PemeriksaanIbuHamilController extends GetxController
     implements GetxService {
   var listPemeriksaanIbuHamil = <PemeriksaanIbuHamilModel>[].obs;
+  // var storePemeriksaanIbuByPetugas =
   final service = PemeriksaanIbuHamilService();
   var isLoading = false.obs;
   RxBool isLang = false.obs;
@@ -22,6 +23,7 @@ class PemeriksaanIbuHamilController extends GetxController
           PemeriksaanIbuHamilModel(
         id: responsedecode['data'][i]["id"],
         tanggalPemeriksaan: responsedecode['data'][i]["tanggal_pemeriksaan"],
+        umurKandungan: responsedecode['data'][i]["umur_kandungan"],
         tinggiBadan: responsedecode['data'][i]["tinggi_badan"].toDouble(),
         beratBadan: responsedecode['data'][i]["berat_badan"].toDouble(),
         lingkarPerut: responsedecode['data'][i]["lingkar_perut"].toDouble(),
@@ -44,4 +46,29 @@ class PemeriksaanIbuHamilController extends GetxController
 
     isLoading.value = false;
   }
+
+  // Future<void> StorePemeriksaanIbuByPetugas() async {
+  //   isLoading.value = true;
+
+  //   detailKeluarga.value.namaLengkap = nama_lengkap.text;
+  //   detailKeluarga.value.nik = det_nik.text;
+  //   detailKeluarga.value.tempatLahir = tempat_lahir.text;
+  //   detailKeluarga.value.tanggalLahir = tanggal_lahir.text;
+  //   detailKeluarga.value.agama = agama.text;
+  //   detailKeluarga.value.noTelp = no_telp.text;
+  //   detailKeluarga.value.jenisPekerjaan = jenis_pekerjaan.text;
+  //   detailKeluarga.value.kewarganegaraan = kewarganegaraan.text;
+  //   detailKeluarga.value.jenisKelamin = jenis_kelamin;
+  //   detailKeluarga.value.golonganDarah = golongan_darah;
+  //   detailKeluarga.value.statusPerkawinan = status_perkawinan;
+  //   detailKeluarga.value.statusDalamKeluarga = status_keluarga;
+  //   detailKeluarga.value.pendidikan = pendidikan.text;
+
+  //   var response = await service.storeMyDetailKeluarga(detailKeluarga.value);
+  //   var responsedecode = jsonDecode(response.body);
+  //   isLoading.value = false;
+
+  //   Get.back();
+  //   resetForm();
+  // }
 }

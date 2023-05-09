@@ -73,4 +73,16 @@ class CekDataService {
     print(response.body);
     return response;
   }
+
+  Future<http.Response> getBeratIbu(int ibu_hamil_id) async {
+    var token = await getToken();
+    var url =
+        Uri.parse(baseURL + 'data-grafik-ibu-hamil/' + ibu_hamil_id.toString());
+    http.Response response = await http.get(
+      url,
+      headers: setHeaders(token),
+    );
+    print(response.body);
+    return response;
+  }
 }

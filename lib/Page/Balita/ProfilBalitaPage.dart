@@ -27,7 +27,7 @@ class _ProfilBalitaState extends State<ProfilBalita> {
   @override
   void initState() {
     super.initState();
-    umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
+    // umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
 
   @override

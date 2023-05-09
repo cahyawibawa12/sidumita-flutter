@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:posyandu/Model/KeluargaModel.dart';
-import 'package:posyandu/Model/UpdatePetugasModel.dart';
+import 'package:posyandu/Model/PetugasModel.dart';
+
 import 'package:posyandu/Service/AuthService.dart';
 import 'package:posyandu/Service/token.dart';
 import 'package:posyandu/globals.dart';
@@ -29,15 +30,23 @@ class PetugasService {
     return response;
   }
 
-  Future<http.Response> updateMyPetugas(
-      UpdatePetugasModel updatePetugasModel) async {
+  Future<http.Response> showIbuHamilForPetugas() async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(baseURL + 'petugas/with-ibu-hamil');
+    http.Response response = await http.get(url, headers: setHeaders(token));
+    print(response.body);
+    return response;
+  }
+
+  Future<http.Response> updateMyPetugas(PetugasModel petugasModel) async {
     // SharedPreferences localStorage = await SharedPreferences.getInstance();
     // var token = localStorage.getString('token')?.replaceAll('"', "");
     var token = await getToken();
     var url = Uri.parse(baseURL + 'me/update-petugas');
     http.Response response = await http.post(url,
-        headers: setHeaders(token),
-        body: jsonEncode(updatePetugasModel.toJson()));
+        headers: setHeaders(token), body: jsonEncode(petugasModel.toJson()));
     print(response.body);
     return response;
   }

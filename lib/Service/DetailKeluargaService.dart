@@ -44,6 +44,16 @@ class DetailKeluargaService {
     return response;
   }
 
+  Future<http.Response> deleteMyDetailKeluarga(int id) async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(baseURL + 'detail-keluarga/' + id.toString());
+    http.Response response = await http.delete(url, headers: setHeaders(token));
+    print(response.body);
+    return response;
+  }
+
   Future<http.Response> GetUmur(int id) async {
     var token = await getToken();
     var url = Uri.parse(baseURL + 'umur/' + id.toString());

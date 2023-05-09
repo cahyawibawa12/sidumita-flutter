@@ -52,7 +52,7 @@ class _BiodataIbuHamilState extends State<BiodataIbuHamil> {
     detailKeluarga.pendidikan.text =
         widget.ibuHamilModel.detailKeluarga!.pendidikan.toString();
 
-    umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
+    // umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
   }
 
   @override

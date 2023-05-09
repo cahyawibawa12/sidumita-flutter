@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Model/CekDataModel.dart';
+import 'package:posyandu/Model/DataBeratIbu.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/Page/Balita/Statistik/BeratBadanPage.dart';
 import 'package:posyandu/Service/CekDataService.dart';
@@ -13,8 +14,10 @@ class CekDataController extends GetxController implements GetxService {
   var hasilCekDataBerat = CekDataModel().obs;
   var hasilCekDataTinggi = CekDataModel().obs;
   var hasilCekDataKepala = CekDataModel().obs;
+  var hasilBeratIbu = <DataBeratIbuModel>[].obs;
   final service = CekDataService();
   var isLoading = false.obs;
+  List<Map<dynamic, dynamic>> data = [];
 
   // void resetButtonClicked() {
   //   Rx<CekDataModel>? hasilCekDataBerat = null;
@@ -74,5 +77,23 @@ class CekDataController extends GetxController implements GetxService {
     hasilCekDataKepala.value = CekDataModel.fromJson(responsedecode3['data']);
     isLoading.value = false;
     // resetButtonClicked();
+  }
+
+  Future<void> getBeratIbu(int ibu_hamil_id) async {
+    isLoading.value = true;
+    var response = await service.getBeratIbu(ibu_hamil_id);
+    var responsedecode = jsonDecode(response.body);
+
+    // for (var i = 0; i < responsedecode['data'].length; i++) {
+    //   DataBeratIbuModel data =
+    //       DataBeratIbuModel.fromJson(responsedecode['data'][i]);
+    //   hasilBeratIbu.add(data);
+    // }
+    // hasilBeratIbu.value = DataBeratIbuModel.fromJson(responsedecode['data']);
+
+    Map obj = responsedecode;
+    data = List<Map<dynamic, dynamic>>.from(obj["data"]);
+
+    isLoading.value = false;
   }
 }

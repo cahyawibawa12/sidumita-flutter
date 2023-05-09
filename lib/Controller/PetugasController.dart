@@ -5,14 +5,14 @@ import 'package:get/get.dart';
 
 import 'package:posyandu/Model/PetugasModel.dart';
 import 'package:posyandu/Model/PetugasWithBalitaModel.dart';
-import 'package:posyandu/Model/UpdatePetugasModel.dart';
+import 'package:posyandu/Model/PetugasWithIbuHamilModel.dart';
 
 import 'package:posyandu/Service/PetugasService.dart';
 
 class PetugasController extends GetxController implements GetxService {
   var petugas = PetugasModel().obs;
   var listPetugasWithBalitas = <PetugasWithBalitaModel>[].obs;
-  var updatePetugas = UpdatePetugasModel().obs;
+  var listPetugasWithIbuHamils = <PetugasWithIbuHamilModel>[].obs;
   final service = PetugasService();
   var isLoading = false.obs;
   List<Map<String, dynamic>> data = [];
@@ -79,19 +79,36 @@ class PetugasController extends GetxController implements GetxService {
     isLoading.value = false;
   }
 
+  Future<void> showIbuHamilForPetugas() async {
+    isLoading.value = true;
+    var response = await service.showIbuHamilForPetugas();
+    var responsedecode = jsonDecode(response.body);
+
+    listPetugasWithIbuHamils.clear();
+    data.clear();
+    for (var i = 0; i < responsedecode['data'].length; i++) {
+      PetugasWithIbuHamilModel petugasWithIbuHamilModel =
+          PetugasWithIbuHamilModel.fromJson(responsedecode['data'][i]);
+      listPetugasWithIbuHamils.add(petugasWithIbuHamilModel);
+    }
+    Map obj = responsedecode;
+    data = List<Map<String, dynamic>>.from(obj["data"]);
+    isLoading.value = false;
+  }
+
   Future<void> UpdatePetugas() async {
     isLoading.value = true;
 
-    updatePetugas.value.nik = nik.text;
-    updatePetugas.value.alamat = alamat.text;
-    updatePetugas.value.nama = nama.text;
-    updatePetugas.value.tempatLahir = tempat_lahir.text;
-    updatePetugas.value.tanggalLahir = tanggal_lahir.text;
-    updatePetugas.value.noTelp = no_telp.text;
-    updatePetugas.value.jenisKelamin = jenis_kelamin;
-    updatePetugas.value.dusunId = dusun_id;
+    petugas.value.nik = nik.text;
+    petugas.value.alamat = alamat.text;
+    petugas.value.nama = nama.text;
+    petugas.value.tempatLahir = tempat_lahir.text;
+    petugas.value.tanggalLahir = tanggal_lahir.text;
+    petugas.value.noTelp = no_telp.text;
+    petugas.value.jenisKelamin = jenis_kelamin;
+    // petugas.value.dusunId = dusun_id;
 
-    var response = await service.updateMyPetugas(updatePetugas.value);
+    var response = await service.updateMyPetugas(petugas.value);
     var responsedecode = jsonDecode(response.body);
     if (response.statusCode == 200) {
       Get.back();

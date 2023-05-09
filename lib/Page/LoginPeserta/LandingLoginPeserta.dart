@@ -322,14 +322,14 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
   }
 
   void logout() async {
-    var res = await Network().getData('auth/logout');
-    var body = json.decode(res.body);
-    if (body['success'] == true) {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.remove('user');
-      localStorage.remove('token');
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginPagePeserta()));
-    }
+    // var res = await Network().getData('auth/logout');
+    // var body = json.decode(res.body);
+    // if (body['success'] == true) {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('user');
+    localStorage.remove('token');
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LoginPagePeserta()));
+    // }
   }
 }

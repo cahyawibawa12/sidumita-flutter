@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:posyandu/Model/PemeriksaanIbuHamilModel.dart';
 import 'package:posyandu/Service/token.dart';
 import 'package:posyandu/globals.dart';
 import 'package:http/http.dart' as http;
@@ -16,4 +17,17 @@ class PemeriksaanIbuHamilService {
     print(response.body);
     return response;
   }
+
+  // Future<http.Response> StorePemeriksaanIbuByPetugas(
+  //     PemeriksaanIbuHamilModel pemeriksaanIbuHamilModel) async {
+  //   // SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   // var token = localStorage.getString('token')?.replaceAll('"', "");
+  //   var token = await getToken();
+  //   var url = Uri.parse(baseURL + 'pemeriksaan-ibu-hamil/byPetugas');
+  //   http.Response response = await http.post(url,
+  //       headers: setHeaders(token),
+  //       body: jsonEncode(pemeriksaanIbuHamilModel.toJson()));
+  //   print(response.body);
+  //   return response;
+  // }
 }

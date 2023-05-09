@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector_v2/focus_detector_v2.dart';
 import 'package:get/get.dart';
+import 'package:posyandu/Controller/MasterData/DaerahController.dart';
 import 'package:posyandu/Controller/MasterData/DesaController.dart';
 import 'package:posyandu/Controller/MasterData/DusunController.dart';
 import 'package:posyandu/Controller/MasterData/KabupatenController.dart';
@@ -25,32 +26,35 @@ class EditBiodataPetugas extends StatefulWidget {
 
 class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
   var bioPetugas = Get.put(PetugasController());
-  var provinsi = Get.put(ProvinsiController());
-  var kabupaten = Get.put(KabupatenController());
-  var kecamatan = Get.put(KecamatanController());
-  var desa = Get.put(DesaController());
-  var dusun = Get.put(DusunController());
-
-  String? provinsi_id, kabupaten_id, kecamatan_id, desa_id, dusun_id;
+  // var provinsi = Get.put(ProvinsiController());
+  // var kabupaten = Get.put(KabupatenController());
+  // var kecamatan = Get.put(KecamatanController());
+  // var desa = Get.put(DesaController());
+  // var dusun = Get.put(DusunController());
+  var daerahController = Get.put(DaerahController());
 
   @override
   void initState() {
     super.initState();
-    bioPetugas.ShowPetugas().then((value) {
-      if (bioPetugas.kabupaten_id != null) {
-        kabupaten.fetchProvinsi(provinsi_id: bioPetugas.provinsi_id);
+    bioPetugas.ShowPetugas().whenComplete(() {
+      print("bebas");
+      if (bioPetugas.petugas.value.kabupatenId != null) {
+        daerahController.fetchProvinsi(
+            provinsi_id: bioPetugas.petugas.value.provinsiId);
       }
-      if (bioPetugas.kecamatan_id != null) {
-        kecamatan.fetchKabupaten(kabupaten_id: bioPetugas.kabupaten_id);
+      if (bioPetugas.petugas.value.kecamatanId != null) {
+        daerahController.fetchKabupaten(
+            kabupaten_id: bioPetugas.petugas.value.kabupatenId);
       }
-      if (bioPetugas.desa_id != null) {
-        desa.fetchKecamatan(kecamatan_id: bioPetugas.kecamatan_id);
+      if (bioPetugas.petugas.value.desaId != null) {
+        daerahController.fetchKecamatan(
+            kecamatan_id: bioPetugas.petugas.value.kecamatanId);
       }
-      if (bioPetugas.dusun_id != null) {
-        dusun.fetchDesa(desa_id: bioPetugas.desa_id);
+      if (bioPetugas.petugas.value.dusunId != null) {
+        daerahController.fetchDesa(desa_id: bioPetugas.petugas.value.desaId);
       }
     });
-    provinsi.getProvinsi();
+    daerahController.getProvinsi();
     // bioPetugas.nama.text = widget.biodataPetugas.nama.toString();
     // bioPetugas.nik.text = widget.biodataPetugas.nik.toString();
     // bioPetugas.no_telp.text = widget.biodataPetugas.noTelp.toString();
@@ -307,7 +311,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                             SizedBox(
                               height: 10,
                             ),
-                            Obx(() => provinsi.isLoading.value
+                            Obx(() => daerahController.isLoading.value
                                 ? CircularProgressIndicator()
                                 : LayoutBuilder(builder: (context, constraint) {
                                     // List<String> itemStringList = ["Female", "Male"];
@@ -325,11 +329,17 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                           child: DropdownButtonHideUnderline(
                                             child: ButtonTheme(
                                               alignedDropdown: false,
-                                              child: DropdownButton<String>(
+                                              child: DropdownButton<String?>(
                                                   isExpanded: true,
-                                                  value: provinsi_id == null
+                                                  value: bioPetugas
+                                                              .petugas
+                                                              .value
+                                                              .provinsiId ==
+                                                          null
                                                       ? null
-                                                      : provinsi_id,
+                                                      : bioPetugas.petugas.value
+                                                          .provinsiId
+                                                          .toString(),
                                                   icon: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -368,18 +378,29 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                   onChanged:
                                                       (String? newValue) {
                                                     setState(() {
-                                                      provinsi_id = newValue!;
-                                                      bioPetugas.provinsi_id =
-                                                          int.parse(newValue)!;
-                                                      kabupaten.fetchProvinsi(
-                                                          provinsi_id:
-                                                              int.parse(
-                                                                  newValue!));
+                                                      bioPetugas.petugas.value
+                                                              .provinsiId =
+                                                          int.parse(newValue!);
+                                                      daerahController
+                                                          .fetchProvinsi(
+                                                              provinsi_id:
+                                                                  int.parse(
+                                                                      newValue!));
+                                                      bioPetugas.petugas.value
+                                                          .kabupatenId = null;
+                                                      bioPetugas.petugas.value
+                                                          .kecamatanId = null;
+                                                      bioPetugas.petugas.value
+                                                          .desaId = null;
+                                                      bioPetugas.petugas.value
+                                                          .dusunId = null;
                                                     });
                                                   },
+                                                  hint: Text("Pilih Provinsi"),
                                                   items: [
-                                                    for (var data in provinsi
-                                                        .listProvinsi.value)
+                                                    for (var data
+                                                        in daerahController
+                                                            .listProvinsi.value)
                                                       DropdownMenuItem(
                                                         child: new Text(
                                                           data.namaProvinsi!,
@@ -397,7 +418,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                             SizedBox(
                               height: 10,
                             ),
-                            Obx(() => kabupaten.isLoading.value
+                            Obx(() => daerahController.isLoading.value
                                 ? CircularProgressIndicator()
                                 : LayoutBuilder(builder: (context, constraint) {
                                     // List<String> itemStringList = ["Female", "Male"];
@@ -417,9 +438,15 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                               alignedDropdown: false,
                                               child: DropdownButton<String>(
                                                   isExpanded: true,
-                                                  value: kabupaten_id == null
+                                                  value: bioPetugas
+                                                              .petugas
+                                                              .value
+                                                              .kabupatenId ==
+                                                          null
                                                       ? null
-                                                      : kabupaten_id,
+                                                      : bioPetugas.petugas.value
+                                                          .kabupatenId
+                                                          .toString(),
                                                   icon: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -458,18 +485,28 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                   onChanged:
                                                       (String? newValue) {
                                                     setState(() {
-                                                      kabupaten_id = newValue!;
-                                                      bioPetugas.kabupaten_id =
-                                                          int.parse(newValue)!;
-                                                      kecamatan.fetchKabupaten(
-                                                          kabupaten_id:
-                                                              int.parse(
-                                                                  newValue));
+                                                      bioPetugas.petugas.value
+                                                              .kabupatenId =
+                                                          int.parse(newValue!);
+                                                      daerahController
+                                                          .fetchKabupaten(
+                                                              kabupaten_id:
+                                                                  int.parse(
+                                                                      newValue));
+                                                      bioPetugas.petugas.value
+                                                          .kecamatanId = null;
+                                                      bioPetugas.petugas.value
+                                                          .desaId = null;
+                                                      bioPetugas.petugas.value
+                                                          .dusunId = null;
                                                     });
                                                   },
+                                                  hint: Text("Pilih Kabupaten"),
                                                   items: [
-                                                    for (var data in kabupaten
-                                                        .listKabupaten.value)
+                                                    for (var data
+                                                        in daerahController
+                                                            .listKabupaten
+                                                            .value)
                                                       DropdownMenuItem(
                                                         child: new Text(
                                                           data.namaKabupaten!,
@@ -487,7 +524,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                             SizedBox(
                               height: 10,
                             ),
-                            Obx(() => kecamatan.isLoading.value
+                            Obx(() => daerahController.isLoading.value
                                 ? CircularProgressIndicator()
                                 : LayoutBuilder(builder: (context, constraint) {
                                     // List<String> itemStringList = ["Female", "Male"];
@@ -507,9 +544,15 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                               alignedDropdown: false,
                                               child: DropdownButton<String>(
                                                   isExpanded: true,
-                                                  value: kecamatan_id == null
+                                                  value: bioPetugas
+                                                              .petugas
+                                                              .value
+                                                              .kecamatanId ==
+                                                          null
                                                       ? null
-                                                      : kecamatan_id,
+                                                      : bioPetugas.petugas.value
+                                                          .kecamatanId
+                                                          .toString(),
                                                   icon: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -548,18 +591,26 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                   onChanged:
                                                       (String? newValue) {
                                                     setState(() {
-                                                      kecamatan_id = newValue!;
-                                                      bioPetugas.kecamatan_id =
-                                                          int.parse(newValue)!;
-                                                      desa.fetchKecamatan(
-                                                          kecamatan_id:
-                                                              int.parse(
-                                                                  newValue));
+                                                      bioPetugas.petugas.value
+                                                              .kecamatanId =
+                                                          int.parse(newValue!);
+                                                      daerahController
+                                                          .fetchKecamatan(
+                                                              kecamatan_id:
+                                                                  int.parse(
+                                                                      newValue));
+                                                      bioPetugas.petugas.value
+                                                          .desaId = null;
+                                                      bioPetugas.petugas.value
+                                                          .dusunId = null;
                                                     });
                                                   },
+                                                  hint: Text("Pilih Kecamatan"),
                                                   items: [
-                                                    for (var data in kecamatan
-                                                        .listKecamatan.value)
+                                                    for (var data
+                                                        in daerahController
+                                                            .listKecamatan
+                                                            .value)
                                                       DropdownMenuItem(
                                                         child: new Text(
                                                           data.namaKecamatan!,
@@ -577,7 +628,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                             SizedBox(
                               height: 10,
                             ),
-                            Obx(() => desa.isLoading.value
+                            Obx(() => daerahController.isLoading.value
                                 ? CircularProgressIndicator()
                                 : LayoutBuilder(builder: (context, constraint) {
                                     // List<String> itemStringList = ["Female", "Male"];
@@ -597,9 +648,13 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                               alignedDropdown: false,
                                               child: DropdownButton<String>(
                                                   isExpanded: true,
-                                                  value: desa_id == null
+                                                  value: bioPetugas.petugas
+                                                              .value.desaId ==
+                                                          null
                                                       ? null
-                                                      : desa_id,
+                                                      : bioPetugas
+                                                          .petugas.value.desaId
+                                                          .toString(),
                                                   icon: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -638,17 +693,20 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                   onChanged:
                                                       (String? newValue) {
                                                     setState(() {
-                                                      desa_id = newValue!;
-                                                      bioPetugas.desa_id =
-                                                          int.parse(newValue)!;
-                                                      dusun.fetchDesa(
+                                                      bioPetugas.petugas.value
+                                                              .desaId =
+                                                          int.parse(newValue!);
+                                                      daerahController.fetchDesa(
                                                           desa_id: int.parse(
                                                               newValue));
+                                                      bioPetugas.petugas.value
+                                                          .dusunId = null;
                                                     });
                                                   },
                                                   items: [
                                                     for (var data
-                                                        in desa.listDesa.value)
+                                                        in daerahController
+                                                            .listDesa.value)
                                                       DropdownMenuItem(
                                                         child: new Text(
                                                           data.namaDesa!,
@@ -666,7 +724,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                             SizedBox(
                               height: 10,
                             ),
-                            Obx(() => dusun.isLoading.value
+                            Obx(() => daerahController.isLoading.value
                                 ? CircularProgressIndicator()
                                 : LayoutBuilder(builder: (context, constraint) {
                                     // List<String> itemStringList = ["Female", "Male"];
@@ -686,9 +744,13 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                               alignedDropdown: false,
                                               child: DropdownButton<String>(
                                                   isExpanded: true,
-                                                  value: dusun_id == null
+                                                  value: bioPetugas.petugas
+                                                              .value.dusunId ==
+                                                          null
                                                       ? null
-                                                      : dusun_id,
+                                                      : bioPetugas
+                                                          .petugas.value.dusunId
+                                                          .toString(),
                                                   icon: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -727,17 +789,15 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                   onChanged:
                                                       (String? newValue) {
                                                     setState(() {
-                                                      dusun_id = newValue!;
-                                                      // kecamatan.fetchKabupaten(
-                                                      //     kabupaten_id:
-                                                      //         int.parse(newValue));
-                                                      bioPetugas.dusun_id =
-                                                          int.parse(newValue)!;
+                                                      bioPetugas.petugas.value
+                                                              .dusunId =
+                                                          int.parse(newValue!);
                                                     });
                                                   },
                                                   items: [
-                                                    for (var data in dusun
-                                                        .listDusun.value)
+                                                    for (var data
+                                                        in daerahController
+                                                            .listDusun.value)
                                                       DropdownMenuItem(
                                                         child: new Text(
                                                           data.namaDusun!,

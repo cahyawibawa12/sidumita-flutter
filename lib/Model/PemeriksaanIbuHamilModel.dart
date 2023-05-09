@@ -1,6 +1,7 @@
 class PemeriksaanIbuHamilModel {
   int id;
   String tanggalPemeriksaan;
+  String umurKandungan;
   double tinggiBadan;
   double beratBadan;
   double lingkarPerut;
@@ -17,6 +18,7 @@ class PemeriksaanIbuHamilModel {
   PemeriksaanIbuHamilModel({
     required this.id,
     required this.tanggalPemeriksaan,
+    required this.umurKandungan,
     required this.tinggiBadan,
     required this.beratBadan,
     required this.lingkarPerut,
@@ -35,6 +37,7 @@ class PemeriksaanIbuHamilModel {
       PemeriksaanIbuHamilModel(
         id: json['id'],
         tanggalPemeriksaan: json['tanggal_pemeriksaan'],
+        umurKandungan: json['umur_kandungan'],
         tinggiBadan: json['tinggi_badan'].toDouble(),
         beratBadan: json['berat_badan'].toDouble(),
         lingkarPerut: json['lingkar_perut'].toDouble(),

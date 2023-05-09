@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:posyandu/Controller/MasterData/VaksinController.dart';
 
 class CheckBoxVaksin extends StatefulWidget {
   const CheckBoxVaksin({super.key});
@@ -10,6 +12,15 @@ class CheckBoxVaksin extends StatefulWidget {
 }
 
 class _CheckBoxVaksinState extends State<CheckBoxVaksin> {
+  var listVaksin = Get.put(VaksinController());
+
+  List<Map> vaksinBalita = [];
+  @override
+  void initState() {
+    super.initState();
+    listVaksin.getVaksin();
+  }
+
   bool isChecked = false;
   void toggleCheckbox(bool value) {
     if (isChecked == false) {
@@ -27,16 +38,6 @@ class _CheckBoxVaksinState extends State<CheckBoxVaksin> {
     }
   }
 
-  List<Map> vaksinBalita = [
-    {"name": "TBD", "isChecked": false},
-    {"name": "BCG", "isChecked": false},
-    {
-      "name": "T",
-      "isChecked": false,
-    },
-    {"name": "B", "isChecked": false},
-    {"name": "C", "isChecked": false}
-  ];
   var resultHolder = 'Checkbox is UN-CHECKED';
   @override
   Widget build(BuildContext context) {
@@ -63,33 +64,40 @@ class _CheckBoxVaksinState extends State<CheckBoxVaksin> {
       ),
       if (isChecked)
         // The checkboxes will be here
-        Column(
-            children: vaksinBalita.map((vaksin) {
-          return CheckboxListTile(
-              value: vaksin["isChecked"],
-              title: Text(vaksin["name"]),
-              onChanged: (newValue) {
-                setState(() {
-                  vaksin["isChecked"] = newValue;
-                });
-              });
-        }).toList()),
-      Wrap(
-        children: vaksinBalita.map((hobby) {
-          if (hobby["isChecked"] == true) {
-            return Card(
-              elevation: 3,
-              color: Colors.amber,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(hobby["name"]),
-              ),
-            );
-          }
-
-          return Container();
-        }).toList(),
-      ),
+        Obx(() => listVaksin.isLoading.value
+            ? CircularProgressIndicator()
+            : LayoutBuilder(builder: (context, constraint) {
+                return FormField(
+                  initialValue: false,
+                  enabled: true,
+                  builder: (FormFieldState<bool> field) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        errorText: field.errorText,
+                        border: InputBorder.none,
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: listVaksin.data.length,
+                        itemBuilder: (context, index) {
+                          return Obx(() => CheckboxListTile(
+                                title:
+                                    Text(listVaksin.data[index]["nama_vaksin"]),
+                                value:
+                                    listVaksin.data[index]["checked"] ?? false,
+                                onChanged: (value) {
+                                  listVaksin.data.value[index]['checked'] =
+                                      value;
+                                  listVaksin.data.refresh();
+                                  listVaksin.update();
+                                },
+                              ));
+                        },
+                      ),
+                    );
+                  },
+                );
+              })),
     ]);
   }
 }

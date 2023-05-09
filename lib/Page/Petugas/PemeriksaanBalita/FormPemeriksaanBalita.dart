@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:posyandu/Controller/MasterData/VaksinController.dart';
+import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
+import 'package:posyandu/Model/PetugasWithBalitaModel.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:posyandu/widget/CheckBoxVaksin.dart';
+import 'package:intl/intl.dart';
 
 class FormPemeriksaanBalita extends StatefulWidget {
-  const FormPemeriksaanBalita({super.key});
+  FormPemeriksaanBalita({super.key, required this.petugasWithBalitaModel});
+  final Map petugasWithBalitaModel;
 
   @override
   State<FormPemeriksaanBalita> createState() => _FormPemeriksaanBalitaState();
@@ -11,6 +17,21 @@ class FormPemeriksaanBalita extends StatefulWidget {
 
 class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
   bool _checkBoxVal = true;
+  var pemeriksaanBalitaByPetugas = Get.put(PemeriksaanBalitaController());
+
+  TextEditingController nama_lengkap = TextEditingController();
+  // TextEditingController tanggal_pemeriksaan = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    nama_lengkap.text = widget.petugasWithBalitaModel['nama_lengkap'];
+    pemeriksaanBalitaByPetugas.tanggal_pemeriksaan.text =
+        DateFormat('y-M-d').format(DateTime.now()).toString();
+  }
+
+  var tanggal = '';
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -31,8 +52,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
               child: Column(
                 children: [
                   TextFormField(
-                    initialValue: 'John Doe',
-                    maxLength: 20,
+                    controller: nama_lengkap,
                     decoration: const InputDecoration(
                       labelText: 'Name',
                       labelStyle: TextStyle(
@@ -45,7 +65,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                       ),
                       // helperText: "What's your name?",
                     ),
-                    onChanged: (value) {},
+                    // onChanged: (value) {},
                   ),
                   InkWell(
                     onTap: () async {
@@ -55,10 +75,18 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2100),
                       );
-                      print("pickedDate: $pickedDate");
+                      setState(() {
+                        tanggal =
+                            pemeriksaanBalitaByPetugas.tanggal_pemeriksaan.text;
+                        pemeriksaanBalitaByPetugas.tanggal_pemeriksaan.text =
+                            DateFormat('y-M-d').format(pickedDate!);
+                      });
+                      tanggal = DateFormat('y-M-d').format(pickedDate!);
+                      print("pickedDate: $tanggal");
                     },
                     child: TextFormField(
-                      initialValue: '2022-08-01',
+                      controller:
+                          pemeriksaanBalitaByPetugas.tanggal_pemeriksaan,
                       maxLength: 20,
                       enabled: false,
                       decoration: const InputDecoration(
@@ -74,11 +102,10 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                         suffixIcon: Icon(Icons.date_range),
                         // helperText: "What's your name?",
                       ),
-                      onChanged: (value) {},
                     ),
                   ),
                   TextFormField(
-                    initialValue: '24',
+                    controller: pemeriksaanBalitaByPetugas.umur_balita,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Umur',
@@ -98,7 +125,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                     onChanged: (value) {},
                   ),
                   TextFormField(
-                    initialValue: '24',
+                    controller: pemeriksaanBalitaByPetugas.berat,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Berat',
@@ -118,7 +145,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                     onChanged: (value) {},
                   ),
                   TextFormField(
-                    initialValue: '24',
+                    controller: pemeriksaanBalitaByPetugas.tinggi,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Tinggi',
@@ -138,7 +165,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                     onChanged: (value) {},
                   ),
                   TextFormField(
-                    initialValue: '24',
+                    controller: pemeriksaanBalitaByPetugas.lingkar_kepala,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Lingkar Kepala',
@@ -155,10 +182,10 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                       ),
                       // helperText: 'Enter your email address',
                     ),
-                    onChanged: (value) {},
+                    // onChanged: (value) {},
                   ),
                   TextFormField(
-                    initialValue: '24',
+                    controller: pemeriksaanBalitaByPetugas.lingkar_lengan,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       labelText: 'Lingkar Lengan',
@@ -175,10 +202,10 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                       ),
                       // helperText: 'Enter your email address',
                     ),
-                    onChanged: (value) {},
+                    // onChanged: (value) {},
                   ),
                   TextFormField(
-                    initialValue: 'Tidak Ada Keluhan',
+                    controller: pemeriksaanBalitaByPetugas.keluhan,
                     maxLength: 200,
                     maxLines: 4,
                     decoration: const InputDecoration(
@@ -192,10 +219,10 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                         ),
                       ),
                     ),
-                    onChanged: (value) {},
+                    // onChanged: (value) {},
                   ),
                   TextFormField(
-                    initialValue: 'Tidak Ada Penanganan',
+                    controller: pemeriksaanBalitaByPetugas.penanganan,
                     maxLength: 200,
                     maxLines: 4,
                     decoration: const InputDecoration(
@@ -209,10 +236,10 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                         ),
                       ),
                     ),
-                    onChanged: (value) {},
+                    // onChanged: (value) {},
                   ),
                   TextFormField(
-                    initialValue: 'Tidak Ada Catatan Khusus',
+                    controller: pemeriksaanBalitaByPetugas.catatan,
                     maxLength: 200,
                     maxLines: 4,
                     decoration: const InputDecoration(
@@ -226,7 +253,41 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                         ),
                       ),
                     ),
-                    onChanged: (value) {},
+                    // onChanged: (value) {},
+                  ),
+                  TextFormField(
+                    controller: pemeriksaanBalitaByPetugas.dokter_id,
+                    maxLength: 200,
+                    maxLines: 4,
+                    decoration: const InputDecoration(
+                      labelText: 'Dokter',
+                      labelStyle: TextStyle(
+                        color: Colors.blueGrey,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                    ),
+                    // onChanged: (value) {},
+                  ),
+                  TextFormField(
+                    controller: pemeriksaanBalitaByPetugas.vitamin_id,
+                    maxLength: 200,
+                    maxLines: 4,
+                    decoration: const InputDecoration(
+                      labelText: 'Vitamin',
+                      labelStyle: TextStyle(
+                        color: Colors.blueGrey,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                    ),
+                    // onChanged: (value) {},
                   ),
 
                   CheckBoxVaksin(),
@@ -242,7 +303,13 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueGrey,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      var listVaksin = Get.put(VaksinController());
+                      pemeriksaanBalitaByPetugas
+                          .StorePemeriksaanBalitaByPetugas(
+                              vaksins: listVaksin.data,
+                              balita_id: widget.petugasWithBalitaModel["id"]);
+                    },
                     child: const Text("Save"),
                   ),
                 ],

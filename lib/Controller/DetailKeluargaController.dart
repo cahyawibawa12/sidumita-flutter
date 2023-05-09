@@ -121,6 +121,30 @@ class DetailKeluargaController extends GetxController implements GetxService {
     isLoading.value = false;
   }
 
+  Future<void> deleteDetailKeluarga(int id) async {
+    isLoading.value = true;
+
+    var response = await service.deleteMyDetailKeluarga(id);
+    var responsedecode = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      Get.back();
+      Get.snackbar(
+        'Delete Berhasil',
+        "Data berhasil di hapus",
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      );
+    } else {
+      Get.snackbar(
+        'Delete Gagal',
+        "Data gagal dihapus, mohon periksa kembali",
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
+    isLoading.value = false;
+  }
+
   Future<void> GetUmur(int id) async {
     isLoading.value = true;
     var response = await service.GetUmur(id);
