@@ -76,9 +76,26 @@ class DetailKeluargaController extends GetxController implements GetxService {
 
     var response = await service.storeMyDetailKeluarga(detailKeluarga.value);
     var responsedecode = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Get.back();
+      Get.snackbar(
+        'Create Berhasil',
+        "Data berhasil ditambah",
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      );
+    } else {
+      Get.snackbar(
+        'Create Gagal',
+        "Data gagal ditambah, mohon periksa kembali",
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
     isLoading.value = false;
 
-    Get.back();
+    // Get.back();
     resetForm();
   }
 

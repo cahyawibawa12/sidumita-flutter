@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:posyandu/Controller/DetailKeluargaController.dart';
 import 'package:posyandu/Controller/MasterData/VaksinController.dart';
 import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
 import 'package:posyandu/Model/PetugasWithBalitaModel.dart';
@@ -18,6 +19,7 @@ class FormPemeriksaanBalita extends StatefulWidget {
 class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
   bool _checkBoxVal = true;
   var pemeriksaanBalitaByPetugas = Get.put(PemeriksaanBalitaController());
+  var umur = Get.put(DetailKeluargaController());
 
   TextEditingController nama_lengkap = TextEditingController();
   // TextEditingController tanggal_pemeriksaan = TextEditingController();
@@ -28,6 +30,9 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
     nama_lengkap.text = widget.petugasWithBalitaModel['nama_lengkap'];
     pemeriksaanBalitaByPetugas.tanggal_pemeriksaan.text =
         DateFormat('y-M-d').format(DateTime.now()).toString();
+    umur.GetUmur(widget.petugasWithBalitaModel['detail_keluarga_id'])
+        .whenComplete(() => pemeriksaanBalitaByPetugas.umur_balita.text =
+            umur.umurPeserta.value.usiaBulan!.toString());
   }
 
   var tanggal = '';
@@ -104,109 +109,157 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                       ),
                     ),
                   ),
-                  TextFormField(
-                    controller: pemeriksaanBalitaByPetugas.umur_balita,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Umur',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_outlined,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            controller: pemeriksaanBalitaByPetugas.umur_balita,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              labelText: 'Umur',
+                              labelStyle: TextStyle(
+                                color: Colors.blueGrey,
+                              ),
+                              // suffixIcon: Icon(
+                              //   Icons.numbers_outlined,
+                              // ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.blueGrey,
+                                ),
+                              ),
+                              // helperText: 'Enter your email address',
+                            ),
+                            onChanged: (value) {},
+                          ),
                         ),
-                      ),
-                      // helperText: 'Enter your email address',
-                    ),
-                    onChanged: (value) {},
-                  ),
-                  TextFormField(
-                    controller: pemeriksaanBalitaByPetugas.berat,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Berat',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_rounded,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
+                        SizedBox(
+                          width: 30,
                         ),
-                      ),
-                      // helperText: 'Enter your email address',
+                        Text("Bulan")
+                      ],
                     ),
-                    onChanged: (value) {},
                   ),
-                  TextFormField(
-                    controller: pemeriksaanBalitaByPetugas.tinggi,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Tinggi',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_rounded,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
+                  Container(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Flexible(
+                              child: TextFormField(
+                                controller: pemeriksaanBalitaByPetugas.berat,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Berat',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  // suffixIcon: Icon(
+                                  //   Icons.numbers_rounded,
+                                  // ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  // helperText: 'Enter your email address',
+                                ),
+                              ),
+                            ),
+                            Text("Kg"),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Flexible(
+                              child: TextFormField(
+                                controller: pemeriksaanBalitaByPetugas.tinggi,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Tinggi',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  // suffixIcon: Icon(
+                                  //   Icons.numbers_rounded,
+                                  // ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  // helperText: 'Enter your email address',
+                                ),
+                              ),
+                            ),
+                            Text("Cm")
+                          ],
                         ),
-                      ),
-                      // helperText: 'Enter your email address',
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Flexible(
+                              child: TextFormField(
+                                controller:
+                                    pemeriksaanBalitaByPetugas.lingkar_kepala,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Lingkar Kepala',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  // suffixIcon: Icon(
+                                  //   Icons.numbers_rounded,
+                                  // ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  // helperText: 'Enter your email address',
+                                ),
+                                // onChanged: (value) {},
+                              ),
+                            ),
+                            Text("Cm"),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Flexible(
+                              child: TextFormField(
+                                controller:
+                                    pemeriksaanBalitaByPetugas.lingkar_lengan,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Lingkar Lengan',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  // suffixIcon: Icon(
+                                  //   Icons.numbers_rounded,
+                                  // ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  // helperText: 'Enter your email address',
+                                ),
+                                // onChanged: (value) {},
+                              ),
+                            ),
+                            Text("Cm")
+                          ],
+                        )
+                      ],
                     ),
-                    onChanged: (value) {},
                   ),
-                  TextFormField(
-                    controller: pemeriksaanBalitaByPetugas.lingkar_kepala,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Lingkar Kepala',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_rounded,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                      // helperText: 'Enter your email address',
-                    ),
-                    // onChanged: (value) {},
-                  ),
-                  TextFormField(
-                    controller: pemeriksaanBalitaByPetugas.lingkar_lengan,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Lingkar Lengan',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_rounded,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                      // helperText: 'Enter your email address',
-                    ),
-                    // onChanged: (value) {},
-                  ),
+
                   TextFormField(
                     controller: pemeriksaanBalitaByPetugas.keluhan,
-                    maxLength: 200,
+
                     maxLines: 4,
                     decoration: const InputDecoration(
                       labelText: 'Keluhan',
@@ -223,7 +276,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                   ),
                   TextFormField(
                     controller: pemeriksaanBalitaByPetugas.penanganan,
-                    maxLength: 200,
+
                     maxLines: 4,
                     decoration: const InputDecoration(
                       labelText: 'Penanganan',
@@ -240,7 +293,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                   ),
                   TextFormField(
                     controller: pemeriksaanBalitaByPetugas.catatan,
-                    maxLength: 200,
+
                     maxLines: 4,
                     decoration: const InputDecoration(
                       labelText: 'Catatan Khusus',

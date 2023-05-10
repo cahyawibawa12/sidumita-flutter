@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:posyandu/Controller/PemeriksaanIbuHamilController.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
+import 'package:intl/intl.dart';
 
 class FormPemeriksaanIbuHamil extends StatefulWidget {
-  const FormPemeriksaanIbuHamil({super.key});
+  FormPemeriksaanIbuHamil({super.key, required this.petugasWithIbuHamilModel});
+
+  final Map petugasWithIbuHamilModel;
 
   @override
   State<FormPemeriksaanIbuHamil> createState() =>
@@ -10,6 +15,18 @@ class FormPemeriksaanIbuHamil extends StatefulWidget {
 }
 
 class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
+  var pemeriksaanIbuHamilbyPetugas = Get.put(PemeriksaanIbuHamilController());
+
+  TextEditingController nama_lengkap = TextEditingController();
+
+  void initState() {
+    super.initState();
+    nama_lengkap.text = widget.petugasWithIbuHamilModel['nama_lengkap'];
+    pemeriksaanIbuHamilbyPetugas.tanggal_pemeriksaanCtrl.text =
+        DateFormat('y-M-d').format(DateTime.now()).toString();
+  }
+
+  var tanggal = '';
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -30,8 +47,7 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
               child: Column(
                 children: [
                   TextFormField(
-                    initialValue: 'John Doe',
-                    maxLength: 20,
+                    controller: nama_lengkap,
                     decoration: const InputDecoration(
                       labelText: 'Name',
                       labelStyle: TextStyle(
@@ -44,7 +60,6 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                       ),
                       // helperText: "What's your name?",
                     ),
-                    onChanged: (value) {},
                   ),
                   InkWell(
                     onTap: () async {
@@ -54,10 +69,18 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2100),
                       );
+                      setState(() {
+                        tanggal = pemeriksaanIbuHamilbyPetugas
+                            .tanggal_pemeriksaanCtrl.text;
+                        pemeriksaanIbuHamilbyPetugas.tanggal_pemeriksaanCtrl
+                            .text = DateFormat('y-M-d').format(pickedDate!);
+                      });
+                      tanggal = DateFormat('y-M-d').format(pickedDate!);
                       print("pickedDate: $pickedDate");
                     },
                     child: TextFormField(
-                      initialValue: '2022-08-01',
+                      controller:
+                          pemeriksaanIbuHamilbyPetugas.tanggal_pemeriksaanCtrl,
                       maxLength: 20,
                       enabled: false,
                       decoration: const InputDecoration(
@@ -73,131 +96,163 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                         suffixIcon: Icon(Icons.date_range),
                         // helperText: "What's your name?",
                       ),
-                      onChanged: (value) {},
                     ),
                   ),
-                  TextFormField(
-                    initialValue: '24',
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Umur Kandungan',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_outlined,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            controller:
+                                pemeriksaanIbuHamilbyPetugas.umur_kandunganCtrl,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              labelText: 'Umur Kandungan',
+                              labelStyle: TextStyle(
+                                color: Colors.blueGrey,
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.blueGrey,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text("Minggu")
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Flexible(
+                              child: TextFormField(
+                                controller: pemeriksaanIbuHamilbyPetugas
+                                    .berat_badanCtrl,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Berat',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text("Kg"),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Flexible(
+                              child: TextFormField(
+                                controller: pemeriksaanIbuHamilbyPetugas
+                                    .tinggi_badanCtrl,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Tinggi',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text("Cm"),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Flexible(
+                              child: TextFormField(
+                                controller: pemeriksaanIbuHamilbyPetugas
+                                    .lingkar_perutCtrl,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Lingkar Perut',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text("Cm"),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Flexible(
+                              child: TextFormField(
+                                controller: pemeriksaanIbuHamilbyPetugas
+                                    .denyut_nadiCtrl,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Denyut Nadi',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  // helperText: 'Enter your email address',
+                                ),
+                              ),
+                            ),
+                            Text("Bpm"),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Flexible(
+                        child: TextFormField(
+                          controller: pemeriksaanIbuHamilbyPetugas
+                              .denyut_jantung_bayiCtrl,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Denyut Jantung Bayi',
+                            labelStyle: TextStyle(
+                              color: Colors.blueGrey,
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blueGrey,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                      // helperText: 'Enter your email address',
-                    ),
-                    onChanged: (value) {},
+                      Text("Bpm"),
+                    ],
                   ),
                   TextFormField(
-                    initialValue: '24',
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Berat',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_rounded,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                      // helperText: 'Enter your email address',
-                    ),
-                    onChanged: (value) {},
-                  ),
-                  TextFormField(
-                    initialValue: '24',
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Tinggi',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_rounded,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                      // helperText: 'Enter your email address',
-                    ),
-                    onChanged: (value) {},
-                  ),
-                  TextFormField(
-                    initialValue: '24',
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Lingkar Perut',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_rounded,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                      // helperText: 'Enter your email address',
-                    ),
-                    onChanged: (value) {},
-                  ),
-                  TextFormField(
-                    initialValue: '24',
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Denyut Nadi',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_rounded,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                      // helperText: 'Enter your email address',
-                    ),
-                    onChanged: (value) {},
-                  ),
-                  TextFormField(
-                    initialValue: '24',
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Denyut Jantung Bayi',
-                      labelStyle: TextStyle(
-                        color: Colors.blueGrey,
-                      ),
-                      // suffixIcon: Icon(
-                      //   Icons.numbers_rounded,
-                      // ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                      // helperText: 'Enter your email address',
-                    ),
-                    onChanged: (value) {},
-                  ),
-                  TextFormField(
-                    initialValue: 'Tidak Ada Keluhan',
+                    controller: pemeriksaanIbuHamilbyPetugas.keluhanCtrl,
                     maxLength: 200,
                     maxLines: 4,
                     decoration: const InputDecoration(
@@ -211,10 +266,9 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                         ),
                       ),
                     ),
-                    onChanged: (value) {},
                   ),
                   TextFormField(
-                    initialValue: 'Tidak Ada Penanganan',
+                    controller: pemeriksaanIbuHamilbyPetugas.penangananCtrl,
                     maxLength: 200,
                     maxLines: 4,
                     decoration: const InputDecoration(
@@ -228,10 +282,9 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                         ),
                       ),
                     ),
-                    onChanged: (value) {},
                   ),
                   TextFormField(
-                    initialValue: 'Tidak Ada Catatan Khusus',
+                    controller: pemeriksaanIbuHamilbyPetugas.catatanCtrl,
                     maxLength: 200,
                     maxLines: 4,
                     decoration: const InputDecoration(
@@ -245,13 +298,15 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                         ),
                       ),
                     ),
-                    onChanged: (value) {},
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueGrey,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      pemeriksaanIbuHamilbyPetugas.StorePemeriksaanIbuByPetugas(
+                          ibu_hamil_id: widget.petugasWithIbuHamilModel['id']);
+                    },
                     child: const Text("Save"),
                   ),
                 ],

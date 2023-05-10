@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/PetugasController.dart';
+import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/BiodataPetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/EditBiodataPetugas.dart';
@@ -145,10 +146,7 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
                           title: const Text("Logout"),
                           trailing: IconButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePagePetugas()));
+                              logout();
                             },
                             icon: const Icon(
                               Icons.arrow_right_sharp,
@@ -158,10 +156,7 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePagePetugas()));
+                        logout();
                       },
                     ),
                   ],
@@ -172,5 +167,17 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
         )
       ],
     );
+  }
+
+  void logout() async {
+    // var res = await Network().getData('auth/logout');
+    // var body = json.decode(res.body);
+    // if (body['success'] == true) {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('user');
+    localStorage.remove('token');
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LandingLogin()));
+    // }
   }
 }

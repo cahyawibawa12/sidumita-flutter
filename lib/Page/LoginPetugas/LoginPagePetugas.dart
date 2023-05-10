@@ -224,6 +224,9 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
           context,
           new MaterialPageRoute(builder: (context) => HomePagePetugas()),
         );
+        // Navigator.of(context).pushAndRemoveUntil(
+        //     MaterialPageRoute(builder: (context) => HomePagePetugas()),
+        //     (route) => route.isFirst);
       } else {
         Navigator.pushReplacement(
           context,

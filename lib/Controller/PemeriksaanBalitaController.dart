@@ -15,6 +15,21 @@ class PemeriksaanBalitaController extends GetxController
   RxBool isLang = false.obs;
   List<Map<dynamic, dynamic>> data = [];
 
+  @override
+  void resetForm() {
+    berat.clear();
+    tinggi.clear();
+    lingkar_kepala.clear();
+    lingkar_lengan.clear();
+    keluhan.clear();
+    penanganan.clear();
+    catatan.clear();
+    // golongan_darah = null;
+    // status_keluarga = null;
+    // status_perkawinan = null;
+    // jenis_kelamin = null;
+  }
+
   TextEditingController tanggal_pemeriksaan = TextEditingController();
   TextEditingController umur_balita = TextEditingController();
   TextEditingController berat = TextEditingController();
@@ -100,9 +115,26 @@ class PemeriksaanBalitaController extends GetxController
     var response = await service.StorePemeriksaanBalitaByPetugas(
         pemeriksaanBalitaByPetugas.value);
     var responsedecode = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Get.back();
+      Get.snackbar(
+        'Create Berhasil',
+        "Data berhasil ditambah",
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      );
+    } else {
+      Get.snackbar(
+        'Create Gagal',
+        "Data gagal ditambah, mohon periksa kembali",
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
     isLoading.value = false;
 
-    Get.back();
+    // Get.back();
     // resetForm();
   }
 }

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:posyandu/Model/PemeriksaanIbuHamilByPetugasModel.dart';
 
 import '../Model/PemeriksaanIbuHamilModel.dart';
 import '../Service/PemeriksaanIbuHamilService.dart';
@@ -8,10 +10,38 @@ import '../Service/PemeriksaanIbuHamilService.dart';
 class PemeriksaanIbuHamilController extends GetxController
     implements GetxService {
   var listPemeriksaanIbuHamil = <PemeriksaanIbuHamilModel>[].obs;
-  // var storePemeriksaanIbuByPetugas =
+  var storePemeriksaanIbuByPetugas = PemeriksaanIbuHamilByPetugasModel().obs;
   final service = PemeriksaanIbuHamilService();
   var isLoading = false.obs;
   RxBool isLang = false.obs;
+
+  @override
+  void resetForm() {
+    umur_kandunganCtrl.clear();
+    berat_badanCtrl.clear();
+    tinggi_badanCtrl.clear();
+    lingkar_perutCtrl.clear();
+    denyut_jantung_bayiCtrl.clear();
+    denyut_nadiCtrl.clear();
+    keluhanCtrl.clear();
+    penangananCtrl.clear();
+    catatanCtrl.clear();
+    // golongan_darah = null;
+    // status_keluarga = null;
+    // status_perkawinan = null;
+    // jenis_kelamin = null;
+  }
+
+  TextEditingController umur_kandunganCtrl = TextEditingController();
+  TextEditingController berat_badanCtrl = TextEditingController();
+  TextEditingController tinggi_badanCtrl = TextEditingController();
+  TextEditingController lingkar_perutCtrl = TextEditingController();
+  TextEditingController denyut_nadiCtrl = TextEditingController();
+  TextEditingController denyut_jantung_bayiCtrl = TextEditingController();
+  TextEditingController keluhanCtrl = TextEditingController();
+  TextEditingController penangananCtrl = TextEditingController();
+  TextEditingController catatanCtrl = TextEditingController();
+  TextEditingController tanggal_pemeriksaanCtrl = TextEditingController();
 
   Future<void> getPemeriksaanIbuHamil(int ibu_hamil_id) async {
     isLoading.value = true;
@@ -47,28 +77,47 @@ class PemeriksaanIbuHamilController extends GetxController
     isLoading.value = false;
   }
 
-  // Future<void> StorePemeriksaanIbuByPetugas() async {
-  //   isLoading.value = true;
+  Future<void> StorePemeriksaanIbuByPetugas({required int ibu_hamil_id}) async {
+    isLoading.value = true;
 
-  //   detailKeluarga.value.namaLengkap = nama_lengkap.text;
-  //   detailKeluarga.value.nik = det_nik.text;
-  //   detailKeluarga.value.tempatLahir = tempat_lahir.text;
-  //   detailKeluarga.value.tanggalLahir = tanggal_lahir.text;
-  //   detailKeluarga.value.agama = agama.text;
-  //   detailKeluarga.value.noTelp = no_telp.text;
-  //   detailKeluarga.value.jenisPekerjaan = jenis_pekerjaan.text;
-  //   detailKeluarga.value.kewarganegaraan = kewarganegaraan.text;
-  //   detailKeluarga.value.jenisKelamin = jenis_kelamin;
-  //   detailKeluarga.value.golonganDarah = golongan_darah;
-  //   detailKeluarga.value.statusPerkawinan = status_perkawinan;
-  //   detailKeluarga.value.statusDalamKeluarga = status_keluarga;
-  //   detailKeluarga.value.pendidikan = pendidikan.text;
+    // detailKeluarga.value.namaLengkap = nama_lengkap.text;
+    storePemeriksaanIbuByPetugas.value.tanggalPemeriksaan =
+        tanggal_pemeriksaanCtrl.text;
+    storePemeriksaanIbuByPetugas.value.umurKandungan = umur_kandunganCtrl.text;
+    storePemeriksaanIbuByPetugas.value.beratBadan = berat_badanCtrl.text;
+    storePemeriksaanIbuByPetugas.value.tinggiBadan = tinggi_badanCtrl.text;
+    storePemeriksaanIbuByPetugas.value.lingkarPerut = lingkar_perutCtrl.text;
+    storePemeriksaanIbuByPetugas.value.denyutJantungBayi =
+        denyut_jantung_bayiCtrl.text;
+    storePemeriksaanIbuByPetugas.value.denyutNadi = denyut_nadiCtrl.text;
+    storePemeriksaanIbuByPetugas.value.keluhan = keluhanCtrl.text;
+    storePemeriksaanIbuByPetugas.value.penanganan = penangananCtrl.text;
+    storePemeriksaanIbuByPetugas.value.catatan = catatanCtrl.text;
+    storePemeriksaanIbuByPetugas.value.ibuHamilId = ibu_hamil_id;
 
-  //   var response = await service.storeMyDetailKeluarga(detailKeluarga.value);
-  //   var responsedecode = jsonDecode(response.body);
-  //   isLoading.value = false;
+    var response = await service.StorePemeriksaanIbuByPetugas(
+        storePemeriksaanIbuByPetugas.value);
+    var responsedecode = jsonDecode(response.body);
 
-  //   Get.back();
-  //   resetForm();
-  // }
+    if (response.statusCode == 200) {
+      Get.back();
+      Get.snackbar(
+        'Create Berhasil',
+        "Data berhasil ditambah",
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      );
+    } else {
+      Get.snackbar(
+        'Create Gagal',
+        "Data gagal ditambah, mohon periksa kembali",
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
+    isLoading.value = false;
+
+    // Get.back();
+    resetForm();
+  }
 }
