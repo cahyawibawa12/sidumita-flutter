@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
@@ -15,8 +17,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'logintest/login.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+  var token = localStorage.getString('token');
+  var user = localStorage.getString('user');
+
+  if (token != null) {
+    if (user != null) {
+      var userDecode = jsonDecode(user);
+      if (userDecode["role_id"] == 3) {
+        runApp(const PetugasHome());
+      } else if (userDecode["role_id"] == 4) {
+        runApp(const PesertaHome());
+      }
+    }
+  } else {
+    runApp(const MyApp());
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -38,35 +56,73 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CheckAuth extends StatefulWidget {
-  @override
-  _CheckAuthState createState() => _CheckAuthState();
-}
+class PetugasHome extends StatelessWidget {
+  const PetugasHome({super.key});
 
-class _CheckAuthState extends State<CheckAuth> {
-  bool isAuth = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _checkIfLoggedIn();
-  }
-
-  void _checkIfLoggedIn() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var token = localStorage.getString('token');
-    if (token != null) {
-      if (mounted) {
-        setState(() {
-          isAuth = true;
-        });
-      }
-    }
-  }
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      // home: LandingLogin(),
+      home: HomePagePetugas(),
+      // home: HomePagePetugas(),
+    );
   }
 }
+
+class PesertaHome extends StatelessWidget {
+  const PesertaHome({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      // home: LandingLogin(),
+      home: LandinLoginPeserta(),
+      // home: HomePagePetugas(),
+    );
+  }
+}
+
+// class CheckAuth extends StatefulWidget {
+//   @override
+//   _CheckAuthState createState() => _CheckAuthState();
+// }
+
+// class _CheckAuthState extends State<CheckAuth> {
+//   bool isAuth = false;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _checkIfLoggedIn();
+//   }
+
+//   void _checkIfLoggedIn() async {
+//     SharedPreferences localStorage = await SharedPreferences.getInstance();
+//     var token = localStorage.getString('token');
+//     if (token != null) {
+//       if (mounted) {
+//         setState(() {
+//           isAuth = true;
+//         });
+//       }
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     throw UnimplementedError();
+//   }
+// }

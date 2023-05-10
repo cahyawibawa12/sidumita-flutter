@@ -220,13 +220,16 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
       localStorage.setString('token', json.encode(body['access_token']));
       localStorage.setString('user', json.encode(body['user']));
       if (body['user']['role_id'] == 3) {
-        Navigator.pushReplacement(
-          context,
-          new MaterialPageRoute(builder: (context) => HomePagePetugas()),
-        );
-        // Navigator.of(context).pushAndRemoveUntil(
-        //     MaterialPageRoute(builder: (context) => HomePagePetugas()),
-        //     (route) => route.isFirst);
+        // Navigator.pop(context);
+        // Navigator.pushReplacement(
+        //   context,
+        //   new MaterialPageRoute(builder: (context) => HomePagePetugas()),
+        // );
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePagePetugas()),
+            (Route<dynamic> route) => false);
+// Navigator.of(context)
+//     .pushAndRemoveUntil('/login', (Route<dynamic> route) => false);
       } else {
         Navigator.pushReplacement(
           context,

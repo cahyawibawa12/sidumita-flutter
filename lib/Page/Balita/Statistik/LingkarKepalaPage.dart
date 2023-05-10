@@ -30,7 +30,7 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
       zoomMode: ZoomMode.x,
       enablePanning: true,
     );
-    umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
+    // umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
 
   @override

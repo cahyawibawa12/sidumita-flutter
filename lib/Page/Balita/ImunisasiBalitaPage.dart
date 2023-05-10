@@ -17,7 +17,32 @@ class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
         BackgroundImage(),
         Scaffold(
           backgroundColor: Colors.transparent,
-          body: SafeArea(child: Column()),
+          body: SafeArea(
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ListView.separated(
+                  itemCount: 10,
+                  shrinkWrap: true,
+                  physics: const ScrollPhysics(),
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 4.0,
+                    );
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: ListTile(
+                        title: const Text("Jessica Doe"),
+                        // subtitle: const Text("Programmer"),
+                        trailing: const Text("test"),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          )),
         )
       ],
     );

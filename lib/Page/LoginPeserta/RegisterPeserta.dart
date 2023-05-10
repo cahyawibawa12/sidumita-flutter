@@ -29,7 +29,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
   String? name, email, password, no_kk, alamat;
   String? dusun_id;
   String? provinsi_id, kabupaten_id, kecamatan_id, desa_id;
-  var listDusun = Get.put(DusunController());
+  var dusun = Get.put(DusunController());
   var provinsi = Get.put(ProvinsiController());
   var kabupaten = Get.put(KabupatenController());
   var kecamatan = Get.put(KecamatanController());
@@ -38,7 +38,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
   @override
   void initState() {
     super.initState();
-    listDusun.getDusun();
+    // listDusun.getDusun();
     provinsi.getProvinsi();
   }
 
@@ -565,7 +565,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                                           setState(() {
                                                             desa_id = newValue!;
 
-                                                            listDusun.fetchDesa(
+                                                            dusun.fetchDesa(
                                                                 desa_id: int.parse(
                                                                     newValue));
                                                           });
@@ -590,7 +590,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Obx(() => listDusun.isLoading.value
+                                  Obx(() => dusun.isLoading.value
                                       ? CircularProgressIndicator()
                                       : LayoutBuilder(
                                           builder: (context, constraint) {
@@ -665,10 +665,8 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                                           });
                                                         },
                                                         items: [
-                                                          for (var data
-                                                              in listDusun
-                                                                  .listDusun
-                                                                  .value)
+                                                          for (var data in dusun
+                                                              .listDusun.value)
                                                             DropdownMenuItem(
                                                               child: new Text(
                                                                 data.namaDusun!,

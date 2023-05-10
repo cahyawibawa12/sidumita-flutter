@@ -41,7 +41,8 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
             backgroundColor: Colors.transparent,
             body: SafeArea(
                 child: Obx(
-              () => pemeriksaanibuhamil.isLoading.value
+              () => pemeriksaanibuhamil.isLoading.value ||
+                      dataBeratIbu.isLoading.value
                   ? CircularProgressIndicator()
                   : Column(
                       children: [

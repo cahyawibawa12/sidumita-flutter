@@ -76,6 +76,8 @@ class _HomePageBalitaState extends State<HomePageBalita> {
   @override
   void initState() {
     super.initState();
+
+    umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
     pemeriksaanbalita
         .getPemeriksaanBalita(widget.balitaModel.id!)
         .then((value) {
@@ -100,7 +102,6 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                 pemeriksaanbalita.listPemeriksaanBalita[0].lingkarKepala);
       }
     });
-    umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
 
   @override

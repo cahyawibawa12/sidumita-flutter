@@ -32,7 +32,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
       zoomMode: ZoomMode.x,
       enablePanning: true,
     );
-    umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
+    // umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
 
   @override

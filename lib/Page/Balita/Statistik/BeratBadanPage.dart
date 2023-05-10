@@ -35,7 +35,7 @@ class _BeratBadanPageState extends State<BeratBadanPage> {
     _tooltipBehavior = TooltipBehavior(
       enable: true,
     );
-    umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
+    // umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
 
   @override

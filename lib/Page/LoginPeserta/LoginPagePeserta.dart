@@ -262,10 +262,13 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
       localStorage.setString('token', json.encode(body['access_token']));
       localStorage.setString('user', json.encode(body['user']));
       if (body['user']['role_id'] == 4) {
-        Navigator.pushReplacement(
-          context,
-          new MaterialPageRoute(builder: (context) => LandinLoginPeserta()),
-        );
+        // Navigator.pushReplacement(
+        //   context,
+        //   new MaterialPageRoute(builder: (context) => LandinLoginPeserta()),
+        // );
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LandinLoginPeserta()),
+            (Route<dynamic> route) => false);
       } else {
         Navigator.pushReplacement(
           context,
