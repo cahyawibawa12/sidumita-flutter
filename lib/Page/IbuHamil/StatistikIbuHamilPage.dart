@@ -23,6 +23,8 @@ class StatistikIbuHamilPage extends StatefulWidget {
 class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
   var pemeriksaanibuhamil = Get.put(PemeriksaanIbuHamilController());
   var dataBeratIbu = Get.put(CekDataController());
+  late ZoomPanBehavior _zoomPanBehavior;
+  late TooltipBehavior _tooltipBehavior;
 
   @override
   void initState() {
@@ -30,6 +32,15 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
     pemeriksaanibuhamil
         .getPemeriksaanIbuHamil(widget.ibuHamilModel.id!)
         .then((value) => dataBeratIbu.getBeratIbu(widget.ibuHamilModel.id!));
+
+    _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      zoomMode: ZoomMode.x,
+      enablePanning: true,
+    );
+    _tooltipBehavior = TooltipBehavior(
+      enable: true,
+    );
   }
 
   @override
@@ -44,138 +55,212 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
               () => pemeriksaanibuhamil.isLoading.value ||
                       dataBeratIbu.isLoading.value
                   ? CircularProgressIndicator()
-                  : Column(
-                      children: [
-                        Text("Statistik Ibu Hamil",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.w500)),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          margin: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Color.fromARGB(162, 255, 255, 255)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                children: [
-                                  Text("Usia Kandungan: "),
-                                  Text(pemeriksaanibuhamil
-                                          .listPemeriksaanIbuHamil[0]
-                                          .umurKandungan +
-                                      " Minggu"),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text("Data Terkini:"),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    pemeriksaanibuhamil
-                                        .listPemeriksaanIbuHamil[0].beratBadan
-                                        .toString(),
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.green),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(pemeriksaanibuhamil
-                                      .listPemeriksaanIbuHamil[0]
-                                      .tanggalPemeriksaan)
-                                ],
-                              )
-                            ],
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Text("Statistik Ibu Hamil",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w500)),
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Builder(builder: (context) {
-                                return Container(
-                                  color: Theme.of(context).cardColor,
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Center(
-                                    child: SfCartesianChart(
-                                      primaryXAxis: NumericAxis(
-                                        interval: 1,
-                                      ),
-                                      primaryYAxis: NumericAxis(interval: 1),
-                                      series: <CartesianSeries>[
-                                        LineSeries<Map, int>(
-                                          dataSource: dataBeratIbu.data,
-                                          xValueMapper: (Map data, _) =>
-                                              int.parse(data["umur_kandungan"]),
-                                          yValueMapper: (Map data, _) =>
-                                              data["berat_badan"],
-                                        ),
-                                        SplineRangeAreaSeries<ChartData, num>(
-                                            dataSource: underWeight,
-                                            xValueMapper: (ChartData data, _) =>
-                                                data.xValue,
-                                            lowValueMapper:
-                                                (ChartData data, _) =>
-                                                    data.lowValue,
-                                            highValueMapper:
-                                                (ChartData data, _) =>
-                                                    data.highValue,
-                                            opacity: 0.5,
-                                            color: Colors.blue[500]),
-                                        SplineRangeAreaSeries<ChartData, num>(
-                                            dataSource: normalWeight,
-                                            xValueMapper: (ChartData data, _) =>
-                                                data.xValue,
-                                            lowValueMapper:
-                                                (ChartData data, _) =>
-                                                    data.lowValue,
-                                            highValueMapper:
-                                                (ChartData data, _) =>
-                                                    data.highValue,
-                                            opacity: 0.5,
-                                            color: Colors.green[500]),
-                                        SplineRangeAreaSeries<ChartData, num>(
-                                            dataSource: overWeight,
-                                            xValueMapper: (ChartData data, _) =>
-                                                data.xValue,
-                                            lowValueMapper:
-                                                (ChartData data, _) =>
-                                                    data.lowValue,
-                                            highValueMapper:
-                                                (ChartData data, _) =>
-                                                    data.highValue,
-                                            opacity: 0.5,
-                                            color: Colors.red[500]),
-                                        SplineRangeAreaSeries<ChartData, num>(
-                                            dataSource: obeseWeight,
-                                            xValueMapper: (ChartData data, _) =>
-                                                data.xValue,
-                                            lowValueMapper:
-                                                (ChartData data, _) =>
-                                                    data.lowValue,
-                                            highValueMapper:
-                                                (ChartData data, _) =>
-                                                    data.highValue,
-                                            opacity: 0.5,
-                                            color: Colors.grey[500]),
-                                      ],
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            margin: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Color.fromARGB(162, 255, 255, 255)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text("Usia Kandungan: "),
+                                    SizedBox(
+                                      height: 10,
                                     ),
-                                  ),
-                                );
-                              }),
-                            ],
+                                    Text(pemeriksaanibuhamil
+                                            .listPemeriksaanIbuHamil[0]
+                                            .umurKandungan +
+                                        " Minggu"),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text("Data Terkini:"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      pemeriksaanibuhamil
+                                          .listPemeriksaanIbuHamil[0].beratBadan
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.green),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(pemeriksaanibuhamil
+                                        .listPemeriksaanIbuHamil[0]
+                                        .tanggalPemeriksaan)
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Builder(builder: (context) {
+                                  return Container(
+                                    color: Theme.of(context).cardColor,
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Center(
+                                      child: SfCartesianChart(
+                                        zoomPanBehavior: _zoomPanBehavior,
+                                        primaryXAxis: NumericAxis(
+                                          interval: 1,
+                                        ),
+                                        primaryYAxis: NumericAxis(interval: 1),
+                                        series: <CartesianSeries>[
+                                          LineSeries<Map, int>(
+                                              dataSource: dataBeratIbu.data,
+                                              xValueMapper: (Map data, _) =>
+                                                  int.parse(
+                                                      data["umur_kandungan"]),
+                                              yValueMapper: (Map data, _) =>
+                                                  data["berat_badan"],
+                                              dataLabelSettings:
+                                                  DataLabelSettings(
+                                                // Renders the data label
+                                                isVisible: true,
+                                              ),
+                                              markerSettings: MarkerSettings(
+                                                  isVisible: true)),
+                                          SplineRangeAreaSeries<ChartData, num>(
+                                              dataSource: underWeight,
+                                              xValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.xValue,
+                                              lowValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.lowValue,
+                                              highValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.highValue,
+                                              opacity: 0.5,
+                                              color: Colors.blue[500]),
+                                          SplineRangeAreaSeries<ChartData, num>(
+                                              dataSource: normalWeight,
+                                              xValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.xValue,
+                                              lowValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.lowValue,
+                                              highValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.highValue,
+                                              opacity: 0.5,
+                                              color: Colors.green[500]),
+                                          SplineRangeAreaSeries<ChartData, num>(
+                                              dataSource: overWeight,
+                                              xValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.xValue,
+                                              lowValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.lowValue,
+                                              highValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.highValue,
+                                              opacity: 0.5,
+                                              color: Colors.red[500]),
+                                          SplineRangeAreaSeries<ChartData, num>(
+                                              dataSource: obeseWeight,
+                                              xValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.xValue,
+                                              lowValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.lowValue,
+                                              highValueMapper:
+                                                  (ChartData data, _) =>
+                                                      data.highValue,
+                                              opacity: 0.5,
+                                              color: Colors.grey[500]),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            margin: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Color.fromARGB(162, 255, 255, 255)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text("Indeks Masa Tubuh:"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(dataBeratIbu
+                                        .hasilStatusBeratIbu.value.imt
+                                        .toString()),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text("Rekomendasi Berat:"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(dataBeratIbu
+                                            .hasilStatusBeratIbu.value.bbMinimal
+                                            .toString() +
+                                        " Kg - " +
+                                        dataBeratIbu.hasilStatusBeratIbu.value
+                                            .bbMaksimal
+                                            .toString() +
+                                        " Kg"),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text("Status:"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      dataBeratIbu
+                                          .hasilStatusBeratIbu.value.status
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.green),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
             )))
       ],

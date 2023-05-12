@@ -36,8 +36,12 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
   @override
   void initState() {
     super.initState();
-    keluarga.ShowKeluarga();
-    listDusun.getDusun();
+    keluarga.ShowKeluarga().whenComplete(() {
+      if (keluarga.keluarga.value.dusun!.desaId != null) {
+        listDusun.fetchDesa(desa_id: keluarga.keluarga.value.dusun!.desaId);
+      }
+    });
+    // listDusun.getDusun();
     _loadUserData();
   }
 
@@ -84,7 +88,7 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                     onPressed: (() {
                       logout();
                     }),
-                    icon: const Icon(CupertinoIcons.bell),
+                    icon: const Icon(CupertinoIcons.square_arrow_left),
                     iconSize: 35,
                     color: Color.fromARGB(255, 24, 98, 26),
                   )
@@ -150,11 +154,13 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                                         alignedDropdown: false,
                                         child: DropdownButton<String>(
                                             isExpanded: true,
-                                            value: dusun_id == null
-                                                ? keluarga
-                                                    .keluarga.value.dusun!.id!
-                                                    .toString()
-                                                : dusun_id,
+                                            value: keluarga.keluarga.value
+                                                        .dusunId ==
+                                                    null
+                                                ? null
+                                                : keluarga
+                                                    .keluarga.value.dusunId
+                                                    .toString(),
                                             icon: Padding(
                                               padding: const EdgeInsets.only(
                                                   right: 10.0),
@@ -189,9 +195,10 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                                             ),
                                             onChanged: (String? newValue) {
                                               setState(() {
-                                                dusun_id = newValue!;
-                                                keluarga.dusun_id =
-                                                    int.parse(newValue)!;
+                                                // keluarga.keluarga.value.dusunId = newValue!;
+                                                keluarga.keluarga.value
+                                                        .dusunId =
+                                                    int.parse(newValue!);
                                               });
                                             },
                                             items: [

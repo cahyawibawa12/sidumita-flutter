@@ -130,9 +130,9 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                   Text(pemeriksaanibuhamil
                                       .listPemeriksaanIbuHamil[index].denyutNadi
                                       .toString()),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
+                                  // SizedBox(
+                                  //   width: 10,
+                                  // ),
                                   IconButton(
                                     onPressed: () {
                                       PersistentNavBarNavigator.pushNewScreen(
@@ -146,6 +146,9 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                                     .listPemeriksaanIbuHamil[
                                                         index]
                                                     .tanggalPemeriksaan,
+                                            umur_kandungan: pemeriksaanibuhamil
+                                                .listPemeriksaanIbuHamil[index]
+                                                .umurKandungan,
                                             berat_badan: pemeriksaanibuhamil
                                                 .listPemeriksaanIbuHamil[index]
                                                 .beratBadan
@@ -174,6 +177,9 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                             penanganan: pemeriksaanibuhamil
                                                 .listPemeriksaanIbuHamil[index]
                                                 .penanganan,
+                                            catatan: pemeriksaanibuhamil
+                                                .listPemeriksaanIbuHamil[index]
+                                                .catatan,
                                             ibu_hamil_id: pemeriksaanibuhamil
                                                 .listPemeriksaanIbuHamil[index]
                                                 .ibuHamilId

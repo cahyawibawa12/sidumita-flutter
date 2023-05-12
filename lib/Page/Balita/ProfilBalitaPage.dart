@@ -7,6 +7,7 @@ import 'package:posyandu/Controller/DetailKeluargaController.dart';
 import 'package:posyandu/Controller/PetugasController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Page/Balita/BiodataBalita.dart';
+import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/BiodataPetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/EditBiodataPetugas.dart';
@@ -113,31 +114,6 @@ class _ProfilBalitaState extends State<ProfilBalita> {
                               //     context,
                               //     MaterialPageRoute(
                               //         builder: (context) => ));
-                            },
-                            icon: const Icon(
-                              Icons.arrow_right_sharp,
-                              size: 24.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => HomePagePetugas()));
-                      },
-                    ),
-                    InkWell(
-                      child: Card(
-                        child: ListTile(
-                          title: const Text("Logout"),
-                          trailing: IconButton(
-                            onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => HomePagePetugas()));
                             },
                             icon: const Icon(
                               Icons.arrow_right_sharp,

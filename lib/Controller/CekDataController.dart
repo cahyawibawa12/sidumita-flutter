@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:posyandu/Model/CekDataModel.dart';
 import 'package:posyandu/Model/DataBeratIbu.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
+import 'package:posyandu/Model/StatusBeratIbuModel.dart';
 import 'package:posyandu/Page/Balita/Statistik/BeratBadanPage.dart';
 import 'package:posyandu/Service/CekDataService.dart';
 import 'package:posyandu/Service/IbuHamilService.dart';
@@ -15,6 +16,7 @@ class CekDataController extends GetxController implements GetxService {
   var hasilCekDataTinggi = CekDataModel().obs;
   var hasilCekDataKepala = CekDataModel().obs;
   var hasilBeratIbu = <DataBeratIbuModel>[].obs;
+  var hasilStatusBeratIbu = StatusBeratIbuModel().obs;
   final service = CekDataService();
   var isLoading = false.obs;
   List<Map<dynamic, dynamic>> data = [];
@@ -93,6 +95,20 @@ class CekDataController extends GetxController implements GetxService {
 
     Map obj = responsedecode;
     data = List<Map<dynamic, dynamic>>.from(obj["data"]);
+
+    isLoading.value = false;
+  }
+
+  Future<void> statusBeratIbu({required int ibu_hamil_id}) async {
+    isLoading.value = true;
+
+    var request = StatusBeratIbuModel(id: ibu_hamil_id);
+
+    var response = await service.statusBeratIbu(request);
+    var responsedecode = jsonDecode(response.body);
+
+    hasilStatusBeratIbu.value =
+        StatusBeratIbuModel.fromJson(responsedecode["data"]);
 
     isLoading.value = false;
   }

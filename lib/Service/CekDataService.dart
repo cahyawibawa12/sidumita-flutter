@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:posyandu/Model/CekDataModel.dart';
+import 'package:posyandu/Model/StatusBeratIbuModel.dart';
 import 'package:posyandu/Service/AuthService.dart';
 import 'package:posyandu/Service/token.dart';
 import 'package:posyandu/globals.dart';
@@ -82,6 +83,23 @@ class CekDataService {
       url,
       headers: setHeaders(token),
     );
+    print(response.body);
+    return response;
+  }
+
+  Future<http.Response> statusBeratIbu(
+      StatusBeratIbuModel statusBeratIbuModel) async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(baseURL +
+        'cek-berat-ibu-hamil' +
+        '?' +
+        'ibu_hamil_id=' +
+        statusBeratIbuModel.id.toString());
+    http.Response response = await http.post(url,
+        headers: setHeaders(token),
+        body: jsonEncode(statusBeratIbuModel.toJson()));
     print(response.body);
     return response;
   }

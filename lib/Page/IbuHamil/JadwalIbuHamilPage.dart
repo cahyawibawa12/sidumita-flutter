@@ -28,23 +28,34 @@ class _JadwalIbuHamilPageState extends State<JadwalIbuHamilPage> {
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
               padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Obx(
-                    () {
-                      if (controller.isLoading.value) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        return SizedBox(
-                          height: 1000.0,
-                          child: QTableCalendar(
-                            events: controller.events.value,
-                          ),
-                        );
-                      }
-                    },
-                  )
-                ],
+              child: Container(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    Text("Jadwal Posyandu",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w500)),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Obx(
+                      () {
+                        if (controller.isLoading.value) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return SizedBox(
+                            height: 700.0,
+                            child: QTableCalendar(
+                              events: controller.events.value,
+                            ),
+                          );
+                        }
+                      },
+                    )
+                  ],
+                ),
               )),
         )
       ],

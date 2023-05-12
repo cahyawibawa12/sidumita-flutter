@@ -7,6 +7,7 @@ import '../../widget/widgets.dart';
 class DetailPemeriksaanBalita extends StatefulWidget {
   final int id;
   final String tanggal_pemeriksaan;
+  final String umur_balita;
   final String lingkar_kepala;
   final String lingkar_lengan;
   final String tinggi_badan;
@@ -20,6 +21,7 @@ class DetailPemeriksaanBalita extends StatefulWidget {
   const DetailPemeriksaanBalita(
       {required this.id,
       required this.tanggal_pemeriksaan,
+      required this.umur_balita,
       required this.lingkar_kepala,
       required this.lingkar_lengan,
       required this.tinggi_badan,
@@ -89,6 +91,25 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                         color: Colors.white),
                     child: Column(
                       children: [
+                        Container(
+                          height: 60,
+                          width: 330,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Color.fromARGB(111, 23, 196, 98)),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Umur Balita"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(widget.umur_balita + " Bulan")
+                              ]),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [

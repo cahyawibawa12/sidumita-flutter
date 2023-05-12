@@ -70,9 +70,9 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                         children: <Widget>[
                           Column(
                             children: [
-                              SizedBox(
-                                height: 200,
-                              ),
+                              // SizedBox(
+                              //   height: 200,
+                              // ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -121,8 +121,8 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                       cursorColor: Colors.blue,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
-                                        hintText: "I Nyoman Cahya",
-                                      ),
+                                          // hintText: "I Nyoman Cahya",
+                                          ),
                                       validator: (nameValue) {
                                         if (nameValue!.isEmpty) {
                                           return 'Mohon masukan nama lengkap anda';
@@ -138,7 +138,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                       cursorColor: Colors.blue,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
-                                        hintText: "cahya@gmail.com",
+                                        hintText: "ex: peserta@gmail.com",
                                       ),
                                       validator: (emailValue) {
                                         if (emailValue!.isEmpty) {
@@ -152,6 +152,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                   ),
                                   Text('Nomor Kartu Keluarga'),
                                   TextFormField(
+                                      maxLength: 16,
                                       cursorColor: Colors.blue,
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
@@ -172,7 +173,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                       cursorColor: Colors.blue,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
-                                        hintText: "Jl. Doang Jadian Kagak",
+                                        hintText: "ex: Jl.Sudirman",
                                       ),
                                       validator: (alamatValue) {
                                         if (alamatValue!.isEmpty) {
@@ -267,6 +268,8 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                                                         newValue!));
                                                           });
                                                         },
+                                                        hint: Text(
+                                                            "Pilih Provinsi"),
                                                         items: [
                                                           for (var data
                                                               in provinsi
@@ -369,6 +372,8 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                                                         newValue));
                                                           });
                                                         },
+                                                        hint: Text(
+                                                            "Pilih Kabupaten"),
                                                         items: [
                                                           for (var data
                                                               in kabupaten
@@ -471,6 +476,8 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                                                         newValue));
                                                           });
                                                         },
+                                                        hint: Text(
+                                                            "Pilih Kecamatan"),
                                                         items: [
                                                           for (var data
                                                               in kecamatan
@@ -570,6 +577,8 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                                                     newValue));
                                                           });
                                                         },
+                                                        hint:
+                                                            Text("Pilih Desa"),
                                                         items: [
                                                           for (var data in desa
                                                               .listDesa.value)
@@ -664,6 +673,8 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                                                 newValue!;
                                                           });
                                                         },
+                                                        hint:
+                                                            Text("Pilih Dusun"),
                                                         items: [
                                                           for (var data in dusun
                                                               .listDusun.value)
@@ -690,7 +701,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                       keyboardType: TextInputType.text,
                                       obscureText: _secureText,
                                       decoration: InputDecoration(
-                                        hintText: "xCahya.",
+                                        hintText: "ex: Peserta.",
                                         suffixIcon: IconButton(
                                           onPressed: showHide,
                                           icon: Icon(_secureText
@@ -777,6 +788,12 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginPagePeserta()),
+      );
+      Get.snackbar(
+        'Pendaftaran Berhasil',
+        'Silahkan Login',
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
       );
     } else {
       // if (body['message']['name'] != null) {

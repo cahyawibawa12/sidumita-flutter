@@ -21,6 +21,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
   void initState() {
     super.initState();
     detailKeluarga.StoreDetailKeluarga();
+    detailKeluarga.resetForm();
   }
 
   @override
@@ -75,6 +76,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                             ),
                             TextFormField(
                               maxLength: 16,
+                              keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
                                 labelText: 'NIK',
                                 labelStyle: TextStyle(
@@ -191,7 +193,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                 DateTime? pickedDate = await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
-                                  firstDate: DateTime(2000),
+                                  firstDate: DateTime(1900),
                                   lastDate: DateTime(2100),
                                 );
                                 setState(() {

@@ -52,7 +52,7 @@ class KeluargaController extends GetxController implements GetxService {
     keluarga.value.noKartuKeluarga = nikKeluarga.text;
     keluarga.value.kepalaKeluarga = kepalaKeluarga.text;
     keluarga.value.alamat = alamat.text;
-    keluarga.value.dusunId = dusun_id;
+    // keluarga.value.dusunId = dusun_id;
 
     var response = await service.updateMyKeluarga(keluarga.value);
     var responsedecode = jsonDecode(response.body);

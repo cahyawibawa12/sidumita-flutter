@@ -7,6 +7,7 @@ import '../../widget/widgets.dart';
 class DetailPemeriksaanIbuHamil extends StatefulWidget {
   final int id;
   final String tanggal_pemeriksaan;
+  final String umur_kandungan;
   final String tinggi_badan;
   final String berat_badan;
   final String lingkar_perut;
@@ -14,12 +15,14 @@ class DetailPemeriksaanIbuHamil extends StatefulWidget {
   final String denyut_nadi;
   final String penanganan;
   final String keluhan;
+  final String catatan;
   final String ibu_hamil_id;
   final String petugas_kesehatan_id;
 
   const DetailPemeriksaanIbuHamil(
       {required this.id,
       required this.tanggal_pemeriksaan,
+      required this.umur_kandungan,
       required this.tinggi_badan,
       required this.berat_badan,
       required this.lingkar_perut,
@@ -27,6 +30,7 @@ class DetailPemeriksaanIbuHamil extends StatefulWidget {
       required this.denyut_nadi,
       required this.penanganan,
       required this.keluhan,
+      required this.catatan,
       required this.ibu_hamil_id,
       required this.petugas_kesehatan_id});
 
@@ -105,11 +109,31 @@ class _DetailPemeriksaanIbuHamilState extends State<DetailPemeriksaanIbuHamil> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text("Berat"),
+                                        Text("Umur Kandungan"),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(widget.berat_badan + ' Kg')
+                                        Text(widget.umur_kandungan + " Minggu")
+                                      ]),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromARGB(111, 23, 196, 98)),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text("Denyut Nadi"),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(widget.denyut_nadi + " bpm")
                                       ]),
                                 ),
                                 SizedBox(
@@ -150,11 +174,11 @@ class _DetailPemeriksaanIbuHamilState extends State<DetailPemeriksaanIbuHamil> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text("Tinggi Badan"),
+                                        Text("Berat"),
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(widget.tinggi_badan + " Cm")
+                                        Text(widget.berat_badan + ' Kg')
                                       ]),
                                 ),
                                 SizedBox(
@@ -178,28 +202,29 @@ class _DetailPemeriksaanIbuHamilState extends State<DetailPemeriksaanIbuHamil> {
                                             widget.denyut_jantung_bayi + " bpm")
                                       ]),
                                 ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromARGB(111, 23, 196, 98)),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text("Tinggi Badan"),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(widget.tinggi_badan + " Cm")
+                                      ]),
+                                ),
                               ],
                             )
                           ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          height: 60,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Color.fromARGB(111, 23, 196, 98)),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Denyut Nadi"),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(widget.denyut_nadi + " bpm")
-                              ]),
                         ),
                         SizedBox(
                           height: 20,
@@ -237,6 +262,25 @@ class _DetailPemeriksaanIbuHamilState extends State<DetailPemeriksaanIbuHamil> {
                                   height: 10,
                                 ),
                                 Text(widget.penanganan)
+                              ]),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          height: 60,
+                          width: 330,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Color.fromARGB(111, 23, 196, 98)),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Catatan Khusus"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(widget.catatan)
                               ]),
                         ),
                         SizedBox(

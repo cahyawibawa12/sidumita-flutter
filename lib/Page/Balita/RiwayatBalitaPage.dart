@@ -122,7 +122,7 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                       .listPemeriksaanBalita[index].tinggiBadan
                                       .toString()),
                                   SizedBox(
-                                    width: 50,
+                                    width: 40,
                                   ),
                                   Text(pemeriksaanbalita
                                       .listPemeriksaanBalita[index]
@@ -141,6 +141,9 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                           tanggal_pemeriksaan: pemeriksaanbalita
                                               .listPemeriksaanBalita[index]
                                               .tanggalPemeriksaan,
+                                          umur_balita: pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .umurBalita,
                                           lingkar_kepala: pemeriksaanbalita
                                               .listPemeriksaanBalita[index]
                                               .lingkarKepala

@@ -10,6 +10,7 @@ import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:posyandu/Page/IbuHamil/ButtonNavBarIbuHamil.dart';
 import 'package:posyandu/Page/IbuHamil/JadwalIbuHamilPage.dart';
 import 'package:posyandu/Page/IbuHamil/StatistikIbuHamilPage.dart';
 
@@ -40,41 +41,41 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
     // umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
   }
 
-  int _current = 0;
-  final CarouselController _controller = CarouselController();
+  // int _current = 0;
+  // final CarouselController _controller = CarouselController();
 
-  final List<Widget> slider = [
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text1'),
-    ),
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text2'),
-    ),
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text3'),
-    ),
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text4'),
-    ),
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text5'),
-    )
-  ];
+  // final List<Widget> slider = [
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text1'),
+  //   ),
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text2'),
+  //   ),
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text3'),
+  //   ),
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text4'),
+  //   ),
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text5'),
+  //   )
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +121,11 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          JadwalIbuHamilPage()));
+                              var buttonNavIbuHamilController =
+                                  Get.put(ButtonNavIbuHamilController());
+                              buttonNavIbuHamilController
+                                  .tabController.value.index = 1;
+                              ;
                             },
                             child: Text(
                               'Jadwal Pemeriksaan',
@@ -401,88 +402,92 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                     SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 180,
-                          width: 150,
-                          padding: EdgeInsets.only(top: 20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundImage:
-                                    AssetImage('assets/images/bg.png'),
+                    InkWell(
+                      child: Container(
+                        // padding:
+                        //     EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white),
+                        child: Card(
+                          elevation: 0,
+                          child: ListTile(
+                            title: const Text("Pertumbuhan Ibu Hamil"),
+                            trailing: IconButton(
+                              onPressed: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: StatistikIbuHamilPage(
+                                      ibuHamilModel: widget.ibuHamilModel),
+                                  withNavBar:
+                                      false, // OPTIONAL VALUE. True by default.
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.arrow_right_sharp,
+                                size: 24.0,
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                        context,
-                                        screen: StatistikIbuHamilPage(
-                                            ibuHamilModel:
-                                                widget.ibuHamilModel),
-                                        withNavBar:
-                                            false, // OPTIONAL VALUE. True by default.
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.cupertino);
-                                  },
-                                  child: Text(
-                                    'Pertumbuhan',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontStyle: FontStyle.normal),
-                                  )),
-                            ],
+                            ),
                           ),
                         ),
-                      ],
-                    )
+                      ),
+                      onTap: () {
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: StatistikIbuHamilPage(
+                              ibuHamilModel: widget.ibuHamilModel),
+
+                          withNavBar: false, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
+                      },
+                    ),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(children: [
-                  CarouselSlider(
-                    items: slider,
-                    carouselController: _controller,
-                    options: CarouselOptions(
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                        aspectRatio: 2.0,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            _current = index;
-                          });
-                        }),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: slider.asMap().entries.map((entry) {
-                      return GestureDetector(
-                        onTap: () => _controller.animateToPage(entry.key),
-                        child: Container(
-                          width: 7.0,
-                          height: 7.0,
-                          margin: EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 4.0),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: (Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? Colors.white
-                                      : Colors.black)
-                                  .withOpacity(
-                                      _current == entry.key ? 0.9 : 0.4)),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ])
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Column(children: [
+                //   CarouselSlider(
+                //     items: slider,
+                //     carouselController: _controller,
+                //     options: CarouselOptions(
+                //         autoPlay: true,
+                //         enlargeCenterPage: true,
+                //         aspectRatio: 2.0,
+                //         onPageChanged: (index, reason) {
+                //           setState(() {
+                //             _current = index;
+                //           });
+                //         }),
+                //   ),
+                //   Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: slider.asMap().entries.map((entry) {
+                //       return GestureDetector(
+                //         onTap: () => _controller.animateToPage(entry.key),
+                //         child: Container(
+                //           width: 7.0,
+                //           height: 7.0,
+                //           margin: EdgeInsets.symmetric(
+                //               vertical: 8.0, horizontal: 4.0),
+                //           decoration: BoxDecoration(
+                //               shape: BoxShape.circle,
+                //               color: (Theme.of(context).brightness ==
+                //                           Brightness.dark
+                //                       ? Colors.white
+                //                       : Colors.black)
+                //                   .withOpacity(
+                //                       _current == entry.key ? 0.9 : 0.4)),
+                //         ),
+                //       );
+                //     }).toList(),
+                //   ),
+                // ])
               ],
             ),
           )),

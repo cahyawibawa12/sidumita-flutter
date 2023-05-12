@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:posyandu/Controller/CekDataController.dart';
 import 'package:posyandu/Controller/DetailKeluargaController.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/Page/IbuHamil/ButtonNavBarIbuHamil.dart';
@@ -63,12 +64,14 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
 
   var pemeriksaanibuhamil = Get.put(PemeriksaanIbuHamilController());
   var umur = Get.put(DetailKeluargaController());
+  var dataBeratIbu = Get.put(CekDataController());
 
   @override
   void initState() {
     super.initState();
     pemeriksaanibuhamil.getPemeriksaanIbuHamil(widget.ibuHamilModel.id!);
     umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
+    dataBeratIbu.statusBeratIbu(ibu_hamil_id: widget.ibuHamilModel.id!);
   }
 
   @override
@@ -124,7 +127,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                               Column(
                                 children: [
                                   Text(
-                                    'Tinggi Fundus',
+                                    'Berat Badan',
                                     style: TextStyle(fontSize: 14),
                                   ),
                                   SizedBox(
@@ -136,9 +139,9 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                         0) {
                                       return Text(pemeriksaanibuhamil
                                               .listPemeriksaanIbuHamil[0]
-                                              .lingkarPerut
+                                              .beratBadan
                                               .toString() +
-                                          ' Cm');
+                                          ' Kg');
                                     } else {
                                       return Text('Loading');
                                     }
@@ -147,13 +150,12 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                     height: 10,
                                   ),
                                   Obx((() {
-                                    if (pemeriksaanibuhamil
-                                            .listPemeriksaanIbuHamil.length !=
-                                        0) {
-                                      if (pemeriksaanibuhamil
-                                              .listPemeriksaanIbuHamil[0]
-                                              .lingkarPerut <=
-                                          4) {
+                                    if (dataBeratIbu.isLoading.value) {
+                                      return Text('Empty');
+                                    } else {
+                                      if (dataBeratIbu.hasilStatusBeratIbu.value
+                                              .status ==
+                                          "Normal") {
                                         return Container(
                                           // width: 60,
                                           // height: 20,
@@ -161,9 +163,18 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                               borderRadius:
                                                   BorderRadius.circular(5),
                                               color: Colors.green),
-                                          child: Center(child: Text('Normal')),
+                                          child: Center(
+                                              child: Text(dataBeratIbu
+                                                  .hasilStatusBeratIbu
+                                                  .value
+                                                  .status
+                                                  .toString())),
                                         );
-                                      } else {
+                                      } else if (dataBeratIbu
+                                              .hasilStatusBeratIbu
+                                              .value
+                                              .status ==
+                                          "Obese") {
                                         return Container(
                                           // width: 60,
                                           // height: 20,
@@ -172,11 +183,47 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                                   BorderRadius.circular(5),
                                               color: Colors.red),
                                           child: Center(
-                                              child: Text('Tidak Normal')),
+                                              child: Text(dataBeratIbu
+                                                  .hasilStatusBeratIbu
+                                                  .value
+                                                  .status
+                                                  .toString())),
+                                        );
+                                      } else if (dataBeratIbu
+                                              .hasilStatusBeratIbu
+                                              .value
+                                              .status ==
+                                          "Underweight") {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.red),
+                                          child: Center(
+                                              child: Text(dataBeratIbu
+                                                  .hasilStatusBeratIbu
+                                                  .value
+                                                  .status
+                                                  .toString())),
+                                        );
+                                      } else {
+                                        return Container(
+                                          // width: 60,
+                                          // height: 20,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.yellow),
+                                          child: Center(
+                                              child: Text(dataBeratIbu
+                                                  .hasilStatusBeratIbu
+                                                  .value
+                                                  .status
+                                                  .toString())),
                                         );
                                       }
-                                    } else {
-                                      return Text('Loading');
                                     }
                                   }))
                                 ],
@@ -217,9 +264,13 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                             .listPemeriksaanIbuHamil.length !=
                                         0) {
                                       if (pemeriksaanibuhamil
-                                              .listPemeriksaanIbuHamil[0]
-                                              .denyutJantungBayi <=
-                                          4) {
+                                                  .listPemeriksaanIbuHamil[0]
+                                                  .denyutJantungBayi >=
+                                              120 &&
+                                          pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[0]
+                                                  .denyutJantungBayi <=
+                                              160) {
                                         return Container(
                                           // width: 60,
                                           // height: 20,
@@ -277,9 +328,13 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                             .listPemeriksaanIbuHamil.length !=
                                         0) {
                                       if (pemeriksaanibuhamil
-                                              .listPemeriksaanIbuHamil[0]
-                                              .denyutNadi >=
-                                          50) {
+                                                  .listPemeriksaanIbuHamil[0]
+                                                  .denyutNadi >=
+                                              60 &&
+                                          pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[0]
+                                                  .denyutNadi <=
+                                              100) {
                                         return Container(
                                           // width: 60,
                                           // height: 20,
@@ -348,7 +403,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                                   .cupertino);
                                     },
                                     child: Text(
-                                      'Lihat Grafik Pertumbuhan',
+                                      'Grafik Pertumbuhan',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontStyle: FontStyle.normal),
