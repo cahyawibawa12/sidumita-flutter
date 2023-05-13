@@ -108,122 +108,178 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
                           physics: ScrollPhysics(),
                           child: ListView.builder(
                             itemBuilder: (context, index) {
-                              return Container(
-                                height: 40,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 3, vertical: 3),
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, top: 8),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.white),
-                                child: Row(
-                                  // mainAxisAlignment:
-                                  //     MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text(pemeriksaanbalita
-                                        .listPemeriksaanBalita[index]
-                                        .tanggalPemeriksaan),
-                                    SizedBox(
-                                      width: 40,
-                                    ),
-                                    Text(pemeriksaanbalita
-                                        .listPemeriksaanBalita[index].beratBadan
-                                        .toString()),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
-                                    Text(pemeriksaanbalita
-                                        .listPemeriksaanBalita[index]
-                                        .tinggiBadan
-                                        .toString()),
-                                    SizedBox(
-                                      width: 40,
-                                    ),
-                                    Text(pemeriksaanbalita
-                                        .listPemeriksaanBalita[index]
-                                        .lingkarKepala
-                                        .toString()),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailRiwayatBalita(
-                                                id: pemeriksaanbalita
-                                                    .listPemeriksaanBalita[
-                                                        index]
-                                                    .id,
-                                                tanggal_pemeriksaan:
-                                                    pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .tanggalPemeriksaan,
-                                                umur_balita: pemeriksaanbalita
-                                                    .listPemeriksaanBalita[
-                                                        index]
-                                                    .umurBalita,
-                                                lingkar_kepala:
-                                                    pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .lingkarKepala
-                                                        .toString(),
-                                                lingkar_lengan:
-                                                    pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .lingkarLengan
-                                                        .toString(),
-                                                berat_badan: pemeriksaanbalita
-                                                    .listPemeriksaanBalita[
-                                                        index]
-                                                    .beratBadan
-                                                    .toString(),
-                                                tinggi_badan: pemeriksaanbalita
-                                                    .listPemeriksaanBalita[
-                                                        index]
-                                                    .tinggiBadan
-                                                    .toString(),
-                                                keluhan: pemeriksaanbalita
-                                                    .listPemeriksaanBalita[
-                                                        index]
-                                                    .keluhan,
-                                                penanganan: pemeriksaanbalita
-                                                    .listPemeriksaanBalita[
-                                                        index]
-                                                    .penanganan,
-                                                catatan: pemeriksaanbalita
-                                                    .listPemeriksaanBalita[
-                                                        index]
-                                                    .catatan,
-                                                balita_id: pemeriksaanbalita
-                                                    .listPemeriksaanBalita[
-                                                        index]
-                                                    .balitaId
-                                                    .toString(),
-                                                petugas_kesehatan_id:
-                                                    pemeriksaanbalita
-                                                        .listPemeriksaanBalita[
-                                                            index]
-                                                        .petugasKesehatanId
-                                                        .toString(),
-                                              ),
-                                            ));
-                                      },
-                                      icon: const Icon(
-                                        Icons.search,
-                                        size: 15.0,
+                              return Dismissible(
+                                key: UniqueKey(),
+                                onDismissed: (detail) {},
+                                confirmDismiss: (direction) async {
+                                  bool confirm = false;
+                                  await showDialog<void>(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Confirm'),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: const <Widget>[
+                                              Text(
+                                                  'Are you sure you want to delete this item?'),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.grey[600],
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text("No"),
+                                          ),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.blueGrey,
+                                            ),
+                                            onPressed: () {
+                                              confirm = true;
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text("Yes"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (confirm) {
+                                    pemeriksaanbalita
+                                        .deletePemeriksaanBalita(
+                                            pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .id)
+                                        .then((value) => pemeriksaanbalita
+                                            .getPemeriksaanBalita(widget
+                                                .petugasWithBalitaModel["id"]));
+                                    return Future.value(true);
+                                  }
+                                  return Future.value(false);
+                                },
+                                child: Container(
+                                  height: 40,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 3, vertical: 3),
+                                  margin: EdgeInsets.only(
+                                      left: 20, right: 20, top: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 20,
                                       ),
-                                    ),
-                                  ],
+                                      Text(pemeriksaanbalita
+                                          .listPemeriksaanBalita[index]
+                                          .tanggalPemeriksaan),
+                                      SizedBox(
+                                        width: 40,
+                                      ),
+                                      Text(pemeriksaanbalita
+                                          .listPemeriksaanBalita[index]
+                                          .beratBadan
+                                          .toString()),
+                                      SizedBox(
+                                        width: 30,
+                                      ),
+                                      Text(pemeriksaanbalita
+                                          .listPemeriksaanBalita[index]
+                                          .tinggiBadan
+                                          .toString()),
+                                      SizedBox(
+                                        width: 40,
+                                      ),
+                                      Text(pemeriksaanbalita
+                                          .listPemeriksaanBalita[index]
+                                          .lingkarKepala
+                                          .toString()),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailRiwayatBalita(
+                                                  id: pemeriksaanbalita
+                                                      .listPemeriksaanBalita[
+                                                          index]
+                                                      .id,
+                                                  tanggal_pemeriksaan:
+                                                      pemeriksaanbalita
+                                                          .listPemeriksaanBalita[
+                                                              index]
+                                                          .tanggalPemeriksaan,
+                                                  umur_balita: pemeriksaanbalita
+                                                      .listPemeriksaanBalita[
+                                                          index]
+                                                      .umurBalita,
+                                                  lingkar_kepala:
+                                                      pemeriksaanbalita
+                                                          .listPemeriksaanBalita[
+                                                              index]
+                                                          .lingkarKepala
+                                                          .toString(),
+                                                  lingkar_lengan:
+                                                      pemeriksaanbalita
+                                                          .listPemeriksaanBalita[
+                                                              index]
+                                                          .lingkarLengan
+                                                          .toString(),
+                                                  berat_badan: pemeriksaanbalita
+                                                      .listPemeriksaanBalita[
+                                                          index]
+                                                      .beratBadan
+                                                      .toString(),
+                                                  tinggi_badan: pemeriksaanbalita
+                                                      .listPemeriksaanBalita[
+                                                          index]
+                                                      .tinggiBadan
+                                                      .toString(),
+                                                  keluhan: pemeriksaanbalita
+                                                      .listPemeriksaanBalita[
+                                                          index]
+                                                      .keluhan,
+                                                  penanganan: pemeriksaanbalita
+                                                      .listPemeriksaanBalita[
+                                                          index]
+                                                      .penanganan,
+                                                  catatan: pemeriksaanbalita
+                                                      .listPemeriksaanBalita[
+                                                          index]
+                                                      .catatan,
+                                                  balita_id: pemeriksaanbalita
+                                                      .listPemeriksaanBalita[
+                                                          index]
+                                                      .balitaId
+                                                      .toString(),
+                                                  petugas_kesehatan_id:
+                                                      pemeriksaanbalita
+                                                          .listPemeriksaanBalita[
+                                                              index]
+                                                          .petugasKesehatanId
+                                                          .toString(),
+                                                ),
+                                              ));
+                                        },
+                                        icon: const Icon(
+                                          Icons.search,
+                                          size: 15.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },

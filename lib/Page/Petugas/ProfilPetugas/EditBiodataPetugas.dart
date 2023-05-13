@@ -125,6 +125,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                               height: 10,
                             ),
                             TextFormField(
+                              maxLength: 16,
                               controller: bioPetugas.nik,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
@@ -147,6 +148,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                               height: 10,
                             ),
                             TextFormField(
+                              maxLength: 13,
                               controller: bioPetugas.no_telp,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(

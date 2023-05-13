@@ -31,4 +31,15 @@ class PemeriksaanBalitaService {
     print(response.body);
     return response;
   }
+
+  Future<http.Response> deletePemeriksaanBalitaByPetugas(int id) async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url =
+        Uri.parse(baseURL + 'destroy/pemeriksaan-balita/' + id.toString());
+    http.Response response = await http.post(url, headers: setHeaders(token));
+    print(response.body);
+    return response;
+  }
 }

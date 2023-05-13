@@ -103,4 +103,16 @@ class CekDataService {
     print(response.body);
     return response;
   }
+
+  Future<http.Response> cekImunisasiBalita(int balita_id) async {
+    var token = await getToken();
+    var url =
+        Uri.parse(baseURL + 'cek-imunisasi-balita/' + balita_id.toString());
+    http.Response response = await http.get(
+      url,
+      headers: setHeaders(token),
+    );
+    print(response.body);
+    return response;
+  }
 }

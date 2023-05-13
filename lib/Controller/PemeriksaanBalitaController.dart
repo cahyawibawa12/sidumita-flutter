@@ -137,4 +137,27 @@ class PemeriksaanBalitaController extends GetxController
     // Get.back();
     // resetForm();
   }
+
+  Future<void> deletePemeriksaanBalita(int id) async {
+    isLoading.value = true;
+
+    var response = await service.deletePemeriksaanBalitaByPetugas(id);
+    var responsedecode = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      Get.snackbar(
+        'Delete Berhasil',
+        "Data berhasil di hapus",
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      );
+    } else {
+      Get.snackbar(
+        'Delete Gagal',
+        "Data gagal dihapus, mohon periksa kembali",
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
+    isLoading.value = false;
+  }
 }

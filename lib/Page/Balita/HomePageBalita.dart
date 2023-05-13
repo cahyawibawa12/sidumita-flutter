@@ -76,7 +76,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
   @override
   void initState() {
     super.initState();
-
+    cekDataBalita.CekImunisasiBalita(widget.balitaModel.id!);
     umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
     pemeriksaanbalita
         .getPemeriksaanBalita(widget.balitaModel.id!)

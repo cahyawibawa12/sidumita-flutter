@@ -492,11 +492,24 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                               ),
                               TextButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ImunisasiBalitaPage()));
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                      context,
+                                      screen: ImunisasiBalitaPage(
+                                        balitaModel: widget.balitaModel,
+                                      ),
+                                      withNavBar:
+                                          false, // OPTIONAL VALUE. True by default.
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.cupertino,
+                                    );
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             ImunisasiBalitaPage(
+                                    //               balitaModel:
+                                    //                   widget.balitaModel,
+                                    //             )));
                                   },
                                   child: Text(
                                     'Imunisasi',

@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Model/CekDataModel.dart';
+import 'package:posyandu/Model/CekImunisasiModel.dart';
 import 'package:posyandu/Model/DataBeratIbu.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/Model/StatusBeratIbuModel.dart';
@@ -17,6 +19,7 @@ class CekDataController extends GetxController implements GetxService {
   var hasilCekDataKepala = CekDataModel().obs;
   var hasilBeratIbu = <DataBeratIbuModel>[].obs;
   var hasilStatusBeratIbu = StatusBeratIbuModel().obs;
+  var cekImunisasiBalita = <CekImunisasiModel>[].obs;
   final service = CekDataService();
   var isLoading = false.obs;
   List<Map<dynamic, dynamic>> data = [];
@@ -79,6 +82,22 @@ class CekDataController extends GetxController implements GetxService {
     hasilCekDataKepala.value = CekDataModel.fromJson(responsedecode3['data']);
     isLoading.value = false;
     // resetButtonClicked();
+  }
+
+  Future<void> CekImunisasiBalita(int balita_id) async {
+    isLoading.value = true;
+    var response = await service.cekImunisasiBalita(balita_id);
+    var responsedecode = jsonDecode(response.body);
+
+    cekImunisasiBalita.clear();
+
+    for (var i = 0; i < responsedecode['data'].length; i++) {
+      CekImunisasiModel data =
+          CekImunisasiModel.fromJson(responsedecode['data'][i]);
+      cekImunisasiBalita.add(data);
+    }
+
+    isLoading.value = false;
   }
 
   Future<void> getBeratIbu(int ibu_hamil_id) async {

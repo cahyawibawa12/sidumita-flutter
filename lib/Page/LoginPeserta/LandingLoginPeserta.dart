@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:posyandu/Controller/MasterData/DusunController.dart';
 import 'package:posyandu/Controller/KeluargaController.dart';
 import 'package:posyandu/Model/KeluargaModel.dart';
+import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/LoginPeserta/EditPeserta/Peserta.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingBalita.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingIbuHamil.dart';
@@ -75,7 +76,12 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Selamat Datang " + '${name}',
+                          "Selamat Datang ",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${name}',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -336,7 +342,7 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
     localStorage.remove('user');
     localStorage.remove('token');
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPagePeserta()));
+        context, MaterialPageRoute(builder: (context) => LandingLogin()));
     // }
   }
 }

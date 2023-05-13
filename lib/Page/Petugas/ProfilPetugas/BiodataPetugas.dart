@@ -71,21 +71,21 @@ class _BiodataPetugasState extends State<BiodataPetugas> {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  height: 160.0,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/jadwal-list.png'),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        16.0,
-                      ),
-                    ),
-                  ),
-                ),
+                // Container(
+                //   margin: EdgeInsets.all(10),
+                //   height: 160.0,
+                //   decoration: const BoxDecoration(
+                //     image: DecorationImage(
+                //       image: AssetImage('assets/images/jadwal-list.png'),
+                //       fit: BoxFit.cover,
+                //     ),
+                //     borderRadius: BorderRadius.all(
+                //       Radius.circular(
+                //         16.0,
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 10,
                 ),

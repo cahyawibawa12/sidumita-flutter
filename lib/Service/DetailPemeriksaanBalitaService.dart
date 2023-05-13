@@ -16,4 +16,16 @@ class DetailPemeriksaanBalitaService {
     print(response.body);
     return response;
   }
+
+  Future<http.Response> showDetailPemeriksaanBalita(int balita_id) async {
+    var token = await getToken();
+    var url =
+        Uri.parse(baseURL + 'detailpemeriksaan/balita/' + balita_id.toString());
+    http.Response response = await http.get(
+      url,
+      headers: setHeaders(token),
+    );
+    print(response.body);
+    return response;
+  }
 }
