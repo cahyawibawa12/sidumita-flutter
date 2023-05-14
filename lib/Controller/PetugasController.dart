@@ -31,7 +31,14 @@ class PetugasController extends GetxController implements GetxService {
   TextEditingController nama_kecamatan = TextEditingController();
   TextEditingController nama_desa = TextEditingController();
   TextEditingController nama_dusun = TextEditingController();
+  TextEditingController new_password = TextEditingController();
+  TextEditingController confirm_password = TextEditingController();
   // int? dusun_id;
+
+  void resetForm() {
+    new_password.clear();
+    confirm_password.clear();
+  }
 
   Future<void> ShowPetugas() async {
     isLoading.value = true;
@@ -127,6 +134,34 @@ class PetugasController extends GetxController implements GetxService {
       );
 
       isLoading.value = false;
+    }
+  }
+
+  Future<void> changePasswordPetugas(String id) async {
+    isLoading.value = true;
+
+    var data = {'password': new_password.text};
+
+    var response = await service.changePasswordPetugas(data);
+    var responsedecode = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      Get.back();
+      Get.snackbar(
+        'Update Password Berhasil',
+        "Data berhasil diubah",
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      );
+    } else {
+      Get.snackbar(
+        'Update Password Gagal',
+        "Data gagal diubah, mohon periksa kembali",
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+
+      isLoading.value = false;
+      resetForm();
     }
   }
 }

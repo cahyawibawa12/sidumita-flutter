@@ -86,7 +86,7 @@ class _DetailPemeriksaanIbuHamilState extends State<DetailPemeriksaanIbuHamil> {
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     margin: EdgeInsets.only(left: 20, right: 20),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),

@@ -228,6 +228,8 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => HomePagePetugas()),
             (Route<dynamic> route) => false);
+        var token = jsonDecode(localStorage.getString('token') ?? '');
+        print('localstorage: $token');
 // Navigator.of(context)
 //     .pushAndRemoveUntil('/login', (Route<dynamic> route) => false);
       } else {
@@ -250,8 +252,6 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
         backgroundColor: Colors.lightBlue,
       );
     }
-    var token = jsonDecode(localStorage.getString('token') ?? '');
-    print('localstorage: $token');
 
     setState(() {
       _isLoading = false;

@@ -6,7 +6,9 @@ import 'package:posyandu/Controller/PetugasController.dart';
 import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/BiodataPetugas.dart';
+import 'package:posyandu/Page/Petugas/ProfilPetugas/ChangePassword.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/EditBiodataPetugas.dart';
+import 'package:posyandu/Service/AuthService.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -124,7 +126,7 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => HomePagePetugas()));
+                                      builder: (context) => ChangePassword()));
                             },
                             icon: const Icon(
                               Icons.arrow_right_sharp,
@@ -137,7 +139,7 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomePagePetugas()));
+                                builder: (context) => ChangePassword()));
                       },
                     ),
                     InkWell(
@@ -170,14 +172,14 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
   }
 
   void logout() async {
-    // var res = await Network().getData('auth/logout');
-    // var body = json.decode(res.body);
-    // if (body['success'] == true) {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    localStorage.remove('user');
-    localStorage.remove('token');
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LandingLogin()));
-    // }
+    var res = await Network().getData('auth/logout');
+    var body = json.decode(res.body);
+    if (body['success'] == true) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.remove('user');
+      localStorage.remove('token');
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LandingLogin()));
+    }
   }
 }

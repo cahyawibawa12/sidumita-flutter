@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "685305154027",
+    "project_id": "sidumita-98802",
+    "storage_bucket": "sidumita-98802.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685305154027:android:eb16c63139d3cabdcef1ae",
+        "android_client_info": {
+          "package_name": "com.example.posyandu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685305154027-mvcv71mv161v8ic6kblu4ohas6jp2g44.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA26T801B4YQfpuTL0zxOJFjKoltZQDmjA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685305154027-mvcv71mv161v8ic6kblu4ohas6jp2g44.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

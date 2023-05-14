@@ -50,4 +50,15 @@ class PetugasService {
     print(response.body);
     return response;
   }
+
+  Future<http.Response> changePasswordPetugas(data) async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(baseURL + 'auth/change-password');
+    http.Response response = await http.post(url,
+        headers: setHeaders(token), body: jsonEncode(data));
+    print(response.body);
+    return response;
+  }
 }

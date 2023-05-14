@@ -35,8 +35,8 @@ class Network {
 
   getData(apiURL) async {
     var fullUrl = Uri.parse(_url + apiURL);
-    await _getToken();
-    return await http.post(fullUrl, headers: _setHeaders());
+    var token = await getToken();
+    return await http.post(fullUrl, headers: setHeaders(token));
   }
 
   _setHeaders() => {

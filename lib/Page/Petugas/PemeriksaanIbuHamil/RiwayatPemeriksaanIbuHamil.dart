@@ -154,9 +154,9 @@ class _RiwayatPemeriksaanIbuHamilState
                                           .listPemeriksaanIbuHamil[index]
                                           .denyutNadi
                                           .toString()),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
+                                      // SizedBox(
+                                      //   width: 10,
+                                      // ),
                                       IconButton(
                                         onPressed: () {
                                           Navigator.push(
