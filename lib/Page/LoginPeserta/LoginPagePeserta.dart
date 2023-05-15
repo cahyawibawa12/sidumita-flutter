@@ -287,7 +287,7 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
           'User Tidak Sesuai',
           "Mohon periksa email dan password",
           colorText: Colors.white,
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: Colors.red,
         );
         setState(() {
           _isLoading = false;
@@ -298,7 +298,7 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
         'Login Gagal',
         "Mohon periksa email dan password",
         colorText: Colors.white,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.red,
       );
     }
 

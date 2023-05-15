@@ -10,15 +10,15 @@ import 'package:posyandu/Service/AuthService.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ChangePassword extends StatefulWidget {
-  const ChangePassword({super.key});
+class ChangePasswordPeserta extends StatefulWidget {
+  const ChangePasswordPeserta({super.key});
 
   @override
-  State<ChangePassword> createState() => _ChangePasswordState();
+  State<ChangePasswordPeserta> createState() => _ChangePasswordPesertaState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
-  var petugas = Get.put(PetugasController());
+class _ChangePasswordPesertaState extends State<ChangePasswordPeserta> {
+  var peserta = Get.put(PetugasController());
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
 
   String id = '';
@@ -63,11 +63,11 @@ class _ChangePasswordState extends State<ChangePassword> {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text("Change Password Petugas"),
+            title: Text("Change Password Peserta"),
             backgroundColor: Color(0xff34BE82),
             leading: BackButton(
               onPressed: () {
-                petugas.resetForm();
+                peserta.resetForm();
                 Get.back();
               },
             ),
@@ -83,7 +83,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               child: Column(
                 children: [
                   TextFormField(
-                    controller: petugas.new_password,
+                    controller: peserta.new_password,
                     maxLength: 20,
                     obscureText: _secureText,
                     decoration: InputDecoration(
@@ -98,10 +98,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                     // onChanged: (value) {},
                   ),
                   TextFormField(
-                    controller: petugas.confirm_password,
+                    controller: peserta.confirm_password,
                     validator: (value) {
                       if (value == null) return 'Empty';
-                      if (value != petugas.new_password.text)
+                      if (value != peserta.new_password.text)
                         return 'Not Match';
                       return null;
                     },
@@ -124,7 +124,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                     onPressed: () {
                       if (_form.currentState!.validate()) {
-                        petugas
+                        peserta
                             .changePassword(id = id)
                             .then((value) => logout());
                       }

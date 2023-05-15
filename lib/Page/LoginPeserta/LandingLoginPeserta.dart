@@ -7,9 +7,11 @@ import 'package:posyandu/Controller/MasterData/DusunController.dart';
 import 'package:posyandu/Controller/KeluargaController.dart';
 import 'package:posyandu/Model/KeluargaModel.dart';
 import 'package:posyandu/Page/LandingLogin.dart';
+import 'package:posyandu/Page/LoginPeserta/ChangePasswordPeserta.dart';
 import 'package:posyandu/Page/LoginPeserta/EditPeserta/Peserta.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingBalita.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingIbuHamil.dart';
+
 import 'package:posyandu/Service/AuthService.dart';
 import 'package:posyandu/widget/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -267,6 +269,19 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                                         builder: (context) => Peserta()));
                               },
                             ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            RoundedButton(
+                              btnText: 'Change Password',
+                              onBtnPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ChangePasswordPeserta()));
+                              },
+                            ),
                           ],
                         ))),
               Container(
@@ -341,8 +356,9 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.remove('user');
       localStorage.remove('token');
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LandingLogin()));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LandingLogin()),
+          (Route<dynamic> route) => false);
     }
   }
 }

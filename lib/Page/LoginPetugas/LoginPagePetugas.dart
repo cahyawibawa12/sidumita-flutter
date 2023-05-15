@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
@@ -209,7 +210,14 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
     setState(() {
       _isLoading = true;
     });
-    var data = {'email': email, 'password': password};
+
+    String fcm_token = "";
+    await FirebaseMessaging.instance.getToken().then((value) {
+      fcm_token = value.toString();
+    });
+    print(fcm_token);
+
+    var data = {'email': email, 'password': password, 'fcm_token': fcm_token};
 
     var res = await Network().auth(data, 'auth/login');
     var body = json.decode(res.body);

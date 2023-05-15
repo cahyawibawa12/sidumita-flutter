@@ -47,6 +47,12 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
           appBar: AppBar(
             title: Text("Create Pemeriksaan Balita"),
             backgroundColor: Color(0xff34BE82),
+            leading: BackButton(
+              onPressed: () {
+                pemeriksaanBalitaByPetugas.resetForm();
+                Get.back();
+              },
+            ),
           ),
           body: SafeArea(
               child: SingleChildScrollView(

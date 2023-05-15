@@ -37,6 +37,12 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
           appBar: AppBar(
             title: Text("Create Pemeriksaan Ibu Hamil"),
             backgroundColor: Color(0xff34BE82),
+            leading: BackButton(
+              onPressed: () {
+                pemeriksaanIbuHamilbyPetugas.resetForm();
+                Get.back();
+              },
+            ),
           ),
           body: SafeArea(
               child: SingleChildScrollView(

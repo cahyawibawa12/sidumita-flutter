@@ -85,6 +85,7 @@ class DetailKeluargaController extends GetxController implements GetxService {
         colorText: Colors.white,
         backgroundColor: Colors.lightBlue,
       );
+      resetForm();
     } else {
       Get.snackbar(
         'Create Gagal',
@@ -96,7 +97,6 @@ class DetailKeluargaController extends GetxController implements GetxService {
     isLoading.value = false;
 
     // Get.back();
-    resetForm();
   }
 
   Future<void> UpdateDetailKeluarga(int id) async {

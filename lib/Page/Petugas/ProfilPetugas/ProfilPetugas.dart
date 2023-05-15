@@ -178,8 +178,9 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.remove('user');
       localStorage.remove('token');
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LandingLogin()));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LandingLogin()),
+          (Route<dynamic> route) => false);
     }
   }
 }

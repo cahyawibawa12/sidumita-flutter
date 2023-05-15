@@ -137,21 +137,21 @@ class PetugasController extends GetxController implements GetxService {
     }
   }
 
-  Future<void> changePasswordPetugas(String id) async {
+  Future<void> changePassword(String id) async {
     isLoading.value = true;
 
     var data = {'password': new_password.text};
 
-    var response = await service.changePasswordPetugas(data);
+    var response = await service.changePassword(data);
     var responsedecode = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      Get.back();
       Get.snackbar(
         'Update Password Berhasil',
         "Data berhasil diubah",
         colorText: Colors.white,
         backgroundColor: Colors.lightBlue,
       );
+      resetForm();
     } else {
       Get.snackbar(
         'Update Password Gagal',
@@ -161,7 +161,6 @@ class PetugasController extends GetxController implements GetxService {
       );
 
       isLoading.value = false;
-      resetForm();
     }
   }
 }
