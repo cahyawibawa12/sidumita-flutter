@@ -33,41 +33,8 @@ class HomePageBalita extends StatefulWidget {
 }
 
 class _HomePageBalitaState extends State<HomePageBalita> {
-  int _current = 0;
-  final CarouselController _controller = CarouselController();
-
-  final List<Widget> slider = [
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text1'),
-    ),
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text2'),
-    ),
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text3'),
-    ),
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text4'),
-    ),
-    Container(
-      height: 200,
-      width: 200,
-      color: Colors.blue,
-      child: Text('text5'),
-    )
-  ];
+  int currentIndex = 0;
+  final CarouselController carouselController = CarouselController();
 
   var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
   var cekDataBalita = Get.put(CekDataController());
@@ -505,41 +472,80 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                   ),
                   Column(
                     children: [
-                      CarouselSlider(
-                        items: slider,
-                        carouselController: _controller,
-                        options: CarouselOptions(
-                            autoPlay: true,
-                            enlargeCenterPage: true,
-                            aspectRatio: 2.0,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _current = index;
-                              });
-                            }),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: slider.asMap().entries.map((entry) {
-                          return GestureDetector(
-                            onTap: () => _controller.animateToPage(entry.key),
-                            child: Container(
-                              width: 7.0,
-                              height: 7.0,
-                              margin: EdgeInsets.symmetric(
-                                  vertical: 8.0, horizontal: 4.0),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: (Theme.of(context).brightness ==
-                                              Brightness.dark
-                                          ? Colors.white
-                                          : Colors.black)
-                                      .withOpacity(
-                                          _current == entry.key ? 0.9 : 0.4)),
+                      Builder(builder: (context) {
+                        List images = [
+                          "https://akah.desa.id/desa/upload/artikel/sedang_1583992455_PSOYANDU.jpg",
+                          "https://dinkes.blorakab.go.id/packages/upload/photo/2022-08-08/WhatsApp-Image-2022-08-01-at-12.42.14.jpeg",
+                          "https://dinkes.blorakab.go.id/packages/upload/portal/images/WhatsApp%20Image%202022-08-01%20at%2012.42.13.jpeg",
+                          "https://purwosari.magetan.go.id/media/img/berita/berita_3185e42771946ee32.18845142.jpg",
+                          "https://i1.wp.com/dinkes.rembangkab.go.id/binangkit/uploads/2023/02/Cover-Berita.jpg?resize=675%2C482&ssl=1",
+                        ];
+
+                        return Column(
+                          children: [
+                            CarouselSlider(
+                              carouselController: carouselController,
+                              options: CarouselOptions(
+                                height: 160.0,
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                onPageChanged: (index, reason) {
+                                  currentIndex = index;
+                                  setState(() {});
+                                },
+                              ),
+                              items: images.map((imageUrl) {
+                                return Builder(
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 5.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(6.0),
+                                        ),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            imageUrl,
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }).toList(),
                             ),
-                          );
-                        }).toList(),
-                      ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: images.asMap().entries.map((entry) {
+                                return GestureDetector(
+                                  onTap: () => carouselController
+                                      .animateToPage(entry.key),
+                                  child: Container(
+                                    width: 12.0,
+                                    height: 12.0,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 4.0),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: (Theme.of(context).brightness ==
+                                                    Brightness.dark
+                                                ? Colors.white
+                                                : Colors.black)
+                                            .withOpacity(
+                                                currentIndex == entry.key
+                                                    ? 0.9
+                                                    : 0.4)),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        );
+                      }),
                       Container(
                         height: 40,
                         width: Get.width,

@@ -2,23 +2,22 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/DetailKeluargaController.dart';
+import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
+import 'package:posyandu/widget/BackgroundImage.dart';
+import 'package:posyandu/widget/listchart/listchartTinggi.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../Controller/PemeriksaanBalitaController.dart';
-import '../../../widget/listchart/listchartTinggi.dart';
-import '../../../widget/widgets.dart';
+class TinggiBadanPagePetugas extends StatefulWidget {
+  TinggiBadanPagePetugas({super.key, required this.petugasWithBalitaModel});
 
-class TinggiBadanPage extends StatefulWidget {
-  TinggiBadanPage({super.key, required this.balitaModel});
-
-  BalitaModel balitaModel;
+  final Map petugasWithBalitaModel;
 
   @override
-  State<TinggiBadanPage> createState() => _TinggiBadanPageState();
+  State<TinggiBadanPagePetugas> createState() => _TinggiBadanPagePetugasState();
 }
 
-class _TinggiBadanPageState extends State<TinggiBadanPage> {
+class _TinggiBadanPagePetugasState extends State<TinggiBadanPagePetugas> {
   var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
   late ZoomPanBehavior _zoomPanBehavior;
   var umur = Get.put(DetailKeluargaController());
@@ -132,10 +131,8 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                 .isLoading.value) {
                                               return CircularProgressIndicator();
                                             } else {
-                                              if (widget
-                                                      .balitaModel
-                                                      .detailKeluarga!
-                                                      .jenisKelamin ==
+                                              if (widget.petugasWithBalitaModel[
+                                                      "jenis_kelamin"] ==
                                                   "Laki-Laki") {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:
@@ -411,10 +408,8 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                 .isLoading.value) {
                                               return CircularProgressIndicator();
                                             } else {
-                                              if (widget
-                                                      .balitaModel
-                                                      .detailKeluarga!
-                                                      .jenisKelamin ==
+                                              if (widget.petugasWithBalitaModel[
+                                                      "jenis_kelamin"] ==
                                                   "Laki-Laki") {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:

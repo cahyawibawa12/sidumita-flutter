@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:posyandu/Controller/DetailKeluargaController.dart';
+import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
-import 'package:posyandu/Page/Balita/Statistik/BeratBadanPage.dart';
-import 'package:posyandu/Page/Balita/Statistik/LingkarKepalaPage.dart';
-import 'package:posyandu/Page/Balita/Statistik/TinggiBadanPage.dart';
+import 'package:posyandu/Page/Petugas/PemeriksaanBalita/Statistik/BeratBadanPage.dart';
+import 'package:posyandu/Page/Petugas/PemeriksaanBalita/Statistik/LingkarKepalaPage.dart';
+import 'package:posyandu/Page/Petugas/PemeriksaanBalita/Statistik/TinggiBadanPage.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 
-import '../../Controller/PemeriksaanBalitaController.dart';
+class StatistikBalitaPetugas extends StatefulWidget {
+  StatistikBalitaPetugas({super.key, required this.petugasWithBalitaModel});
 
-class StatistikBalitaPage extends StatefulWidget {
-  StatistikBalitaPage({super.key, required this.balitaModel});
-
-  BalitaModel balitaModel;
+  final Map petugasWithBalitaModel;
 
   @override
-  State<StatistikBalitaPage> createState() => _StatistikBalitaPageState();
+  State<StatistikBalitaPetugas> createState() => _StatistikBalitaPetugasState();
 }
 
-class _StatistikBalitaPageState extends State<StatistikBalitaPage> {
+class _StatistikBalitaPetugasState extends State<StatistikBalitaPetugas> {
   // List<Widget> _buildPage() {
   //   return [
   //     const BeratBadanPage(),
@@ -26,11 +26,11 @@ class _StatistikBalitaPageState extends State<StatistikBalitaPage> {
   //     const TinggiBadanPage(),
   //   ];
   // }
-
   var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
+  var umur = Get.put(DetailKeluargaController());
 
   void initState() {
-    pemeriksaanbalita.getPemeriksaanBalita(widget.balitaModel.id!);
+    // pemeriksaanbalita.getPemeriksaanBalita(widget.petugasWithBalitaModel["id"]);
   }
 
   @override
@@ -80,11 +80,13 @@ class _StatistikBalitaPageState extends State<StatistikBalitaPage> {
                   ),
                   Expanded(
                       child: TabBarView(children: <Widget>[
-                    BeratBadanPage(
-                      balitaModel: widget.balitaModel,
+                    BeratBadanPagePetugas(
+                      petugasWithBalitaModel: widget.petugasWithBalitaModel,
                     ),
-                    LingkarKepalaPage(balitaModel: widget.balitaModel),
-                    TinggiBadanPage(balitaModel: widget.balitaModel)
+                    LingkarKepalaPagePetugas(
+                        petugasWithBalitaModel: widget.petugasWithBalitaModel),
+                    TinggiBadanPagePetugas(
+                        petugasWithBalitaModel: widget.petugasWithBalitaModel)
                   ]))
                 ],
               ),

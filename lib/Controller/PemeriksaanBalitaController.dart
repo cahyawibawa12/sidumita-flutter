@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:posyandu/Controller/MasterData/VaksinController.dart';
 import 'package:posyandu/Model/PemeriksaanBalitaByPetugasModel.dart';
 import 'package:posyandu/Model/PemeriksaanBalitaModel.dart';
 import 'package:posyandu/Service/PemeriksaanBalitaService.dart';
@@ -14,6 +15,7 @@ class PemeriksaanBalitaController extends GetxController
   var isLoading = false.obs;
   RxBool isLang = false.obs;
   List<Map<dynamic, dynamic>> data = [];
+  var isVaksinCheck = false.obs;
 
   @override
   void resetForm() {
@@ -24,10 +26,8 @@ class PemeriksaanBalitaController extends GetxController
     keluhan.clear();
     penanganan.clear();
     catatan.clear();
-    // golongan_darah = null;
-    // status_keluarga = null;
-    // status_perkawinan = null;
-    // jenis_kelamin = null;
+    dokter_id = null;
+    vitamin_id = null;
   }
 
   TextEditingController tanggal_pemeriksaan = TextEditingController();
@@ -39,9 +39,8 @@ class PemeriksaanBalitaController extends GetxController
   TextEditingController keluhan = TextEditingController();
   TextEditingController penanganan = TextEditingController();
   TextEditingController catatan = TextEditingController();
-  TextEditingController dokter_id = TextEditingController();
-  TextEditingController vitamin_id = TextEditingController();
-  int? vaksin_id;
+
+  int? vaksin_id, dokter_id, vitamin_id;
 
   var vaksinChecked = <Map<String, dynamic>>[];
 
@@ -102,16 +101,18 @@ class PemeriksaanBalitaController extends GetxController
     pemeriksaanBalitaByPetugas.value.catatan = catatan.text;
     pemeriksaanBalitaByPetugas.value.keluhan = keluhan.text;
     pemeriksaanBalitaByPetugas.value.penanganan = penanganan.text;
-    pemeriksaanBalitaByPetugas.value.vitaminId = int.parse(vitamin_id.text);
-    pemeriksaanBalitaByPetugas.value.dokterId = int.parse(dokter_id.text);
+    pemeriksaanBalitaByPetugas.value.vitaminId = vitamin_id;
+    pemeriksaanBalitaByPetugas.value.dokterId = dokter_id;
     pemeriksaanBalitaByPetugas.value.balitaId = balita_id;
 
-    vaksins.forEach((element) {
-      if (element['checked']) {
-        // vaksinChecked.add(element);
-        pemeriksaanBalitaByPetugas.value.vaksinId!.add(element['id']);
-      }
-    });
+    if (isVaksinCheck.value) {
+      vaksins.forEach((element) {
+        if (element['checked']) {
+          // vaksinChecked.add(element);
+          pemeriksaanBalitaByPetugas.value.vaksinId!.add(element['id']);
+        }
+      });
+    }
     var response = await service.StorePemeriksaanBalitaByPetugas(
         pemeriksaanBalitaByPetugas.value);
     var responsedecode = jsonDecode(response.body);
@@ -124,6 +125,12 @@ class PemeriksaanBalitaController extends GetxController
         colorText: Colors.white,
         backgroundColor: Colors.lightBlue,
       );
+      resetForm();
+      // var listVaksin = Get.put(VaksinController());
+      // listVaksin.data.forEach((element) {
+      //   element['checked'] = false;
+      // });
+      pemeriksaanBalitaByPetugas.value.vaksinId!.clear();
     } else {
       Get.snackbar(
         'Create Gagal',

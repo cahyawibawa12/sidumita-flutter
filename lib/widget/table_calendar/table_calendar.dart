@@ -33,10 +33,10 @@ class _QTableCalendarState extends State<QTableCalendar> {
   @override
   void initState() {
     super.initState();
-
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
     eventList.addAll(widget.events);
+    _selectedEvents.value = _getEventsForDay(_selectedDay!);
   }
 
   @override

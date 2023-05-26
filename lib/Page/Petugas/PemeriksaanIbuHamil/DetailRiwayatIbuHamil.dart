@@ -44,7 +44,7 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text("Detail Riwayat Ibu Hamil"),
+            title: Text("Detail Riwayat"),
             backgroundColor: Color(0xff34BE82),
           ),
           body: SafeArea(

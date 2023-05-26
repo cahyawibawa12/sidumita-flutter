@@ -18,6 +18,11 @@ class RiwayatBalitaPage extends StatefulWidget {
 class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
   var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
 
+  Future<void> _refresh(bool reload) async {
+    await Get.find<PemeriksaanBalitaController>()
+        .getPemeriksaanBalita(widget.balitaModel.id!);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,14 +42,15 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
               child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     margin: EdgeInsets.only(left: 20, top: 30),
-                    child: Text(
-                      "Riwayat Pemeriksaan",
-                      style: TextStyle(fontSize: 30, color: Colors.white),
-                    ),
+                    child: Text("Riwayat Pemeriksaan",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w500)),
                   ),
                 ],
               ),
@@ -87,8 +93,10 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                 ],
               ),
               Expanded(
-                  child: Obx(() => SingleChildScrollView(
-                        physics: ScrollPhysics(),
+                  child: Obx(() => RefreshIndicator(
+                        onRefresh: () async {
+                          await _refresh(true);
+                        },
                         child: ListView.builder(
                           itemBuilder: (context, index) {
                             return Container(
@@ -122,7 +130,7 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                       .listPemeriksaanBalita[index].tinggiBadan
                                       .toString()),
                                   SizedBox(
-                                    width: 40,
+                                    width: 30,
                                   ),
                                   Text(pemeriksaanbalita
                                       .listPemeriksaanBalita[index]
@@ -131,70 +139,76 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  IconButton(
-                                    onPressed: () {
-                                      PersistentNavBarNavigator.pushNewScreen(
-                                        context,
-                                        screen: DetailPemeriksaanBalita(
-                                          id: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index].id,
-                                          tanggal_pemeriksaan: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .tanggalPemeriksaan,
-                                          umur_balita: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .umurBalita,
-                                          lingkar_kepala: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .lingkarKepala
-                                              .toString(),
-                                          lingkar_lengan: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .lingkarLengan
-                                              .toString(),
-                                          berat_badan: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .beratBadan
-                                              .toString(),
-                                          tinggi_badan: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .tinggiBadan
-                                              .toString(),
-                                          keluhan: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .keluhan,
-                                          penanganan: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .penanganan,
-                                          catatan: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .catatan,
-                                          balita_id: pemeriksaanbalita
-                                              .listPemeriksaanBalita[index]
-                                              .balitaId
-                                              .toString(),
-                                          petugas_kesehatan_id:
-                                              pemeriksaanbalita
-                                                  .listPemeriksaanBalita[index]
-                                                  .petugasKesehatanId
-                                                  .toString(),
-                                        ),
-                                        withNavBar:
-                                            false, // OPTIONAL VALUE. True by default.
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.cupertino,
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.search,
-                                      size: 15.0,
+                                  Expanded(
+                                    child: IconButton(
+                                      onPressed: () {
+                                        PersistentNavBarNavigator.pushNewScreen(
+                                          context,
+                                          screen: DetailPemeriksaanBalita(
+                                            id: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .id,
+                                            tanggal_pemeriksaan:
+                                                pemeriksaanbalita
+                                                    .listPemeriksaanBalita[
+                                                        index]
+                                                    .tanggalPemeriksaan,
+                                            umur_balita: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .umurBalita,
+                                            lingkar_kepala: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .lingkarKepala
+                                                .toString(),
+                                            lingkar_lengan: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .lingkarLengan
+                                                .toString(),
+                                            berat_badan: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .beratBadan
+                                                .toString(),
+                                            tinggi_badan: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .tinggiBadan
+                                                .toString(),
+                                            keluhan: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .keluhan,
+                                            penanganan: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .penanganan,
+                                            catatan: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .catatan,
+                                            balita_id: pemeriksaanbalita
+                                                .listPemeriksaanBalita[index]
+                                                .balitaId
+                                                .toString(),
+                                            petugas_kesehatan_id:
+                                                pemeriksaanbalita
+                                                    .listPemeriksaanBalita[
+                                                        index]
+                                                    .petugasKesehatanId
+                                                    .toString(),
+                                          ),
+                                          withNavBar:
+                                              false, // OPTIONAL VALUE. True by default.
+                                          pageTransitionAnimation:
+                                              PageTransitionAnimation.cupertino,
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.search,
+                                        size: 15.0,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             );
                           },
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: AlwaysScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount:
                               pemeriksaanbalita.listPemeriksaanBalita.length,

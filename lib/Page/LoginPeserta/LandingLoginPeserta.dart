@@ -7,6 +7,7 @@ import 'package:posyandu/Controller/MasterData/DusunController.dart';
 import 'package:posyandu/Controller/KeluargaController.dart';
 import 'package:posyandu/Model/KeluargaModel.dart';
 import 'package:posyandu/Page/LandingLogin.dart';
+import 'package:posyandu/Page/LandingPage.dart';
 import 'package:posyandu/Page/LoginPeserta/ChangePasswordPeserta.dart';
 import 'package:posyandu/Page/LoginPeserta/EditPeserta/Peserta.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingBalita.dart';
@@ -120,6 +121,7 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                             Text('NIK Kartu Keluarga'),
                             TextField(
                               controller: keluarga.nikKeluarga,
+                              maxLength: 16,
                               // decoration: const InputDecoration(hintText: 'email'),
                               onChanged: (value) {
                                 _nikkaka = value;
@@ -357,7 +359,7 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
       localStorage.remove('user');
       localStorage.remove('token');
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => LandingLogin()),
+          MaterialPageRoute(builder: (context) => LandingPage()),
           (Route<dynamic> route) => false);
     }
   }

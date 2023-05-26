@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/CekDataController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
+import 'package:intl/intl.dart';
 
 import '../../widget/BackgroundImage.dart';
 
@@ -65,7 +66,20 @@ class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
                                   title: Text(dataImunisasi
                                       .cekImunisasiBalita[index].vaksin
                                       .toString()),
-                                  // subtitle: const Text("Programmer"),
+                                  subtitle: (() {
+                                    if (dataImunisasi
+                                            .cekImunisasiBalita[index].status ==
+                                        "Belum") {
+                                      return Text('Tanggal: -');
+                                    } else {
+                                      return Text("Tanggal: " +
+                                          DateFormat('dd MMMM yyyy').format(
+                                              DateTime.parse(dataImunisasi
+                                                  .cekImunisasiBalita[index]
+                                                  .tanggalPemeriksaan
+                                                  .toString())));
+                                    }
+                                  }()),
                                   trailing: (() {
                                     if (dataImunisasi
                                             .cekImunisasiBalita[index].status ==
@@ -74,6 +88,28 @@ class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
                                         padding: EdgeInsets.all(5),
                                         decoration: BoxDecoration(
                                             color: Colors.red,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Text(
+                                          dataImunisasi
+                                              .cekImunisasiBalita[index].status
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      );
+                                    } else if (dataImunisasi
+                                                .cekImunisasiBalita[index]
+                                                .status ==
+                                            "Akan" ||
+                                        dataImunisasi.cekImunisasiBalita[index]
+                                                .status ==
+                                            "Kejar") {
+                                      return Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.yellow[900],
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Text(

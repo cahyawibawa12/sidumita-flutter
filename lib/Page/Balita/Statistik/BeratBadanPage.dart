@@ -287,16 +287,31 @@ class _BeratBadanPageState extends State<BeratBadanPage> {
                                     Column(
                                       children: [
                                         Text("Usia: "),
-                                        Text(
-                                          umur.umurPeserta.value.umur
-                                                  .toString() +
-                                              " Tahun " +
-                                              (umur.umurPeserta.value
-                                                          .usiaBulan! %
-                                                      12)
-                                                  .toString() +
-                                              " Bulan",
-                                        ),
+                                        (() {
+                                          if (umur.umurPeserta.value.format
+                                                  .toString() ==
+                                              "tahun") {
+                                            return Text(
+                                              umur.umurPeserta.value.umur
+                                                      .toString() +
+                                                  " Tahun " +
+                                                  (umur.umurPeserta.value
+                                                              .usiaBulan! %
+                                                          12)
+                                                      .toString() +
+                                                  " Bulan",
+                                            );
+                                          } else {
+                                            return Text(
+                                              "0 Tahun " +
+                                                  (umur.umurPeserta.value
+                                                              .usiaBulan! %
+                                                          12)
+                                                      .toString() +
+                                                  " Bulan",
+                                            );
+                                          }
+                                        }())
                                       ],
                                     ),
                                     Column(

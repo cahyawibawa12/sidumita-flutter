@@ -1,24 +1,23 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/DetailKeluargaController.dart';
+import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
+import 'package:posyandu/widget/listchart/listchartLingkarKepala.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../Controller/PemeriksaanBalitaController.dart';
-import '../../../widget/listchart/listchartTinggi.dart';
-import '../../../widget/widgets.dart';
+import '../../../../widget/BackgroundImage.dart';
 
-class TinggiBadanPage extends StatefulWidget {
-  TinggiBadanPage({super.key, required this.balitaModel});
+class LingkarKepalaPagePetugas extends StatefulWidget {
+  LingkarKepalaPagePetugas({super.key, required this.petugasWithBalitaModel});
 
-  BalitaModel balitaModel;
-
+  final Map petugasWithBalitaModel;
   @override
-  State<TinggiBadanPage> createState() => _TinggiBadanPageState();
+  State<LingkarKepalaPagePetugas> createState() =>
+      _LingkarKepalaPagePetugasState();
 }
 
-class _TinggiBadanPageState extends State<TinggiBadanPage> {
+class _LingkarKepalaPagePetugasState extends State<LingkarKepalaPagePetugas> {
   var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
   late ZoomPanBehavior _zoomPanBehavior;
   var umur = Get.put(DetailKeluargaController());
@@ -101,7 +100,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                         Obx(() => Text(
                                               pemeriksaanbalita
                                                   .listPemeriksaanBalita[0]
-                                                  .tinggiBadan
+                                                  .lingkarKepala
                                                   .toString(),
                                               style: TextStyle(
                                                   fontSize: 20,
@@ -132,10 +131,8 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                 .isLoading.value) {
                                               return CircularProgressIndicator();
                                             } else {
-                                              if (widget
-                                                      .balitaModel
-                                                      .detailKeluarga!
-                                                      .jenisKelamin ==
+                                              if (widget.petugasWithBalitaModel[
+                                                      "jenis_kelamin"] ==
                                                   "Laki-Laki") {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:
@@ -145,7 +142,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                   ),
                                                   primaryYAxis: NumericAxis(
                                                       interval: 0.5,
-                                                      minimum: 33),
+                                                      minimum: 28),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
                                                         dataSource:
@@ -159,12 +156,12 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                                     data,
                                                                 _) =>
                                                             data[
-                                                                "tinggi_badan"],
+                                                                "lingkar_kepala"],
                                                         dataLabelMapper: (Map data,
                                                                 _) =>
                                                             data["umur_balita"] +
                                                             ': ' +
-                                                            data["tinggi_badan"]
+                                                            data["lingkar_kepala"]
                                                                 .toString(),
                                                         dataLabelSettings:
                                                             DataLabelSettings(
@@ -177,7 +174,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                                     true)),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin3l,
+                                                          chartKepalan3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -187,7 +184,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin2l,
+                                                          chartKepalan2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -197,7 +194,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin1l,
+                                                          chartKepalan1l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -207,7 +204,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggiNormall,
+                                                          chartKepalaNormall,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -216,7 +213,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi1l,
+                                                      dataSource: chartKepala1l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -225,7 +222,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi2l,
+                                                      dataSource: chartKepala2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -234,7 +231,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi3l,
+                                                      dataSource: chartKepala3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -253,7 +250,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                   ),
                                                   primaryYAxis: NumericAxis(
                                                       interval: 0.5,
-                                                      minimum: 33),
+                                                      minimum: 28),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
                                                         dataSource:
@@ -266,14 +263,14 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                         yValueMapper: (Map data,
                                                                 _) =>
                                                             data[
-                                                                "tinggi_badan"],
+                                                                "lingkar_kepala"],
                                                         dataLabelMapper: (Map
                                                                     data,
                                                                 _) =>
                                                             data[
                                                                 "umur_balita"] +
                                                             ': ' +
-                                                            data["tinggi_badan"]
+                                                            data["lingkar_kepala"]
                                                                 .toString(),
                                                         dataLabelSettings:
                                                             DataLabelSettings(
@@ -282,7 +279,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                         )),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin3p,
+                                                          chartKepalan3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -292,7 +289,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin2p,
+                                                          chartKepalan2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -302,7 +299,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin1p,
+                                                          chartKepalan1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -312,7 +309,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggiNormalp,
+                                                          chartKepalaNormalp,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -321,7 +318,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi1p,
+                                                      dataSource: chartKepala1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -330,7 +327,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi2p,
+                                                      dataSource: chartKepala2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -339,7 +336,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi3p,
+                                                      dataSource: chartKepala3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -411,10 +408,8 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                 .isLoading.value) {
                                               return CircularProgressIndicator();
                                             } else {
-                                              if (widget
-                                                      .balitaModel
-                                                      .detailKeluarga!
-                                                      .jenisKelamin ==
+                                              if (widget.petugasWithBalitaModel[
+                                                      "jenis_kelamin"] ==
                                                   "Laki-Laki") {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:
@@ -424,11 +419,11 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                   ),
                                                   primaryYAxis: NumericAxis(
                                                       interval: 0.5,
-                                                      minimum: 33),
+                                                      minimum: 28),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin3l,
+                                                          chartKepalan3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -438,7 +433,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin2l,
+                                                          chartKepalan2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -448,7 +443,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin1l,
+                                                          chartKepalan1l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -458,7 +453,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggiNormall,
+                                                          chartKepalaNormall,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -467,7 +462,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi1l,
+                                                      dataSource: chartKepala1l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -476,7 +471,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi2l,
+                                                      dataSource: chartKepala2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -485,7 +480,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi3l,
+                                                      dataSource: chartKepala3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -504,7 +499,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                   ),
                                                   primaryYAxis: NumericAxis(
                                                       interval: 0.5,
-                                                      minimum: 33),
+                                                      minimum: 28),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
                                                         dataSource:
@@ -517,14 +512,14 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                         yValueMapper: (Map data,
                                                                 _) =>
                                                             data[
-                                                                "tinggi_badan"],
+                                                                "lingkar_kepala"],
                                                         dataLabelMapper: (Map
                                                                     data,
                                                                 _) =>
                                                             data[
                                                                 "umur_balita"] +
                                                             ': ' +
-                                                            data["tinggi_badan"]
+                                                            data["lingkar_kepala"]
                                                                 .toString(),
                                                         dataLabelSettings:
                                                             DataLabelSettings(
@@ -533,7 +528,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                         )),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin3p,
+                                                          chartKepalan3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -543,7 +538,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin2p,
+                                                          chartKepalan2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -553,7 +548,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggin1p,
+                                                          chartKepalan1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -563,7 +558,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                     ),
                                                     LineSeries<Map, int>(
                                                       dataSource:
-                                                          chartTinggiNormalp,
+                                                          chartKepalaNormalp,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -572,7 +567,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi1p,
+                                                      dataSource: chartKepala1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -581,7 +576,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi2p,
+                                                      dataSource: chartKepala2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -590,7 +585,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartTinggi3p,
+                                                      dataSource: chartKepala3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],

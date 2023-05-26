@@ -42,7 +42,7 @@ class _DetailRiwayatBalitaState extends State<DetailRiwayatBalita> {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text("Detail Riwayat Pemeriksaan Balita"),
+            title: Text("Detail Riwayat"),
             backgroundColor: Color(0xff34BE82),
           ),
           body: SafeArea(

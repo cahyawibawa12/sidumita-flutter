@@ -11,7 +11,7 @@ import '../widget/table_calendar/table_calendar_util.dart';
 
 class JadwalController extends GetxController implements GetxService {
   static late JadwalController instance;
-  late JadwalBalitaPage view;
+  // late JadwalBalitaPage view;
 
   @override
   void onInit() {
@@ -50,6 +50,13 @@ class JadwalController extends GetxController implements GetxService {
           end: DateFormat.jm().format(endEvent),
         ),
       ];
+      // events.value[endEvent] = [
+      //   Event(
+      //     title: eventName + " - " + locationName,
+      //     start: DateFormat.jm().format(startEvent),
+      //     end: DateFormat.jm().format(endEvent),
+      //   ),
+      // ];
     }
     events.refresh();
     update();

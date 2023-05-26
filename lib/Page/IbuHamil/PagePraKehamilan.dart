@@ -45,9 +45,9 @@ class _PagePraKehamilanState extends State<PagePraKehamilan> {
                           margin: EdgeInsets.all(10),
                           height: 160.0,
                           decoration: const BoxDecoration(
+                            color: Colors.green,
                             image: DecorationImage(
-                              image:
-                                  AssetImage('assets/images/jadwal-list.png'),
+                              image: AssetImage('assets/images/pra-ibu3.png'),
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.all(

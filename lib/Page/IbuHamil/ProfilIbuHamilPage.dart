@@ -10,6 +10,7 @@ import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/Page/Balita/BiodataBalita.dart';
 import 'package:posyandu/Page/IbuHamil/BiodataIbuHamil.dart';
 import 'package:posyandu/Page/IbuHamil/PagePraKehamilan.dart';
+import 'package:posyandu/Page/Konten/HalamanBerita.dart';
 import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingLoginPeserta.dart';
 import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
@@ -51,19 +52,31 @@ class _ProfilIbuHamilPageState extends State<ProfilIbuHamilPage> {
                 child: Card(
                   color: Color.fromARGB(255, 185, 246, 188),
                   child: ListTile(
-                    title: Text(
-                      widget.ibuHamilModel.detailKeluarga!.namaLengkap
-                          .toString(),
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
-                    subtitle: Text(
-                      umur.umurPeserta.value.umur.toString() +
-                          " Tahun " +
-                          (umur.umurPeserta.value.usiaBulan! % 12).toString() +
-                          " Bulan",
-                    ),
-                  ),
+                      title: Text(
+                        widget.ibuHamilModel.detailKeluarga!.namaLengkap
+                            .toString(),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      subtitle: (() {
+                        if (umur.umurPeserta.value.format.toString() ==
+                            "tahun") {
+                          return Text(
+                            umur.umurPeserta.value.umur.toString() +
+                                " Tahun " +
+                                (umur.umurPeserta.value.usiaBulan! % 12)
+                                    .toString() +
+                                " Bulan",
+                          );
+                        } else {
+                          return Text(
+                            "0 Tahun " +
+                                (umur.umurPeserta.value.usiaBulan! % 12)
+                                    .toString() +
+                                " Bulan",
+                          );
+                        }
+                      }())),
                 ),
               ),
               SizedBox(
@@ -156,10 +169,14 @@ class _ProfilIbuHamilPageState extends State<ProfilIbuHamilPage> {
                           title: const Text("Berita"),
                           trailing: IconButton(
                             onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => ));
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: HalamanBerita(),
+                                withNavBar:
+                                    false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
                             },
                             icon: const Icon(
                               Icons.arrow_right_sharp,
@@ -169,10 +186,13 @@ class _ProfilIbuHamilPageState extends State<ProfilIbuHamilPage> {
                         ),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => HomePagePetugas()));
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: HalamanBerita(),
+                          withNavBar: false, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
                       },
                     ),
                   ],

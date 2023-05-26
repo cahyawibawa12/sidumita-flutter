@@ -7,6 +7,7 @@ import 'package:posyandu/Controller/DetailKeluargaController.dart';
 import 'package:posyandu/Controller/PetugasController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Page/Balita/BiodataBalita.dart';
+import 'package:posyandu/Page/Konten/HalamanBerita.dart';
 import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/BiodataPetugas.dart';
@@ -47,18 +48,31 @@ class _ProfilBalitaState extends State<ProfilBalita> {
                 child: Card(
                   color: Color.fromARGB(255, 185, 246, 188),
                   child: ListTile(
-                    title: Text(
-                      widget.balitaModel.detailKeluarga!.namaLengkap.toString(),
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
-                    subtitle: Text(
-                      umur.umurPeserta.value.umur.toString() +
-                          " Tahun " +
-                          (umur.umurPeserta.value.usiaBulan! % 12).toString() +
-                          " Bulan",
-                    ),
-                  ),
+                      title: Text(
+                        widget.balitaModel.detailKeluarga!.namaLengkap
+                            .toString(),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      subtitle: (() {
+                        if (umur.umurPeserta.value.format.toString() ==
+                            "tahun") {
+                          return Text(
+                            umur.umurPeserta.value.umur.toString() +
+                                " Tahun " +
+                                (umur.umurPeserta.value.usiaBulan! % 12)
+                                    .toString() +
+                                " Bulan",
+                          );
+                        } else {
+                          return Text(
+                            "0 Tahun " +
+                                (umur.umurPeserta.value.usiaBulan! % 12)
+                                    .toString() +
+                                " Bulan",
+                          );
+                        }
+                      }())),
                 ),
               ),
               SizedBox(
@@ -81,7 +95,18 @@ class _ProfilBalitaState extends State<ProfilBalita> {
                         child: ListTile(
                           title: const Text("Biodata Balita"),
                           trailing: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: BiodataBalita(
+                                  balitaModel: widget.balitaModel,
+                                ),
+                                withNavBar:
+                                    false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
                             icon: const Icon(
                               Icons.arrow_right_sharp,
                               size: 24.0,
@@ -110,10 +135,14 @@ class _ProfilBalitaState extends State<ProfilBalita> {
                           title: const Text("Berita"),
                           trailing: IconButton(
                             onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => ));
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: HalamanBerita(),
+                                withNavBar:
+                                    false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
                             },
                             icon: const Icon(
                               Icons.arrow_right_sharp,
@@ -123,10 +152,13 @@ class _ProfilBalitaState extends State<ProfilBalita> {
                         ),
                       ),
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => HomePagePetugas()));
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: HalamanBerita(),
+                          withNavBar: false, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
                       },
                     ),
                   ],

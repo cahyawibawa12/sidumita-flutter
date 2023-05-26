@@ -133,73 +133,86 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                   // SizedBox(
                                   //   width: 10,
                                   // ),
-                                  IconButton(
-                                    onPressed: () {
-                                      PersistentNavBarNavigator.pushNewScreen(
-                                          context,
-                                          screen: DetailPemeriksaanIbuHamil(
-                                            id: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .id,
-                                            tanggal_pemeriksaan:
-                                                pemeriksaanibuhamil
-                                                    .listPemeriksaanIbuHamil[
-                                                        index]
-                                                    .tanggalPemeriksaan,
-                                            umur_kandungan: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .umurKandungan,
-                                            berat_badan: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .beratBadan
-                                                .toString(),
-                                            tinggi_badan: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .tinggiBadan
-                                                .toString(),
-                                            lingkar_perut: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .lingkarPerut
-                                                .toString(),
-                                            denyut_jantung_bayi:
-                                                pemeriksaanibuhamil
-                                                    .listPemeriksaanIbuHamil[
-                                                        index]
-                                                    .denyutJantungBayi
-                                                    .toString(),
-                                            denyut_nadi: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .denyutNadi
-                                                .toString(),
-                                            keluhan: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .keluhan,
-                                            penanganan: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .penanganan,
-                                            catatan: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .catatan,
-                                            ibu_hamil_id: pemeriksaanibuhamil
-                                                .listPemeriksaanIbuHamil[index]
-                                                .ibuHamilId
-                                                .toString(),
-                                            petugas_kesehatan_id:
-                                                pemeriksaanibuhamil
-                                                    .listPemeriksaanIbuHamil[
-                                                        index]
-                                                    .petugasKesehatanId
-                                                    .toString(),
-                                          ),
-                                          withNavBar:
-                                              false, // OPTIONAL VALUE. True by default.
-                                          pageTransitionAnimation:
-                                              PageTransitionAnimation
-                                                  .cupertino);
-                                    },
-                                    icon: const Icon(
-                                      Icons.search,
-                                      size: 15.0,
+                                  Expanded(
+                                    child: IconButton(
+                                      onPressed: () {
+                                        PersistentNavBarNavigator.pushNewScreen(
+                                            context,
+                                            screen: DetailPemeriksaanIbuHamil(
+                                              id: pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[
+                                                      index]
+                                                  .id,
+                                              tanggal_pemeriksaan:
+                                                  pemeriksaanibuhamil
+                                                      .listPemeriksaanIbuHamil[
+                                                          index]
+                                                      .tanggalPemeriksaan,
+                                              umur_kandungan:
+                                                  pemeriksaanibuhamil
+                                                      .listPemeriksaanIbuHamil[
+                                                          index]
+                                                      .umurKandungan,
+                                              berat_badan: pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[
+                                                      index]
+                                                  .beratBadan
+                                                  .toString(),
+                                              tinggi_badan: pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[
+                                                      index]
+                                                  .tinggiBadan
+                                                  .toString(),
+                                              lingkar_perut: pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[
+                                                      index]
+                                                  .lingkarPerut
+                                                  .toString(),
+                                              denyut_jantung_bayi:
+                                                  pemeriksaanibuhamil
+                                                      .listPemeriksaanIbuHamil[
+                                                          index]
+                                                      .denyutJantungBayi
+                                                      .toString(),
+                                              denyut_nadi: pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[
+                                                      index]
+                                                  .denyutNadi
+                                                  .toString(),
+                                              keluhan: pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[
+                                                      index]
+                                                  .keluhan,
+                                              penanganan: pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[
+                                                      index]
+                                                  .penanganan,
+                                              catatan: pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[
+                                                      index]
+                                                  .catatan,
+                                              ibu_hamil_id: pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[
+                                                      index]
+                                                  .ibuHamilId
+                                                  .toString(),
+                                              petugas_kesehatan_id:
+                                                  pemeriksaanibuhamil
+                                                      .listPemeriksaanIbuHamil[
+                                                          index]
+                                                      .petugasKesehatanId
+                                                      .toString(),
+                                            ),
+                                            withNavBar:
+                                                false, // OPTIONAL VALUE. True by default.
+                                            pageTransitionAnimation:
+                                                PageTransitionAnimation
+                                                    .cupertino);
+                                      },
+                                      icon: const Icon(
+                                        Icons.search,
+                                        size: 15.0,
+                                      ),
                                     ),
                                   ),
                                 ],

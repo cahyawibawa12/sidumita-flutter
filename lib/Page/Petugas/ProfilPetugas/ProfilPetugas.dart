@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/PetugasController.dart';
 import 'package:posyandu/Page/LandingLogin.dart';
+import 'package:posyandu/Page/LandingPage.dart';
 import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/BiodataPetugas.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/ChangePassword.dart';
@@ -179,7 +180,7 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
       localStorage.remove('user');
       localStorage.remove('token');
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => LandingLogin()),
+          MaterialPageRoute(builder: (context) => LandingPage()),
           (Route<dynamic> route) => false);
     }
   }

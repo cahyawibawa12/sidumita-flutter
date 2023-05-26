@@ -144,7 +144,7 @@ class DetailKeluargaController extends GetxController implements GetxService {
     var response = await service.deleteMyDetailKeluarga(id);
     var responsedecode = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      Get.back();
+      // Get.back();
       Get.snackbar(
         'Delete Berhasil',
         "Data berhasil di hapus",

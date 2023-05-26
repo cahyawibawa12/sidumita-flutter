@@ -71,20 +71,31 @@ class _BiodataBalitaState extends State<BiodataBalita> {
                   child: Card(
                     color: Color.fromARGB(255, 185, 246, 188),
                     child: ListTile(
-                      title: Text(
-                        widget.balitaModel.detailKeluarga!.namaLengkap
-                            .toString(),
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        umur.umurPeserta.value.umur.toString() +
-                            " Tahun " +
-                            (umur.umurPeserta.value.usiaBulan! % 12)
-                                .toString() +
-                            " Bulan",
-                      ),
-                    ),
+                        title: Text(
+                          widget.balitaModel.detailKeluarga!.namaLengkap
+                              .toString(),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: (() {
+                          if (umur.umurPeserta.value.format.toString() ==
+                              "tahun") {
+                            return Text(
+                              umur.umurPeserta.value.umur.toString() +
+                                  " Tahun " +
+                                  (umur.umurPeserta.value.usiaBulan! % 12)
+                                      .toString() +
+                                  " Bulan",
+                            );
+                          } else {
+                            return Text(
+                              "0 Tahun " +
+                                  (umur.umurPeserta.value.usiaBulan! % 12)
+                                      .toString() +
+                                  " Bulan",
+                            );
+                          }
+                        }())),
                   ),
                 ),
                 Card(

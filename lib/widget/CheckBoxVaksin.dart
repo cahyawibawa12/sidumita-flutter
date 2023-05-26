@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/MasterData/VaksinController.dart';
+import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
 
 class CheckBoxVaksin extends StatefulWidget {
   const CheckBoxVaksin({super.key});
@@ -13,6 +14,9 @@ class CheckBoxVaksin extends StatefulWidget {
 
 class _CheckBoxVaksinState extends State<CheckBoxVaksin> {
   var listVaksin = Get.put(VaksinController());
+  var pemeriksaanBalitaByPetugasController =
+      Get.put(PemeriksaanBalitaController());
+  final _formKey = GlobalKey<FormState>();
 
   List<Map> vaksinBalita = [];
   @override
@@ -29,12 +33,17 @@ class _CheckBoxVaksinState extends State<CheckBoxVaksin> {
         isChecked = true;
         resultHolder = 'Checkbox is CHECKED';
       });
+      pemeriksaanBalitaByPetugasController.isVaksinCheck.value = true;
     } else {
       // Put your code here which you want to execute on CheckBox Un-Checked event.
       setState(() {
         isChecked = false;
         resultHolder = 'Checkbox is UN-CHECKED';
       });
+      pemeriksaanBalitaByPetugasController.isVaksinCheck.value = false;
+      // pemeriksaanBalitaByPetugasController
+      //     .pemeriksaanBalitaByPetugas.value.vaksinId!
+      //     .clear();
     }
   }
 
@@ -68,6 +77,7 @@ class _CheckBoxVaksinState extends State<CheckBoxVaksin> {
             ? CircularProgressIndicator()
             : LayoutBuilder(builder: (context, constraint) {
                 return FormField(
+                  key: _formKey,
                   initialValue: false,
                   enabled: true,
                   builder: (FormFieldState<bool> field) {
@@ -76,23 +86,27 @@ class _CheckBoxVaksinState extends State<CheckBoxVaksin> {
                         errorText: field.errorText,
                         border: InputBorder.none,
                       ),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: listVaksin.data.length,
-                        itemBuilder: (context, index) {
-                          return Obx(() => CheckboxListTile(
-                                title:
-                                    Text(listVaksin.data[index]["nama_vaksin"]),
-                                value:
-                                    listVaksin.data[index]["checked"] ?? false,
-                                onChanged: (value) {
-                                  listVaksin.data.value[index]['checked'] =
-                                      value;
-                                  listVaksin.data.refresh();
-                                  listVaksin.update();
-                                },
-                              ));
-                        },
+                      child: Container(
+                        height: 200,
+                        child: ListView.builder(
+                          // physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: listVaksin.data.length,
+                          itemBuilder: (context, index) {
+                            return Obx(() => CheckboxListTile(
+                                  title: Text(
+                                      listVaksin.data[index]["nama_vaksin"]),
+                                  value: listVaksin.data[index]["checked"] ??
+                                      false,
+                                  onChanged: (value) {
+                                    listVaksin.data.value[index]['checked'] =
+                                        value;
+                                    listVaksin.data.refresh();
+                                    listVaksin.update();
+                                  },
+                                ));
+                          },
+                        ),
                       ),
                     );
                   },

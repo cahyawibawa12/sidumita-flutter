@@ -21,7 +21,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
   @override
   void initState() {
     super.initState();
-    detailKeluarga.StoreDetailKeluarga();
+    // detailKeluarga.StoreDetailKeluarga();
     detailKeluarga.resetForm();
   }
 
@@ -44,22 +44,22 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
             child: SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.all(10.0),
-                child: Form(
-                  key: _form,
-                  child: Column(
-                    children: [
-                      Text(
-                        "Tambah Anggota Keluarga",
-                        style: TextStyle(
-                          fontSize: 30.0,
-                        ),
+                child: Column(
+                  children: [
+                    Text(
+                      "Tambah Anggota Keluarga",
+                      style: TextStyle(
+                        fontSize: 30.0,
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Form(
+                          key: _form,
                           child: Column(
                             children: [
                               TextFormField(
@@ -76,6 +76,13 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                                 controller: detailKeluarga.nama_lengkap,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  detailKeluarga.nama_lengkap.text = nameValue;
+                                  return null;
+                                },
                               ),
                               TextFormField(
                                 maxLength: 16,
@@ -92,6 +99,13 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                                 controller: detailKeluarga.det_nik,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  detailKeluarga.det_nik.text = nameValue;
+                                  return null;
+                                },
                               ),
                               LayoutBuilder(builder: (context, constraint) {
                                 List<String> itemStringList = [
@@ -190,6 +204,13 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                                 controller: detailKeluarga.tempat_lahir,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  detailKeluarga.tanggal_lahir.text = nameValue;
+                                  return null;
+                                },
                               ),
                               InkWell(
                                 onTap: () async {
@@ -210,6 +231,14 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                 },
                                 child: TextFormField(
                                   controller: detailKeluarga.tanggal_lahir,
+                                  validator: (nameValue) {
+                                    if (nameValue!.isEmpty) {
+                                      return 'Mohon masukan data';
+                                    }
+                                    detailKeluarga.tanggal_lahir.text =
+                                        nameValue;
+                                    return null;
+                                  },
                                   maxLength: 20,
                                   enabled: false,
                                   decoration: const InputDecoration(
@@ -229,6 +258,13 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                               ),
                               TextFormField(
                                 maxLength: 20,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  detailKeluarga.agama.text = nameValue;
+                                  return null;
+                                },
                                 decoration: const InputDecoration(
                                   labelText: 'Agama',
                                   labelStyle: TextStyle(
@@ -244,6 +280,13 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                               ),
                               TextFormField(
                                 maxLength: 13,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  detailKeluarga.no_telp.text = nameValue;
+                                  return null;
+                                },
                                 decoration: const InputDecoration(
                                   labelText: 'No Telp',
                                   labelStyle: TextStyle(
@@ -345,6 +388,14 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                               }),
                               TextFormField(
                                 maxLength: 20,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  detailKeluarga.jenis_pekerjaan.text =
+                                      nameValue;
+                                  return null;
+                                },
                                 decoration: const InputDecoration(
                                   labelText: 'Jenis Pekerjaan',
                                   labelStyle: TextStyle(
@@ -360,6 +411,13 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                               ),
                               TextFormField(
                                 maxLength: 20,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  detailKeluarga.pendidikan.text = nameValue;
+                                  return null;
+                                },
                                 decoration: const InputDecoration(
                                   labelText: 'Pendidikan Terakhir',
                                   labelStyle: TextStyle(
@@ -557,6 +615,14 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   ),
                                 ),
                                 controller: detailKeluarga.kewarganegaraan,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  detailKeluarga.kewarganegaraan.text =
+                                      nameValue;
+                                  return null;
+                                },
                               ),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
@@ -573,8 +639,8 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

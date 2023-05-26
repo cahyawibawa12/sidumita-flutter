@@ -107,6 +107,7 @@ class PemeriksaanIbuHamilController extends GetxController
         colorText: Colors.white,
         backgroundColor: Colors.lightBlue,
       );
+      resetForm();
     } else {
       Get.snackbar(
         'Create Gagal',
@@ -118,6 +119,5 @@ class PemeriksaanIbuHamilController extends GetxController
     isLoading.value = false;
 
     // Get.back();
-    resetForm();
   }
 }

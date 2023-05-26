@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/IbuHamil.dart';
 import 'package:posyandu/Page/IbuHamil/ButtonNavBarIbuHamil.dart';
+import 'package:posyandu/Page/IbuHamil/PagePraKehamilan.dart';
 import 'package:posyandu/widget/widgets.dart';
 
 class LandingIbuHamil extends StatefulWidget {
@@ -106,14 +107,34 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                                                 // subtitle: Text(detailKeluarga
                                                 //     .listDetailKeluarga[index].nik!),
                                                 onTap: () {
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ButtonNavBarIbuHamil(
-                                                                ibuHamilModel:
-                                                                    ibuHamil.listIbuHamil[
-                                                                        index],
-                                                              )));
+                                                  if (ibuHamil
+                                                              .listIbuHamil[
+                                                                  index]
+                                                              .beratBadanPrakehamilan ==
+                                                          null ||
+                                                      ibuHamil
+                                                              .listIbuHamil[
+                                                                  index]
+                                                              .tinggiBadanPrakehamilan ==
+                                                          null) {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                PagePraKehamilan(
+                                                                  ibuHamilModel:
+                                                                      ibuHamil.listIbuHamil[
+                                                                          index],
+                                                                )));
+                                                  } else {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ButtonNavBarIbuHamil(
+                                                                  ibuHamilModel:
+                                                                      ibuHamil.listIbuHamil[
+                                                                          index],
+                                                                )));
+                                                  }
                                                 },
                                               ),
                                             );

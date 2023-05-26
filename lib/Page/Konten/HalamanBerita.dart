@@ -11,14 +11,14 @@ import 'package:posyandu/Page/LoginPage.dart';
 
 import 'package:posyandu/widget/widgets.dart';
 
-class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
+class HalamanBerita extends StatefulWidget {
+  const HalamanBerita({super.key});
 
   @override
-  State<LandingPage> createState() => _LandingPageState();
+  State<HalamanBerita> createState() => _HalamanBeritaState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _HalamanBeritaState extends State<HalamanBerita> {
   int currentIndex = 0;
   final CarouselController carouselController = CarouselController();
   var kontenController = Get.put(KontenController());
@@ -27,6 +27,39 @@ class _LandingPageState extends State<LandingPage> {
     super.initState();
     kontenController.ShowKonten();
   }
+
+  // final List<Widget> slider = [
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text1'),
+  //   ),
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text2'),
+  //   ),
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text3'),
+  //   ),
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text4'),
+  //   ),
+  //   Container(
+  //     height: 200,
+  //     width: 200,
+  //     color: Colors.blue,
+  //     child: Text('text5'),
+  //   )
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -64,19 +97,6 @@ class _LandingPageState extends State<LandingPage> {
                                 SizedBox(
                                   width: 40,
                                 ),
-                                IconButton(
-                                  onPressed: (() {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LandingLogin()),
-                                    );
-                                  }),
-                                  icon: const Icon(
-                                      CupertinoIcons.person_crop_circle),
-                                  iconSize: 35,
-                                  color: Color.fromARGB(255, 24, 98, 26),
-                                )
                               ],
                             ),
                             SizedBox(
