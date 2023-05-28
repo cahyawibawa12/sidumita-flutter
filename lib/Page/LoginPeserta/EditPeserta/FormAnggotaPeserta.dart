@@ -208,7 +208,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                   if (nameValue!.isEmpty) {
                                     return 'Mohon masukan data';
                                   }
-                                  detailKeluarga.tanggal_lahir.text = nameValue;
+                                  detailKeluarga.tempat_lahir.text = nameValue;
                                   return null;
                                 },
                               ),
@@ -231,6 +231,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                 },
                                 child: TextFormField(
                                   controller: detailKeluarga.tanggal_lahir,
+                                  readOnly: true,
                                   validator: (nameValue) {
                                     if (nameValue!.isEmpty) {
                                       return 'Mohon masukan data';

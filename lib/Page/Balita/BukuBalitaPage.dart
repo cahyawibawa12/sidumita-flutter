@@ -27,52 +27,17 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
       Get.put(GetTwoLastDataPemeriksaanBalitaController());
   var umur = Get.put(DetailKeluargaController());
 
+  Future<void> _refresh(bool reload) async {
+    await Get.find<GetTwoLastDataPemeriksaanBalitaController>()
+        .getTwoLastDataPemeriksaanBalita(widget.balitaModel.id!);
+  }
+
   @override
   void initState() {
     super.initState();
     getTwoLastDataPemeriksaanBalita
         .getTwoLastDataPemeriksaanBalita(widget.balitaModel.id!);
-    // print('frompage' +
-    //     getTwoLastDataPemeriksaanBalita.listTwoLastDataPemeriksaanBalita.length
-    //         .toString());
-    // umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
-
-  // int _current = 0;
-  // final CarouselController _controller = CarouselController();
-
-  // final List<Widget> slider = [
-  //   Container(
-  //     height: 200,
-  //     width: 200,
-  //     color: Colors.blue,
-  //     child: Text('text1'),
-  //   ),
-  //   Container(
-  //     height: 200,
-  //     width: 200,
-  //     color: Colors.blue,
-  //     child: Text('text2'),
-  //   ),
-  //   Container(
-  //     height: 200,
-  //     width: 200,
-  //     color: Colors.blue,
-  //     child: Text('text3'),
-  //   ),
-  //   Container(
-  //     height: 200,
-  //     width: 200,
-  //     color: Colors.blue,
-  //     child: Text('text4'),
-  //   ),
-  //   Container(
-  //     height: 200,
-  //     width: 200,
-  //     color: Colors.blue,
-  //     child: Text('text5'),
-  //   )
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -82,502 +47,508 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
-              child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Column(
-                  children: [
-                    Container(
-                      height: 100,
-                      padding: EdgeInsets.all(10),
-                      child: Card(
-                        color: Color.fromARGB(255, 185, 246, 188),
-                        child: ListTile(
-                            title: Text(
-                              widget.balitaModel.detailKeluarga!.namaLengkap
-                                  .toString(),
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600),
-                            ),
-                            subtitle: (() {
-                              if (umur.umurPeserta.value.format.toString() ==
-                                  "tahun") {
-                                return Text(
-                                  umur.umurPeserta.value.umur.toString() +
-                                      " Tahun " +
-                                      (umur.umurPeserta.value.usiaBulan! % 12)
-                                          .toString() +
-                                      " Bulan",
-                                );
-                              } else {
-                                return Text(
-                                  "0 Tahun " +
-                                      (umur.umurPeserta.value.usiaBulan! % 12)
-                                          .toString() +
-                                      " Bulan",
-                                );
-                              }
-                            }())),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("Hasil Pertumbuhan"),
-                        SizedBox(
-                          width: 18,
+              child: RefreshIndicator(
+            onRefresh: () async {
+              await _refresh(true);
+            },
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: <Widget>[
+                  Column(
+                    children: [
+                      Container(
+                        height: 100,
+                        padding: EdgeInsets.all(10),
+                        child: Card(
+                          color: Color.fromARGB(255, 185, 246, 188),
+                          child: ListTile(
+                              title: Text(
+                                widget.balitaModel.detailKeluarga!.namaLengkap
+                                    .toString(),
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                              subtitle: (() {
+                                if (umur.umurPeserta.value.format.toString() ==
+                                    "tahun") {
+                                  return Text(
+                                    umur.umurPeserta.value.umur.toString() +
+                                        " Tahun " +
+                                        (umur.umurPeserta.value.usiaBulan! % 12)
+                                            .toString() +
+                                        " Bulan",
+                                  );
+                                } else {
+                                  return Text(
+                                    "0 Tahun " +
+                                        (umur.umurPeserta.value.usiaBulan! % 12)
+                                            .toString() +
+                                        " Bulan",
+                                  );
+                                }
+                              }())),
                         ),
-                        TextButton(
-                            onPressed: () {
-                              var buttonNavBalitaController =
-                                  Get.put(ButtonNavBalitaController());
-                              buttonNavBalitaController
-                                  .tabController.value.index = 1;
-                            },
-                            child: Text(
-                              'Jadwal Pemeriksaan',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 43, 113, 218),
-                                  fontStyle: FontStyle.normal),
-                            )),
-                      ],
-                    ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white),
-                      child: Row(
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
-                            children: [
-                              Text('Data Sebelumnya'),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 60,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Color.fromARGB(111, 23, 196, 98)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Berat"),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
-                                              .length >=
-                                          2) {
-                                        return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
-                                                    1]
-                                                .beratBadan
-                                                .toString());
-                                      } else if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
-                                              .length ==
-                                          1) {
-                                        return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
-                                                    0]
-                                                .beratBadan
-                                                .toString());
-                                      } else {
-                                        return Text('Empty');
-                                      }
-                                    })
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 60,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Color.fromARGB(111, 23, 196, 98)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Tinggi"),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
-                                              .length >=
-                                          2) {
-                                        return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
-                                                    1]
-                                                .tinggiBadan
-                                                .toString());
-                                      } else if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
-                                              .length ==
-                                          1) {
-                                        return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
-                                                    0]
-                                                .tinggiBadan
-                                                .toString());
-                                      } else {
-                                        return Text('Empty');
-                                      }
-                                    })
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 60,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Color.fromARGB(111, 23, 196, 98)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Lingkar Kepala"),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
-                                              .length >=
-                                          2) {
-                                        return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
-                                                    1]
-                                                .lingkarKepala
-                                                .toString());
-                                      } else if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
-                                              .length ==
-                                          1) {
-                                        return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
-                                                    0]
-                                                .lingkarKepala
-                                                .toString());
-                                      } else {
-                                        return Text('Empty');
-                                      }
-                                    })
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Obx(() {
-                                if (getTwoLastDataPemeriksaanBalita
-                                        .listTwoLastDataPemeriksaanBalita
-                                        .length >=
-                                    2) {
-                                  return Text('Date : ' +
-                                      getTwoLastDataPemeriksaanBalita
-                                          .listTwoLastDataPemeriksaanBalita[1]
-                                          .tanggalPemeriksaan
-                                          .toString());
-                                } else if (getTwoLastDataPemeriksaanBalita
-                                        .listTwoLastDataPemeriksaanBalita
-                                        .length ==
-                                    1) {
-                                  return Text('Date : ' +
-                                      getTwoLastDataPemeriksaanBalita
-                                          .listTwoLastDataPemeriksaanBalita[0]
-                                          .tanggalPemeriksaan
-                                          .toString());
-                                } else {
-                                  return Text('Empty');
-                                }
-                              })
-                            ],
-                          ),
+                          Text("Hasil Pertumbuhan"),
                           SizedBox(
-                            width: 10,
+                            width: 18,
                           ),
-                          Column(
-                            children: [
-                              Text('Data Terakhir'),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 60,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Color.fromARGB(111, 23, 196, 98)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Berat"),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
-                                              .length >=
-                                          2) {
-                                        return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
-                                                    0]
-                                                .beratBadan
-                                                .toString());
-                                      } else {
-                                        return Text('Empty');
-                                      }
-                                    })
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 60,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Color.fromARGB(111, 23, 196, 98)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Tinggi"),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
-                                              .length >=
-                                          2) {
-                                        return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
-                                                    0]
-                                                .tinggiBadan
-                                                .toString());
-                                      } else {
-                                        return Text('Empty');
-                                      }
-                                    })
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 60,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Color.fromARGB(111, 23, 196, 98)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Lingkar Kepala"),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Obx(() {
-                                      if (getTwoLastDataPemeriksaanBalita
-                                              .listTwoLastDataPemeriksaanBalita
-                                              .length >=
-                                          2) {
-                                        return Text(
-                                            getTwoLastDataPemeriksaanBalita
-                                                .listTwoLastDataPemeriksaanBalita[
-                                                    0]
-                                                .lingkarKepala
-                                                .toString());
-                                      } else {
-                                        return Text('Empty');
-                                      }
-                                    })
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Obx(() {
-                                if (getTwoLastDataPemeriksaanBalita
-                                        .listTwoLastDataPemeriksaanBalita
-                                        .length >=
-                                    2) {
-                                  return Text('Date : ' +
-                                      getTwoLastDataPemeriksaanBalita
-                                          .listTwoLastDataPemeriksaanBalita[0]
-                                          .tanggalPemeriksaan
-                                          .toString());
-                                } else {
-                                  return Text('Empty');
-                                }
-                              })
-                            ],
-                          )
+                          TextButton(
+                              onPressed: () {
+                                var buttonNavBalitaController =
+                                    Get.put(ButtonNavBalitaController());
+                                buttonNavBalitaController
+                                    .tabController.value.index = 1;
+                              },
+                              child: Text(
+                                'Jadwal Pemeriksaan',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 43, 113, 218),
+                                    fontStyle: FontStyle.normal),
+                              )),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 180,
-                          width: 150,
-                          padding: EdgeInsets.only(top: 20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundColor: Colors.green[400],
-                                backgroundImage:
-                                    AssetImage('assets/images/pertumbuhan.png'),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                      context,
-                                      screen: StatistikBalitaPage(
-                                        balitaModel: widget.balitaModel,
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text('Data Sebelumnya'),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromARGB(111, 23, 196, 98)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Berat"),
+                                      SizedBox(
+                                        height: 5,
                                       ),
-                                      withNavBar:
-                                          false, // OPTIONAL VALUE. True by default.
-                                      pageTransitionAnimation:
-                                          PageTransitionAnimation.cupertino,
-                                    );
-                                  },
-                                  child: Text(
-                                    'Pertumbuhan',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontStyle: FontStyle.normal),
-                                  )),
-                            ],
-                          ),
+                                      Obx(() {
+                                        if (getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita
+                                                .length >=
+                                            2) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanBalita
+                                                  .listTwoLastDataPemeriksaanBalita[
+                                                      1]
+                                                  .beratBadan
+                                                  .toString());
+                                        } else if (getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita
+                                                .length ==
+                                            1) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanBalita
+                                                  .listTwoLastDataPemeriksaanBalita[
+                                                      0]
+                                                  .beratBadan
+                                                  .toString());
+                                        } else {
+                                          return Text('Empty');
+                                        }
+                                      })
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromARGB(111, 23, 196, 98)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Tinggi"),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Obx(() {
+                                        if (getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita
+                                                .length >=
+                                            2) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanBalita
+                                                  .listTwoLastDataPemeriksaanBalita[
+                                                      1]
+                                                  .tinggiBadan
+                                                  .toString());
+                                        } else if (getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita
+                                                .length ==
+                                            1) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanBalita
+                                                  .listTwoLastDataPemeriksaanBalita[
+                                                      0]
+                                                  .tinggiBadan
+                                                  .toString());
+                                        } else {
+                                          return Text('Empty');
+                                        }
+                                      })
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromARGB(111, 23, 196, 98)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Lingkar Kepala"),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Obx(() {
+                                        if (getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita
+                                                .length >=
+                                            2) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanBalita
+                                                  .listTwoLastDataPemeriksaanBalita[
+                                                      1]
+                                                  .lingkarKepala
+                                                  .toString());
+                                        } else if (getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita
+                                                .length ==
+                                            1) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanBalita
+                                                  .listTwoLastDataPemeriksaanBalita[
+                                                      0]
+                                                  .lingkarKepala
+                                                  .toString());
+                                        } else {
+                                          return Text('Empty');
+                                        }
+                                      })
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Obx(() {
+                                  if (getTwoLastDataPemeriksaanBalita
+                                          .listTwoLastDataPemeriksaanBalita
+                                          .length >=
+                                      2) {
+                                    return Text('Date : ' +
+                                        getTwoLastDataPemeriksaanBalita
+                                            .listTwoLastDataPemeriksaanBalita[1]
+                                            .tanggalPemeriksaan
+                                            .toString());
+                                  } else if (getTwoLastDataPemeriksaanBalita
+                                          .listTwoLastDataPemeriksaanBalita
+                                          .length ==
+                                      1) {
+                                    return Text('Date : ' +
+                                        getTwoLastDataPemeriksaanBalita
+                                            .listTwoLastDataPemeriksaanBalita[0]
+                                            .tanggalPemeriksaan
+                                            .toString());
+                                  } else {
+                                    return Text('Empty');
+                                  }
+                                })
+                              ],
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              children: [
+                                Text('Data Terakhir'),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromARGB(111, 23, 196, 98)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Berat"),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Obx(() {
+                                        if (getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita
+                                                .length >=
+                                            2) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanBalita
+                                                  .listTwoLastDataPemeriksaanBalita[
+                                                      0]
+                                                  .beratBadan
+                                                  .toString());
+                                        } else {
+                                          return Text('Empty');
+                                        }
+                                      })
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromARGB(111, 23, 196, 98)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Tinggi"),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Obx(() {
+                                        if (getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita
+                                                .length >=
+                                            2) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanBalita
+                                                  .listTwoLastDataPemeriksaanBalita[
+                                                      0]
+                                                  .tinggiBadan
+                                                  .toString());
+                                        } else {
+                                          return Text('Empty');
+                                        }
+                                      })
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 60,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromARGB(111, 23, 196, 98)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Lingkar Kepala"),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Obx(() {
+                                        if (getTwoLastDataPemeriksaanBalita
+                                                .listTwoLastDataPemeriksaanBalita
+                                                .length >=
+                                            2) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanBalita
+                                                  .listTwoLastDataPemeriksaanBalita[
+                                                      0]
+                                                  .lingkarKepala
+                                                  .toString());
+                                        } else {
+                                          return Text('Empty');
+                                        }
+                                      })
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Obx(() {
+                                  if (getTwoLastDataPemeriksaanBalita
+                                          .listTwoLastDataPemeriksaanBalita
+                                          .length >=
+                                      2) {
+                                    return Text('Date : ' +
+                                        getTwoLastDataPemeriksaanBalita
+                                            .listTwoLastDataPemeriksaanBalita[0]
+                                            .tanggalPemeriksaan
+                                            .toString());
+                                  } else {
+                                    return Text('Empty');
+                                  }
+                                })
+                              ],
+                            )
+                          ],
                         ),
-                        Container(
-                          height: 180,
-                          width: 150,
-                          padding: EdgeInsets.only(top: 20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white),
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundColor: Colors.green[400],
-                                backgroundImage:
-                                    AssetImage('assets/images/vaksin.png'),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                      context,
-                                      screen: ImunisasiBalitaPage(
-                                        balitaModel: widget.balitaModel,
-                                      ),
-                                      withNavBar:
-                                          false, // OPTIONAL VALUE. True by default.
-                                      pageTransitionAnimation:
-                                          PageTransitionAnimation.cupertino,
-                                    );
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             ImunisasiBalitaPage(
-                                    //               balitaModel:
-                                    //                   widget.balitaModel,
-                                    //             )));
-                                  },
-                                  child: Text(
-                                    'Imunisasi',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontStyle: FontStyle.normal),
-                                  )),
-                            ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 180,
+                            width: 150,
+                            padding: EdgeInsets.only(top: 20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white),
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.green[400],
+                                  backgroundImage: AssetImage(
+                                      'assets/images/pertumbuhan.png'),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: StatistikBalitaPage(
+                                          balitaModel: widget.balitaModel,
+                                        ),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino,
+                                      );
+                                    },
+                                    child: Text(
+                                      'Pertumbuhan',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontStyle: FontStyle.normal),
+                                    )),
+                              ],
+                            ),
                           ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // Column(children: [
-                //   CarouselSlider(
-                //     items: slider,
-                //     carouselController: _controller,
-                //     options: CarouselOptions(
-                //         autoPlay: true,
-                //         enlargeCenterPage: true,
-                //         aspectRatio: 2.0,
-                //         onPageChanged: (index, reason) {
-                //           setState(() {
-                //             _current = index;
-                //           });
-                //         }),
-                //   ),
-                //   Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: slider.asMap().entries.map((entry) {
-                //       return GestureDetector(
-                //         onTap: () => _controller.animateToPage(entry.key),
-                //         child: Container(
-                //           width: 7.0,
-                //           height: 7.0,
-                //           margin: EdgeInsets.symmetric(
-                //               vertical: 8.0, horizontal: 4.0),
-                //           decoration: BoxDecoration(
-                //               shape: BoxShape.circle,
-                //               color: (Theme.of(context).brightness ==
-                //                           Brightness.dark
-                //                       ? Colors.white
-                //                       : Colors.black)
-                //                   .withOpacity(
-                //                       _current == entry.key ? 0.9 : 0.4)),
-                //         ),
-                //       );
-                //     }).toList(),
-                //   ),
-                // ])
-              ],
+                          Container(
+                            height: 180,
+                            width: 150,
+                            padding: EdgeInsets.only(top: 20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.white),
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.green[400],
+                                  backgroundImage:
+                                      AssetImage('assets/images/vaksin.png'),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: ImunisasiBalitaPage(
+                                          balitaModel: widget.balitaModel,
+                                        ),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino,
+                                      );
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             ImunisasiBalitaPage(
+                                      //               balitaModel:
+                                      //                   widget.balitaModel,
+                                      //             )));
+                                    },
+                                    child: Text(
+                                      'Imunisasi',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontStyle: FontStyle.normal),
+                                    )),
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // Column(children: [
+                  //   CarouselSlider(
+                  //     items: slider,
+                  //     carouselController: _controller,
+                  //     options: CarouselOptions(
+                  //         autoPlay: true,
+                  //         enlargeCenterPage: true,
+                  //         aspectRatio: 2.0,
+                  //         onPageChanged: (index, reason) {
+                  //           setState(() {
+                  //             _current = index;
+                  //           });
+                  //         }),
+                  //   ),
+                  //   Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: slider.asMap().entries.map((entry) {
+                  //       return GestureDetector(
+                  //         onTap: () => _controller.animateToPage(entry.key),
+                  //         child: Container(
+                  //           width: 7.0,
+                  //           height: 7.0,
+                  //           margin: EdgeInsets.symmetric(
+                  //               vertical: 8.0, horizontal: 4.0),
+                  //           decoration: BoxDecoration(
+                  //               shape: BoxShape.circle,
+                  //               color: (Theme.of(context).brightness ==
+                  //                           Brightness.dark
+                  //                       ? Colors.white
+                  //                       : Colors.black)
+                  //                   .withOpacity(
+                  //                       _current == entry.key ? 0.9 : 0.4)),
+                  //         ),
+                  //       );
+                  //     }).toList(),
+                  //   ),
+                  // ])
+                ],
+              ),
             ),
           )),
         )

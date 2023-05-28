@@ -23,6 +23,10 @@ class _HalamanBeritaState extends State<HalamanBerita> {
   final CarouselController carouselController = CarouselController();
   var kontenController = Get.put(KontenController());
 
+  Future<void> _refresh(bool reload) async {
+    await Get.find<KontenController>().ShowKonten();
+  }
+
   void initState() {
     super.initState();
     kontenController.ShowKonten();
@@ -196,49 +200,56 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                           ],
                         ),
                         Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            child: ListView.builder(
-                              itemCount: kontenController.listKonten.length,
-                              physics: const ScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  height: 90,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Card(
-                                    color: Colors.green[200],
-                                    child: ListTile(
-                                      leading: Image.network(
-                                          "http://127.0.0.1:8000/storage/" +
-                                              kontenController.listKonten
-                                                  .value[index].gambar!),
-                                      title: Text(
-                                        kontenController
-                                            .listKonten.value[index].judul!,
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      subtitle: Text(
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              await _refresh(true);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListView.builder(
+                                itemCount: kontenController.listKonten.length,
+                                shrinkWrap: true,
+                                physics: AlwaysScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    height: 90,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Card(
+                                      color: Colors.green[200],
+                                      child: ListTile(
+                                        leading: Image.network(
+                                            "http://127.0.0.1:8000/storage/" +
+                                                kontenController.listKonten
+                                                    .value[index].gambar!),
+                                        title: Text(
                                           kontenController
-                                              .listKonten.value[index].konten!,
-                                          maxLines: 2),
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DetailBerita(
-                                                      kontenModel:
-                                                          kontenController
-                                                                  .listKonten[
-                                                              index],
-                                                    )));
-                                      },
+                                              .listKonten.value[index].judul!,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        subtitle: Text(
+                                            kontenController.listKonten
+                                                .value[index].konten!,
+                                            maxLines: 2),
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DetailBerita(
+                                                        kontenModel:
+                                                            kontenController
+                                                                    .listKonten[
+                                                                index],
+                                                      )));
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),

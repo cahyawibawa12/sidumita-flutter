@@ -23,6 +23,10 @@ class _LandingPageState extends State<LandingPage> {
   final CarouselController carouselController = CarouselController();
   var kontenController = Get.put(KontenController());
 
+  Future<void> _refresh(bool reload) async {
+    await Get.find<KontenController>().ShowKonten();
+  }
+
   void initState() {
     super.initState();
     kontenController.ShowKonten();
@@ -40,113 +44,107 @@ class _LandingPageState extends State<LandingPage> {
                   ? CircularProgressIndicator()
                   : Column(
                       children: <Widget>[
-                        Column(
+                        Row(
                           children: [
-                            Row(
+                            CircleAvatar(
+                              radius: 28,
+                              backgroundImage:
+                                  AssetImage('assets/images/bg.png'),
+                            ),
+                            Column(
                               children: [
-                                CircleAvatar(
-                                  radius: 28,
-                                  backgroundImage:
-                                      AssetImage('assets/images/bg.png'),
+                                Text(
+                                  "SIDUMITA",
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                  ),
                                 ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      "SIDUMITA",
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                      ),
-                                    ),
-                                    Text(
-                                        "Sistem Informasi Ibu Hamil dan Balita"),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 40,
-                                ),
-                                IconButton(
-                                  onPressed: (() {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LandingLogin()),
-                                    );
-                                  }),
-                                  icon: const Icon(
-                                      CupertinoIcons.person_crop_circle),
-                                  iconSize: 35,
-                                  color: Color.fromARGB(255, 24, 98, 26),
-                                )
+                                Text("Sistem Informasi Ibu Hamil dan Balita"),
                               ],
                             ),
                             SizedBox(
-                              height: 50,
+                              width: 40,
                             ),
-                            Builder(builder: (context) {
-                              List images = [
-                                "https://akah.desa.id/desa/upload/artikel/sedang_1583992455_PSOYANDU.jpg",
-                                "https://dinkes.blorakab.go.id/packages/upload/photo/2022-08-08/WhatsApp-Image-2022-08-01-at-12.42.14.jpeg",
-                                "https://dinkes.blorakab.go.id/packages/upload/portal/images/WhatsApp%20Image%202022-08-01%20at%2012.42.13.jpeg",
-                                "https://purwosari.magetan.go.id/media/img/berita/berita_3185e42771946ee32.18845142.jpg",
-                                "https://i1.wp.com/dinkes.rembangkab.go.id/binangkit/uploads/2023/02/Cover-Berita.jpg?resize=675%2C482&ssl=1",
-                              ];
+                            IconButton(
+                              onPressed: (() {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LandingLogin()),
+                                );
+                              }),
+                              icon:
+                                  const Icon(CupertinoIcons.person_crop_circle),
+                              iconSize: 35,
+                              color: Color.fromARGB(255, 24, 98, 26),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Builder(builder: (context) {
+                          List images = [
+                            "https://akah.desa.id/desa/upload/artikel/sedang_1583992455_PSOYANDU.jpg",
+                            "https://dinkes.blorakab.go.id/packages/upload/photo/2022-08-08/WhatsApp-Image-2022-08-01-at-12.42.14.jpeg",
+                            "https://dinkes.blorakab.go.id/packages/upload/portal/images/WhatsApp%20Image%202022-08-01%20at%2012.42.13.jpeg",
+                            "https://purwosari.magetan.go.id/media/img/berita/berita_3185e42771946ee32.18845142.jpg",
+                            "https://i1.wp.com/dinkes.rembangkab.go.id/binangkit/uploads/2023/02/Cover-Berita.jpg?resize=675%2C482&ssl=1",
+                          ];
 
-                              return Column(
-                                children: [
-                                  CarouselSlider(
-                                    carouselController: carouselController,
-                                    options: CarouselOptions(
-                                      height: 160.0,
-                                      autoPlay: true,
-                                      enlargeCenterPage: true,
-                                      onPageChanged: (index, reason) {
-                                        currentIndex = index;
-                                        setState(() {});
-                                      },
-                                    ),
-                                    items: images.map((imageUrl) {
-                                      return Builder(
-                                        builder: (BuildContext context) {
-                                          return Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            margin: const EdgeInsets.symmetric(
-                                                horizontal: 5.0),
-                                            decoration: BoxDecoration(
-                                              color: Colors.amber,
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(6.0),
-                                              ),
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                  imageUrl,
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
+                          return Column(
+                            children: [
+                              CarouselSlider(
+                                carouselController: carouselController,
+                                options: CarouselOptions(
+                                  height: 160.0,
+                                  autoPlay: true,
+                                  enlargeCenterPage: true,
+                                  onPageChanged: (index, reason) {
+                                    currentIndex = index;
+                                    setState(() {});
+                                  },
+                                ),
+                                items: images.map((imageUrl) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.amber,
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(6.0),
+                                          ),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                              imageUrl,
                                             ),
-                                          );
-                                        },
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       );
-                                    }).toList(),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children:
-                                        images.asMap().entries.map((entry) {
-                                      return GestureDetector(
-                                        onTap: () => carouselController
-                                            .animateToPage(entry.key),
-                                        child: Container(
-                                          width: 12.0,
-                                          height: 12.0,
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 8.0, horizontal: 4.0),
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: (Theme.of(context)
-                                                              .brightness ==
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: images.asMap().entries.map((entry) {
+                                  return GestureDetector(
+                                    onTap: () => carouselController
+                                        .animateToPage(entry.key),
+                                    child: Container(
+                                      width: 12.0,
+                                      height: 12.0,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 4.0),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color:
+                                              (Theme.of(context).brightness ==
                                                           Brightness.dark
                                                       ? Colors.white
                                                       : Colors.black)
@@ -154,15 +152,13 @@ class _LandingPageState extends State<LandingPage> {
                                                       currentIndex == entry.key
                                                           ? 0.9
                                                           : 0.4)),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ],
-                              );
-                            }),
-                          ],
-                        ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          );
+                        }),
                         Row(
                           children: [
                             Padding(padding: EdgeInsets.only(left: 20)),
@@ -176,49 +172,57 @@ class _LandingPageState extends State<LandingPage> {
                           ],
                         ),
                         Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            child: ListView.builder(
-                              itemCount: kontenController.listKonten.length,
-                              physics: const ScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  height: 90,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Card(
-                                    color: Colors.green[200],
-                                    child: ListTile(
-                                      leading: Image.network(
-                                          "http://127.0.0.1:8000/storage/" +
-                                              kontenController.listKonten
-                                                  .value[index].gambar!),
-                                      title: Text(
-                                        kontenController
-                                            .listKonten.value[index].judul!,
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      subtitle: Text(
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              await _refresh(true);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListView.builder(
+                                // scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: kontenController.listKonten.length,
+                                physics: AlwaysScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    height: 90,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Card(
+                                      color: Colors.green[200],
+                                      child: ListTile(
+                                        leading: Image.network(
+                                            "http://127.0.0.1:8000/storage/" +
+                                                kontenController.listKonten
+                                                    .value[index].gambar!),
+                                        title: Text(
                                           kontenController
-                                              .listKonten.value[index].konten!,
-                                          maxLines: 2),
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DetailBerita(
-                                                      kontenModel:
-                                                          kontenController
-                                                                  .listKonten[
-                                                              index],
-                                                    )));
-                                      },
+                                              .listKonten.value[index].judul!,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        subtitle: Text(
+                                            kontenController.listKonten
+                                                .value[index].konten!,
+                                            maxLines: 2),
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DetailBerita(
+                                                        kontenModel:
+                                                            kontenController
+                                                                    .listKonten[
+                                                                index],
+                                                      )));
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),

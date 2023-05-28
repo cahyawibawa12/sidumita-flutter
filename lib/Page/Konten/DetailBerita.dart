@@ -34,7 +34,7 @@ class _DetailBeritaState extends State<DetailBerita> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height,
+                  // height: MediaQuery.of(context).size.height,
                   child: Card(
                     clipBehavior: Clip.antiAlias,
                     color: Colors.transparent,

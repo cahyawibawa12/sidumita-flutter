@@ -87,7 +87,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     maxLength: 20,
                     obscureText: _secureText,
                     decoration: InputDecoration(
-                      hintText: "Password",
+                      hintText: "New Password",
                       suffixIcon: IconButton(
                         onPressed: showHideNew,
                         icon: Icon(_secureText

@@ -71,6 +71,18 @@ class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
                                             .cekImunisasiBalita[index].status ==
                                         "Belum") {
                                       return Text('Tanggal: -');
+                                    } else if (dataImunisasi
+                                                .cekImunisasiBalita[index]
+                                                .status ==
+                                            "Kejar" ||
+                                        dataImunisasi.cekImunisasiBalita[index]
+                                                .status ==
+                                            "Susulan") {
+                                      return Text('Tanggal: ' +
+                                          dataImunisasi
+                                              .cekImunisasiBalita[index]
+                                              .tanggalPemeriksaan
+                                              .toString());
                                     } else {
                                       return Text("Tanggal: " +
                                           DateFormat('dd MMMM yyyy').format(
@@ -110,6 +122,24 @@ class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
                                         padding: EdgeInsets.all(5),
                                         decoration: BoxDecoration(
                                             color: Colors.yellow[900],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Text(
+                                          dataImunisasi
+                                              .cekImunisasiBalita[index].status
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      );
+                                    } else if (dataImunisasi
+                                            .cekImunisasiBalita[index].status ==
+                                        "Susulan") {
+                                      return Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue[900],
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Text(

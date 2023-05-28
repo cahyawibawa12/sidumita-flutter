@@ -14,6 +14,11 @@ class JadwalBalitaPage extends StatefulWidget {
 
 class _JadwalBalitaPageState extends State<JadwalBalitaPage> {
   var controller = Get.put(JadwalController());
+
+  Future<void> _refresh(bool reload) async {
+    await Get.find<JadwalController>().getEvents();
+  }
+
   void initState() {
     controller.getEvents();
   }
@@ -25,37 +30,42 @@ class _JadwalBalitaPageState extends State<JadwalBalitaPage> {
         BackgroundImage(),
         Scaffold(
           backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-              padding: EdgeInsets.all(10),
-              child: Container(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    Text("Jadwal Posyandu",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500)),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Obx(
-                      () {
-                        if (controller.isLoading.value) {
-                          return Center(child: CircularProgressIndicator());
-                        } else {
-                          return SizedBox(
-                            height: 700.0,
-                            child: QTableCalendar(
-                              events: controller.events.value,
-                            ),
-                          );
-                        }
-                      },
-                    )
-                  ],
-                ),
-              )),
+          body: RefreshIndicator(
+            onRefresh: () async {
+              await _refresh(true);
+            },
+            child: SingleChildScrollView(
+                padding: EdgeInsets.all(10),
+                child: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      Text("Jadwal Posyandu",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500)),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Obx(
+                        () {
+                          if (controller.isLoading.value) {
+                            return Center(child: CircularProgressIndicator());
+                          } else {
+                            return SizedBox(
+                              height: 700.0,
+                              child: QTableCalendar(
+                                events: controller.events.value,
+                              ),
+                            );
+                          }
+                        },
+                      )
+                    ],
+                  ),
+                )),
+          ),
         )
       ],
     );

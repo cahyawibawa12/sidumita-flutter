@@ -33,6 +33,15 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
   var umur = Get.put(DetailKeluargaController());
   var dataBeratIbu = Get.put(CekDataController());
 
+  Future<void> _refresh(bool reload) async {
+    await Get.find<PemeriksaanIbuHamilController>()
+        .getPemeriksaanIbuHamil(widget.ibuHamilModel.id!);
+    await Get.find<CekDataController>()
+        .statusBeratIbu(ibu_hamil_id: widget.ibuHamilModel.id!);
+    await Get.find<DetailKeluargaController>()
+        .GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -49,473 +58,503 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
-            child: Column(
-              children: <Widget>[
-                Column(
-                  children: [
-                    Obx(() => umur.isLoading.value
-                        ? CircularProgressIndicator()
-                        : Container(
-                            height: 100,
-                            padding: EdgeInsets.all(10),
-                            child: Card(
-                              color: Color.fromARGB(255, 185, 246, 188),
-                              child: ListTile(
-                                  title: Text(
-                                    widget.ibuHamilModel.detailKeluarga!
-                                        .namaLengkap
-                                        .toString(),
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  subtitle: (() {
-                                    if (umur.umurPeserta.value.format
-                                            .toString() ==
-                                        "tahun") {
-                                      return Text(
-                                        umur.umurPeserta.value.umur.toString() +
-                                            " Tahun " +
-                                            (umur.umurPeserta.value.usiaBulan! %
-                                                    12)
-                                                .toString() +
-                                            " Bulan",
-                                      );
-                                    } else {
-                                      return Text(
-                                        "0 Tahun " +
-                                            (umur.umurPeserta.value.usiaBulan! %
-                                                    12)
-                                                .toString() +
-                                            " Bulan",
-                                      );
-                                    }
-                                  }())),
-                            ),
-                          )),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                      margin: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await _refresh(true);
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: <Widget>[
+                    Column(
+                      children: [
+                        Obx(() => umur.isLoading.value
+                            ? CircularProgressIndicator()
+                            : Container(
+                                height: 100,
+                                padding: EdgeInsets.all(10),
+                                child: Card(
+                                  color: Color.fromARGB(255, 185, 246, 188),
+                                  child: ListTile(
+                                      title: Text(
+                                        widget.ibuHamilModel.detailKeluarga!
+                                            .namaLengkap
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      subtitle: (() {
+                                        if (umur.umurPeserta.value.format
+                                                .toString() ==
+                                            "tahun") {
+                                          return Text(
+                                            umur.umurPeserta.value.umur
+                                                    .toString() +
+                                                " Tahun " +
+                                                (umur.umurPeserta.value
+                                                            .usiaBulan! %
+                                                        12)
+                                                    .toString() +
+                                                " Bulan",
+                                          );
+                                        } else {
+                                          return Text(
+                                            "0 Tahun " +
+                                                (umur.umurPeserta.value
+                                                            .usiaBulan! %
+                                                        12)
+                                                    .toString() +
+                                                " Bulan",
+                                          );
+                                        }
+                                      }())),
+                                ),
+                              )),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 16),
+                          margin: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white),
+                          child: Column(
                             children: [
-                              Column(
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    'Berat Badan',
-                                    style: TextStyle(fontSize: 14),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'Berat Badan',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Obx(() {
+                                        if (pemeriksaanibuhamil
+                                                .listPemeriksaanIbuHamil
+                                                .length !=
+                                            0) {
+                                          return Text(pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[0]
+                                                  .beratBadan
+                                                  .toString() +
+                                              ' Kg');
+                                        } else {
+                                          return Text('Empty');
+                                        }
+                                      }),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Obx((() {
+                                        if (dataBeratIbu.isLoading.value) {
+                                          return Text('Empty');
+                                        } else {
+                                          if (dataBeratIbu.hasilStatusBeratIbu
+                                                  .value.status ==
+                                              "Normal") {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.green),
+                                              child: Center(
+                                                  child: Text(dataBeratIbu
+                                                      .hasilStatusBeratIbu
+                                                      .value
+                                                      .status
+                                                      .toString())),
+                                            );
+                                          } else if (dataBeratIbu
+                                                  .hasilStatusBeratIbu
+                                                  .value
+                                                  .status ==
+                                              "Obese") {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.red),
+                                              child: Center(
+                                                  child: Text(dataBeratIbu
+                                                      .hasilStatusBeratIbu
+                                                      .value
+                                                      .status
+                                                      .toString())),
+                                            );
+                                          } else if (dataBeratIbu
+                                                  .hasilStatusBeratIbu
+                                                  .value
+                                                  .status ==
+                                              "Underweight") {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.red),
+                                              child: Center(
+                                                  child: Text(dataBeratIbu
+                                                      .hasilStatusBeratIbu
+                                                      .value
+                                                      .status
+                                                      .toString())),
+                                            );
+                                          } else {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.yellow),
+                                              child: Center(
+                                                  child: Text(dataBeratIbu
+                                                      .hasilStatusBeratIbu
+                                                      .value
+                                                      .status
+                                                      .toString())),
+                                            );
+                                          }
+                                        }
+                                      }))
+                                    ],
                                   ),
-                                  SizedBox(
-                                    height: 10,
+                                  // VerticalDivider(
+                                  //   color: Colors.black,
+                                  //   indent: 10,
+                                  //   thickness: 2,
+                                  //   endIndent: 10,
+                                  // ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'D. Jantung Bayi',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Obx(() {
+                                        if (pemeriksaanibuhamil
+                                                .listPemeriksaanIbuHamil
+                                                .length !=
+                                            0) {
+                                          return Text(pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[0]
+                                                  .denyutJantungBayi
+                                                  .toString() +
+                                              ' bpm');
+                                        } else {
+                                          return Text('Empty');
+                                        }
+                                      }),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Obx((() {
+                                        if (pemeriksaanibuhamil
+                                                .listPemeriksaanIbuHamil
+                                                .length !=
+                                            0) {
+                                          if (pemeriksaanibuhamil
+                                                      .listPemeriksaanIbuHamil[
+                                                          0]
+                                                      .denyutJantungBayi >=
+                                                  120 &&
+                                              pemeriksaanibuhamil
+                                                      .listPemeriksaanIbuHamil[
+                                                          0]
+                                                      .denyutJantungBayi <=
+                                                  160) {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.green),
+                                              child:
+                                                  Center(child: Text('Normal')),
+                                            );
+                                          } else {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.red),
+                                              child: Center(
+                                                  child: Text('Tidak Normal')),
+                                            );
+                                          }
+                                        } else {
+                                          return Container(
+                                            // width: 60,
+                                            // height: 20,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: Colors.green),
+                                            child:
+                                                Center(child: Text('Normal')),
+                                          );
+                                        }
+                                      }))
+                                    ],
                                   ),
-                                  Obx(() {
-                                    if (pemeriksaanibuhamil
-                                            .listPemeriksaanIbuHamil.length !=
-                                        0) {
-                                      return Text(pemeriksaanibuhamil
-                                              .listPemeriksaanIbuHamil[0]
-                                              .beratBadan
-                                              .toString() +
-                                          ' Kg');
-                                    } else {
-                                      return Text('Empty');
-                                    }
-                                  }),
-                                  SizedBox(
-                                    height: 10,
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'Nadi Ibu',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Obx(() {
+                                        if (pemeriksaanibuhamil
+                                                .listPemeriksaanIbuHamil
+                                                .length !=
+                                            0) {
+                                          return Text(pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[0]
+                                                  .denyutNadi
+                                                  .toString() +
+                                              ' bpm');
+                                        } else {
+                                          return Text('Empty');
+                                        }
+                                      }),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Obx((() {
+                                        if (pemeriksaanibuhamil
+                                                .listPemeriksaanIbuHamil
+                                                .length !=
+                                            0) {
+                                          if (pemeriksaanibuhamil
+                                                      .listPemeriksaanIbuHamil[
+                                                          0]
+                                                      .denyutNadi >=
+                                                  60 &&
+                                              pemeriksaanibuhamil
+                                                      .listPemeriksaanIbuHamil[
+                                                          0]
+                                                      .denyutNadi <=
+                                                  100) {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.green),
+                                              child:
+                                                  Center(child: Text('Normal')),
+                                            );
+                                          } else {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.red),
+                                              child: Center(
+                                                  child: Text('Tidak Normal')),
+                                            );
+                                          }
+                                        } else {
+                                          return Container(
+                                            // width: 60,
+                                            // height: 20,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: Colors.green),
+                                            child:
+                                                Center(child: Text('Normal')),
+                                          );
+                                        }
+                                      }))
+                                    ],
                                   ),
-                                  Obx((() {
-                                    if (dataBeratIbu.isLoading.value) {
-                                      return Text('Empty');
-                                    } else {
-                                      if (dataBeratIbu.hasilStatusBeratIbu.value
-                                              .status ==
-                                          "Normal") {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.green),
-                                          child: Center(
-                                              child: Text(dataBeratIbu
-                                                  .hasilStatusBeratIbu
-                                                  .value
-                                                  .status
-                                                  .toString())),
-                                        );
-                                      } else if (dataBeratIbu
-                                              .hasilStatusBeratIbu
-                                              .value
-                                              .status ==
-                                          "Obese") {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.red),
-                                          child: Center(
-                                              child: Text(dataBeratIbu
-                                                  .hasilStatusBeratIbu
-                                                  .value
-                                                  .status
-                                                  .toString())),
-                                        );
-                                      } else if (dataBeratIbu
-                                              .hasilStatusBeratIbu
-                                              .value
-                                              .status ==
-                                          "Underweight") {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.red),
-                                          child: Center(
-                                              child: Text(dataBeratIbu
-                                                  .hasilStatusBeratIbu
-                                                  .value
-                                                  .status
-                                                  .toString())),
-                                        );
-                                      } else {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.yellow),
-                                          child: Center(
-                                              child: Text(dataBeratIbu
-                                                  .hasilStatusBeratIbu
-                                                  .value
-                                                  .status
-                                                  .toString())),
-                                        );
-                                      }
-                                    }
-                                  }))
                                 ],
                               ),
-                              // VerticalDivider(
-                              //   color: Colors.black,
-                              //   indent: 10,
-                              //   thickness: 2,
-                              //   endIndent: 10,
-                              // ),
-                              Column(
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    'D. Jantung Bayi',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
                                   Obx(() {
                                     if (pemeriksaanibuhamil
                                             .listPemeriksaanIbuHamil.length !=
                                         0) {
-                                      return Text(pemeriksaanibuhamil
-                                              .listPemeriksaanIbuHamil[0]
-                                              .denyutJantungBayi
-                                              .toString() +
-                                          ' bpm');
-                                    } else {
-                                      return Text('Empty');
-                                    }
-                                  }),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Obx((() {
-                                    if (pemeriksaanibuhamil
-                                            .listPemeriksaanIbuHamil.length !=
-                                        0) {
-                                      if (pemeriksaanibuhamil
-                                                  .listPemeriksaanIbuHamil[0]
-                                                  .denyutJantungBayi >=
-                                              120 &&
+                                      return Text('Date : ' +
                                           pemeriksaanibuhamil
-                                                  .listPemeriksaanIbuHamil[0]
-                                                  .denyutJantungBayi <=
-                                              160) {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.green),
-                                          child: Center(child: Text('Normal')),
-                                        );
-                                      } else {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.red),
-                                          child: Center(
-                                              child: Text('Tidak Normal')),
-                                        );
-                                      }
-                                    } else {
-                                      return Container(
-                                        // width: 60,
-                                        // height: 20,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: Colors.green),
-                                        child: Center(child: Text('Normal')),
-                                      );
-                                    }
-                                  }))
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'Nadi Ibu',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Obx(() {
-                                    if (pemeriksaanibuhamil
-                                            .listPemeriksaanIbuHamil.length !=
-                                        0) {
-                                      return Text(pemeriksaanibuhamil
                                               .listPemeriksaanIbuHamil[0]
-                                              .denyutNadi
-                                              .toString() +
-                                          ' bpm');
+                                              .tanggalPemeriksaan
+                                              .toString());
                                     } else {
                                       return Text('Empty');
                                     }
                                   }),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Obx((() {
-                                    if (pemeriksaanibuhamil
-                                            .listPemeriksaanIbuHamil.length !=
-                                        0) {
-                                      if (pemeriksaanibuhamil
-                                                  .listPemeriksaanIbuHamil[0]
-                                                  .denyutNadi >=
-                                              60 &&
-                                          pemeriksaanibuhamil
-                                                  .listPemeriksaanIbuHamil[0]
-                                                  .denyutNadi <=
-                                              100) {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.green),
-                                          child: Center(child: Text('Normal')),
-                                        );
-                                      } else {
-                                        return Container(
-                                          // width: 60,
-                                          // height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.red),
-                                          child: Center(
-                                              child: Text('Tidak Normal')),
-                                        );
-                                      }
-                                    } else {
-                                      return Container(
-                                        // width: 60,
-                                        // height: 20,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: Colors.green),
-                                        child: Center(child: Text('Normal')),
-                                      );
-                                    }
-                                  }))
+                                  Container(
+                                    width: 180,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color:
+                                            Color.fromARGB(119, 33, 149, 243)),
+                                    child: TextButton(
+                                        onPressed: () {
+                                          PersistentNavBarNavigator.pushNewScreen(
+                                              context,
+                                              screen: StatistikIbuHamilPage(
+                                                  ibuHamilModel:
+                                                      widget.ibuHamilModel),
+                                              withNavBar:
+                                                  false, // OPTIONAL VALUE. True by default.
+                                              pageTransitionAnimation:
+                                                  PageTransitionAnimation
+                                                      .cupertino);
+                                        },
+                                        child: Text(
+                                          'Grafik Pertumbuhan',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontStyle: FontStyle.normal),
+                                        )),
+                                  )
                                 ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Obx(() {
-                                if (pemeriksaanibuhamil
-                                        .listPemeriksaanIbuHamil.length !=
-                                    0) {
-                                  return Text('Date : ' +
-                                      pemeriksaanibuhamil
-                                          .listPemeriksaanIbuHamil[0]
-                                          .tanggalPemeriksaan
-                                          .toString());
-                                } else {
-                                  return Text('Empty');
-                                }
-                              }),
-                              Container(
-                                width: 180,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Color.fromARGB(119, 33, 149, 243)),
-                                child: TextButton(
-                                    onPressed: () {
-                                      PersistentNavBarNavigator.pushNewScreen(
-                                          context,
-                                          screen: StatistikIbuHamilPage(
-                                              ibuHamilModel:
-                                                  widget.ibuHamilModel),
-                                          withNavBar:
-                                              false, // OPTIONAL VALUE. True by default.
-                                          pageTransitionAnimation:
-                                              PageTransitionAnimation
-                                                  .cupertino);
-                                    },
-                                    child: Text(
-                                      'Grafik Pertumbuhan',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontStyle: FontStyle.normal),
-                                    )),
                               )
                             ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    Builder(builder: (context) {
-                      List images = [
-                        "https://akah.desa.id/desa/upload/artikel/sedang_1583992455_PSOYANDU.jpg",
-                        "https://dinkes.blorakab.go.id/packages/upload/photo/2022-08-08/WhatsApp-Image-2022-08-01-at-12.42.14.jpeg",
-                        "https://dinkes.blorakab.go.id/packages/upload/portal/images/WhatsApp%20Image%202022-08-01%20at%2012.42.13.jpeg",
-                        "https://purwosari.magetan.go.id/media/img/berita/berita_3185e42771946ee32.18845142.jpg",
-                        "https://i1.wp.com/dinkes.rembangkab.go.id/binangkit/uploads/2023/02/Cover-Berita.jpg?resize=675%2C482&ssl=1",
-                      ];
+                          ),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Builder(builder: (context) {
+                          List images = [
+                            "https://akah.desa.id/desa/upload/artikel/sedang_1583992455_PSOYANDU.jpg",
+                            "https://dinkes.blorakab.go.id/packages/upload/photo/2022-08-08/WhatsApp-Image-2022-08-01-at-12.42.14.jpeg",
+                            "https://dinkes.blorakab.go.id/packages/upload/portal/images/WhatsApp%20Image%202022-08-01%20at%2012.42.13.jpeg",
+                            "https://purwosari.magetan.go.id/media/img/berita/berita_3185e42771946ee32.18845142.jpg",
+                            "https://i1.wp.com/dinkes.rembangkab.go.id/binangkit/uploads/2023/02/Cover-Berita.jpg?resize=675%2C482&ssl=1",
+                          ];
 
-                      return Column(
-                        children: [
-                          CarouselSlider(
-                            carouselController: carouselController,
-                            options: CarouselOptions(
-                              height: 160.0,
-                              autoPlay: true,
-                              enlargeCenterPage: true,
-                              onPageChanged: (index, reason) {
-                                currentIndex = index;
-                                setState(() {});
-                              },
-                            ),
-                            items: images.map((imageUrl) {
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    decoration: BoxDecoration(
-                                      color: Colors.amber,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(6.0),
-                                      ),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                          imageUrl,
+                          return Column(
+                            children: [
+                              CarouselSlider(
+                                carouselController: carouselController,
+                                options: CarouselOptions(
+                                  height: 160.0,
+                                  autoPlay: true,
+                                  enlargeCenterPage: true,
+                                  onPageChanged: (index, reason) {
+                                    currentIndex = index;
+                                    setState(() {});
+                                  },
+                                ),
+                                items: images.map((imageUrl) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.amber,
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(6.0),
+                                          ),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                              imageUrl,
+                                            ),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                        fit: BoxFit.cover,
-                                      ),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: images.asMap().entries.map((entry) {
+                                  return GestureDetector(
+                                    onTap: () => carouselController
+                                        .animateToPage(entry.key),
+                                    child: Container(
+                                      width: 12.0,
+                                      height: 12.0,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 4.0),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color:
+                                              (Theme.of(context).brightness ==
+                                                          Brightness.dark
+                                                      ? Colors.white
+                                                      : Colors.black)
+                                                  .withOpacity(
+                                                      currentIndex == entry.key
+                                                          ? 0.9
+                                                          : 0.4)),
                                     ),
                                   );
-                                },
-                              );
-                            }).toList(),
+                                }).toList(),
+                              ),
+                            ],
+                          );
+                        }),
+                        Container(
+                          height: 40,
+                          width: Get.width,
+                          margin: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white),
+                          child: Row(
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    var buttonNavIbuHamilController =
+                                        Get.put(ButtonNavIbuHamilController());
+                                    buttonNavIbuHamilController
+                                        .tabController.value.index = 1;
+                                  },
+                                  child: Text(
+                                    'Jadwal Pemeriksaan',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontStyle: FontStyle.normal),
+                                  )),
+                            ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: images.asMap().entries.map((entry) {
-                              return GestureDetector(
-                                onTap: () =>
-                                    carouselController.animateToPage(entry.key),
-                                child: Container(
-                                  width: 12.0,
-                                  height: 12.0,
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 4.0),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: (Theme.of(context).brightness ==
-                                                  Brightness.dark
-                                              ? Colors.white
-                                              : Colors.black)
-                                          .withOpacity(currentIndex == entry.key
-                                              ? 0.9
-                                              : 0.4)),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      );
-                    }),
-                    Container(
-                      height: 40,
-                      width: Get.width,
-                      margin: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white),
-                      child: Row(
-                        children: [
-                          TextButton(
-                              onPressed: () {
-                                var buttonNavIbuHamilController =
-                                    Get.put(ButtonNavIbuHamilController());
-                                buttonNavIbuHamilController
-                                    .tabController.value.index = 1;
-                              },
-                              child: Text(
-                                'Jadwal Pemeriksaan',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontStyle: FontStyle.normal),
-                              )),
-                        ],
-                      ),
-                    )
+                        )
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         )
