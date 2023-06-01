@@ -1,6 +1,6 @@
 class PetugasWithBalitaModel {
-  int? id;
-  int? detailKeluargaId;
+  String? id;
+  String? detailKeluargaId;
   String? createdAt;
   String? updatedAt;
   Null? deletedAt;
@@ -17,15 +17,15 @@ class PetugasWithBalitaModel {
   String? statusPerkawinan;
   String? statusDalamKeluarga;
   String? kewarganegaraan;
-  int? keluargaId;
+  String? keluargaId;
   String? noKartuKeluarga;
   String? kepalaKeluarga;
   String? alamat;
   String? jumlah;
-  int? userId;
-  int? dusunId;
+  String? userId;
+  String? dusunId;
   String? namaDusun;
-  int? desaId;
+  String? desaId;
 
   PetugasWithBalitaModel(
       {this.id,

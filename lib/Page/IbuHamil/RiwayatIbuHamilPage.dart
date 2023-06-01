@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/Page/IbuHamil/DetailPemeriksaanIbuHamil.dart';
+import 'package:intl/intl.dart';
 
 import 'package:posyandu/widget/widgets.dart';
 
@@ -42,17 +44,22 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
           body: SafeArea(
               child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 20, top: 30),
-                    child: Text(
-                      "Riwayat Pemeriksaan",
-                      style: TextStyle(fontSize: 30, color: Colors.white),
-                    ),
-                  ),
-                ],
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                margin: EdgeInsets.only(top: 10, bottom: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Color.fromARGB(255, 185, 246, 188)),
+                child: Center(
+                  child: Text("Riwayat Pemeriksaan",
+                      style: GoogleFonts.gentiumBasic(
+                        textStyle: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      )),
+                ),
               ),
               Column(
                 children: [
@@ -114,27 +121,32 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                   //     MainAxisAlignment.spaceEvenly,
                                   children: [
                                     SizedBox(
-                                      width: 20,
+                                      width: MediaQuery.of(context).size.width /
+                                          12.5,
                                     ),
-                                    Text(pemeriksaanibuhamil
-                                        .listPemeriksaanIbuHamil[index]
-                                        .tanggalPemeriksaan),
+                                    Text(DateFormat('yMd').format(
+                                        DateTime.parse(pemeriksaanibuhamil
+                                            .listPemeriksaanIbuHamil[index]
+                                            .tanggalPemeriksaan))),
                                     SizedBox(
-                                      width: 40,
+                                      width: MediaQuery.of(context).size.width /
+                                          10,
                                     ),
                                     Text(pemeriksaanibuhamil
                                         .listPemeriksaanIbuHamil[index]
                                         .lingkarPerut
                                         .toString()),
                                     SizedBox(
-                                      width: 45,
+                                      width: MediaQuery.of(context).size.width /
+                                          10,
                                     ),
                                     Text(pemeriksaanibuhamil
                                         .listPemeriksaanIbuHamil[index]
                                         .denyutJantungBayi
                                         .toString()),
                                     SizedBox(
-                                      width: 30,
+                                      width: MediaQuery.of(context).size.width /
+                                          10,
                                     ),
                                     Text(pemeriksaanibuhamil
                                         .listPemeriksaanIbuHamil[index]

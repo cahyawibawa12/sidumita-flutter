@@ -36,7 +36,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
     nama_lengkap.text = widget.petugasWithBalitaModel['nama_lengkap'];
     pemeriksaanBalitaByPetugas.tanggal_pemeriksaan.text =
         DateFormat('y-M-d').format(DateTime.now()).toString();
-    umur.GetUmur(widget.petugasWithBalitaModel['detail_keluarga_id'])
+    umur.GetUmur(int.parse(widget.petugasWithBalitaModel['detail_keluarga_id']))
         .whenComplete(() => pemeriksaanBalitaByPetugas.umur_balita.text =
             umur.umurPeserta.value.usiaBulan!.toString());
 
@@ -598,8 +598,8 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                           pemeriksaanBalitaByPetugas
                               .StorePemeriksaanBalitaByPetugas(
                                   vaksins: listVaksin.data,
-                                  balita_id:
-                                      widget.petugasWithBalitaModel["id"]);
+                                  balita_id: int.parse(
+                                      widget.petugasWithBalitaModel["id"]));
                         }
                       },
                       child: const Text("Save"),

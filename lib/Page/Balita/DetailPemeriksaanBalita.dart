@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Controller/DetailPemeriksaanBalitaController.dart';
+import 'package:intl/intl.dart';
 
 import '../../widget/widgets.dart';
 
@@ -70,10 +72,22 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
             children: [
               Column(
                 children: [
-                  Text(
-                    "PEMERIKSAAN BALITA",
-                    style: TextStyle(
-                      fontSize: 30,
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    margin: EdgeInsets.only(
+                        top: 10, bottom: 10, right: 20, left: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color.fromARGB(255, 185, 246, 188)),
+                    child: Center(
+                      child: Text("Detail Pemeriksaan",
+                          style: GoogleFonts.gentiumBasic(
+                            textStyle: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          )),
                     ),
                   ),
                 ],
@@ -82,6 +96,7 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                 height: 30,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -90,10 +105,11 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.white),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           height: 60,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Color.fromARGB(111, 23, 196, 98)),
@@ -118,7 +134,8 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                               children: [
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -138,7 +155,8 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -156,14 +174,15 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                               ],
                             ),
                             SizedBox(
-                              width: 30,
+                              width: 10,
                             ),
                             Column(
                               // mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -183,7 +202,8 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -207,7 +227,7 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                         ),
                         Container(
                           height: 60,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Color.fromARGB(111, 23, 196, 98)),
@@ -226,7 +246,7 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                         ),
                         Container(
                           height: 60,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Color.fromARGB(111, 23, 196, 98)),
@@ -245,7 +265,7 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                         ),
                         Container(
                           height: 60,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Color.fromARGB(111, 23, 196, 98)),
@@ -262,7 +282,9 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                         SizedBox(
                           height: 20,
                         ),
-                        Text("Date : " + widget.tanggal_pemeriksaan)
+                        Text("Date : " +
+                            DateFormat('dd MMMM yyyy').format(
+                                DateTime.parse(widget.tanggal_pemeriksaan)))
                       ],
                     ),
                   )

@@ -6,6 +6,7 @@ import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:posyandu/widget/listchart/listchartBerat.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class BeratBadanPagePetugas extends StatefulWidget {
   BeratBadanPagePetugas({super.key, required this.petugasWithBalitaModel});
@@ -329,9 +330,11 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Obx(() => Text(pemeriksaanbalita
-                                            .listPemeriksaanBalita[0]
-                                            .tanggalPemeriksaan))
+                                        Obx(() => Text(DateFormat('dd MMMM yy')
+                                            .format(DateTime.parse(
+                                                pemeriksaanbalita
+                                                    .listPemeriksaanBalita[0]
+                                                    .tanggalPemeriksaan))))
                                       ],
                                     )
                                   ],

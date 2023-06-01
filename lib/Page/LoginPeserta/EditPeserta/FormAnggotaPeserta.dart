@@ -280,6 +280,7 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                 controller: detailKeluarga.agama,
                               ),
                               TextFormField(
+                                keyboardType: TextInputType.number,
                                 maxLength: 13,
                                 validator: (nameValue) {
                                   if (nameValue!.isEmpty) {

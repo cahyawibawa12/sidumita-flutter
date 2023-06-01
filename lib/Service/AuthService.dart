@@ -15,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // }
 
 class Network {
-  final String _url = 'http://127.0.0.1:8000/api/';
+  final String _url = 'https://sidumita.definitelynotgod.com/api/';
   // 192.168.1.2 is my IP, change with your IP address
   var token;
 

@@ -7,6 +7,7 @@ import 'package:posyandu/Model/PetugasWithBalitaModel.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanBalita/DetailRiwayatBalita.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanBalita/FormPemeriksaanBalita.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanBalita/StatistikBalitaPetugas.dart';
+import 'package:intl/intl.dart';
 
 import 'package:posyandu/widget/BackgroundImage.dart';
 
@@ -27,8 +28,9 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
   @override
   void initState() {
     super.initState();
-    pemeriksaanbalita.getPemeriksaanBalita(widget.petugasWithBalitaModel["id"]);
-    umur.GetUmur(widget.petugasWithBalitaModel["id"]);
+    pemeriksaanbalita
+        .getPemeriksaanBalita(int.parse(widget.petugasWithBalitaModel["id"]));
+    umur.GetUmur(int.parse(widget.petugasWithBalitaModel["id"]));
     print('from page ' +
         pemeriksaanbalita.listPemeriksaanBalita.length.toString());
   }
@@ -37,8 +39,8 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
   Widget build(BuildContext context) {
     return FocusDetector(
       onFocusGained: () {
-        pemeriksaanbalita
-            .getPemeriksaanBalita(widget.petugasWithBalitaModel["id"]);
+        pemeriksaanbalita.getPemeriksaanBalita(
+            int.parse(widget.petugasWithBalitaModel["id"]));
       },
       child: Stack(
         children: [
@@ -130,7 +132,7 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
                 ),
                 Expanded(
                   child: Obx(() => pemeriksaanbalita.isLoading.value
-                      ? CircularProgressIndicator()
+                      ? Center(child: CircularProgressIndicator())
                       : SingleChildScrollView(
                           physics: ScrollPhysics(),
                           child: ListView.builder(
@@ -203,35 +205,44 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                        width: 10,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                12.5,
                                       ),
-                                      Text(pemeriksaanbalita
-                                          .listPemeriksaanBalita[index]
-                                          .tanggalPemeriksaan),
+                                      Text(DateFormat('yMd').format(
+                                          DateTime.parse(pemeriksaanbalita
+                                              .listPemeriksaanBalita[index]
+                                              .tanggalPemeriksaan))),
                                       SizedBox(
-                                        width: 40,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                10,
                                       ),
                                       Text(pemeriksaanbalita
                                           .listPemeriksaanBalita[index]
                                           .beratBadan
                                           .toString()),
                                       SizedBox(
-                                        width: 30,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                10,
                                       ),
                                       Text(pemeriksaanbalita
                                           .listPemeriksaanBalita[index]
                                           .tinggiBadan
                                           .toString()),
                                       SizedBox(
-                                        width: 30,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                10,
                                       ),
                                       Text(pemeriksaanbalita
                                           .listPemeriksaanBalita[index]
                                           .lingkarKepala
                                           .toString()),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
+                                      // SizedBox(
+                                      //   width: 20,
+                                      // ),
                                       Expanded(
                                         child: IconButton(
                                           onPressed: () {

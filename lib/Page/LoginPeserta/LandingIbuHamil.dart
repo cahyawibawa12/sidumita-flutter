@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Controller/IbuHamil.dart';
 import 'package:posyandu/Page/IbuHamil/ButtonNavBarIbuHamil.dart';
 import 'package:posyandu/Page/IbuHamil/PagePraKehamilan.dart';
@@ -53,16 +54,19 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                                 child: CircleAvatar(
                                   radius: 55,
                                   backgroundImage:
-                                      AssetImage('assets/images/bg.png'),
+                                      AssetImage('assets/images/Logo.png'),
                                 ),
                               ),
                               Column(
                                 children: [
                                   Text(
                                     "SIDUMITA",
-                                    style: TextStyle(
-                                        fontSize: 50,
-                                        fontWeight: FontWeight.bold),
+                                    style: GoogleFonts.nunitoSans(
+                                      textStyle: TextStyle(
+                                          fontSize: 50,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
                                   ),
                                   Text("Sistem Informasi Ibu Hamil dan Balita"),
                                 ],
@@ -93,7 +97,8 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                                 ),
                                 Expanded(
                                   child: Obx(() => ibuHamil.isLoading.value
-                                      ? CircularProgressIndicator()
+                                      ? Center(
+                                          child: CircularProgressIndicator())
                                       : SingleChildScrollView(
                                           child: ListView.builder(
                                             shrinkWrap: true,

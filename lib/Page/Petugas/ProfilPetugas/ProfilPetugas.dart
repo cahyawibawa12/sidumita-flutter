@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/PetugasController.dart';
+import 'package:posyandu/Page/Konten/HalamanBerita.dart';
 import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/LandingPage.dart';
 import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
@@ -142,6 +143,34 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
                             MaterialPageRoute(
                                 builder: (context) => ChangePassword()));
                       },
+                    ),
+                    InkWell(
+                      child: Card(
+                        child: ListTile(
+                          title: const Text("Berita"),
+                          trailing: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HalamanBerita()));
+                            },
+                            icon: const Icon(
+                              Icons.arrow_right_sharp,
+                              size: 24.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HalamanBerita()));
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     InkWell(
                       child: Card(

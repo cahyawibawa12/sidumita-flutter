@@ -61,7 +61,7 @@ class _PemeriksaanBalitaPageState extends State<PemeriksaanBalitaPage> {
           ),
           body: SafeArea(
             child: Obx(() => petugasWithBalita.isLoading.value
-                ? CircularProgressIndicator()
+                ? Center(child: CircularProgressIndicator())
                 : Padding(
                     padding: const EdgeInsets.all(10),
                     child: Column(

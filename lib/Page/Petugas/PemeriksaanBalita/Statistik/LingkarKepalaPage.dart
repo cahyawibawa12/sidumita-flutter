@@ -5,6 +5,7 @@ import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/widget/listchart/listchartLingkarKepala.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../widget/BackgroundImage.dart';
 
@@ -109,9 +110,11 @@ class _LingkarKepalaPagePetugasState extends State<LingkarKepalaPagePetugas> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Obx(() => Text(pemeriksaanbalita
-                                            .listPemeriksaanBalita[0]
-                                            .tanggalPemeriksaan))
+                                        Obx(() => Text(
+                                            DateFormat('dd MMMM yyyy').format(
+                                                DateTime.parse(pemeriksaanbalita
+                                                    .listPemeriksaanBalita[0]
+                                                    .tanggalPemeriksaan))))
                                       ],
                                     )
                                   ],

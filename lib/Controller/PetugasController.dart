@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,11 +61,11 @@ class PetugasController extends GetxController implements GetxService {
     nama_desa.text = petugas.value.namaDesa!;
     nama_dusun.text = petugas.value.namaDusun!;
     jenis_kelamin = petugas.value.jenisKelamin;
-    provinsi_id = petugas.value.provinsiId;
-    kabupaten_id = petugas.value.kabupatenId;
-    kecamatan_id = petugas.value.kecamatanId;
-    desa_id = petugas.value.desaId;
-    dusun_id = petugas.value.dusunId;
+    provinsi_id = int.parse(petugas.value.provinsiId!);
+    kabupaten_id = int.parse(petugas.value.kabupatenId!);
+    kecamatan_id = int.parse(petugas.value.kecamatanId!);
+    desa_id = int.parse(petugas.value.desaId!);
+    dusun_id = int.parse(petugas.value.dusunId!);
 
     isLoading.value = false;
   }

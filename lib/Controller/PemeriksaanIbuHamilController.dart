@@ -120,4 +120,27 @@ class PemeriksaanIbuHamilController extends GetxController
 
     // Get.back();
   }
+
+  Future<void> deletePemeriksaanIbuHamil(int id) async {
+    isLoading.value = true;
+
+    var response = await service.deletePemeriksaanIbuHamilByPetugas(id);
+    var responsedecode = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      Get.snackbar(
+        'Delete Berhasil',
+        "Data berhasil di hapus",
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      );
+    } else {
+      Get.snackbar(
+        'Delete Gagal',
+        "Data gagal dihapus, mohon periksa kembali",
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
+    isLoading.value = false;
+  }
 }

@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Controller/KontenController.dart';
 import 'package:posyandu/Page/Konten/DetailBerita.dart';
 import 'package:posyandu/Page/LandingLogin.dart';
@@ -80,18 +81,26 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                         Column(
                           children: [
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                CircleAvatar(
-                                  radius: 28,
-                                  backgroundImage:
-                                      AssetImage('assets/images/bg.png'),
+                                Container(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: CircleAvatar(
+                                    radius: 28,
+                                    backgroundImage:
+                                        AssetImage('assets/images/Logo.png'),
+                                  ),
                                 ),
                                 Column(
                                   children: [
                                     Text(
                                       "SIDUMITA",
-                                      style: TextStyle(
-                                        fontSize: 30,
+                                      style: GoogleFonts.nunitoSans(
+                                        textStyle: TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                       ),
                                     ),
                                     Text(
@@ -120,7 +129,7 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                                   CarouselSlider(
                                     carouselController: carouselController,
                                     options: CarouselOptions(
-                                      height: 160.0,
+                                      height: 200.0,
                                       autoPlay: true,
                                       enlargeCenterPage: true,
                                       onPageChanged: (index, reason) {
@@ -128,7 +137,8 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                                         setState(() {});
                                       },
                                     ),
-                                    items: images.map((imageUrl) {
+                                    items: kontenController.listKonten.value
+                                        .map((imageUrl) {
                                       return Builder(
                                         builder: (BuildContext context) {
                                           return Container(
@@ -145,7 +155,8 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                                               ),
                                               image: DecorationImage(
                                                 image: NetworkImage(
-                                                  imageUrl,
+                                                  "https://sidumita.definitelynotgod.com/storage/" +
+                                                      imageUrl.gambar!,
                                                 ),
                                                 fit: BoxFit.cover,
                                               ),
@@ -163,8 +174,8 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                                         onTap: () => carouselController
                                             .animateToPage(entry.key),
                                         child: Container(
-                                          width: 12.0,
-                                          height: 12.0,
+                                          width: 10.0,
+                                          height: 10.0,
                                           margin: const EdgeInsets.symmetric(
                                               vertical: 8.0, horizontal: 4.0),
                                           decoration: BoxDecoration(
@@ -207,44 +218,114 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                             child: Container(
                               padding: EdgeInsets.all(10),
                               child: ListView.builder(
-                                itemCount: kontenController.listKonten.length,
+                                // scrollDirection: Axis.vertical,
+
                                 shrinkWrap: true,
+                                itemCount: kontenController.listKonten.length,
                                 physics: AlwaysScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
                                   return Container(
-                                    height: 90,
+                                    height: 120,
                                     decoration: BoxDecoration(
                                         borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Card(
-                                      color: Colors.green[200],
-                                      child: ListTile(
-                                        leading: Image.network(
-                                            "http://127.0.0.1:8000/storage/" +
-                                                kontenController.listKonten
-                                                    .value[index].gambar!),
-                                        title: Text(
-                                          kontenController
-                                              .listKonten.value[index].judul!,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700),
+                                            BorderRadius.circular(50)),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailBerita(
+                                                      kontenModel:
+                                                          kontenController
+                                                                  .listKonten[
+                                                              index],
+                                                    )));
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          color: Colors.transparent,
                                         ),
-                                        subtitle: Text(
-                                            kontenController.listKonten
-                                                .value[index].konten!,
-                                            maxLines: 2),
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DetailBerita(
-                                                        kontenModel:
-                                                            kontenController
-                                                                    .listKonten[
-                                                                index],
-                                                      )));
-                                        },
+                                        padding: EdgeInsets.all(5),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: Colors.green[200],
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child: Container(
+                                                    child: Image.network(
+                                                  "https://sidumita.definitelynotgod.com/storage/" +
+                                                      kontenController
+                                                          .listKonten
+                                                          .value[index]
+                                                          .gambar!,
+                                                )),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                child: Expanded(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        kontenController
+                                                            .listKonten
+                                                            .value[index]
+                                                            .judul!,
+                                                        // maxLines: 4,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 15),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
+                                        // child: ListTile(
+                                        //   leading: Image.network(
+                                        //     "https://sidumita.definitelynotgod.com/storage/" +
+                                        //         kontenController.listKonten
+                                        //             .value[index].gambar!,
+                                        //   ),
+                                        //   title: Text(
+                                        //     kontenController
+                                        //         .listKonten.value[index].judul!,
+                                        //     maxLines: 2,
+                                        //     style: TextStyle(
+                                        //         fontWeight: FontWeight.w700),
+                                        //   ),
+                                        //   subtitle: Text(
+                                        //       kontenController.listKonten
+                                        //           .value[index].konten!,
+                                        //       maxLines: 2),
+                                        //   onTap: () {
+                                        //     Navigator.of(context).push(
+                                        //         MaterialPageRoute(
+                                        //             builder: (context) =>
+                                        //                 DetailBerita(
+                                        //                   kontenModel:
+                                        //                       kontenController
+                                        //                               .listKonten[
+                                        //                           index],
+                                        //                 )));
+                                        //   },
+                                        // ),
                                       ),
                                     ),
                                   );

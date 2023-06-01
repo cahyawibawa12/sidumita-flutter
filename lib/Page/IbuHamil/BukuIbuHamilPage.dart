@@ -7,6 +7,7 @@ import 'package:posyandu/Page/Balita/ImunisasiBalitaPage.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
 import 'dart:math';
+import 'package:intl/intl.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -134,7 +135,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -168,7 +169,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -202,7 +203,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -240,11 +241,13 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                           .length !=
                                       0) {
                                     return Text('Date : ' +
-                                        getTwoLastDataPemeriksaanIbuHamil
-                                            .listTwoLastDataPemeriksaanIbuHamil[
-                                                1]
-                                            .tanggalPemeriksaan
-                                            .toString());
+                                        DateFormat('dd MMMM yyyy').format(
+                                            DateTime.parse(
+                                                getTwoLastDataPemeriksaanIbuHamil
+                                                    .listTwoLastDataPemeriksaanIbuHamil[
+                                                        1]
+                                                    .tanggalPemeriksaan
+                                                    .toString())));
                                   } else {
                                     return Text('Loading');
                                   }
@@ -262,7 +265,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -296,7 +299,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -330,7 +333,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -368,11 +371,13 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                           .length !=
                                       0) {
                                     return Text('Date : ' +
-                                        getTwoLastDataPemeriksaanIbuHamil
-                                            .listTwoLastDataPemeriksaanIbuHamil[
-                                                0]
-                                            .tanggalPemeriksaan
-                                            .toString());
+                                        DateFormat('dd MMMM yyyy').format(
+                                            DateTime.parse(
+                                                getTwoLastDataPemeriksaanIbuHamil
+                                                    .listTwoLastDataPemeriksaanIbuHamil[
+                                                        0]
+                                                    .tanggalPemeriksaan
+                                                    .toString())));
                                   } else {
                                     return Text('Loading');
                                   }

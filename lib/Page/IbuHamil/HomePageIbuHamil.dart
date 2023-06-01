@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posyandu/Controller/CekDataController.dart';
 import 'package:posyandu/Controller/DetailKeluargaController.dart';
+import 'package:posyandu/Controller/KontenController.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/Page/IbuHamil/ButtonNavBarIbuHamil.dart';
 import 'package:posyandu/Page/IbuHamil/JadwalIbuHamilPage.dart';
@@ -10,6 +11,7 @@ import 'package:posyandu/Page/IbuHamil/StatistikIbuHamilPage.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:get/get.dart';
 import 'dart:math';
+import 'package:intl/intl.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,6 +34,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
   var pemeriksaanibuhamil = Get.put(PemeriksaanIbuHamilController());
   var umur = Get.put(DetailKeluargaController());
   var dataBeratIbu = Get.put(CekDataController());
+  var kontenController = Get.put(KontenController());
 
   Future<void> _refresh(bool reload) async {
     await Get.find<PemeriksaanIbuHamilController>()
@@ -40,11 +43,13 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
         .statusBeratIbu(ibu_hamil_id: widget.ibuHamilModel.id!);
     await Get.find<DetailKeluargaController>()
         .GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
+    await Get.find<KontenController>().ShowKonten();
   }
 
   @override
   void initState() {
     super.initState();
+    kontenController.ShowKonten();
     pemeriksaanibuhamil.getPemeriksaanIbuHamil(widget.ibuHamilModel.id!);
     umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
     dataBeratIbu.statusBeratIbu(ibu_hamil_id: widget.ibuHamilModel.id!);
@@ -405,10 +410,11 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                             .listPemeriksaanIbuHamil.length !=
                                         0) {
                                       return Text('Date : ' +
-                                          pemeriksaanibuhamil
-                                              .listPemeriksaanIbuHamil[0]
-                                              .tanggalPemeriksaan
-                                              .toString());
+                                          DateFormat('dd MMMM yyyy').format(
+                                              DateTime.parse(pemeriksaanibuhamil
+                                                  .listPemeriksaanIbuHamil[0]
+                                                  .tanggalPemeriksaan
+                                                  .toString())));
                                     } else {
                                       return Text('Empty');
                                     }
@@ -463,7 +469,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                               CarouselSlider(
                                 carouselController: carouselController,
                                 options: CarouselOptions(
-                                  height: 160.0,
+                                  height: 200.0,
                                   autoPlay: true,
                                   enlargeCenterPage: true,
                                   onPageChanged: (index, reason) {
@@ -471,7 +477,8 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                     setState(() {});
                                   },
                                 ),
-                                items: images.map((imageUrl) {
+                                items: kontenController.listKonten.value
+                                    .map((imageUrl) {
                                   return Builder(
                                     builder: (BuildContext context) {
                                       return Container(
@@ -486,7 +493,8 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                           ),
                                           image: DecorationImage(
                                             image: NetworkImage(
-                                              imageUrl,
+                                              "https://sidumita.definitelynotgod.com/storage/" +
+                                                  imageUrl.gambar!,
                                             ),
                                             fit: BoxFit.cover,
                                           ),
@@ -525,31 +533,71 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                             ],
                           );
                         }),
-                        Container(
-                          height: 40,
-                          width: Get.width,
-                          margin: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white),
-                          child: Row(
-                            children: [
-                              TextButton(
+                        InkWell(
+                          child: Container(
+                            // padding:
+                            //     EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                            margin: EdgeInsets.only(left: 20, right: 20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.white),
+                            child: Card(
+                              elevation: 0,
+                              child: ListTile(
+                                title: Text(
+                                  "Pertumbuhan Ibu Hamil",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                trailing: IconButton(
                                   onPressed: () {
                                     var buttonNavIbuHamilController =
                                         Get.put(ButtonNavIbuHamilController());
                                     buttonNavIbuHamilController
                                         .tabController.value.index = 1;
                                   },
-                                  child: Text(
-                                    'Jadwal Pemeriksaan',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontStyle: FontStyle.normal),
-                                  )),
-                            ],
+                                  icon: const Icon(
+                                    Icons.arrow_right_sharp,
+                                    size: 24.0,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        )
+                          onTap: () {
+                            var buttonNavIbuHamilController =
+                                Get.put(ButtonNavIbuHamilController());
+                            buttonNavIbuHamilController
+                                .tabController.value.index = 1;
+                          },
+                        ),
+                        // Container(
+                        //   height: 40,
+                        //   width: Get.width,
+                        //   margin: EdgeInsets.all(20),
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(5),
+                        //       color: Colors.white),
+                        //   child: Row(
+                        //     children: [
+                        //       TextButton(
+                        //           onPressed: () {
+                        // var buttonNavIbuHamilController =
+                        //     Get.put(ButtonNavIbuHamilController());
+                        // buttonNavIbuHamilController
+                        //     .tabController.value.index = 1;
+                        //           },
+                        //           child: Text(
+                        //             'Jadwal Pemeriksaan',
+                        //             style: TextStyle(
+                        //                 color: Colors.black,
+                        //                 fontStyle: FontStyle.normal),
+                        //           )),
+                        //     ],
+                        //   ),
+                        // )
                       ],
                     ),
                   ],

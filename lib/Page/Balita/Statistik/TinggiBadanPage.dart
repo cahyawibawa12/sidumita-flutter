@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../Controller/PemeriksaanBalitaController.dart';
 import '../../../widget/listchart/listchartTinggi.dart';
 import '../../../widget/widgets.dart';
+import 'package:intl/intl.dart';
 
 class TinggiBadanPage extends StatefulWidget {
   TinggiBadanPage({super.key, required this.balitaModel});
@@ -110,9 +111,11 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Obx(() => Text(pemeriksaanbalita
-                                            .listPemeriksaanBalita[0]
-                                            .tanggalPemeriksaan))
+                                        Obx(() => Text(
+                                            DateFormat('dd MMMM yyyy').format(
+                                                DateTime.parse(pemeriksaanbalita
+                                                    .listPemeriksaanBalita[0]
+                                                    .tanggalPemeriksaan))))
                                       ],
                                     )
                                   ],

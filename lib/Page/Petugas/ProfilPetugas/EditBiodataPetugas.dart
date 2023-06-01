@@ -40,18 +40,19 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
       print("bebas");
       if (bioPetugas.petugas.value.kabupatenId != null) {
         daerahController.fetchProvinsi(
-            provinsi_id: bioPetugas.petugas.value.provinsiId);
+            provinsi_id: int.parse(bioPetugas.petugas.value.provinsiId!));
       }
       if (bioPetugas.petugas.value.kecamatanId != null) {
         daerahController.fetchKabupaten(
-            kabupaten_id: bioPetugas.petugas.value.kabupatenId);
+            kabupaten_id: int.parse(bioPetugas.petugas.value.kabupatenId!));
       }
       if (bioPetugas.petugas.value.desaId != null) {
         daerahController.fetchKecamatan(
-            kecamatan_id: bioPetugas.petugas.value.kecamatanId);
+            kecamatan_id: int.parse(bioPetugas.petugas.value.kecamatanId!));
       }
       if (bioPetugas.petugas.value.dusunId != null) {
-        daerahController.fetchDesa(desa_id: bioPetugas.petugas.value.desaId);
+        daerahController.fetchDesa(
+            desa_id: int.parse(bioPetugas.petugas.value.desaId!));
       }
     });
     daerahController.getProvinsi();
@@ -97,7 +98,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                   height: 10,
                 ),
                 Obx(() => bioPetugas.isLoading.value
-                    ? CircularProgressIndicator()
+                    ? Center(child: CircularProgressIndicator())
                     : Container(
                         padding: EdgeInsets.all(20),
                         margin: EdgeInsets.all(10),
@@ -382,7 +383,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                     setState(() {
                                                       bioPetugas.petugas.value
                                                               .provinsiId =
-                                                          int.parse(newValue!);
+                                                          newValue!;
                                                       daerahController
                                                           .fetchProvinsi(
                                                               provinsi_id:
@@ -489,7 +490,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                     setState(() {
                                                       bioPetugas.petugas.value
                                                               .kabupatenId =
-                                                          int.parse(newValue!);
+                                                          newValue!;
                                                       daerahController
                                                           .fetchKabupaten(
                                                               kabupaten_id:
@@ -595,7 +596,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                     setState(() {
                                                       bioPetugas.petugas.value
                                                               .kecamatanId =
-                                                          int.parse(newValue!);
+                                                          newValue!;
                                                       daerahController
                                                           .fetchKecamatan(
                                                               kecamatan_id:
@@ -696,8 +697,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                       (String? newValue) {
                                                     setState(() {
                                                       bioPetugas.petugas.value
-                                                              .desaId =
-                                                          int.parse(newValue!);
+                                                          .desaId = newValue!;
                                                       daerahController.fetchDesa(
                                                           desa_id: int.parse(
                                                               newValue));
@@ -792,8 +792,7 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                       (String? newValue) {
                                                     setState(() {
                                                       bioPetugas.petugas.value
-                                                              .dusunId =
-                                                          int.parse(newValue!);
+                                                          .dusunId = newValue!;
                                                     });
                                                   },
                                                   items: [

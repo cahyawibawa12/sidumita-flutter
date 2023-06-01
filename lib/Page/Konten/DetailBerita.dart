@@ -48,7 +48,7 @@ class _DetailBeritaState extends State<DetailBerita> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(
-                                    "http://127.0.0.1:8000/storage/" +
+                                    "https://sidumita.definitelynotgod.com/storage/" +
                                         widget.kontenModel.gambar!),
                                 fit: BoxFit.cover,
                               ),
@@ -70,7 +70,7 @@ class _DetailBeritaState extends State<DetailBerita> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 6.0,
+                                  height: 10.0,
                                 ),
                                 Text(
                                   widget.kontenModel.konten!,

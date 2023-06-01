@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posyandu/Controller/CekDataController.dart';
 import 'package:posyandu/Controller/DetailKeluargaController.dart';
+import 'package:posyandu/Controller/KontenController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Model/DetailKeluargaModel.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
@@ -14,6 +15,7 @@ import 'package:posyandu/Page/LoginPeserta/LoginPagePeserta.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:get/get.dart';
 import 'dart:math';
+import 'package:intl/intl.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,6 +41,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
   var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
   var cekDataBalita = Get.put(CekDataController());
   var umur = Get.put(DetailKeluargaController());
+  var kontenController = Get.put(KontenController());
 
   Future<void> _refresh(bool reload) async {
     await Get.find<CekDataController>()
@@ -69,11 +72,13 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                 pemeriksaanbalita.listPemeriksaanBalita[0].lingkarKepala);
       }
     });
+    await Get.find<KontenController>().ShowKonten();
   }
 
   @override
   void initState() {
     super.initState();
+    kontenController.ShowKonten();
     cekDataBalita.CekImunisasiBalita(widget.balitaModel.id!);
     umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
     pemeriksaanbalita
@@ -469,10 +474,11 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                             .listPemeriksaanBalita.length !=
                                         0) {
                                       return Text('Date : ' +
-                                          pemeriksaanbalita
-                                              .listPemeriksaanBalita[0]
-                                              .tanggalPemeriksaan
-                                              .toString());
+                                          DateFormat('dd MMMM yyyy').format(
+                                              DateTime.parse(pemeriksaanbalita
+                                                  .listPemeriksaanBalita[0]
+                                                  .tanggalPemeriksaan
+                                                  .toString())));
                                     } else {
                                       return Text('Empty');
                                     }
@@ -498,7 +504,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                           );
                                         },
                                         child: Text(
-                                          'Lihat Grafik Pertumbuhan',
+                                          'Grafik Pertumbuhan',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontStyle: FontStyle.normal),
@@ -527,7 +533,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                               CarouselSlider(
                                 carouselController: carouselController,
                                 options: CarouselOptions(
-                                  height: 160.0,
+                                  height: 200.0,
                                   autoPlay: true,
                                   enlargeCenterPage: true,
                                   onPageChanged: (index, reason) {
@@ -535,7 +541,8 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                     setState(() {});
                                   },
                                 ),
-                                items: images.map((imageUrl) {
+                                items: kontenController.listKonten.value
+                                    .map((imageUrl) {
                                   return Builder(
                                     builder: (BuildContext context) {
                                       return Container(
@@ -550,7 +557,8 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                           ),
                                           image: DecorationImage(
                                             image: NetworkImage(
-                                              imageUrl,
+                                              "https://sidumita.definitelynotgod.com/storage/" +
+                                                  imageUrl.gambar!,
                                             ),
                                             fit: BoxFit.cover,
                                           ),
@@ -567,8 +575,8 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                     onTap: () => carouselController
                                         .animateToPage(entry.key),
                                     child: Container(
-                                      width: 12.0,
-                                      height: 12.0,
+                                      width: 10.0,
+                                      height: 10.0,
                                       margin: const EdgeInsets.symmetric(
                                           vertical: 8.0, horizontal: 4.0),
                                       decoration: BoxDecoration(
@@ -589,31 +597,71 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                             ],
                           );
                         }),
-                        Container(
-                          height: 40,
-                          width: Get.width,
-                          margin: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.white),
-                          child: Row(
-                            children: [
-                              TextButton(
+                        InkWell(
+                          child: Container(
+                            // padding:
+                            //     EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                            margin: EdgeInsets.only(left: 20, right: 20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.white),
+                            child: Card(
+                              elevation: 0,
+                              child: ListTile(
+                                title: Text(
+                                  "Pertumbuhan Balita",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                trailing: IconButton(
                                   onPressed: () {
                                     var buttonNavBalitaController =
                                         Get.put(ButtonNavBalitaController());
                                     buttonNavBalitaController
                                         .tabController.value.index = 1;
                                   },
-                                  child: Text(
-                                    'Jadwal Pemeriksaan',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontStyle: FontStyle.normal),
-                                  )),
-                            ],
+                                  icon: const Icon(
+                                    Icons.arrow_right_sharp,
+                                    size: 24.0,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        )
+                          onTap: () {
+                            var buttonNavBalitaController =
+                                Get.put(ButtonNavBalitaController());
+                            buttonNavBalitaController
+                                .tabController.value.index = 1;
+                          },
+                        ),
+                        // Container(
+                        //   height: 40,
+                        //   width: Get.width,
+                        //   margin: EdgeInsets.all(20),
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(5),
+                        //       color: Colors.white),
+                        //   child: Row(
+                        //     children: [
+                        //       TextButton(
+                        //           onPressed: () {
+                        //             var buttonNavBalitaController =
+                        //                 Get.put(ButtonNavBalitaController());
+                        //             buttonNavBalitaController
+                        //                 .tabController.value.index = 1;
+                        //           },
+                        //           child: Text(
+                        //             'Jadwal Pemeriksaan',
+                        //             style: TextStyle(
+                        //                 color: Colors.black,
+                        //                 fontStyle: FontStyle.normal),
+                        //           )),
+                        //     ],
+                        //   ),
+                        // )
                       ],
                     ),
                   ],

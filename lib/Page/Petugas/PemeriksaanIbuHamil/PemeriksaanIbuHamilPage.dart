@@ -61,7 +61,7 @@ class _PemeriksaanIbuHamilPageState extends State<PemeriksaanIbuHamilPage> {
           ),
           body: SafeArea(
             child: Obx(() => petugasWithIbuHamil.isLoading.value
-                ? CircularProgressIndicator()
+                ? Center(child: CircularProgressIndicator())
                 : Padding(
                     padding: const EdgeInsets.all(10),
                     child: Column(

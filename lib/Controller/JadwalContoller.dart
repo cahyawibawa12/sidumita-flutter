@@ -31,7 +31,7 @@ class JadwalController extends GetxController implements GetxService {
     isLoading.value = true;
     var token = await getToken();
     var response = await Dio().get(
-      "http://127.0.0.1:8000/api/jadwal-pemeriksaan",
+      "https://sidumita.definitelynotgod.com/api/jadwal-pemeriksaan",
       options: Options(headers: setHeaders(token)),
     );
     Map obj = response.data;

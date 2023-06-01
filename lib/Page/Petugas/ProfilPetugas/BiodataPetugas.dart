@@ -90,7 +90,7 @@ class _BiodataPetugasState extends State<BiodataPetugas> {
                   height: 10,
                 ),
                 Obx(() => bioPetugas.isLoading.value
-                    ? CircularProgressIndicator()
+                    ? Center(child: CircularProgressIndicator())
                     : Container(
                         padding: EdgeInsets.all(20),
                         margin: EdgeInsets.all(10),

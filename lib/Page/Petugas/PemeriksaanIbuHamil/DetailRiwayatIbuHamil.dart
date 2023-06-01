@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
+import 'package:intl/intl.dart';
 
 class DetailRiwayatIbuHamil extends StatefulWidget {
   final int id;
@@ -54,6 +55,7 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                 height: 30,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -71,7 +73,8 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                               children: [
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -91,7 +94,8 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -111,7 +115,8 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -129,14 +134,15 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                               ],
                             ),
                             SizedBox(
-                              width: 30,
+                              width: 10,
                             ),
                             Column(
                               // mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -156,7 +162,8 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -177,7 +184,8 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -201,7 +209,7 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                         ),
                         Container(
                           height: 60,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Color.fromARGB(111, 23, 196, 98)),
@@ -220,7 +228,7 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                         ),
                         Container(
                           height: 60,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Color.fromARGB(111, 23, 196, 98)),
@@ -239,7 +247,7 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                         ),
                         Container(
                           height: 60,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width / 1.2,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Color.fromARGB(111, 23, 196, 98)),
@@ -256,7 +264,9 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                         SizedBox(
                           height: 20,
                         ),
-                        Text("Date : " + widget.tanggal_pemeriksaan)
+                        Text("Date : " +
+                            DateFormat('dd MMMM yyyy').format(
+                                DateTime.parse(widget.tanggal_pemeriksaan)))
                       ],
                     ),
                   )

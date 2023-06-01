@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Controller/JadwalContoller.dart';
 import 'package:posyandu/widget/table_calendar/table_calendar.dart';
 import 'package:posyandu/widget/widgets.dart';
@@ -41,11 +42,24 @@ class _JadwalIbuHamilPageState extends State<JadwalIbuHamilPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      Text("Jadwal Posyandu",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w500)),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        margin: EdgeInsets.only(top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Color.fromARGB(255, 185, 246, 188)),
+                        child: Center(
+                          child: Text("Jadwal Posyandu",
+                              style: GoogleFonts.gentiumBasic(
+                                textStyle: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              )),
+                        ),
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -55,7 +69,7 @@ class _JadwalIbuHamilPageState extends State<JadwalIbuHamilPage> {
                             return Center(child: CircularProgressIndicator());
                           } else {
                             return SizedBox(
-                              height: 700.0,
+                              height: MediaQuery.of(context).size.height / 1.15,
                               child: QTableCalendar(
                                 events: controller.events.value,
                               ),

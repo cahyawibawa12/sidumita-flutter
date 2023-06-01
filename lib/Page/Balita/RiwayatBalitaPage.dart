@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Page/Balita/DetailPemeriksaanBalita.dart';
 import 'package:posyandu/widget/widgets.dart';
+import 'package:intl/intl.dart';
 
 class RiwayatBalitaPage extends StatefulWidget {
   RiwayatBalitaPage({super.key, required this.balitaModel});
@@ -41,18 +43,22 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
           body: SafeArea(
               child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 20, top: 30),
-                    child: Text("Riwayat Pemeriksaan",
-                        style: TextStyle(
-                            color: Colors.black,
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                margin: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Color.fromARGB(255, 185, 246, 188)),
+                child: Center(
+                  child: Text("Riwayat Pemeriksaan",
+                      style: GoogleFonts.gentiumBasic(
+                        textStyle: TextStyle(
                             fontSize: 30,
-                            fontWeight: FontWeight.w500)),
-                  ),
-                ],
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      )),
+                ),
               ),
               Column(
                 children: [
@@ -65,28 +71,40 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        // SizedBox(
+                        //   width: MediaQuery.of(context).size.width / 10,
+                        // ),
                         Text("Tanggal"),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        // SizedBox(
+                        //   width: MediaQuery.of(context).size.width / 10,
+                        // ),
                         Column(
                           children: [
                             Text("Berat"),
                             Text("(Kg)"),
                           ],
                         ),
+                        // SizedBox(
+                        //   width: MediaQuery.of(context).size.width / 10,
+                        // ),
                         Column(
                           children: [
                             Text("Tinggi"),
                             Text("(Cm)"),
                           ],
                         ),
+                        // SizedBox(
+                        //   width: MediaQuery.of(context).size.width / 15,
+                        // ),
                         Column(
                           children: [
                             Text("Lingkar Kepala"),
                             Text("(Cm)"),
                           ],
                         ),
+                        // SizedBox(
+                        //   width: MediaQuery.of(context).size.width / 6,
+                        // ),
                       ],
                     ),
                   )
@@ -112,33 +130,39 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                 //     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   SizedBox(
-                                    width: 20,
+                                    width: MediaQuery.of(context).size.width /
+                                        12.5,
                                   ),
-                                  Text(pemeriksaanbalita
-                                      .listPemeriksaanBalita[index]
-                                      .tanggalPemeriksaan),
+                                  Text(DateFormat('yMd').format(DateTime.parse(
+                                      pemeriksaanbalita
+                                          .listPemeriksaanBalita[index]
+                                          .tanggalPemeriksaan))),
                                   SizedBox(
-                                    width: 40,
+                                    width:
+                                        MediaQuery.of(context).size.width / 10,
                                   ),
                                   Text(pemeriksaanbalita
                                       .listPemeriksaanBalita[index].beratBadan
                                       .toString()),
                                   SizedBox(
-                                    width: 40,
+                                    width:
+                                        MediaQuery.of(context).size.width / 10,
                                   ),
                                   Text(pemeriksaanbalita
                                       .listPemeriksaanBalita[index].tinggiBadan
                                       .toString()),
                                   SizedBox(
-                                    width: 30,
+                                    width:
+                                        MediaQuery.of(context).size.width / 10,
                                   ),
                                   Text(pemeriksaanbalita
                                       .listPemeriksaanBalita[index]
                                       .lingkarKepala
                                       .toString()),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
+                                  // SizedBox(
+                                  //   width:
+                                  //       MediaQuery.of(context).size.width / 7,
+                                  // ),
                                   Expanded(
                                     child: IconButton(
                                       onPressed: () {

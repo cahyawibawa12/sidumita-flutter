@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/Balita/HomePageBalita.dart';
 import 'package:posyandu/Page/LandingPage.dart';
@@ -71,16 +72,19 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
                               child: CircleAvatar(
                                 radius: 55,
                                 backgroundImage:
-                                    AssetImage('assets/images/bg.png'),
+                                    AssetImage('assets/images/Logo.png'),
                               ),
                             ),
                             Column(
                               children: [
                                 Text(
                                   "SIDUMITA",
-                                  style: TextStyle(
-                                      fontSize: 50,
-                                      fontWeight: FontWeight.bold),
+                                  style: GoogleFonts.nunitoSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 50,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
                                 ),
                                 Text("Sistem Informasi Ibu Hamil dan Balita"),
                               ],
@@ -264,7 +268,7 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
     var body = json.decode(res.body);
     print(json.encode(body['access_token']));
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    if (body['success'] == true) {
+    if (body['success'] == true || res.statusCode == 200) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['access_token']));
       localStorage.setString('user', json.encode(body['user']));

@@ -1,8 +1,8 @@
 class PetugasWithIbuHamilModel {
-  int? id;
+  String? id;
   String? beratBadanPrakehamilan;
   String? tinggiBadanPrakehamilan;
-  int? detailKeluargaId;
+  String? detailKeluargaId;
   String? createdAt;
   String? updatedAt;
   Null? deletedAt;
@@ -19,15 +19,15 @@ class PetugasWithIbuHamilModel {
   String? statusPerkawinan;
   String? statusDalamKeluarga;
   String? kewarganegaraan;
-  int? keluargaId;
+  String? keluargaId;
   String? noKartuKeluarga;
   String? kepalaKeluarga;
   String? alamat;
-  Null? jumlah;
-  int? userId;
-  int? dusunId;
+  String? jumlah;
+  String? userId;
+  String? dusunId;
   String? namaDusun;
-  int? desaId;
+  String? desaId;
 
   PetugasWithIbuHamilModel(
       {this.id,
@@ -85,7 +85,7 @@ class PetugasWithIbuHamilModel {
     noKartuKeluarga = json['no_kartu_keluarga'];
     kepalaKeluarga = json['kepala_keluarga'];
     alamat = json['alamat'];
-    // jumlah = json['jumlah'];
+    jumlah = json['jumlah'];
     userId = json['user_id'];
     dusunId = json['dusun_id'];
     namaDusun = json['nama_dusun'];

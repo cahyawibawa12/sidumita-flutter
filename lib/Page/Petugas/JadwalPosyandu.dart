@@ -40,7 +40,7 @@ class _JadwalPosyanduState extends State<JadwalPosyandu> {
                       return Center(child: CircularProgressIndicator());
                     } else {
                       return SizedBox(
-                        height: 1000.0,
+                        height: MediaQuery.of(context).size.height / 1.15,
                         child: QTableCalendar(
                           events: controller.events.value,
                         ),

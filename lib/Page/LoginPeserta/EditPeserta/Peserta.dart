@@ -80,7 +80,7 @@ class _PesertaState extends State<Peserta> {
                 ),
                 Expanded(
                   child: Obx(() => detailKeluarga.isLoading.value
-                      ? CircularProgressIndicator()
+                      ? Center(child: CircularProgressIndicator())
                       : ListView.builder(
                           itemCount: detailKeluarga.listDetailKeluarga.length,
                           physics: const ScrollPhysics(),

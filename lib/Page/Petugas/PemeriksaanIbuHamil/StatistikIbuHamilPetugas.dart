@@ -10,6 +10,7 @@ import 'package:posyandu/Page/Balita/Statistik/TinggiBadanPage.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:posyandu/widget/listchart/listChartIbu.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class StatistikIbuHamilPetugas extends StatefulWidget {
   StatistikIbuHamilPetugas({super.key, required this.petugasWithIbuHamilModel});
@@ -115,9 +116,10 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Text(pemeriksaanibuhamil
-                                            .listPemeriksaanIbuHamil[0]
-                                            .tanggalPemeriksaan)
+                                        Text(DateFormat('dd MMMM yyyy').format(
+                                            DateTime.parse(pemeriksaanibuhamil
+                                                .listPemeriksaanIbuHamil[0]
+                                                .tanggalPemeriksaan)))
                                       ],
                                     )
                                   ],

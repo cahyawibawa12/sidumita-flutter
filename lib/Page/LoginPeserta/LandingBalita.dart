@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Controller/BalitaController.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/Balita/HomePageBalita.dart';
@@ -48,16 +49,19 @@ class _LandingBalitaState extends State<LandingBalita> {
                               child: CircleAvatar(
                                 radius: 55,
                                 backgroundImage:
-                                    AssetImage('assets/images/bg.png'),
+                                    AssetImage('assets/images/Logo.png'),
                               ),
                             ),
                             Column(
                               children: [
                                 Text(
                                   "SIDUMITA",
-                                  style: TextStyle(
-                                      fontSize: 50,
-                                      fontWeight: FontWeight.bold),
+                                  style: GoogleFonts.nunitoSans(
+                                    textStyle: TextStyle(
+                                        fontSize: 50,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
                                 ),
                                 Text("Sistem Informasi Ibu Hamil dan Balita"),
                               ],
@@ -88,7 +92,7 @@ class _LandingBalitaState extends State<LandingBalita> {
                               ),
                               Expanded(
                                 child: Obx(() => balita.isLoading.value
-                                    ? CircularProgressIndicator()
+                                    ? Center(child: CircularProgressIndicator())
                                     : SingleChildScrollView(
                                         child: ListView.builder(
                                           shrinkWrap: true,

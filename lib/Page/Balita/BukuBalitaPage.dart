@@ -9,7 +9,7 @@ import 'package:posyandu/Page/Balita/ImunisasiBalitaPage.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
 import 'dart:math';
-
+import 'package:intl/intl.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -130,7 +130,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -174,7 +174,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -218,7 +218,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -266,19 +266,25 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                           .length >=
                                       2) {
                                     return Text('Date : ' +
-                                        getTwoLastDataPemeriksaanBalita
-                                            .listTwoLastDataPemeriksaanBalita[1]
-                                            .tanggalPemeriksaan
-                                            .toString());
+                                        DateFormat('dd MMMM yyyy').format(
+                                            DateTime.parse(
+                                                getTwoLastDataPemeriksaanBalita
+                                                    .listTwoLastDataPemeriksaanBalita[
+                                                        1]
+                                                    .tanggalPemeriksaan
+                                                    .toString())));
                                   } else if (getTwoLastDataPemeriksaanBalita
                                           .listTwoLastDataPemeriksaanBalita
                                           .length ==
                                       1) {
                                     return Text('Date : ' +
-                                        getTwoLastDataPemeriksaanBalita
-                                            .listTwoLastDataPemeriksaanBalita[0]
-                                            .tanggalPemeriksaan
-                                            .toString());
+                                        DateFormat('dd MMMM yyyy').format(
+                                            DateTime.parse(
+                                                getTwoLastDataPemeriksaanBalita
+                                                    .listTwoLastDataPemeriksaanBalita[
+                                                        0]
+                                                    .tanggalPemeriksaan
+                                                    .toString())));
                                   } else {
                                     return Text('Empty');
                                   }
@@ -296,7 +302,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -330,7 +336,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -364,7 +370,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                 ),
                                 Container(
                                   height: 60,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Color.fromARGB(111, 23, 196, 98)),
@@ -402,10 +408,13 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                           .length >=
                                       2) {
                                     return Text('Date : ' +
-                                        getTwoLastDataPemeriksaanBalita
-                                            .listTwoLastDataPemeriksaanBalita[0]
-                                            .tanggalPemeriksaan
-                                            .toString());
+                                        DateFormat('dd MMMM yyyy').format(
+                                            DateTime.parse(
+                                                getTwoLastDataPemeriksaanBalita
+                                                    .listTwoLastDataPemeriksaanBalita[
+                                                        0]
+                                                    .tanggalPemeriksaan
+                                                    .toString())));
                                   } else {
                                     return Text('Empty');
                                   }

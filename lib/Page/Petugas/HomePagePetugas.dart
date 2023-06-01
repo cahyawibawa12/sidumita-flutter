@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:posyandu/Page/Petugas/JadwalPosyandu.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanBalita/PemeriksaanBalitaPage.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanIbuHamil/PemeriksaanIbuHamilPage.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/ProfilPetugas.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Controller/KontenController.dart';
 import '../../widget/widgets.dart';
 
 class HomePagePetugas extends StatefulWidget {
@@ -23,11 +25,13 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
   final CarouselController carouselController = CarouselController();
   String name = '';
   String email = '';
+  var kontenController = Get.put(KontenController());
 
   @override
   void initState() {
     super.initState();
     _loadUserData();
+    kontenController.ShowKonten();
   }
 
   _loadUserData() async {
@@ -90,7 +94,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                       CarouselSlider(
                         carouselController: carouselController,
                         options: CarouselOptions(
-                          height: 160.0,
+                          height: 200.0,
                           autoPlay: true,
                           enlargeCenterPage: true,
                           onPageChanged: (index, reason) {
@@ -98,7 +102,8 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                             setState(() {});
                           },
                         ),
-                        items: images.map((imageUrl) {
+                        items:
+                            kontenController.listKonten.value.map((imageUrl) {
                           return Builder(
                             builder: (BuildContext context) {
                               return Container(
@@ -112,7 +117,8 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                   ),
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      imageUrl,
+                                      "https://sidumita.definitelynotgod.com/storage/" +
+                                          imageUrl.gambar!,
                                     ),
                                     fit: BoxFit.cover,
                                   ),
@@ -151,7 +157,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                 }),
 
                 SizedBox(
-                  height: 500,
+                  height: MediaQuery.of(context).size.height / 2,
                   child: Container(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -171,6 +177,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                                 ProfilPetugas()));
                                   },
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(10),
@@ -202,6 +209,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                                 JadwalPosyandu()));
                                   },
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(10),
@@ -233,6 +241,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                                 PemeriksaanBalitaPage()));
                                   },
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(10),
@@ -264,6 +273,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                                 PemeriksaanIbuHamilPage()));
                                   },
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(10),

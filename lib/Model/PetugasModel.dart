@@ -1,5 +1,5 @@
 class PetugasModel {
-  int? id;
+  String? id;
   String? nama;
   String? jenisKelamin;
   String? tempatLahir;
@@ -7,18 +7,19 @@ class PetugasModel {
   String? alamat;
   String? noTelp;
   String? nik;
-  int? userId;
-  int? dusunId;
+  String? userId;
+  String? dusunId;
   String? createdAt;
   String? updatedAt;
+  Null? deletedAt;
   String? namaDusun;
-  int? desaId;
+  String? desaId;
   String? namaDesa;
-  int? kecamatanId;
+  String? kecamatanId;
   String? namaKecamatan;
-  int? kabupatenId;
+  String? kabupatenId;
   String? namaKabupaten;
-  int? provinsiId;
+  String? provinsiId;
   String? namaProvinsi;
 
   PetugasModel(
@@ -34,6 +35,7 @@ class PetugasModel {
       this.dusunId,
       this.createdAt,
       this.updatedAt,
+      this.deletedAt,
       this.namaDusun,
       this.desaId,
       this.namaDesa,
@@ -57,6 +59,7 @@ class PetugasModel {
     dusunId = json['dusun_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
     namaDusun = json['nama_dusun'];
     desaId = json['desa_id'];
     namaDesa = json['nama_desa'];
@@ -82,6 +85,16 @@ class PetugasModel {
     data['dusun_id'] = this.dusunId;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['deleted_at'] = this.deletedAt;
+    data['nama_dusun'] = this.namaDusun;
+    data['desa_id'] = this.desaId;
+    data['nama_desa'] = this.namaDesa;
+    data['kecamatan_id'] = this.kecamatanId;
+    data['nama_kecamatan'] = this.namaKecamatan;
+    data['kabupaten_id'] = this.kabupatenId;
+    data['nama_kabupaten'] = this.namaKabupaten;
+    data['provinsi_id'] = this.provinsiId;
+    data['nama_provinsi'] = this.namaProvinsi;
     return data;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Page/IbuHamil/ProfilIbuHamilPage.dart';
 import 'package:posyandu/Page/LoginPeserta/LoginPagePeserta.dart';
 import 'package:posyandu/Page/LoginPetugas/LoginPagePetugas.dart';
@@ -36,15 +37,19 @@ class _LandingLoginState extends State<LandingLogin> {
                         padding: EdgeInsets.only(left: 10),
                         child: CircleAvatar(
                           radius: 55,
-                          backgroundImage: AssetImage('assets/images/bg.png'),
+                          backgroundImage: AssetImage('assets/images/Logo.png'),
                         ),
                       ),
                       Column(
                         children: [
                           Text(
                             "SIDUMITA",
-                            style: TextStyle(
-                                fontSize: 50, fontWeight: FontWeight.bold),
+                            style: GoogleFonts.nunitoSans(
+                              textStyle: TextStyle(
+                                  fontSize: 50,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
                           ),
                           Text("Sistem Informasi Ibu Hamil dan Balita"),
                         ],
