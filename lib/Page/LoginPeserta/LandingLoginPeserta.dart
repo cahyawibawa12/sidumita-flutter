@@ -108,7 +108,25 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                         ),
                         IconButton(
                           onPressed: (() {
-                            logout();
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: Text("Confirm Logout"),
+                                      content: Text(
+                                          "Apakah Anda Ingin Keluar Dari Aplikasi?"),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("No")),
+                                        TextButton(
+                                            onPressed: () {
+                                              logout();
+                                            },
+                                            child: Text("Yes")),
+                                      ],
+                                    ));
                           }),
                           icon: const Icon(CupertinoIcons.square_arrow_left),
                           iconSize: 35,
@@ -319,7 +337,7 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Apakah Kamu?",
+                                "Masuk Sebagai",
                                 style: TextStyle(
                                   fontSize: 15.0,
                                 ),

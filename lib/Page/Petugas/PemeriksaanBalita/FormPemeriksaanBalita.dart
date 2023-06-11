@@ -527,7 +527,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                                                   int.parse(newValue!);
                                             });
                                           },
-                                          hint: Text("Pilih Dokter"),
+                                          hint: Text("Pilih Vitamin"),
                                           items: [
                                             for (var data in vitaminController
                                                 .listVitamin.value)

@@ -6,6 +6,7 @@ import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
 import 'package:posyandu/Model/PetugasWithBalitaModel.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanBalita/DetailRiwayatBalita.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanBalita/FormPemeriksaanBalita.dart';
+import 'package:posyandu/Page/Petugas/PemeriksaanBalita/ImunisasiBalitaPetugasPage.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanBalita/StatistikBalitaPetugas.dart';
 import 'package:intl/intl.dart';
 
@@ -59,7 +60,7 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
                   children: [
                     Container(
                       height: 64,
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: MediaQuery.of(context).size.width / 3,
                       padding: const EdgeInsets.all(12.0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -73,12 +74,15 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
                                       petugasWithBalitaModel:
                                           widget.petugasWithBalitaModel)));
                         },
-                        child: const Text("Tambah Data"),
+                        child: Text(
+                          "Tambah Data",
+                          style: TextStyle(fontSize: 12),
+                        ),
                       ),
                     ),
                     Container(
                       height: 64,
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: MediaQuery.of(context).size.width / 3,
                       padding: const EdgeInsets.all(12.0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -92,6 +96,24 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
                                   )));
                         },
                         child: const Text("Statistik"),
+                      ),
+                    ),
+                    Container(
+                      height: 64,
+                      width: MediaQuery.of(context).size.width / 3,
+                      padding: const EdgeInsets.all(12.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ImunisasiBalitaPetugasPage(
+                                    petugasWithBalitaModel:
+                                        widget.petugasWithBalitaModel,
+                                  )));
+                        },
+                        child: const Text("Imunisasi"),
                       ),
                     ),
                   ],
@@ -187,8 +209,9 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
                                                 .listPemeriksaanBalita[index]
                                                 .id)
                                         .then((value) => pemeriksaanbalita
-                                            .getPemeriksaanBalita(widget
-                                                .petugasWithBalitaModel["id"]));
+                                            .getPemeriksaanBalita(int.parse(
+                                                widget.petugasWithBalitaModel[
+                                                    "id"])));
                                     return Future.value(true);
                                   }
                                   return Future.value(false);
@@ -207,9 +230,9 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                12.5,
+                                                14.5,
                                       ),
-                                      Text(DateFormat('yMd').format(
+                                      Text(DateFormat('dd/MM/yyyy').format(
                                           DateTime.parse(pemeriksaanbalita
                                               .listPemeriksaanBalita[index]
                                               .tanggalPemeriksaan))),
@@ -309,6 +332,17 @@ class _RiwayatPemeriksaanBalitaState extends State<RiwayatPemeriksaanBalita> {
                                                                 index]
                                                             .petugasKesehatanId
                                                             .toString(),
+                                                    dokter_id: pemeriksaanbalita
+                                                        .listPemeriksaanBalita[
+                                                            index]
+                                                        .dokterId
+                                                        .toString()
+                                                        .toString(),
+                                                    vitamin_id: pemeriksaanbalita
+                                                        .listPemeriksaanBalita[
+                                                            index]
+                                                        .vitaminId
+                                                        .toString(),
                                                   ),
                                                 ));
                                           },

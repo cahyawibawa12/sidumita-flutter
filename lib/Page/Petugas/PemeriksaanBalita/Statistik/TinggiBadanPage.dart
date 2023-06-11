@@ -8,6 +8,7 @@ import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:posyandu/widget/listchart/listchartTinggi.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class TinggiBadanPagePetugas extends StatefulWidget {
   TinggiBadanPagePetugas({super.key, required this.petugasWithBalitaModel});
@@ -25,6 +26,7 @@ class _TinggiBadanPagePetugasState extends State<TinggiBadanPagePetugas> {
 
   @override
   void initState() {
+    initializeDateFormatting('id');
     // super.initState();
     // pemeriksaanbalita.getPemeriksaanBalita(widget.balitaModel.id!);
     _zoomPanBehavior = ZoomPanBehavior(
@@ -110,9 +112,10 @@ class _TinggiBadanPagePetugasState extends State<TinggiBadanPagePetugas> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Obx(() => Text(
-                                            DateFormat('dd MMMM yyyy').format(
-                                                DateTime.parse(pemeriksaanbalita
+                                        Obx(() => Text(DateFormat(
+                                                'dd MMMM yyyy', "id")
+                                            .format(DateTime.parse(
+                                                pemeriksaanbalita
                                                     .listPemeriksaanBalita[0]
                                                     .tanggalPemeriksaan))))
                                       ],

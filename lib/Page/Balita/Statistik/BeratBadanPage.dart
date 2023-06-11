@@ -6,6 +6,7 @@ import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/widget/listchart/listchartBerat.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import '../../../widget/widgets.dart';
 
@@ -26,6 +27,7 @@ class _BeratBadanPageState extends State<BeratBadanPage> {
 
   @override
   void initState() {
+    initializeDateFormatting('id');
     // super.initState();
     // pemeriksaanbalita.getPemeriksaanBalita(widget.balitaModel.id!);
     _zoomPanBehavior = ZoomPanBehavior(
@@ -333,9 +335,10 @@ class _BeratBadanPageState extends State<BeratBadanPage> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Obx(() => Text(
-                                            DateFormat('dd MMMM yyyy').format(
-                                                DateTime.parse(pemeriksaanbalita
+                                        Obx(() => Text(DateFormat(
+                                                'dd MMMM yyyy', "id")
+                                            .format(DateTime.parse(
+                                                pemeriksaanbalita
                                                     .listPemeriksaanBalita[0]
                                                     .tanggalPemeriksaan))))
                                       ],

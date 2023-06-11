@@ -47,7 +47,7 @@ class _LandingBalitaState extends State<LandingBalita> {
                             Container(
                               padding: EdgeInsets.only(left: 10),
                               child: CircleAvatar(
-                                radius: 55,
+                                radius: 40,
                                 backgroundImage:
                                     AssetImage('assets/images/Logo.png'),
                               ),
@@ -63,7 +63,10 @@ class _LandingBalitaState extends State<LandingBalita> {
                                         color: Colors.white),
                                   ),
                                 ),
-                                Text("Sistem Informasi Ibu Hamil dan Balita"),
+                                Text(
+                                  "Sistem Informasi Posyandu Ibu Hamil dan Balita",
+                                  style: TextStyle(fontSize: 13),
+                                ),
                               ],
                             )
                           ],

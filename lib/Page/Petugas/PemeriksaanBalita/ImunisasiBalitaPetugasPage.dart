@@ -4,26 +4,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Controller/CekDataController.dart';
 import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:posyandu/widget/BackgroundImage.dart';
 
-import '../../widget/BackgroundImage.dart';
+class ImunisasiBalitaPetugasPage extends StatefulWidget {
+  ImunisasiBalitaPetugasPage({super.key, required this.petugasWithBalitaModel});
 
-class ImunisasiBalitaPage extends StatefulWidget {
-  ImunisasiBalitaPage({super.key, required this.balitaModel});
-
-  BalitaModel balitaModel;
+  final Map petugasWithBalitaModel;
 
   @override
-  State<ImunisasiBalitaPage> createState() => _ImunisasiBalitaPageState();
+  State<ImunisasiBalitaPetugasPage> createState() =>
+      _ImunisasiBalitaPetugasPageState();
 }
 
-class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
+class _ImunisasiBalitaPetugasPageState
+    extends State<ImunisasiBalitaPetugasPage> {
   var dataImunisasi = Get.put(CekDataController());
 
   @override
   void initState() {
     super.initState();
-    initializeDateFormatting('id');
+    dataImunisasi.CekImunisasiBalita(
+        int.parse(widget.petugasWithBalitaModel["id"]));
   }
 
   @override
@@ -92,7 +93,10 @@ class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
                                             "Kejar" ||
                                         dataImunisasi.cekImunisasiBalita[index]
                                                 .status ==
-                                            "Susulan") {
+                                            "Susulan" ||
+                                        dataImunisasi.cekImunisasiBalita[index]
+                                                .status ==
+                                            "Akan") {
                                       return Text('Tanggal: ' +
                                           dataImunisasi
                                               .cekImunisasiBalita[index]
@@ -100,12 +104,11 @@ class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
                                               .toString());
                                     } else {
                                       return Text("Tanggal: " +
-                                          DateFormat('dd MMMM yyyy', "id")
-                                              .format(DateTime.parse(
-                                                  dataImunisasi
-                                                      .cekImunisasiBalita[index]
-                                                      .tanggalPemeriksaan
-                                                      .toString())));
+                                          DateFormat('dd MMMM yyyy').format(
+                                              DateTime.parse(dataImunisasi
+                                                  .cekImunisasiBalita[index]
+                                                  .tanggalPemeriksaan
+                                                  .toString())));
                                     }
                                   }()),
                                   trailing: (() {

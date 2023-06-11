@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:focus_detector_v2/focus_detector_v2.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:posyandu/Controller/DetailKeluargaController.dart';
 import 'package:posyandu/Model/KeluargaModel.dart';
@@ -38,13 +39,45 @@ class _PesertaState extends State<Peserta> {
             body: SafeArea(
               child: Column(children: <Widget>[
                 Column(children: [
+                  // Row(
+                  //         crossAxisAlignment: CrossAxisAlignment.center,
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Container(
+                  //             padding: EdgeInsets.only(left: 10),
+                  //             child: CircleAvatar(
+                  //               radius: 55,
+                  //               backgroundImage:
+                  //                   AssetImage('assets/images/Logo.png'),
+                  //             ),
+                  //           ),
+                  //           Column(
+                  //             children: [
+                  //               Text(
+                  //                 "SIDUMITA",
+                  //                 style: GoogleFonts.nunitoSans(
+                  //                   textStyle: TextStyle(
+                  //                       fontSize: 50,
+                  //                       fontWeight: FontWeight.bold,
+                  //                       color: Colors.white),
+                  //                 ),
+                  //               ),
+                  //               Text("Sistem Informasi Ibu Hamil dan Balita"),
+                  //             ],
+                  //           )
+                  //         ],
+                  //       )
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Container(
                       child: Column(children: [
                         Text(
                           "SIDUMITA",
-                          style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.nunitoSans(
+                            textStyle: TextStyle(
+                                fontSize: 50,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
                         ),
                         Text("Sistem Informasi Ibu Hamil dan Balita"),
                       ]),
@@ -53,7 +86,7 @@ class _PesertaState extends State<Peserta> {
                       padding: EdgeInsets.only(left: 10),
                       child: CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage('assets/images/bg.png'),
+                        backgroundImage: AssetImage('assets/images/Logo.png'),
                       ),
                     ),
                   ]),

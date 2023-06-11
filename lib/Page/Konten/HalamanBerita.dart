@@ -75,7 +75,7 @@ class _HalamanBeritaState extends State<HalamanBerita> {
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: Obx(() => kontenController.isLoading.value
-                  ? CircularProgressIndicator()
+                  ? Center(child: CircularProgressIndicator())
                   : Column(
                       children: <Widget>[
                         Column(
@@ -104,7 +104,9 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                                       ),
                                     ),
                                     Text(
-                                        "Sistem Informasi Ibu Hamil dan Balita"),
+                                      "Sistem Informasi Posyandu Ibu Hamil dan Balita",
+                                      style: TextStyle(fontSize: 13),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(
@@ -168,8 +170,10 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children:
-                                        images.asMap().entries.map((entry) {
+                                    children: kontenController.listKonten.value
+                                        .asMap()
+                                        .entries
+                                        .map((entry) {
                                       return GestureDetector(
                                         onTap: () => carouselController
                                             .animateToPage(entry.key),

@@ -8,6 +8,7 @@ import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,6 +40,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
   @override
   void initState() {
     super.initState();
+    initializeDateFormatting('id');
     getTwoLastDataPemeriksaanIbuHamil
         .getTwoLastDataPemeriksaanIbuHamil(widget.ibuHamilModel.id!);
   }
@@ -61,37 +63,50 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                 children: <Widget>[
                   Column(
                     children: [
-                      Container(
-                        height: 100,
-                        padding: EdgeInsets.all(10),
-                        child: Card(
-                          color: Color.fromARGB(255, 185, 246, 188),
-                          child: ListTile(
-                              title: Text(
-                                widget.ibuHamilModel.detailKeluarga!.namaLengkap
-                                    .toString(),
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w600),
-                              ),
-                              subtitle: (() {
-                                if (umur.umurPeserta.value.format.toString() ==
-                                    "tahun") {
-                                  return Text(
-                                    umur.umurPeserta.value.umur.toString() +
-                                        " Tahun " +
-                                        (umur.umurPeserta.value.usiaBulan! % 12)
-                                            .toString() +
-                                        " Bulan",
-                                  );
-                                } else {
-                                  return Text(
-                                    "0 Tahun " +
-                                        (umur.umurPeserta.value.usiaBulan! % 12)
-                                            .toString() +
-                                        " Bulan",
-                                  );
-                                }
-                              }())),
+                      InkWell(
+                        onTap: () {
+                          var buttonNavIbuHamilController =
+                              Get.put(ButtonNavIbuHamilController());
+                          buttonNavIbuHamilController
+                              .tabController.value.index = 4;
+                        },
+                        child: Container(
+                          height: 100,
+                          padding: EdgeInsets.all(10),
+                          child: Card(
+                            color: Color.fromARGB(255, 185, 246, 188),
+                            child: ListTile(
+                                title: Text(
+                                  widget
+                                      .ibuHamilModel.detailKeluarga!.namaLengkap
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: (() {
+                                  if (umur.umurPeserta.value.format
+                                          .toString() ==
+                                      "tahun") {
+                                    return Text(
+                                      umur.umurPeserta.value.umur.toString() +
+                                          " Tahun " +
+                                          (umur.umurPeserta.value.usiaBulan! %
+                                                  12)
+                                              .toString() +
+                                          " Bulan",
+                                    );
+                                  } else {
+                                    return Text(
+                                      "0 Tahun " +
+                                          (umur.umurPeserta.value.usiaBulan! %
+                                                  12)
+                                              .toString() +
+                                          " Bulan",
+                                    );
+                                  }
+                                }())),
+                          ),
                         ),
                       ),
                       Row(
@@ -240,8 +255,8 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                           .listTwoLastDataPemeriksaanIbuHamil
                                           .length !=
                                       0) {
-                                    return Text('Date : ' +
-                                        DateFormat('dd MMMM yyyy').format(
+                                    return Text('Tgl : ' +
+                                        DateFormat('dd MMMM yyyy', "id").format(
                                             DateTime.parse(
                                                 getTwoLastDataPemeriksaanIbuHamil
                                                     .listTwoLastDataPemeriksaanIbuHamil[
@@ -370,8 +385,8 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                           .listTwoLastDataPemeriksaanIbuHamil
                                           .length !=
                                       0) {
-                                    return Text('Date : ' +
-                                        DateFormat('dd MMMM yyyy').format(
+                                    return Text('Tgl : ' +
+                                        DateFormat('dd MMMM yyyy', "id").format(
                                             DateTime.parse(
                                                 getTwoLastDataPemeriksaanIbuHamil
                                                     .listTwoLastDataPemeriksaanIbuHamil[
@@ -401,7 +416,13 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                           child: Card(
                             elevation: 0,
                             child: ListTile(
-                              title: const Text("Pertumbuhan Ibu Hamil"),
+                              title: Text(
+                                "Pertumbuhan Ibu Hamil",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w700),
+                              ),
                               trailing: IconButton(
                                 onPressed: () {
                                   PersistentNavBarNavigator.pushNewScreen(

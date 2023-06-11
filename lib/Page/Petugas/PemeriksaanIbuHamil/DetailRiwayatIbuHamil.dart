@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class DetailRiwayatIbuHamil extends StatefulWidget {
   final int id;
@@ -37,6 +38,10 @@ class DetailRiwayatIbuHamil extends StatefulWidget {
 }
 
 class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
+  void initState() {
+    initializeDateFormatting('id');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -265,7 +270,7 @@ class _DetailRiwayatIbuHamilState extends State<DetailRiwayatIbuHamil> {
                           height: 20,
                         ),
                         Text("Date : " +
-                            DateFormat('dd MMMM yyyy').format(
+                            DateFormat('dd MMMM yyyy', "id").format(
                                 DateTime.parse(widget.tanggal_pemeriksaan)))
                       ],
                     ),

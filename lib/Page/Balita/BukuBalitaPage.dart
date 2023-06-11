@@ -10,6 +10,7 @@ import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
 import 'package:posyandu/Page/Balita/StatistikBalitaPage.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -37,6 +38,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
     super.initState();
     getTwoLastDataPemeriksaanBalita
         .getTwoLastDataPemeriksaanBalita(widget.balitaModel.id!);
+    initializeDateFormatting('id');
   }
 
   @override
@@ -57,37 +59,49 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                 children: <Widget>[
                   Column(
                     children: [
-                      Container(
-                        height: 100,
-                        padding: EdgeInsets.all(10),
-                        child: Card(
-                          color: Color.fromARGB(255, 185, 246, 188),
-                          child: ListTile(
-                              title: Text(
-                                widget.balitaModel.detailKeluarga!.namaLengkap
-                                    .toString(),
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w600),
-                              ),
-                              subtitle: (() {
-                                if (umur.umurPeserta.value.format.toString() ==
-                                    "tahun") {
-                                  return Text(
-                                    umur.umurPeserta.value.umur.toString() +
-                                        " Tahun " +
-                                        (umur.umurPeserta.value.usiaBulan! % 12)
-                                            .toString() +
-                                        " Bulan",
-                                  );
-                                } else {
-                                  return Text(
-                                    "0 Tahun " +
-                                        (umur.umurPeserta.value.usiaBulan! % 12)
-                                            .toString() +
-                                        " Bulan",
-                                  );
-                                }
-                              }())),
+                      InkWell(
+                        onTap: () {
+                          var buttonNavBalitaController =
+                              Get.put(ButtonNavBalitaController());
+                          buttonNavBalitaController.tabController.value.index =
+                              4;
+                        },
+                        child: Container(
+                          height: 100,
+                          padding: EdgeInsets.all(10),
+                          child: Card(
+                            color: Color.fromARGB(255, 185, 246, 188),
+                            child: ListTile(
+                                title: Text(
+                                  widget.balitaModel.detailKeluarga!.namaLengkap
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: (() {
+                                  if (umur.umurPeserta.value.format
+                                          .toString() ==
+                                      "tahun") {
+                                    return Text(
+                                      umur.umurPeserta.value.umur.toString() +
+                                          " Tahun " +
+                                          (umur.umurPeserta.value.usiaBulan! %
+                                                  12)
+                                              .toString() +
+                                          " Bulan",
+                                    );
+                                  } else {
+                                    return Text(
+                                      "0 Tahun " +
+                                          (umur.umurPeserta.value.usiaBulan! %
+                                                  12)
+                                              .toString() +
+                                          " Bulan",
+                                    );
+                                  }
+                                }())),
+                          ),
                         ),
                       ),
                       Row(
@@ -163,7 +177,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                   .beratBadan
                                                   .toString());
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -207,7 +221,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                   .tinggiBadan
                                                   .toString());
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -251,7 +265,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                   .lingkarKepala
                                                   .toString());
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -265,8 +279,8 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                           .listTwoLastDataPemeriksaanBalita
                                           .length >=
                                       2) {
-                                    return Text('Date : ' +
-                                        DateFormat('dd MMMM yyyy').format(
+                                    return Text('Tgl : ' +
+                                        DateFormat('dd MMMM yyyy', "id").format(
                                             DateTime.parse(
                                                 getTwoLastDataPemeriksaanBalita
                                                     .listTwoLastDataPemeriksaanBalita[
@@ -277,8 +291,8 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                           .listTwoLastDataPemeriksaanBalita
                                           .length ==
                                       1) {
-                                    return Text('Date : ' +
-                                        DateFormat('dd MMMM yyyy').format(
+                                    return Text('Tgl : ' +
+                                        DateFormat('dd MMMM yyyy', "id").format(
                                             DateTime.parse(
                                                 getTwoLastDataPemeriksaanBalita
                                                     .listTwoLastDataPemeriksaanBalita[
@@ -286,7 +300,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                     .tanggalPemeriksaan
                                                     .toString())));
                                   } else {
-                                    return Text('Empty');
+                                    return Text('Kosong');
                                   }
                                 })
                               ],
@@ -325,7 +339,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                   .beratBadan
                                                   .toString());
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -359,7 +373,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                   .tinggiBadan
                                                   .toString());
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -393,7 +407,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                   .lingkarKepala
                                                   .toString());
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -407,8 +421,8 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                           .listTwoLastDataPemeriksaanBalita
                                           .length >=
                                       2) {
-                                    return Text('Date : ' +
-                                        DateFormat('dd MMMM yyyy').format(
+                                    return Text('Tgl : ' +
+                                        DateFormat('dd MMMM yyyy', "id").format(
                                             DateTime.parse(
                                                 getTwoLastDataPemeriksaanBalita
                                                     .listTwoLastDataPemeriksaanBalita[
@@ -416,7 +430,7 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                                                     .tanggalPemeriksaan
                                                     .toString())));
                                   } else {
-                                    return Text('Empty');
+                                    return Text('Kosong');
                                   }
                                 })
                               ],
@@ -430,87 +444,107 @@ class _BukuBalitaPageState extends State<BukuBalitaPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            height: 180,
-                            width: 150,
-                            padding: EdgeInsets.only(top: 20),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white),
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Colors.green[400],
-                                  backgroundImage: AssetImage(
-                                      'assets/images/pertumbuhan.png'),
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      PersistentNavBarNavigator.pushNewScreen(
-                                        context,
-                                        screen: StatistikBalitaPage(
-                                          balitaModel: widget.balitaModel,
-                                        ),
-                                        withNavBar:
-                                            false, // OPTIONAL VALUE. True by default.
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.cupertino,
-                                      );
-                                    },
-                                    child: Text(
-                                      'Pertumbuhan',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontStyle: FontStyle.normal),
-                                    )),
-                              ],
+                          InkWell(
+                            child: Container(
+                              height: 180,
+                              width: 150,
+                              padding: EdgeInsets.only(top: 20),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white),
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.green[400],
+                                    backgroundImage: AssetImage(
+                                        'assets/images/pertumbuhan.png'),
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        PersistentNavBarNavigator.pushNewScreen(
+                                          context,
+                                          screen: StatistikBalitaPage(
+                                            balitaModel: widget.balitaModel,
+                                          ),
+                                          withNavBar:
+                                              false, // OPTIONAL VALUE. True by default.
+                                          pageTransitionAnimation:
+                                              PageTransitionAnimation.cupertino,
+                                        );
+                                      },
+                                      child: Text(
+                                        'Pertumbuhan',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontStyle: FontStyle.normal),
+                                      )),
+                                ],
+                              ),
                             ),
+                            onTap: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: StatistikBalitaPage(
+                                  balitaModel: widget.balitaModel,
+                                ),
+                                withNavBar:
+                                    false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
                           ),
-                          Container(
-                            height: 180,
-                            width: 150,
-                            padding: EdgeInsets.only(top: 20),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white),
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Colors.green[400],
-                                  backgroundImage:
-                                      AssetImage('assets/images/vaksin.png'),
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      PersistentNavBarNavigator.pushNewScreen(
-                                        context,
-                                        screen: ImunisasiBalitaPage(
-                                          balitaModel: widget.balitaModel,
-                                        ),
-                                        withNavBar:
-                                            false, // OPTIONAL VALUE. True by default.
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.cupertino,
-                                      );
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             ImunisasiBalitaPage(
-                                      //               balitaModel:
-                                      //                   widget.balitaModel,
-                                      //             )));
-                                    },
-                                    child: Text(
-                                      'Imunisasi',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontStyle: FontStyle.normal),
-                                    )),
-                              ],
+                          InkWell(
+                            child: Container(
+                              height: 180,
+                              width: 150,
+                              padding: EdgeInsets.only(top: 20),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.white),
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.green[400],
+                                    backgroundImage:
+                                        AssetImage('assets/images/vaksin.png'),
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        PersistentNavBarNavigator.pushNewScreen(
+                                          context,
+                                          screen: ImunisasiBalitaPage(
+                                            balitaModel: widget.balitaModel,
+                                          ),
+                                          withNavBar:
+                                              false, // OPTIONAL VALUE. True by default.
+                                          pageTransitionAnimation:
+                                              PageTransitionAnimation.cupertino,
+                                        );
+                                      },
+                                      child: Text(
+                                        'Imunisasi',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontStyle: FontStyle.normal),
+                                      )),
+                                ],
+                              ),
                             ),
+                            onTap: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: ImunisasiBalitaPage(
+                                  balitaModel: widget.balitaModel,
+                                ),
+                                withNavBar:
+                                    false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
                           )
                         ],
                       )

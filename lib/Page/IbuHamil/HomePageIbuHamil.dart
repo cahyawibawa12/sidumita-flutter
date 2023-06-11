@@ -12,6 +12,7 @@ import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:get/get.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,6 +49,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
 
   @override
   void initState() {
+    initializeDateFormatting('id');
     super.initState();
     kontenController.ShowKonten();
     pemeriksaanibuhamil.getPemeriksaanIbuHamil(widget.ibuHamilModel.id!);
@@ -75,45 +77,53 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                       children: [
                         Obx(() => umur.isLoading.value
                             ? CircularProgressIndicator()
-                            : Container(
-                                height: 100,
-                                padding: EdgeInsets.all(10),
-                                child: Card(
-                                  color: Color.fromARGB(255, 185, 246, 188),
-                                  child: ListTile(
-                                      title: Text(
-                                        widget.ibuHamilModel.detailKeluarga!
-                                            .namaLengkap
-                                            .toString(),
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      subtitle: (() {
-                                        if (umur.umurPeserta.value.format
-                                                .toString() ==
-                                            "tahun") {
-                                          return Text(
-                                            umur.umurPeserta.value.umur
-                                                    .toString() +
-                                                " Tahun " +
-                                                (umur.umurPeserta.value
-                                                            .usiaBulan! %
-                                                        12)
-                                                    .toString() +
-                                                " Bulan",
-                                          );
-                                        } else {
-                                          return Text(
-                                            "0 Tahun " +
-                                                (umur.umurPeserta.value
-                                                            .usiaBulan! %
-                                                        12)
-                                                    .toString() +
-                                                " Bulan",
-                                          );
-                                        }
-                                      }())),
+                            : InkWell(
+                                onTap: () {
+                                  var buttonNavIbuHamilController =
+                                      Get.put(ButtonNavIbuHamilController());
+                                  buttonNavIbuHamilController
+                                      .tabController.value.index = 4;
+                                },
+                                child: Container(
+                                  height: 100,
+                                  padding: EdgeInsets.all(10),
+                                  child: Card(
+                                    color: Color.fromARGB(255, 185, 246, 188),
+                                    child: ListTile(
+                                        title: Text(
+                                          widget.ibuHamilModel.detailKeluarga!
+                                              .namaLengkap
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        subtitle: (() {
+                                          if (umur.umurPeserta.value.format
+                                                  .toString() ==
+                                              "tahun") {
+                                            return Text(
+                                              umur.umurPeserta.value.umur
+                                                      .toString() +
+                                                  " Tahun " +
+                                                  (umur.umurPeserta.value
+                                                              .usiaBulan! %
+                                                          12)
+                                                      .toString() +
+                                                  " Bulan",
+                                            );
+                                          } else {
+                                            return Text(
+                                              "0 Tahun " +
+                                                  (umur.umurPeserta.value
+                                                              .usiaBulan! %
+                                                          12)
+                                                      .toString() +
+                                                  " Bulan",
+                                            );
+                                          }
+                                        }())),
+                                  ),
                                 ),
                               )),
                         Container(
@@ -149,7 +159,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                                   .toString() +
                                               ' Kg');
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       }),
                                       SizedBox(
@@ -157,7 +167,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                       ),
                                       Obx((() {
                                         if (dataBeratIbu.isLoading.value) {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         } else {
                                           if (dataBeratIbu.hasilStatusBeratIbu
                                                   .value.status ==
@@ -260,7 +270,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                                   .toString() +
                                               ' bpm');
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       }),
                                       SizedBox(
@@ -338,7 +348,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                                   .toString() +
                                               ' bpm');
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       }),
                                       SizedBox(
@@ -409,14 +419,16 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                                     if (pemeriksaanibuhamil
                                             .listPemeriksaanIbuHamil.length !=
                                         0) {
-                                      return Text('Date : ' +
-                                          DateFormat('dd MMMM yyyy').format(
-                                              DateTime.parse(pemeriksaanibuhamil
-                                                  .listPemeriksaanIbuHamil[0]
-                                                  .tanggalPemeriksaan
-                                                  .toString())));
+                                      return Text('Tgl : ' +
+                                          DateFormat('dd MMMM yyyy', "id")
+                                              .format(DateTime.parse(
+                                                  pemeriksaanibuhamil
+                                                      .listPemeriksaanIbuHamil[
+                                                          0]
+                                                      .tanggalPemeriksaan
+                                                      .toString())));
                                     } else {
-                                      return Text('Empty');
+                                      return Text('Kosong');
                                     }
                                   }),
                                   Container(
@@ -506,7 +518,10 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: images.asMap().entries.map((entry) {
+                                children: kontenController.listKonten.value
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
                                   return GestureDetector(
                                     onTap: () => carouselController
                                         .animateToPage(entry.key),
@@ -545,7 +560,7 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
                               elevation: 0,
                               child: ListTile(
                                 title: Text(
-                                  "Pertumbuhan Ibu Hamil",
+                                  "Jadwal Posyandu",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontStyle: FontStyle.normal,

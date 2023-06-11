@@ -131,10 +131,10 @@ class _RiwayatBalitaPageState extends State<RiwayatBalitaPage> {
                                 children: [
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width /
-                                        12.5,
+                                        14.5,
                                   ),
-                                  Text(DateFormat('yMd').format(DateTime.parse(
-                                      pemeriksaanbalita
+                                  Text(DateFormat('dd/MM/yyyy').format(
+                                      DateTime.parse(pemeriksaanbalita
                                           .listPemeriksaanBalita[index]
                                           .tanggalPemeriksaan))),
                                   SizedBox(

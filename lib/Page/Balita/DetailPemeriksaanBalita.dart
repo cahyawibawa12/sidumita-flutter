@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Controller/DetailPemeriksaanBalitaController.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import '../../widget/widgets.dart';
 
@@ -59,6 +60,9 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
   //   super.initState();
   //   // detailpemeriksaanbalita.getDetailPemeriksaanBalita(widget.id);
   // }
+  void initState() {
+    initializeDateFormatting('id');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -282,8 +286,8 @@ class _DetailPemeriksaanBalitaState extends State<DetailPemeriksaanBalita> {
                         SizedBox(
                           height: 20,
                         ),
-                        Text("Date : " +
-                            DateFormat('dd MMMM yyyy').format(
+                        Text("Tanggal : " +
+                            DateFormat('dd MMMM yyyy', "id").format(
                                 DateTime.parse(widget.tanggal_pemeriksaan)))
                       ],
                     ),

@@ -47,7 +47,7 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                margin: EdgeInsets.only(top: 10, bottom: 10),
+                margin: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Color.fromARGB(255, 185, 246, 188)),
@@ -122,9 +122,9 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                   children: [
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width /
-                                          12.5,
+                                          14.5,
                                     ),
-                                    Text(DateFormat('yMd').format(
+                                    Text(DateFormat('dd/MM/yyyy').format(
                                         DateTime.parse(pemeriksaanibuhamil
                                             .listPemeriksaanIbuHamil[index]
                                             .tanggalPemeriksaan))),

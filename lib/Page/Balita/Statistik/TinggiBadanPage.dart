@@ -9,6 +9,7 @@ import '../../../Controller/PemeriksaanBalitaController.dart';
 import '../../../widget/listchart/listchartTinggi.dart';
 import '../../../widget/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class TinggiBadanPage extends StatefulWidget {
   TinggiBadanPage({super.key, required this.balitaModel});
@@ -26,6 +27,7 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
 
   @override
   void initState() {
+    initializeDateFormatting('id');
     // super.initState();
     // pemeriksaanbalita.getPemeriksaanBalita(widget.balitaModel.id!);
     _zoomPanBehavior = ZoomPanBehavior(
@@ -111,9 +113,10 @@ class _TinggiBadanPageState extends State<TinggiBadanPage> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        Obx(() => Text(
-                                            DateFormat('dd MMMM yyyy').format(
-                                                DateTime.parse(pemeriksaanbalita
+                                        Obx(() => Text(DateFormat(
+                                                'dd MMMM yyyy', "id")
+                                            .format(DateTime.parse(
+                                                pemeriksaanbalita
                                                     .listPemeriksaanBalita[0]
                                                     .tanggalPemeriksaan))))
                                       ],

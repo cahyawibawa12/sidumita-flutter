@@ -80,9 +80,9 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                   Container(
                                     padding: EdgeInsets.only(left: 10),
                                     child: CircleAvatar(
-                                      radius: 55,
+                                      radius: 40,
                                       backgroundImage:
-                                          AssetImage('assets/images/bg.png'),
+                                          AssetImage('assets/images/Logo.png'),
                                     ),
                                   ),
                                   Column(
@@ -94,7 +94,9 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                          "Sistem Informasi Ibu Hamil dan Balita"),
+                                        "Sistem Informasi Posyandu Ibu Hamil dan Balita",
+                                        style: TextStyle(fontSize: 13),
+                                      ),
                                     ],
                                   )
                                 ],

@@ -389,8 +389,8 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                         if (_form.currentState!.validate()) {
                           pemeriksaanIbuHamilbyPetugas
                               .StorePemeriksaanIbuByPetugas(
-                                  ibu_hamil_id:
-                                      widget.petugasWithIbuHamilModel['id']);
+                                  ibu_hamil_id: int.parse(
+                                      widget.petugasWithIbuHamilModel['id']));
                         }
                       },
                       child: const Text("Save"),

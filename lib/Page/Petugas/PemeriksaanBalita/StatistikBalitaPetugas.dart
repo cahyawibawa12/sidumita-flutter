@@ -44,14 +44,26 @@ class _StatistikBalitaPetugasState extends State<StatistikBalitaPetugas> {
             body: SafeArea(
               child: Column(
                 children: [
-                  Text("Statistik",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w500)),
-                  SizedBox(
-                    height: 10,
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    margin: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color.fromARGB(255, 185, 246, 188)),
+                    child: Center(
+                      child: Text("Statistik Balita",
+                          style: GoogleFonts.gentiumBasic(
+                            textStyle: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          )),
+                    ),
                   ),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
                   Container(
                     // padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     margin: EdgeInsets.all(10),
@@ -70,7 +82,7 @@ class _StatistikBalitaPetugasState extends State<StatistikBalitaPetugas> {
                           text: 'Berat Badan',
                         ),
                         Tab(
-                          text: 'Lingkar Kepala',
+                          text: 'L.Kepala',
                         ),
                         Tab(
                           text: 'Tinggi Badan',

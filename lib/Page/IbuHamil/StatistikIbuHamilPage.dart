@@ -11,6 +11,7 @@ import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:posyandu/widget/listchart/listChartIbu.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class StatistikIbuHamilPage extends StatefulWidget {
   StatistikIbuHamilPage({super.key, required this.ibuHamilModel});
@@ -35,6 +36,7 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
 
   @override
   void initState() {
+    initializeDateFormatting('id');
     super.initState();
     pemeriksaanibuhamil
         .getPemeriksaanIbuHamil(widget.ibuHamilModel.id!)
@@ -72,14 +74,28 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                             physics: AlwaysScrollableScrollPhysics(),
                             child: Column(
                               children: [
-                                Text("Statistik Ibu Hamil",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w500)),
-                                SizedBox(
-                                  height: 10,
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 16),
+                                  margin: EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color:
+                                          Color.fromARGB(255, 185, 246, 188)),
+                                  child: Center(
+                                    child: Text("Statistik Ibu Hamil",
+                                        style: GoogleFonts.gentiumBasic(
+                                          textStyle: TextStyle(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
+                                        )),
+                                  ),
                                 ),
+                                // SizedBox(
+                                //   height: 10,
+                                // ),
                                 Container(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 16),
@@ -122,7 +138,7 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Text(DateFormat('dd MMMM yyyy')
+                                          Text(DateFormat('dd MMMM yyyy', "id")
                                               .format(DateTime.parse(
                                                   pemeriksaanibuhamil
                                                       .listPemeriksaanIbuHamil[
@@ -427,11 +443,24 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                       physics: AlwaysScrollableScrollPhysics(),
                       child: Column(
                         children: [
-                          Text("Statistik Ibu Hamil",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w500)),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            margin: EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Color.fromARGB(255, 185, 246, 188)),
+                            child: Center(
+                              child: Text("Statistik Ibu Hamil",
+                                  style: GoogleFonts.gentiumBasic(
+                                    textStyle: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  )),
+                            ),
+                          ),
                           SizedBox(
                             height: 10,
                           ),

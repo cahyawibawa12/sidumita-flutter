@@ -16,6 +16,7 @@ import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:get/get.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -105,6 +106,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                 pemeriksaanbalita.listPemeriksaanBalita[0].lingkarKepala);
       }
     });
+    initializeDateFormatting('id');
   }
 
   @override
@@ -127,45 +129,53 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                       children: [
                         Obx(() => umur.isLoading.value
                             ? CircularProgressIndicator()
-                            : Container(
-                                height: 100,
-                                padding: EdgeInsets.all(10),
-                                child: Card(
-                                  color: Color.fromARGB(255, 185, 246, 188),
-                                  child: ListTile(
-                                      title: Text(
-                                        widget.balitaModel.detailKeluarga!
-                                            .namaLengkap
-                                            .toString(),
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      subtitle: (() {
-                                        if (umur.umurPeserta.value.format
-                                                .toString() ==
-                                            "tahun") {
-                                          return Text(
-                                            umur.umurPeserta.value.umur
-                                                    .toString() +
-                                                " Tahun " +
-                                                (umur.umurPeserta.value
-                                                            .usiaBulan! %
-                                                        12)
-                                                    .toString() +
-                                                " Bulan",
-                                          );
-                                        } else {
-                                          return Text(
-                                            "0 Tahun " +
-                                                (umur.umurPeserta.value
-                                                            .usiaBulan! %
-                                                        12)
-                                                    .toString() +
-                                                " Bulan",
-                                          );
-                                        }
-                                      }())),
+                            : InkWell(
+                                onTap: () {
+                                  var buttonNavBalitaController =
+                                      Get.put(ButtonNavBalitaController());
+                                  buttonNavBalitaController
+                                      .tabController.value.index = 4;
+                                },
+                                child: Container(
+                                  height: 100,
+                                  padding: EdgeInsets.all(10),
+                                  child: Card(
+                                    color: Color.fromARGB(255, 185, 246, 188),
+                                    child: ListTile(
+                                        title: Text(
+                                          widget.balitaModel.detailKeluarga!
+                                              .namaLengkap
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        subtitle: (() {
+                                          if (umur.umurPeserta.value.format
+                                                  .toString() ==
+                                              "tahun") {
+                                            return Text(
+                                              umur.umurPeserta.value.umur
+                                                      .toString() +
+                                                  " Tahun " +
+                                                  (umur.umurPeserta.value
+                                                              .usiaBulan! %
+                                                          12)
+                                                      .toString() +
+                                                  " Bulan",
+                                            );
+                                          } else {
+                                            return Text(
+                                              "0 Tahun " +
+                                                  (umur.umurPeserta.value
+                                                              .usiaBulan! %
+                                                          12)
+                                                      .toString() +
+                                                  " Bulan",
+                                            );
+                                          }
+                                        }())),
+                                  ),
                                 ),
                               )),
                         Container(
@@ -200,7 +210,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                                   .toString() +
                                               ' Kg');
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       }),
                                       SizedBox(
@@ -208,7 +218,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                       ),
                                       Obx((() {
                                         if (cekDataBalita.isLoading.value) {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         } else {
                                           if (cekDataBalita.hasilCekDataBerat
                                                       .value.status ==
@@ -297,7 +307,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                                   .toString() +
                                               ' Cm');
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       }),
                                       SizedBox(
@@ -305,7 +315,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                       ),
                                       Obx((() {
                                         if (cekDataBalita.isLoading.value) {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         } else {
                                           if (cekDataBalita.hasilCekDataTinggi
                                                       .value.status ==
@@ -388,7 +398,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                                   .toString() +
                                               ' Cm');
                                         } else {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         }
                                       }),
                                       SizedBox(
@@ -396,7 +406,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                       ),
                                       Obx((() {
                                         if (cekDataBalita.isLoading.value) {
-                                          return Text('Empty');
+                                          return Text('Kosong');
                                         } else {
                                           if (cekDataBalita.hasilCekDataKepala
                                                       .value.status ==
@@ -473,14 +483,15 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                     if (pemeriksaanbalita
                                             .listPemeriksaanBalita.length !=
                                         0) {
-                                      return Text('Date : ' +
-                                          DateFormat('dd MMMM yyyy').format(
-                                              DateTime.parse(pemeriksaanbalita
-                                                  .listPemeriksaanBalita[0]
-                                                  .tanggalPemeriksaan
-                                                  .toString())));
+                                      return Text('Tgl : ' +
+                                          DateFormat('dd MMMM yyyy', "id")
+                                              .format(DateTime.parse(
+                                                  pemeriksaanbalita
+                                                      .listPemeriksaanBalita[0]
+                                                      .tanggalPemeriksaan
+                                                      .toString())));
                                     } else {
-                                      return Text('Empty');
+                                      return Text('Kosong');
                                     }
                                   }),
                                   Container(
@@ -570,7 +581,10 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: images.asMap().entries.map((entry) {
+                                children: kontenController.listKonten.value
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
                                   return GestureDetector(
                                     onTap: () => carouselController
                                         .animateToPage(entry.key),
@@ -609,7 +623,7 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                               elevation: 0,
                               child: ListTile(
                                 title: Text(
-                                  "Pertumbuhan Balita",
+                                  "Jadwal Posyandu",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontStyle: FontStyle.normal,

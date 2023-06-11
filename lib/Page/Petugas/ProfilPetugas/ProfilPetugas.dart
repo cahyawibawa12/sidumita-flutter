@@ -178,7 +178,25 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
                           title: const Text("Logout"),
                           trailing: IconButton(
                             onPressed: () {
-                              logout();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: Text("Confirm Logout"),
+                                        content: Text(
+                                            "Apakah Anda Ingin Keluar Dari Aplikasi?"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("No")),
+                                          TextButton(
+                                              onPressed: () {
+                                                logout();
+                                              },
+                                              child: Text("Yes")),
+                                        ],
+                                      ));
                             },
                             icon: const Icon(
                               Icons.arrow_right_sharp,
@@ -188,7 +206,25 @@ class _ProfilPetugasState extends State<ProfilPetugas> {
                         ),
                       ),
                       onTap: () {
-                        logout();
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text("Confirm Logout"),
+                                  content: Text(
+                                      "Apakah Anda Ingin Keluar Dari Aplikasi?"),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("No")),
+                                    TextButton(
+                                        onPressed: () {
+                                          logout();
+                                        },
+                                        child: Text("Yes")),
+                                  ],
+                                ));
                       },
                     ),
                   ],

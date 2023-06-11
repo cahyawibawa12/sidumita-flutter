@@ -36,7 +36,7 @@ class _LandingLoginState extends State<LandingLogin> {
                       Container(
                         padding: EdgeInsets.only(left: 10),
                         child: CircleAvatar(
-                          radius: 55,
+                          radius: 40,
                           backgroundImage: AssetImage('assets/images/Logo.png'),
                         ),
                       ),
@@ -51,7 +51,10 @@ class _LandingLoginState extends State<LandingLogin> {
                                   color: Colors.white),
                             ),
                           ),
-                          Text("Sistem Informasi Ibu Hamil dan Balita"),
+                          Text(
+                            "Sistem Informasi Posyandu Ibu Hamil dan Balita",
+                            style: TextStyle(fontSize: 13),
+                          ),
                         ],
                       )
                     ],

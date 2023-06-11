@@ -68,6 +68,7 @@ class _PagePraKehamilanState extends State<PagePraKehamilan> {
                                   keyboardType: TextInputType.number,
                                   decoration: const InputDecoration(
                                     labelText: 'Berat Pra-Kehamilan',
+                                    hintText: '59',
                                     labelStyle: TextStyle(
                                       color: Colors.blueGrey,
                                     ),
@@ -85,6 +86,7 @@ class _PagePraKehamilanState extends State<PagePraKehamilan> {
                                   keyboardType: TextInputType.number,
                                   decoration: const InputDecoration(
                                     labelText: 'Tinggi Pra-Kehamilan',
+                                    hintText: '159',
                                     labelStyle: TextStyle(
                                       color: Colors.blueGrey,
                                     ),

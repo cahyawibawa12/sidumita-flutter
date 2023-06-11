@@ -71,7 +71,7 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
                             Container(
                               padding: EdgeInsets.only(left: 10),
                               child: CircleAvatar(
-                                radius: 55,
+                                radius: 40,
                                 backgroundImage:
                                     AssetImage('assets/images/Logo.png'),
                               ),
@@ -87,7 +87,10 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
                                         color: Colors.white),
                                   ),
                                 ),
-                                Text("Sistem Informasi Ibu Hamil dan Balita"),
+                                Text(
+                                  "Sistem Informasi Posyandu Ibu Hamil dan Balita",
+                                  style: TextStyle(fontSize: 13),
+                                ),
                               ],
                             )
                           ],
@@ -114,8 +117,8 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
                                 cursorColor: Colors.blue,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
-                                  hintText: "Email",
-                                ),
+                                    // hintText: "Email",
+                                    ),
                                 validator: (emailValue) {
                                   if (emailValue!.isEmpty) {
                                     return 'Please enter your email';
@@ -132,7 +135,7 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
                                 keyboardType: TextInputType.text,
                                 obscureText: _secureText,
                                 decoration: InputDecoration(
-                                  hintText: "Password",
+                                  // hintText: "Password",
                                   suffixIcon: IconButton(
                                     onPressed: showHide,
                                     icon: Icon(_secureText

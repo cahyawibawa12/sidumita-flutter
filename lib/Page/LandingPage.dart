@@ -42,7 +42,7 @@ class _LandingPageState extends State<LandingPage> {
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: Obx(() => kontenController.isLoading.value
-                  ? CircularProgressIndicator()
+                  ? Center(child: CircularProgressIndicator())
                   : Column(
                       children: <Widget>[
                         Row(
@@ -68,7 +68,10 @@ class _LandingPageState extends State<LandingPage> {
                                         color: Colors.white),
                                   ),
                                 ),
-                                Text("Sistem Informasi Ibu Hamil dan Balita"),
+                                Text(
+                                  "Sistem Informasi Posyandu Ibu Hamil dan Balita",
+                                  style: TextStyle(fontSize: 11),
+                                ),
                               ],
                             ),
                             SizedBox(

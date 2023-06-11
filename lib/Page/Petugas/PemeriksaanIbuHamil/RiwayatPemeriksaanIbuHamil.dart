@@ -198,9 +198,9 @@ class _RiwayatPemeriksaanIbuHamilState
                                                 .listPemeriksaanIbuHamil[index]
                                                 .id)
                                         .then((value) => pemeriksaanibuhamil
-                                            .getPemeriksaanIbuHamil(
+                                            .getPemeriksaanIbuHamil(int.parse(
                                                 widget.petugasWithIbuHamilModel[
-                                                    "id"]));
+                                                    "id"])));
                                     return Future.value(true);
                                   }
                                   return Future.value(false);
@@ -217,9 +217,9 @@ class _RiwayatPemeriksaanIbuHamilState
                                   child: Row(children: [
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width /
-                                          12.5,
+                                          14.5,
                                     ),
-                                    Text(DateFormat('yMd').format(
+                                    Text(DateFormat('dd/MM/yyyy').format(
                                         DateTime.parse(pemeriksaanibuhamil
                                             .listPemeriksaanIbuHamil[index]
                                             .tanggalPemeriksaan))),

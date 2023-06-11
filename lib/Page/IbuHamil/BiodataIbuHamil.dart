@@ -7,6 +7,7 @@ import 'package:posyandu/Model/BalitaModel.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class BiodataIbuHamil extends StatefulWidget {
   BiodataIbuHamil({super.key, required this.ibuHamilModel});
@@ -23,6 +24,7 @@ class _BiodataIbuHamilState extends State<BiodataIbuHamil> {
 
   @override
   void initState() {
+    initializeDateFormatting('id');
     super.initState();
     detailKeluarga.nama_lengkap.text =
         widget.ibuHamilModel.detailKeluarga!.namaLengkap.toString();
@@ -30,7 +32,7 @@ class _BiodataIbuHamilState extends State<BiodataIbuHamil> {
         widget.ibuHamilModel.detailKeluarga!.nik.toString();
     detailKeluarga.tempat_lahir.text =
         widget.ibuHamilModel.detailKeluarga!.tempatLahir.toString();
-    detailKeluarga.tanggal_lahir.text = DateFormat('dd MMMM yyyy').format(
+    detailKeluarga.tanggal_lahir.text = DateFormat('dd MMMM yyyy', "id").format(
         DateTime.parse(
             widget.ibuHamilModel.detailKeluarga!.tanggalLahir.toString()));
     detailKeluarga.agama.text =

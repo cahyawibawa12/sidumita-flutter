@@ -30,8 +30,8 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
     kontenController.ShowKonten();
+    _loadUserData();
   }
 
   _loadUserData() async {
@@ -57,18 +57,26 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
               child: SingleChildScrollView(
             child: Column(
               children: [
-                Container(
-                  height: 100,
-                  padding: EdgeInsets.all(10),
-                  child: Card(
-                    color: Color.fromARGB(255, 185, 246, 188),
-                    child: ListTile(
-                      title: Text(
-                        '${name}',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfilPetugas()));
+                  },
+                  child: Container(
+                    height: 100,
+                    padding: EdgeInsets.all(10),
+                    child: Card(
+                      color: Color.fromARGB(255, 185, 246, 188),
+                      child: ListTile(
+                        title: Text(
+                          '${name}',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: Text('${email}'),
                       ),
-                      subtitle: Text('${email}'),
                     ),
                   ),
                 ),
@@ -76,10 +84,10 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                   height: 10,
                 ),
                 /*
-                TODO: Implement this @ controller
-                int currentIndex = 0;
-                final CarouselController carouselController = CarouselController();
-                */
+                            TODO: Implement this @ controller
+                            int currentIndex = 0;
+                            final CarouselController carouselController = CarouselController();
+                            */
                 Builder(builder: (context) {
                   List images = [
                     "https://akah.desa.id/desa/upload/artikel/sedang_1583992455_PSOYANDU.jpg",
@@ -130,7 +138,10 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: images.asMap().entries.map((entry) {
+                        children: kontenController.listKonten.value
+                            .asMap()
+                            .entries
+                            .map((entry) {
                           return GestureDetector(
                             onTap: () =>
                                 carouselController.animateToPage(entry.key),
@@ -184,7 +195,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                         child: CircleAvatar(
                                           backgroundImage: AssetImage(
                                               'assets/images/petugas.png'),
-                                          radius: 70,
+                                          radius: 55,
                                         ),
                                       ),
                                       Text(
@@ -216,7 +227,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                         child: CircleAvatar(
                                           backgroundImage: AssetImage(
                                               'assets/images/jadwal.png'),
-                                          radius: 70,
+                                          radius: 55,
                                         ),
                                       ),
                                       Text(
@@ -248,7 +259,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                         child: CircleAvatar(
                                           backgroundImage: AssetImage(
                                               'assets/images/baby1.png'),
-                                          radius: 70,
+                                          radius: 55,
                                         ),
                                       ),
                                       Text(
@@ -280,7 +291,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                         child: CircleAvatar(
                                           backgroundImage: AssetImage(
                                               'assets/images/ibu.png'),
-                                          radius: 70,
+                                          radius: 55,
                                         ),
                                       ),
                                       Text(

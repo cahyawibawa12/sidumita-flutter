@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:posyandu/Controller/DetailKeluargaController.dart';
 
@@ -71,15 +72,27 @@ class _EditPesertaState extends State<EditPeserta> {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    Text(
-                      "Tambah Anggota Keluarga",
-                      style: TextStyle(
-                        fontSize: 30.0,
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      margin: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Color.fromARGB(255, 185, 246, 188)),
+                      child: Center(
+                        child: Text("Data Anggota Keluarga",
+                            style: GoogleFonts.gentiumBasic(
+                              textStyle: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            )),
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
@@ -269,7 +282,7 @@ class _EditPesertaState extends State<EditPeserta> {
                                   maxLength: 20,
                                   enabled: false,
                                   decoration: const InputDecoration(
-                                    labelText: 'Birth date',
+                                    labelText: 'Tanggal Lahir',
                                     labelStyle: TextStyle(
                                       color: Colors.blueGrey,
                                     ),
