@@ -241,7 +241,7 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                                           (ChartData data, _) =>
                                                               data.highValue,
                                                       opacity: 0.5,
-                                                      color: Colors.green[500]),
+                                                      color: Colors.red[500]),
                                                 ]);
                                           } else if (dataBeratIbu
                                                   .hasilStatusBeratIbu
@@ -288,7 +288,7 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                                           (ChartData data, _) =>
                                                               data.highValue,
                                                       opacity: 0.5,
-                                                      color: Colors.red[500]),
+                                                      color: Colors.green[500]),
                                                 ]);
                                           } else {
                                             return SfCartesianChart(
@@ -478,7 +478,7 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                                 (ChartData data, _) =>
                                                     data.highValue,
                                             opacity: 0.5,
-                                            color: Colors.green[500]),
+                                            color: Colors.red[500]),
                                         SplineRangeAreaSeries<ChartData, num>(
                                             dataSource: overWeight,
                                             xValueMapper: (ChartData data, _) =>
@@ -490,7 +490,7 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                                 (ChartData data, _) =>
                                                     data.highValue,
                                             opacity: 0.5,
-                                            color: Colors.red[500]),
+                                            color: Colors.green[500]),
                                         SplineRangeAreaSeries<ChartData, num>(
                                             dataSource: obeseWeight,
                                             xValueMapper: (ChartData data, _) =>

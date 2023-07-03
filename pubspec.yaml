@@ -39,6 +39,7 @@ dependencies:
     sdk: flutter
   flutter_clean_calendar: ^1.1.0
   flutter_local_notifications: ^14.0.0+2
+  flutter_otp_text_field: ^1.1.1
   focus_detector_v2: ^3.0.0+2
   get: null
   google_fonts: ^3.0.1

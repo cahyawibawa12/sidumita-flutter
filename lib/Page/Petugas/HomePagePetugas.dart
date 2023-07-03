@@ -4,9 +4,11 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:posyandu/Controller/PetugasController.dart';
 import 'package:posyandu/Page/Petugas/JadwalPosyandu.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanBalita/PemeriksaanBalitaPage.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanIbuHamil/PemeriksaanIbuHamilPage.dart';
+import 'package:posyandu/Page/Petugas/PetugasWithKeluarga/DaftarKeluaga.dart';
 import 'package:posyandu/Page/Petugas/ProfilPetugas/ProfilPetugas.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,18 +28,22 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
   String name = '';
   String email = '';
   var kontenController = Get.put(KontenController());
+  var bioPetugas = Get.put(PetugasController());
 
   @override
   void initState() {
     super.initState();
     kontenController.ShowKonten();
+    bioPetugas.ShowPetugas();
     _loadUserData();
   }
 
   _loadUserData() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var user = jsonDecode(localStorage.getString('user')!);
-
+    // var token = localStorage.getString('token');
+    // Get.snackbar("Token", token.toString() + user.toString(),
+    //     duration: Duration(days: 1));
     if (user != null) {
       setState(() {
         name = user['name'];
@@ -168,7 +174,7 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                 }),
 
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 2,
+                  height: 600,
                   child: Container(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -200,6 +206,38 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
                                       ),
                                       Text(
                                         "Profil Petugas",
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Color.fromARGB(255, 185, 246, 188)),
+                              child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DaftarKeluarga()));
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: CircleAvatar(
+                                          backgroundImage: AssetImage(
+                                              'assets/images/family.png'),
+                                          radius: 55,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Daftar Keluarga",
                                         style: TextStyle(
                                           fontSize: 15.0,
                                         ),

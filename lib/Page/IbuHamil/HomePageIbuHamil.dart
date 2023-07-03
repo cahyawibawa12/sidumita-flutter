@@ -39,9 +39,15 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
 
   Future<void> _refresh(bool reload) async {
     await Get.find<PemeriksaanIbuHamilController>()
-        .getPemeriksaanIbuHamil(widget.ibuHamilModel.id!);
-    await Get.find<CekDataController>()
-        .statusBeratIbu(ibu_hamil_id: widget.ibuHamilModel.id!);
+        .getPemeriksaanIbuHamil(widget.ibuHamilModel.id!)
+        .whenComplete(() => dataBeratIbu.statusBeratIbu(
+            ibu_hamil_id: widget.ibuHamilModel.id!,
+            berat_badan: pemeriksaanibuhamil
+                .listPemeriksaanIbuHamil[0].beratBadan
+                .toString(),
+            umur_kandungan: pemeriksaanibuhamil
+                .listPemeriksaanIbuHamil[0].umurKandungan
+                .toString()));
     await Get.find<DetailKeluargaController>()
         .GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
     await Get.find<KontenController>().ShowKonten();
@@ -52,9 +58,17 @@ class _HomePageIbuHamilState extends State<HomePageIbuHamil> {
     initializeDateFormatting('id');
     super.initState();
     kontenController.ShowKonten();
-    pemeriksaanibuhamil.getPemeriksaanIbuHamil(widget.ibuHamilModel.id!);
+    pemeriksaanibuhamil
+        .getPemeriksaanIbuHamil(widget.ibuHamilModel.id!)
+        .whenComplete(() => dataBeratIbu.statusBeratIbu(
+            ibu_hamil_id: widget.ibuHamilModel.id!,
+            berat_badan: pemeriksaanibuhamil
+                .listPemeriksaanIbuHamil[0].beratBadan
+                .toString(),
+            umur_kandungan: pemeriksaanibuhamil
+                .listPemeriksaanIbuHamil[0].umurKandungan
+                .toString()));
     umur.GetUmur(widget.ibuHamilModel.detailKeluarga!.id!);
-    dataBeratIbu.statusBeratIbu(ibu_hamil_id: widget.ibuHamilModel.id!);
   }
 
   @override

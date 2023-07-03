@@ -32,7 +32,7 @@ class _EditPesertaState extends State<EditPeserta> {
         widget.detailKeluargaModel.tempatLahir.toString();
     detailKeluarga.tanggal_lahir.text =
         widget.detailKeluargaModel.tanggalLahir.toString();
-    detailKeluarga.agama.text = widget.detailKeluargaModel.agama.toString();
+    detailKeluarga.agama = widget.detailKeluargaModel.agama.toString();
     detailKeluarga.no_telp.text = widget.detailKeluargaModel.noTelp.toString();
     detailKeluarga.jenis_pekerjaan.text =
         widget.detailKeluargaModel.jenisPekerjaan.toString();
@@ -46,7 +46,9 @@ class _EditPesertaState extends State<EditPeserta> {
         widget.detailKeluargaModel.statusPerkawinan.toString();
     detailKeluarga.status_keluarga =
         widget.detailKeluargaModel.statusDalamKeluarga.toString();
-    detailKeluarga.pendidikan.text =
+    detailKeluarga.status_dalam_keluarga.text =
+        widget.detailKeluargaModel.statusDalamKeluarga.toString();
+    detailKeluarga.pendidikan_terakhir =
         widget.detailKeluargaModel.pendidikan.toString();
     // detailKeluarga.StoreDetailKeluarga();
   }
@@ -142,6 +144,8 @@ class _EditPesertaState extends State<EditPeserta> {
                                 validator: (nameValue) {
                                   if (nameValue!.isEmpty) {
                                     return 'Mohon masukan data';
+                                  } else if (nameValue.length < 16) {
+                                    return 'Masukkan NIK dengan Benar';
                                   }
                                   detailKeluarga.det_nik.text = nameValue;
                                   return null;
@@ -258,7 +262,7 @@ class _EditPesertaState extends State<EditPeserta> {
                                     context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime(1900),
-                                    lastDate: DateTime(2100),
+                                    lastDate: DateTime.now(),
                                   );
                                   setState(() {
                                     tanggal = detailKeluarga.tanggal_lahir.text;
@@ -297,28 +301,6 @@ class _EditPesertaState extends State<EditPeserta> {
                                 ),
                               ),
                               TextFormField(
-                                maxLength: 20,
-                                decoration: const InputDecoration(
-                                  labelText: 'Agama',
-                                  labelStyle: TextStyle(
-                                    color: Colors.blueGrey,
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.blueGrey,
-                                    ),
-                                  ),
-                                ),
-                                controller: detailKeluarga.agama,
-                                validator: (nameValue) {
-                                  if (nameValue!.isEmpty) {
-                                    return 'Mohon masukan data';
-                                  }
-                                  detailKeluarga.agama.text = nameValue;
-                                  return null;
-                                },
-                              ),
-                              TextFormField(
                                 keyboardType: TextInputType.number,
                                 maxLength: 13,
                                 decoration: const InputDecoration(
@@ -341,6 +323,115 @@ class _EditPesertaState extends State<EditPeserta> {
                                   return null;
                                 },
                               ),
+                              LayoutBuilder(builder: (context, constraint) {
+                                List<String> itemStringList = [
+                                  "Hindu",
+                                  "Budha",
+                                  "Islam",
+                                  "Kristen",
+                                  "Kristen Katolik",
+                                ];
+
+                                return FormField(
+                                  initialValue: false,
+                                  enabled: true,
+                                  builder: (FormFieldState<bool> field) {
+                                    return InputDecorator(
+                                      decoration: InputDecoration(
+                                        labelText: "Agama",
+                                        errorText: field.errorText,
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                        child: ButtonTheme(
+                                          alignedDropdown: false,
+                                          child: DropdownButton<String>(
+                                            isExpanded: true,
+                                            value: detailKeluarga.agama,
+                                            icon: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10.0),
+                                              child: Icon(
+                                                Icons.arrow_drop_down_outlined,
+                                                size: 24.0,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .color,
+                                              ),
+                                            ),
+                                            iconSize: 16,
+                                            elevation: 16,
+                                            style: TextStyle(
+                                              fontSize: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontSize,
+                                              fontFamily: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontFamily,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .color,
+                                            ),
+                                            underline: Container(
+                                              height: 0,
+                                              color: Colors.grey[300],
+                                            ),
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                detailKeluarga.agama =
+                                                    newValue!;
+                                              });
+                                            },
+                                            items: itemStringList
+                                                .map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 0.0,
+                                                    vertical: 0.0,
+                                                  ),
+                                                  child: Text(
+                                                    value,
+                                                  ),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }),
+                              // TextFormField(
+                              //   maxLength: 20,
+                              //   decoration: const InputDecoration(
+                              //     labelText: 'Agama',
+                              //     labelStyle: TextStyle(
+                              //       color: Colors.blueGrey,
+                              //     ),
+                              //     enabledBorder: UnderlineInputBorder(
+                              //       borderSide: BorderSide(
+                              //         color: Colors.blueGrey,
+                              //       ),
+                              //     ),
+                              //   ),
+                              //   controller: detailKeluarga.agama,
+                              //   validator: (nameValue) {
+                              //     if (nameValue!.isEmpty) {
+                              //       return 'Mohon masukan data';
+                              //     }
+                              //     detailKeluarga.agama.text = nameValue;
+                              //     return null;
+                              //   },
+                              // ),
+
                               LayoutBuilder(builder: (context, constraint) {
                                 List<String> itemStringList = [
                                   "A",
@@ -427,55 +518,103 @@ class _EditPesertaState extends State<EditPeserta> {
                                   },
                                 );
                               }),
-                              TextFormField(
-                                maxLength: 20,
-                                decoration: const InputDecoration(
-                                  labelText: 'Jenis Pekerjaan',
-                                  labelStyle: TextStyle(
-                                    color: Colors.blueGrey,
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.blueGrey,
-                                    ),
-                                  ),
-                                ),
-                                controller: detailKeluarga.jenis_pekerjaan,
-                                validator: (nameValue) {
-                                  if (nameValue!.isEmpty) {
-                                    return 'Mohon masukan data';
-                                  }
-                                  detailKeluarga.jenis_pekerjaan.text =
-                                      nameValue;
-                                  return null;
-                                },
-                              ),
-                              TextFormField(
-                                maxLength: 20,
-                                decoration: const InputDecoration(
-                                  labelText: 'Pendidikan Terakhir',
-                                  labelStyle: TextStyle(
-                                    color: Colors.blueGrey,
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.blueGrey,
-                                    ),
-                                  ),
-                                ),
-                                controller: detailKeluarga.pendidikan,
-                                validator: (nameValue) {
-                                  if (nameValue!.isEmpty) {
-                                    return 'Mohon masukan data';
-                                  }
-                                  detailKeluarga.pendidikan.text = nameValue;
-                                  return null;
-                                },
-                              ),
+
                               LayoutBuilder(builder: (context, constraint) {
                                 List<String> itemStringList = [
-                                  "Menikah",
-                                  "Belum Menikah"
+                                  "SD",
+                                  "SMP",
+                                  "SMA",
+                                  "S1",
+                                  "S2",
+                                  "S3",
+                                  "Belum"
+                                ];
+
+                                return FormField(
+                                  initialValue: false,
+                                  enabled: true,
+                                  builder: (FormFieldState<bool> field) {
+                                    return InputDecorator(
+                                      decoration: InputDecoration(
+                                        labelText: "Status Pendidikan",
+                                        errorText: field.errorText,
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                        child: ButtonTheme(
+                                          alignedDropdown: false,
+                                          child: DropdownButton<String>(
+                                            isExpanded: true,
+                                            value: detailKeluarga
+                                                .pendidikan_terakhir,
+                                            icon: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10.0),
+                                              child: Icon(
+                                                Icons.arrow_drop_down_outlined,
+                                                size: 24.0,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .color,
+                                              ),
+                                            ),
+                                            iconSize: 16,
+                                            elevation: 16,
+                                            style: TextStyle(
+                                              fontSize: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontSize,
+                                              fontFamily: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .fontFamily,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .color,
+                                            ),
+                                            underline: Container(
+                                              height: 0,
+                                              color: Colors.grey[300],
+                                            ),
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                detailKeluarga
+                                                        .pendidikan_terakhir =
+                                                    newValue!;
+                                              });
+                                            },
+                                            items: itemStringList
+                                                .map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 0.0,
+                                                    vertical: 0.0,
+                                                  ),
+                                                  child: Text(
+                                                    value,
+                                                  ),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }),
+                              LayoutBuilder(builder: (context, constraint) {
+                                List<String> itemStringList = [
+                                  "Kawin",
+                                  "Belum Kawin",
+                                  "Janda",
+                                  "Duda"
                                 ];
 
                                 return FormField(
@@ -557,92 +696,131 @@ class _EditPesertaState extends State<EditPeserta> {
                                   },
                                 );
                               }),
-                              LayoutBuilder(builder: (context, constraint) {
-                                List<String> itemStringList = [
-                                  "Anak",
-                                  "Istri",
-                                  "Kepala Keluarga",
-                                  "Ayah",
-                                ];
+                              // LayoutBuilder(builder: (context, constraint) {
+                              //   List<String> itemStringList = [
+                              //     "Anak",
+                              //     "Istri",
+                              //     "Kepala Keluarga",
+                              //     "Ayah",
+                              //   ];
 
-                                return FormField(
-                                  initialValue: false,
-                                  enabled: true,
-                                  builder: (FormFieldState<bool> field) {
-                                    return InputDecorator(
-                                      decoration: InputDecoration(
-                                        labelText: "Status Dalam Keluarga",
-                                        errorText: field.errorText,
-                                      ),
-                                      child: DropdownButtonHideUnderline(
-                                        child: ButtonTheme(
-                                          alignedDropdown: false,
-                                          child: DropdownButton<String>(
-                                            isExpanded: true,
-                                            value:
-                                                detailKeluarga.status_keluarga,
-                                            icon: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 10.0),
-                                              child: Icon(
-                                                Icons.arrow_drop_down_outlined,
-                                                size: 24.0,
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge!
-                                                    .color,
-                                              ),
-                                            ),
-                                            iconSize: 16,
-                                            elevation: 16,
-                                            style: TextStyle(
-                                              fontSize: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontSize,
-                                              fontFamily: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .fontFamily,
-                                              color: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .color,
-                                            ),
-                                            underline: Container(
-                                              height: 0,
-                                              color: Colors.grey[300],
-                                            ),
-                                            onChanged: (String? newValue) {
-                                              setState(() {
-                                                detailKeluarga.status_keluarga =
-                                                    newValue!;
-                                              });
-                                            },
-                                            items: itemStringList
-                                                .map<DropdownMenuItem<String>>(
-                                                    (String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 0.0,
-                                                    vertical: 0.0,
-                                                  ),
-                                                  child: Text(
-                                                    value,
-                                                  ),
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }),
+                              //   return FormField(
+                              //     initialValue: false,
+                              //     enabled: true,
+                              //     builder: (FormFieldState<bool> field) {
+                              //       return InputDecorator(
+                              //         decoration: InputDecoration(
+                              //           labelText: "Status Dalam Keluarga",
+                              //           errorText: field.errorText,
+                              //         ),
+                              //         child: DropdownButtonHideUnderline(
+                              //           child: ButtonTheme(
+                              //             alignedDropdown: false,
+                              //             child: DropdownButton<String>(
+                              //               isExpanded: true,
+                              //               value:
+                              //                   detailKeluarga.status_keluarga,
+                              //               icon: Padding(
+                              //                 padding: const EdgeInsets.only(
+                              //                     right: 10.0),
+                              //                 child: Icon(
+                              //                   Icons.arrow_drop_down_outlined,
+                              //                   size: 24.0,
+                              //                   color: Theme.of(context)
+                              //                       .textTheme
+                              //                       .bodyLarge!
+                              //                       .color,
+                              //                 ),
+                              //               ),
+                              //               iconSize: 16,
+                              //               elevation: 16,
+                              //               style: TextStyle(
+                              //                 fontSize: Theme.of(context)
+                              //                     .textTheme
+                              //                     .bodyMedium!
+                              //                     .fontSize,
+                              //                 fontFamily: Theme.of(context)
+                              //                     .textTheme
+                              //                     .bodyMedium!
+                              //                     .fontFamily,
+                              //                 color: Theme.of(context)
+                              //                     .textTheme
+                              //                     .bodyMedium!
+                              //                     .color,
+                              //               ),
+                              //               underline: Container(
+                              //                 height: 0,
+                              //                 color: Colors.grey[300],
+                              //               ),
+                              //               onChanged: (String? newValue) {
+                              //                 setState(() {
+                              //                   detailKeluarga.status_keluarga =
+                              //                       newValue!;
+                              //                 });
+                              //               },
+                              //               items: itemStringList
+                              //                   .map<DropdownMenuItem<String>>(
+                              //                       (String value) {
+                              //                 return DropdownMenuItem<String>(
+                              //                   value: value,
+                              //                   child: Padding(
+                              //                     padding: const EdgeInsets
+                              //                         .symmetric(
+                              //                       horizontal: 0.0,
+                              //                       vertical: 0.0,
+                              //                     ),
+                              //                     child: Text(
+                              //                       value,
+                              //                     ),
+                              //                   ),
+                              //                 );
+                              //               }).toList(),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       );
+                              //     },
+                              //   );
+                              // }),
+                              TextFormField(
+                                readOnly: true,
+                                decoration: const InputDecoration(
+                                  labelText: 'Status Dalam Keluarga',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                ),
+                                controller:
+                                    detailKeluarga.status_dalam_keluarga,
+                              ),
+                              TextFormField(
+                                maxLength: 20,
+                                decoration: const InputDecoration(
+                                  labelText: 'Jenis Pekerjaan',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                ),
+                                controller: detailKeluarga.jenis_pekerjaan,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  detailKeluarga.jenis_pekerjaan.text =
+                                      nameValue;
+                                  return null;
+                                },
+                              ),
                               TextFormField(
                                 maxLength: 20,
                                 decoration: const InputDecoration(

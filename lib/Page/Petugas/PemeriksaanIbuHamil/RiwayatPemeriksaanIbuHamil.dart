@@ -34,10 +34,16 @@ class _RiwayatPemeriksaanIbuHamilState
       () {
         dataBeratIbu
             .getBeratIbu(int.parse(widget.petugasWithIbuHamilModel["id"]));
+        dataBeratIbu.statusBeratIbu(
+            ibu_hamil_id: int.parse(widget.petugasWithIbuHamilModel["id"]),
+            berat_badan: pemeriksaanibuhamil
+                .listPemeriksaanIbuHamil[0].beratBadan
+                .toString(),
+            umur_kandungan: pemeriksaanibuhamil
+                .listPemeriksaanIbuHamil[0].umurKandungan
+                .toString());
       },
     );
-    dataBeratIbu.statusBeratIbu(
-        ibu_hamil_id: int.parse(widget.petugasWithIbuHamilModel["id"]));
   }
 
   @override
@@ -230,7 +236,8 @@ class _RiwayatPemeriksaanIbuHamilState
                                     Text(pemeriksaanibuhamil
                                         .listPemeriksaanIbuHamil[index]
                                         .lingkarPerut
-                                        .toString()),
+                                        .toString()
+                                        .replaceAll(".0", "")),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           10,
@@ -238,7 +245,8 @@ class _RiwayatPemeriksaanIbuHamilState
                                     Text(pemeriksaanibuhamil
                                         .listPemeriksaanIbuHamil[index]
                                         .denyutJantungBayi
-                                        .toString()),
+                                        .toString()
+                                        .replaceAll(".0", "")),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           10,
@@ -246,7 +254,8 @@ class _RiwayatPemeriksaanIbuHamilState
                                     Text(pemeriksaanibuhamil
                                         .listPemeriksaanIbuHamil[index]
                                         .denyutNadi
-                                        .toString()),
+                                        .toString()
+                                        .replaceAll(".0", "")),
                                     Expanded(
                                       child: IconButton(
                                         onPressed: () {

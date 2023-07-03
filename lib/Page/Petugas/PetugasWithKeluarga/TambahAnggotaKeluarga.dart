@@ -8,14 +8,15 @@ import 'package:posyandu/Controller/DetailKeluargaController.dart';
 
 import '../../../widget/widgets.dart';
 
-class FormAnggotaKeluarga extends StatefulWidget {
-  const FormAnggotaKeluarga({super.key});
+class TambahAnggotaKeluarga extends StatefulWidget {
+  TambahAnggotaKeluarga({super.key, required this.petugasWithKeluargaModel});
+  final Map petugasWithKeluargaModel;
 
   @override
-  State<FormAnggotaKeluarga> createState() => _FormAnggotaKeluargaState();
+  State<TambahAnggotaKeluarga> createState() => _TambahAnggotaKeluargaState();
 }
 
-class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
+class _TambahAnggotaKeluargaState extends State<TambahAnggotaKeluarga> {
   var detailKeluarga = Get.put(DetailKeluargaController());
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
 
@@ -778,7 +779,9 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                 ),
                                 onPressed: () {
                                   if (_form.currentState!.validate()) {
-                                    detailKeluarga.StoreDetailKeluarga();
+                                    detailKeluarga.StoreDetailKeluargaByPetugas(
+                                        int.parse(widget
+                                            .petugasWithKeluargaModel["id"]));
                                   }
                                 },
                                 child: const Text("Save"),

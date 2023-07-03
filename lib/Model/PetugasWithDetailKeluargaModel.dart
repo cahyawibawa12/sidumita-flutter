@@ -1,53 +1,4 @@
-class IbuHamilModel {
-  int? id;
-  String? beratBadanPrakehamilan;
-  String? tinggiBadanPrakehamilan;
-  int? detailKeluargaId;
-  String? createdAt;
-  String? updatedAt;
-  Null? deletedAt;
-  DetailKeluarga? detailKeluarga;
-
-  IbuHamilModel(
-      {this.id,
-      this.beratBadanPrakehamilan,
-      this.tinggiBadanPrakehamilan,
-      this.detailKeluargaId,
-      this.createdAt,
-      this.updatedAt,
-      this.deletedAt,
-      this.detailKeluarga});
-
-  IbuHamilModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    beratBadanPrakehamilan = json['berat_badan_prakehamilan'] ?? "0";
-    tinggiBadanPrakehamilan = json['tinggi_badan_prakehamilan'] ?? "0";
-    detailKeluargaId = json['detail_keluarga_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
-    detailKeluarga = json['detail_keluarga'] != null
-        ? new DetailKeluarga.fromJson(json['detail_keluarga'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['berat_badan_prakehamilan'] = this.beratBadanPrakehamilan;
-    data['tinggi_badan_prakehamilan'] = this.tinggiBadanPrakehamilan;
-    // data['detail_keluarga_id'] = this.detailKeluargaId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    if (this.detailKeluarga != null) {
-      data['detail_keluarga'] = this.detailKeluarga!.toJson();
-    }
-    return data;
-  }
-}
-
-class DetailKeluarga {
+class PetugasWithDetailKeluargaModel {
   int? id;
   String? namaLengkap;
   String? nik;
@@ -66,8 +17,9 @@ class DetailKeluarga {
   String? createdAt;
   String? updatedAt;
   Null? deletedAt;
+  Keluarga? keluarga;
 
-  DetailKeluarga(
+  PetugasWithDetailKeluargaModel(
       {this.id,
       this.namaLengkap,
       this.nik,
@@ -85,9 +37,10 @@ class DetailKeluarga {
       this.keluargaId,
       this.createdAt,
       this.updatedAt,
-      this.deletedAt});
+      this.deletedAt,
+      this.keluarga});
 
-  DetailKeluarga.fromJson(Map<String, dynamic> json) {
+  PetugasWithDetailKeluargaModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     namaLengkap = json['nama_lengkap'];
     nik = json['nik'];
@@ -106,6 +59,9 @@ class DetailKeluarga {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
+    keluarga = json['keluarga'] != null
+        ? new Keluarga.fromJson(json['keluarga'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -128,6 +84,66 @@ class DetailKeluarga {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['deleted_at'] = this.deletedAt;
+    if (this.keluarga != null) {
+      data['keluarga'] = this.keluarga!.toJson();
+    }
+    return data;
+  }
+}
+
+class Keluarga {
+  int? id;
+  String? noKartuKeluarga;
+  String? kepalaKeluarga;
+  String? alamat;
+  String? jumlah;
+  int? userId;
+  int? dusunId;
+  String? createdAt;
+  String? updatedAt;
+  Null? deletedAt;
+  int? jumlahKeluarga;
+
+  Keluarga(
+      {this.id,
+      this.noKartuKeluarga,
+      this.kepalaKeluarga,
+      this.alamat,
+      this.jumlah,
+      this.userId,
+      this.dusunId,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt,
+      this.jumlahKeluarga});
+
+  Keluarga.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    noKartuKeluarga = json['no_kartu_keluarga'];
+    kepalaKeluarga = json['kepala_keluarga'];
+    alamat = json['alamat'];
+    jumlah = json['jumlah'];
+    userId = json['user_id'];
+    dusunId = json['dusun_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+    jumlahKeluarga = json['jumlah_keluarga'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['no_kartu_keluarga'] = this.noKartuKeluarga;
+    data['kepala_keluarga'] = this.kepalaKeluarga;
+    data['alamat'] = this.alamat;
+    data['jumlah'] = this.jumlah;
+    data['user_id'] = this.userId;
+    data['dusun_id'] = this.dusunId;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['deleted_at'] = this.deletedAt;
+    data['jumlah_keluarga'] = this.jumlahKeluarga;
     return data;
   }
 }

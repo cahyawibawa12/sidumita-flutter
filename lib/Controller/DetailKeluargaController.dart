@@ -4,14 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Model/DetailKeluargaModel.dart';
+import 'package:posyandu/Model/PetugasWithDetailKeluargaModel.dart';
 import 'package:posyandu/Model/UmurModel.dart';
 import 'package:posyandu/Service/DetailKeluargaService.dart';
+import 'package:posyandu/Service/PetugasService.dart';
 
 class DetailKeluargaController extends GetxController implements GetxService {
   var listDetailKeluarga = <DetailKeluargaModel>[].obs;
   var detailKeluarga = DetailKeluargaModel().obs;
   var umurPeserta = UmurModel().obs;
+  var listPetugasWithDetailKeluarga = <PetugasWithDetailKeluargaModel>[].obs;
+  final servicePetugas = PetugasService();
   final service = DetailKeluargaService();
+
   var isLoading = false.obs;
 
   @override
@@ -20,27 +25,33 @@ class DetailKeluargaController extends GetxController implements GetxService {
     det_nik.clear();
     tempat_lahir.clear();
     tanggal_lahir.clear();
-    agama.clear();
+    agama = null;
     no_telp.clear();
     kewarganegaraan.clear();
     jenis_pekerjaan.clear();
-    pendidikan.clear();
+    pendidikan_terakhir = null;
     golongan_darah = null;
     status_keluarga = null;
     status_perkawinan = null;
     jenis_kelamin = null;
   }
 
-  String? jenis_kelamin, golongan_darah, status_perkawinan, status_keluarga;
+  String? jenis_kelamin,
+      golongan_darah,
+      status_perkawinan,
+      status_keluarga,
+      pendidikan_terakhir,
+      agama;
   TextEditingController nama_lengkap = TextEditingController();
   TextEditingController det_nik = TextEditingController();
   TextEditingController tempat_lahir = TextEditingController();
   TextEditingController tanggal_lahir = TextEditingController();
-  TextEditingController agama = TextEditingController();
+  TextEditingController agama_controller = TextEditingController();
   TextEditingController no_telp = TextEditingController();
   TextEditingController jenis_pekerjaan = TextEditingController();
+  TextEditingController status_dalam_keluarga = TextEditingController();
   TextEditingController kewarganegaraan = TextEditingController();
-  TextEditingController pendidikan = TextEditingController();
+  TextEditingController pendidikan_controller = TextEditingController();
   TextEditingController jenis_kelamins = TextEditingController();
   TextEditingController golongan_darahs = TextEditingController();
 
@@ -64,7 +75,7 @@ class DetailKeluargaController extends GetxController implements GetxService {
     detailKeluarga.value.nik = det_nik.text;
     detailKeluarga.value.tempatLahir = tempat_lahir.text;
     detailKeluarga.value.tanggalLahir = tanggal_lahir.text;
-    detailKeluarga.value.agama = agama.text;
+    detailKeluarga.value.agama = agama;
     detailKeluarga.value.noTelp = no_telp.text;
     detailKeluarga.value.jenisPekerjaan = jenis_pekerjaan.text;
     detailKeluarga.value.kewarganegaraan = kewarganegaraan.text;
@@ -72,9 +83,53 @@ class DetailKeluargaController extends GetxController implements GetxService {
     detailKeluarga.value.golonganDarah = golongan_darah;
     detailKeluarga.value.statusPerkawinan = status_perkawinan;
     detailKeluarga.value.statusDalamKeluarga = status_keluarga;
-    detailKeluarga.value.pendidikan = pendidikan.text;
+    detailKeluarga.value.pendidikan = pendidikan_terakhir;
 
     var response = await service.storeMyDetailKeluarga(detailKeluarga.value);
+    var responsedecode = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Get.back();
+      Get.snackbar(
+        'Create Berhasil',
+        "Data berhasil ditambah",
+        colorText: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      );
+      resetForm();
+    } else {
+      Get.snackbar(
+        'Create Gagal',
+        "Data gagal ditambah, mohon periksa kembali",
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
+    isLoading.value = false;
+
+    // Get.back();
+  }
+
+  Future<void> StoreDetailKeluargaByPetugas(int keluarga_id) async {
+    isLoading.value = true;
+
+    detailKeluarga.value.namaLengkap = nama_lengkap.text;
+    detailKeluarga.value.nik = det_nik.text;
+    detailKeluarga.value.tempatLahir = tempat_lahir.text;
+    detailKeluarga.value.tanggalLahir = tanggal_lahir.text;
+    detailKeluarga.value.agama = agama;
+    detailKeluarga.value.noTelp = no_telp.text;
+    detailKeluarga.value.jenisPekerjaan = jenis_pekerjaan.text;
+    detailKeluarga.value.kewarganegaraan = kewarganegaraan.text;
+    detailKeluarga.value.jenisKelamin = jenis_kelamin;
+    detailKeluarga.value.golonganDarah = golongan_darah;
+    detailKeluarga.value.statusPerkawinan = status_perkawinan;
+    detailKeluarga.value.statusDalamKeluarga = status_keluarga;
+    detailKeluarga.value.pendidikan = pendidikan_terakhir;
+    detailKeluarga.value.keluargaId = keluarga_id;
+
+    var response =
+        await service.storeDetailKeluargaByPetugas(detailKeluarga.value);
     var responsedecode = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -107,7 +162,7 @@ class DetailKeluargaController extends GetxController implements GetxService {
     detailKeluarga.value.nik = det_nik.text;
     detailKeluarga.value.tempatLahir = tempat_lahir.text;
     detailKeluarga.value.tanggalLahir = tanggal_lahir.text;
-    detailKeluarga.value.agama = agama.text;
+    detailKeluarga.value.agama = agama;
     detailKeluarga.value.noTelp = no_telp.text;
     detailKeluarga.value.jenisPekerjaan = jenis_pekerjaan.text;
     detailKeluarga.value.kewarganegaraan = kewarganegaraan.text;
@@ -115,7 +170,7 @@ class DetailKeluargaController extends GetxController implements GetxService {
     detailKeluarga.value.golonganDarah = golongan_darah;
     detailKeluarga.value.statusPerkawinan = status_perkawinan;
     detailKeluarga.value.statusDalamKeluarga = status_keluarga;
-    detailKeluarga.value.pendidikan = pendidikan.text;
+    detailKeluarga.value.pendidikan = pendidikan_terakhir;
 
     var response = await service.updateMyDetailKeluarga(detailKeluarga.value);
     var responsedecode = jsonDecode(response.body);
@@ -169,6 +224,23 @@ class DetailKeluargaController extends GetxController implements GetxService {
 
     umurPeserta.value = UmurModel.fromJson(responsedecode['data']);
 
+    isLoading.value = false;
+  }
+
+  Future<void> showDetailKeluargaForPetugas(int keluarga_id) async {
+    isLoading.value = true;
+    var response =
+        await servicePetugas.showDetailKeluargaForPetugas(keluarga_id);
+    var responsedecode = jsonDecode(response.body);
+
+    listPetugasWithDetailKeluarga.clear();
+    for (var i = 0; i < responsedecode['data'].length; i++) {
+      PetugasWithDetailKeluargaModel petugasWithDetailKeluargaModel =
+          PetugasWithDetailKeluargaModel.fromJson(responsedecode['data'][i]);
+      listPetugasWithDetailKeluarga.add(petugasWithDetailKeluargaModel);
+    }
+    // Map obj = responsedecode;
+    // data = List<Map<String, dynamic>>.from(obj["data"]);
     isLoading.value = false;
   }
 }

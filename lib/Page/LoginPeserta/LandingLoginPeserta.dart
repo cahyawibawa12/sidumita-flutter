@@ -29,6 +29,7 @@ class LandinLoginPeserta extends StatefulWidget {
 class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
   var keluarga = Get.put(KeluargaController());
   var listDusun = Get.put(DusunController());
+  final GlobalKey<FormState> _form = GlobalKey<FormState>();
 
   String _nikkaka = '';
   String _alamat = '';
@@ -60,7 +61,9 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
   _loadUserData() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var user = jsonDecode(localStorage.getString('user')!);
-
+    // var token = localStorage.getString('token');
+    // Get.snackbar("Token", token.toString() + user.toString(),
+    //     duration: Duration(days: 1));
     if (user != null) {
       setState(() {
         name = user['name'];
@@ -86,26 +89,30 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Selamat Datang ",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${name}',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                  "Pada Sistem Informasi Posyandu Ibu Hamil dan Balita")
-                            ],
-                          ),
-                        ),
+                        Obx(() => keluarga.isLoading.value
+                            ? CircularProgressIndicator()
+                            : SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Selamat Datang ",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      keluarga.kepalaKeluarga.text,
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                        "Pada Sistem Informasi Posyandu Ibu Hamil dan Balita")
+                                  ],
+                                ),
+                              )),
                         IconButton(
                           onPressed: (() {
                             showDialog(
@@ -144,187 +151,221 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                         child: Obx(() => keluarga.isLoading.value ||
                                 listDusun.isLoading.value
                             ? CircularProgressIndicator()
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text('NIK Kartu Keluarga'),
-                                  TextField(
-                                    keyboardType: TextInputType.number,
-                                    controller: keluarga.nikKeluarga,
-                                    maxLength: 16,
-                                    // decoration: const InputDecoration(hintText: 'email'),
-                                    onChanged: (value) {
-                                      _nikkaka = value;
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text('Alamat'),
-                                  TextField(
-                                    // keyboardType: TextInputType.name,
-                                    controller: keluarga.alamat,
-                                    // decoration: const InputDecoration(hintText: 'email'),
-                                    onChanged: (value) {
-                                      _alamat = value;
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  // Text('Dusun'),
-                                  // TextField(
-                                  //   controller: keluarga.dusun,
-                                  //   // decoration: const InputDecoration(hintText: 'email'),
-                                  //   onChanged: (value) {
-                                  //     _dusun = value;
-                                  //   },
-                                  // ),
-                                  LayoutBuilder(builder: (context, constraint) {
-                                    return FormField(
-                                      initialValue: false,
-                                      enabled: true,
-                                      builder: (FormFieldState<bool> field) {
-                                        return InputDecorator(
-                                          decoration: InputDecoration(
-                                            labelText: "Dusun",
-                                            errorText: field.errorText,
-                                          ),
-                                          child: DropdownButtonHideUnderline(
-                                            child: ButtonTheme(
-                                              alignedDropdown: false,
-                                              child: DropdownButton<String>(
-                                                  isExpanded: true,
-                                                  value: keluarga.keluarga.value
-                                                              .dusunId ==
-                                                          null
-                                                      ? null
-                                                      : keluarga.keluarga.value
-                                                          .dusunId
-                                                          .toString(),
-                                                  icon: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 10.0),
-                                                    child: Icon(
-                                                      Icons
-                                                          .arrow_drop_down_outlined,
-                                                      size: 24.0,
+                            : Form(
+                                key: _form,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text('Nomor Kartu Keluarga'),
+                                    TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      controller: keluarga.nikKeluarga,
+                                      maxLength: 16,
+                                      // decoration: const InputDecoration(hintText: 'email'),
+                                      onChanged: (value) {
+                                        _nikkaka = value;
+                                      },
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Mohon masukan data';
+                                        } else if (value.length < 16) {
+                                          return 'Masukkan NIK dengan Benar';
+                                        }
+                                        keluarga.nikKeluarga.text = value;
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text('Alamat'),
+                                    TextFormField(
+                                      // keyboardType: TextInputType.name,
+                                      controller: keluarga.alamat,
+                                      // decoration: const InputDecoration(hintText: 'email'),
+                                      onChanged: (value) {
+                                        _alamat = value;
+                                      },
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Mohon masukan data';
+                                        }
+                                        keluarga.alamat.text = value;
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    // Text('Dusun'),
+                                    // TextField(
+                                    //   controller: keluarga.dusun,
+                                    //   // decoration: const InputDecoration(hintText: 'email'),
+                                    //   onChanged: (value) {
+                                    //     _dusun = value;
+                                    //   },
+                                    // ),
+                                    LayoutBuilder(
+                                        builder: (context, constraint) {
+                                      return FormField(
+                                        initialValue: false,
+                                        enabled: true,
+                                        builder: (FormFieldState<bool> field) {
+                                          return InputDecorator(
+                                            decoration: InputDecoration(
+                                              labelText: "Dusun",
+                                              errorText: field.errorText,
+                                            ),
+                                            child: DropdownButtonHideUnderline(
+                                              child: ButtonTheme(
+                                                alignedDropdown: false,
+                                                child: DropdownButton<String>(
+                                                    isExpanded: true,
+                                                    value: keluarga
+                                                                .keluarga
+                                                                .value
+                                                                .dusunId ==
+                                                            null
+                                                        ? null
+                                                        : keluarga.keluarga
+                                                            .value.dusunId
+                                                            .toString(),
+                                                    icon: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 10.0),
+                                                      child: Icon(
+                                                        Icons
+                                                            .arrow_drop_down_outlined,
+                                                        size: 24.0,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge!
+                                                            .color,
+                                                      ),
+                                                    ),
+                                                    iconSize: 16,
+                                                    elevation: 16,
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .fontSize,
+                                                      fontFamily:
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .fontFamily,
                                                       color: Theme.of(context)
                                                           .textTheme
-                                                          .bodyLarge!
+                                                          .bodyMedium!
                                                           .color,
                                                     ),
-                                                  ),
-                                                  iconSize: 16,
-                                                  elevation: 16,
-                                                  style: TextStyle(
-                                                    fontSize: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium!
-                                                        .fontSize,
-                                                    fontFamily:
-                                                        Theme.of(context)
-                                                            .textTheme
-                                                            .bodyMedium!
-                                                            .fontFamily,
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium!
-                                                        .color,
-                                                  ),
-                                                  underline: Container(
-                                                    height: 0,
-                                                    color: Colors.grey[300],
-                                                  ),
-                                                  onChanged:
-                                                      (String? newValue) {
-                                                    setState(() {
-                                                      // keluarga.keluarga.value.dusunId = newValue!;
-                                                      keluarga.keluarga.value
-                                                              .dusunId =
-                                                          int.parse(newValue!);
-                                                    });
-                                                  },
-                                                  items: [
-                                                    for (var data in listDusun
-                                                        .listDusun.value)
-                                                      DropdownMenuItem(
-                                                        child: new Text(
-                                                          data.namaDusun!,
-                                                        ),
-                                                        value:
-                                                            data.id.toString(),
-                                                      )
-                                                  ]),
+                                                    underline: Container(
+                                                      height: 0,
+                                                      color: Colors.grey[300],
+                                                    ),
+                                                    onChanged:
+                                                        (String? newValue) {
+                                                      setState(() {
+                                                        // keluarga.keluarga.value.dusunId = newValue!;
+                                                        keluarga.keluarga.value
+                                                                .dusunId =
+                                                            int.parse(
+                                                                newValue!);
+                                                      });
+                                                    },
+                                                    items: [
+                                                      for (var data in listDusun
+                                                          .listDusun.value)
+                                                        DropdownMenuItem(
+                                                          child: new Text(
+                                                            data.namaDusun!,
+                                                          ),
+                                                          value: data.id
+                                                              .toString(),
+                                                        )
+                                                    ]),
+                                              ),
                                             ),
-                                          ),
-                                        );
+                                          );
+                                        },
+                                      );
+                                    }),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text('Kepala Keluarga'),
+                                    TextFormField(
+                                      keyboardType: TextInputType.text,
+                                      controller: keluarga.kepalaKeluarga,
+                                      // decoration: const InputDecoration(hintText: 'email'),
+                                      onChanged: (value) {
+                                        _kepalakeluarga = value;
                                       },
-                                    );
-                                  }),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text('Kepala Keluarga'),
-                                  TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: keluarga.kepalaKeluarga,
-                                    // decoration: const InputDecoration(hintText: 'email'),
-                                    onChanged: (value) {
-                                      _kepalakeluarga = value;
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text('Jumlah'),
-                                  TextField(
-                                    controller: keluarga.jumlah,
-                                    enabled: false,
-                                    // decoration: const InputDecoration(hintText: 'email'),
-                                    onChanged: (value) {
-                                      _jumlah = value;
-                                    },
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  RoundedButton(
-                                    btnText: 'Save',
-                                    onBtnPressed: () {
-                                      keluarga.UpdateKeluarga();
-                                    },
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  RoundedButton(
-                                    btnText: 'Data Keluarga',
-                                    onBtnPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => Peserta()));
-                                    },
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  RoundedButton(
-                                    btnText: 'Change Password',
-                                    onBtnPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChangePasswordPeserta()));
-                                    },
-                                  ),
-                                ],
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Mohon masukan data';
+                                        }
+                                        keluarga.kepalaKeluarga.text = value;
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text('Jumlah'),
+                                    TextField(
+                                      controller: keluarga.jumlah,
+                                      enabled: false,
+                                      // decoration: const InputDecoration(hintText: 'email'),
+                                      onChanged: (value) {
+                                        _jumlah = value;
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    RoundedButton(
+                                      btnText: 'Save',
+                                      onBtnPressed: () {
+                                        if (_form.currentState!.validate()) {
+                                          keluarga.UpdateKeluarga();
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    RoundedButton(
+                                      btnText: 'Data Keluarga',
+                                      onBtnPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Peserta()));
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    RoundedButton(
+                                      btnText: 'Change Password',
+                                      onBtnPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChangePasswordPeserta()));
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ))),
                     Container(
                         padding:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/PemeriksaanIbuHamilController.dart';
+import 'package:posyandu/Controller/PetugasController.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:intl/intl.dart';
 
@@ -16,12 +17,14 @@ class FormPemeriksaanIbuHamil extends StatefulWidget {
 
 class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
   var pemeriksaanIbuHamilbyPetugas = Get.put(PemeriksaanIbuHamilController());
+  var bioPetugas = Get.put(PetugasController());
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
 
   TextEditingController nama_lengkap = TextEditingController();
 
   void initState() {
     super.initState();
+    bioPetugas.ShowPetugas();
     nama_lengkap.text = widget.petugasWithIbuHamilModel['nama_lengkap'];
     pemeriksaanIbuHamilbyPetugas.tanggal_pemeriksaanCtrl.text =
         DateFormat('y-M-d').format(DateTime.now()).toString();
@@ -57,9 +60,26 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                   children: [
                     TextFormField(
                       readOnly: true,
+                      controller: bioPetugas.nama,
+                      decoration: const InputDecoration(
+                        labelText: 'Nama Petugas',
+                        labelStyle: TextStyle(
+                          color: Colors.blueGrey,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+                        // helperText: "What's your name?",
+                      ),
+                      // onChanged: (value) {},
+                    ),
+                    TextFormField(
+                      readOnly: true,
                       controller: nama_lengkap,
                       decoration: const InputDecoration(
-                        labelText: 'Name',
+                        labelText: 'Nama Ibu',
                         labelStyle: TextStyle(
                           color: Colors.blueGrey,
                         ),

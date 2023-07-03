@@ -31,6 +31,19 @@ class DetailKeluargaService {
     return response;
   }
 
+  Future<http.Response> storeDetailKeluargaByPetugas(
+      DetailKeluargaModel detailKeluargaModel) async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(baseURL + 'detail-keluarga');
+    http.Response response = await http.post(url,
+        headers: setHeaders(token),
+        body: jsonEncode(detailKeluargaModel.toJson()));
+    print(response.body);
+    return response;
+  }
+
   Future<http.Response> updateMyDetailKeluarga(
       DetailKeluargaModel detailKeluargaModel) async {
     // SharedPreferences localStorage = await SharedPreferences.getInstance();

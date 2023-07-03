@@ -9,20 +9,20 @@ import 'package:posyandu/Controller/MasterData/KabupatenController.dart';
 import 'package:posyandu/Controller/MasterData/KecamatanController.dart';
 import 'package:posyandu/Controller/MasterData/Provinsi.dart';
 import 'package:posyandu/Page/LoginPeserta/LoginPagePeserta.dart';
+import 'package:posyandu/Page/Petugas/PetugasWithKeluarga/DaftarKeluaga.dart';
+import 'package:posyandu/Service/AuthService.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Service/AuthService.dart';
-import '../../widget/RoundedButton.dart';
-
-class RegisterPeserta extends StatefulWidget {
-  const RegisterPeserta({super.key});
+class RegisterPesertabyPetugas extends StatefulWidget {
+  const RegisterPesertabyPetugas({super.key});
 
   @override
-  State<RegisterPeserta> createState() => _RegisterPesertaState();
+  State<RegisterPesertabyPetugas> createState() =>
+      _RegisterPesertabyPetugasState();
 }
 
-class _RegisterPesertaState extends State<RegisterPeserta> {
+class _RegisterPesertabyPetugasState extends State<RegisterPesertabyPetugas> {
   bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -725,17 +725,19 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                   ),
                                   Text("Password"),
                                   TextFormField(
+                                      readOnly: true,
+                                      initialValue: "Sidumita2022!",
                                       cursorColor: Colors.blue,
                                       keyboardType: TextInputType.text,
-                                      obscureText: _secureText,
+                                      // obscureText: _secureText,
                                       decoration: InputDecoration(
-                                        hintText: "ex: Peserta123",
-                                        suffixIcon: IconButton(
-                                          onPressed: showHide,
-                                          icon: Icon(_secureText
-                                              ? Icons.visibility_off
-                                              : Icons.visibility),
-                                        ),
+                                        // hintText: "ex: Peserta123",
+                                        // suffixIcon: IconButton(
+                                        //   onPressed: showHide,
+                                        //   icon: Icon(_secureText
+                                        //       ? Icons.visibility_off
+                                        //       : Icons.visibility),
+                                        // ),
                                         helperText:
                                             'Password kombinasi huruf dan angka minimal 8 karakter',
                                       ),
@@ -751,31 +753,31 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                   const SizedBox(
                                     height: 30,
                                   ),
-                                  Text("Confirm Password"),
-                                  TextFormField(
-                                    controller: confirm_password,
-                                    validator: (nameValue) {
-                                      if (nameValue == null) return 'Empty';
-                                      if (nameValue != password)
-                                        return 'Not Match';
-                                      return null;
-                                    },
-                                    maxLength: 20,
-                                    obscureText: _secureTextConfirm,
-                                    decoration: InputDecoration(
-                                      hintText: "Confirm Password",
-                                      suffixIcon: IconButton(
-                                        onPressed: showHideConfirm,
-                                        icon: Icon(_secureTextConfirm
-                                            ? Icons.visibility_off
-                                            : Icons.visibility),
-                                      ),
-                                    ),
-                                    // onChanged: (value) {},
-                                  ),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
+                                  // Text("Confirm Password"),
+                                  // TextFormField(
+                                  //   controller: confirm_password,
+                                  //   validator: (nameValue) {
+                                  //     if (nameValue == null) return 'Empty';
+                                  //     if (nameValue != password)
+                                  //       return 'Not Match';
+                                  //     return null;
+                                  //   },
+                                  //   maxLength: 20,
+                                  //   obscureText: _secureTextConfirm,
+                                  //   decoration: InputDecoration(
+                                  //     hintText: "Confirm Password",
+                                  //     suffixIcon: IconButton(
+                                  //       onPressed: showHideConfirm,
+                                  //       icon: Icon(_secureTextConfirm
+                                  //           ? Icons.visibility_off
+                                  //           : Icons.visibility),
+                                  //     ),
+                                  //   ),
+                                  //   // onChanged: (value) {},
+                                  // ),
+                                  // const SizedBox(
+                                  //   height: 30,
+                                  // ),
                                   Center(
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -830,7 +832,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
       'kepala_keluarga': name,
       'email': email,
       'no_kartu_keluarga': no_kk,
-      'password': password,
+      'password': "Sidumita2022!",
       'alamat': alamat,
       'dusun_id': dusun_id,
       'role_id': 4,
@@ -844,7 +846,7 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
       localStorage.setString('user', json.encode(body['user']));
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPagePeserta()),
+        MaterialPageRoute(builder: (context) => DaftarKeluarga()),
       );
       Get.snackbar(
         'Pendaftaran Berhasil',

@@ -89,7 +89,7 @@ class _LoginPagePetugasState extends State<LoginPagePetugas> {
                                 ),
                                 Text(
                                   "Sistem Informasi Posyandu Ibu Hamil dan Balita",
-                                  style: TextStyle(fontSize: 13),
+                                  style: TextStyle(fontSize: 11),
                                 ),
                               ],
                             )

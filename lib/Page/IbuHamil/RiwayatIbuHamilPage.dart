@@ -135,7 +135,8 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                     Text(pemeriksaanibuhamil
                                         .listPemeriksaanIbuHamil[index]
                                         .lingkarPerut
-                                        .toString()),
+                                        .toString()
+                                        .replaceAll(".0", "")),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           10,
@@ -143,7 +144,8 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                     Text(pemeriksaanibuhamil
                                         .listPemeriksaanIbuHamil[index]
                                         .denyutJantungBayi
-                                        .toString()),
+                                        .toString()
+                                        .replaceAll(".0", "")),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           10,
@@ -151,7 +153,8 @@ class _RiwayatIbuHamilPageState extends State<RiwayatIbuHamilPage> {
                                     Text(pemeriksaanibuhamil
                                         .listPemeriksaanIbuHamil[index]
                                         .denyutNadi
-                                        .toString()),
+                                        .toString()
+                                        .replaceAll(".0", "")),
                                     // SizedBox(
                                     //   width: 10,
                                     // ),

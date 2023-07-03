@@ -262,7 +262,11 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                                     .toString(),
                                               )),
                                             );
-                                          } else {
+                                          } else if (cekDataBalita
+                                                  .hasilCekDataBerat
+                                                  .value
+                                                  .status ==
+                                              "Normal") {
                                             return Container(
                                               // width: 60,
                                               // height: 20,
@@ -275,6 +279,19 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                                 cekDataBalita.hasilCekDataBerat
                                                     .value.status
                                                     .toString(),
+                                              )),
+                                            );
+                                          } else {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.green),
+                                              child: Center(
+                                                  child: Text(
+                                                "Kosong",
                                               )),
                                             );
                                           }
@@ -359,7 +376,11 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                                     .toString(),
                                               )),
                                             );
-                                          } else {
+                                          } else if (cekDataBalita
+                                                  .hasilCekDataTinggi
+                                                  .value
+                                                  .status ==
+                                              "Normal") {
                                             return Container(
                                               // width: 60,
                                               // height: 20,
@@ -372,6 +393,19 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                                 cekDataBalita.hasilCekDataTinggi
                                                     .value.status
                                                     .toString(),
+                                              )),
+                                            );
+                                          } else {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.green),
+                                              child: Center(
+                                                  child: Text(
+                                                "Kosong",
                                               )),
                                             );
                                           }
@@ -450,7 +484,11 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                                     .toString(),
                                               )),
                                             );
-                                          } else {
+                                          } else if (cekDataBalita
+                                                  .hasilCekDataKepala
+                                                  .value
+                                                  .status ==
+                                              "Normal") {
                                             return Container(
                                               // width: 60,
                                               // height: 20,
@@ -463,6 +501,19 @@ class _HomePageBalitaState extends State<HomePageBalita> {
                                                 cekDataBalita.hasilCekDataKepala
                                                     .value.status
                                                     .toString(),
+                                              )),
+                                            );
+                                          } else {
+                                            return Container(
+                                              // width: 60,
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.green),
+                                              child: Center(
+                                                  child: Text(
+                                                "Kosong",
                                               )),
                                             );
                                           }

@@ -164,16 +164,26 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                       Obx(() {
                                         if (getTwoLastDataPemeriksaanIbuHamil
                                                 .listTwoLastDataPemeriksaanIbuHamil
-                                                .length !=
-                                            0) {
+                                                .length >=
+                                            2) {
                                           return Text(
                                               getTwoLastDataPemeriksaanIbuHamil
                                                   .listTwoLastDataPemeriksaanIbuHamil[
                                                       1]
                                                   .lingkarPerut
                                                   .toString());
+                                        } else if (getTwoLastDataPemeriksaanIbuHamil
+                                                .listTwoLastDataPemeriksaanIbuHamil
+                                                .length ==
+                                            1) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanIbuHamil
+                                                  .listTwoLastDataPemeriksaanIbuHamil[
+                                                      0]
+                                                  .lingkarPerut
+                                                  .toString());
                                         } else {
-                                          return Text('Loading');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -198,16 +208,26 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                       Obx(() {
                                         if (getTwoLastDataPemeriksaanIbuHamil
                                                 .listTwoLastDataPemeriksaanIbuHamil
-                                                .length !=
-                                            0) {
+                                                .length >=
+                                            2) {
                                           return Text(
                                               getTwoLastDataPemeriksaanIbuHamil
                                                   .listTwoLastDataPemeriksaanIbuHamil[
                                                       1]
                                                   .denyutJantungBayi
                                                   .toString());
+                                        } else if (getTwoLastDataPemeriksaanIbuHamil
+                                                .listTwoLastDataPemeriksaanIbuHamil
+                                                .length ==
+                                            1) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanIbuHamil
+                                                  .listTwoLastDataPemeriksaanIbuHamil[
+                                                      0]
+                                                  .denyutJantungBayi
+                                                  .toString());
                                         } else {
-                                          return Text('Loading');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -232,16 +252,26 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                       Obx(() {
                                         if (getTwoLastDataPemeriksaanIbuHamil
                                                 .listTwoLastDataPemeriksaanIbuHamil
-                                                .length !=
-                                            0) {
+                                                .length >=
+                                            2) {
                                           return Text(
                                               getTwoLastDataPemeriksaanIbuHamil
                                                   .listTwoLastDataPemeriksaanIbuHamil[
                                                       1]
                                                   .denyutNadi
                                                   .toString());
+                                        } else if (getTwoLastDataPemeriksaanIbuHamil
+                                                .listTwoLastDataPemeriksaanIbuHamil
+                                                .length ==
+                                            1) {
+                                          return Text(
+                                              getTwoLastDataPemeriksaanIbuHamil
+                                                  .listTwoLastDataPemeriksaanIbuHamil[
+                                                      0]
+                                                  .denyutNadi
+                                                  .toString());
                                         } else {
-                                          return Text('Loading');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -253,8 +283,8 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                 Obx(() {
                                   if (getTwoLastDataPemeriksaanIbuHamil
                                           .listTwoLastDataPemeriksaanIbuHamil
-                                          .length !=
-                                      0) {
+                                          .length >=
+                                      2) {
                                     return Text('Tgl : ' +
                                         DateFormat('dd MMMM yyyy', "id").format(
                                             DateTime.parse(
@@ -263,8 +293,20 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                                         1]
                                                     .tanggalPemeriksaan
                                                     .toString())));
+                                  } else if (getTwoLastDataPemeriksaanIbuHamil
+                                          .listTwoLastDataPemeriksaanIbuHamil
+                                          .length ==
+                                      1) {
+                                    return Text('Tgl : ' +
+                                        DateFormat('dd MMMM yyyy', "id").format(
+                                            DateTime.parse(
+                                                getTwoLastDataPemeriksaanIbuHamil
+                                                    .listTwoLastDataPemeriksaanIbuHamil[
+                                                        0]
+                                                    .tanggalPemeriksaan
+                                                    .toString())));
                                   } else {
-                                    return Text('Loading');
+                                    return Text('Kosong');
                                   }
                                 })
                               ],
@@ -294,8 +336,8 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                       Obx(() {
                                         if (getTwoLastDataPemeriksaanIbuHamil
                                                 .listTwoLastDataPemeriksaanIbuHamil
-                                                .length !=
-                                            0) {
+                                                .length >=
+                                            2) {
                                           return Text(
                                               getTwoLastDataPemeriksaanIbuHamil
                                                   .listTwoLastDataPemeriksaanIbuHamil[
@@ -303,7 +345,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                                   .lingkarPerut
                                                   .toString());
                                         } else {
-                                          return Text('Loading');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -328,8 +370,8 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                       Obx(() {
                                         if (getTwoLastDataPemeriksaanIbuHamil
                                                 .listTwoLastDataPemeriksaanIbuHamil
-                                                .length !=
-                                            0) {
+                                                .length >=
+                                            2) {
                                           return Text(
                                               getTwoLastDataPemeriksaanIbuHamil
                                                   .listTwoLastDataPemeriksaanIbuHamil[
@@ -337,7 +379,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                                   .denyutJantungBayi
                                                   .toString());
                                         } else {
-                                          return Text('Loading');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -362,8 +404,8 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                       Obx(() {
                                         if (getTwoLastDataPemeriksaanIbuHamil
                                                 .listTwoLastDataPemeriksaanIbuHamil
-                                                .length !=
-                                            0) {
+                                                .length >=
+                                            2) {
                                           return Text(
                                               getTwoLastDataPemeriksaanIbuHamil
                                                   .listTwoLastDataPemeriksaanIbuHamil[
@@ -371,7 +413,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                                   .denyutNadi
                                                   .toString());
                                         } else {
-                                          return Text('Loading');
+                                          return Text('Kosong');
                                         }
                                       })
                                     ],
@@ -383,8 +425,8 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                 Obx(() {
                                   if (getTwoLastDataPemeriksaanIbuHamil
                                           .listTwoLastDataPemeriksaanIbuHamil
-                                          .length !=
-                                      0) {
+                                          .length >=
+                                      2) {
                                     return Text('Tgl : ' +
                                         DateFormat('dd MMMM yyyy', "id").format(
                                             DateTime.parse(
@@ -394,7 +436,7 @@ class _BukuIbuHamilPageState extends State<BukuIbuHamilPage> {
                                                     .tanggalPemeriksaan
                                                     .toString())));
                                   } else {
-                                    return Text('Loading');
+                                    return Text('Kosong');
                                   }
                                 })
                               ],

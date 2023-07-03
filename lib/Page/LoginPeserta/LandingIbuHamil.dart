@@ -70,7 +70,7 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                                   ),
                                   Text(
                                     "Sistem Informasi Posyandu Ibu Hamil dan Balita",
-                                    style: TextStyle(fontSize: 13),
+                                    style: TextStyle(fontSize: 11),
                                   ),
                                 ],
                               )
@@ -124,12 +124,12 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                                                                 .listIbuHamil[
                                                                     index]
                                                                 .beratBadanPrakehamilan ==
-                                                            null ||
+                                                            "0" ||
                                                         ibuHamil
                                                                 .listIbuHamil[
                                                                     index]
                                                                 .tinggiBadanPrakehamilan ==
-                                                            null) {
+                                                            "0") {
                                                       Navigator.of(context).push(
                                                           MaterialPageRoute(
                                                               builder: (context) =>

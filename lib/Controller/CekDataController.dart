@@ -118,10 +118,16 @@ class CekDataController extends GetxController implements GetxService {
     isLoading.value = false;
   }
 
-  Future<void> statusBeratIbu({required int ibu_hamil_id}) async {
+  Future<void> statusBeratIbu(
+      {required int ibu_hamil_id,
+      required String berat_badan,
+      required String umur_kandungan}) async {
     isLoading.value = true;
 
-    var request = StatusBeratIbuModel(id: ibu_hamil_id);
+    var request = StatusBeratIbuModel(
+        id: ibu_hamil_id,
+        beratBadan: berat_badan,
+        umurKandungan: umur_kandungan);
 
     var response = await service.statusBeratIbu(request);
     var responsedecode = jsonDecode(response.body);

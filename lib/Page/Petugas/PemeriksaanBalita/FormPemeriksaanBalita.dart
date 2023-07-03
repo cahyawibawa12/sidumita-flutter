@@ -5,6 +5,7 @@ import 'package:posyandu/Controller/MasterData/DokterController.dart';
 import 'package:posyandu/Controller/MasterData/VaksinController.dart';
 import 'package:posyandu/Controller/MasterData/VitaminController.dart';
 import 'package:posyandu/Controller/PemeriksaanBalitaController.dart';
+import 'package:posyandu/Controller/PetugasController.dart';
 import 'package:posyandu/Model/PetugasWithBalitaModel.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:posyandu/widget/CheckBoxVaksin.dart';
@@ -25,6 +26,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
   var vitaminController = Get.put(VitaminController());
   var umur = Get.put(DetailKeluargaController());
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  var bioPetugas = Get.put(PetugasController());
   String? dokter_id;
 
   TextEditingController nama_lengkap = TextEditingController();
@@ -42,6 +44,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
 
     dokterController.getDokter();
     vitaminController.getVitamin();
+    bioPetugas.ShowPetugas();
   }
 
   var tanggal = '';
@@ -75,9 +78,26 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                   children: [
                     TextFormField(
                       readOnly: true,
+                      controller: bioPetugas.nama,
+                      decoration: const InputDecoration(
+                        labelText: 'Nama Petugas',
+                        labelStyle: TextStyle(
+                          color: Colors.blueGrey,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+                        // helperText: "What's your name?",
+                      ),
+                      // onChanged: (value) {},
+                    ),
+                    TextFormField(
+                      readOnly: true,
                       controller: nama_lengkap,
                       decoration: const InputDecoration(
-                        labelText: 'Name',
+                        labelText: 'Nama Balita',
                         labelStyle: TextStyle(
                           color: Colors.blueGrey,
                         ),
@@ -461,7 +481,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                               },
                             );
                           })),
-                    Obx(() => dokterController.isLoading.value
+                    Obx(() => vitaminController.isLoading.value
                         ? CircularProgressIndicator()
                         : LayoutBuilder(builder: (context, constraint) {
                             // List<String> itemStringList = ["Female", "Male"];

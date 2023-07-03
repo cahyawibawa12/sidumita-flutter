@@ -96,7 +96,11 @@ class CekDataService {
         'cek-berat-ibu-hamil' +
         '?' +
         'ibu_hamil_id=' +
-        statusBeratIbuModel.id.toString());
+        statusBeratIbuModel.id.toString() +
+        '&berat_badan=' +
+        statusBeratIbuModel.beratBadan.toString() +
+        '&umur_kandungan=' +
+        statusBeratIbuModel.umurKandungan.toString());
     http.Response response = await http.post(url,
         headers: setHeaders(token),
         body: jsonEncode(statusBeratIbuModel.toJson()));

@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 
 import 'package:posyandu/Model/PetugasModel.dart';
 import 'package:posyandu/Model/PetugasWithBalitaModel.dart';
+import 'package:posyandu/Model/PetugasWithDetailKeluargaModel.dart';
 import 'package:posyandu/Model/PetugasWithIbuHamilModel.dart';
+import 'package:posyandu/Model/PetugasWithKeluargaModel.dart';
 
 import 'package:posyandu/Service/PetugasService.dart';
 
@@ -14,6 +16,8 @@ class PetugasController extends GetxController implements GetxService {
   var petugas = PetugasModel().obs;
   var listPetugasWithBalitas = <PetugasWithBalitaModel>[].obs;
   var listPetugasWithIbuHamils = <PetugasWithIbuHamilModel>[].obs;
+  var listPetugasWithKeluarga = <PetugasWithKeluargaModel>[].obs;
+
   final service = PetugasService();
   var isLoading = false.obs;
   List<Map<String, dynamic>> data = [];
@@ -98,6 +102,23 @@ class PetugasController extends GetxController implements GetxService {
       PetugasWithIbuHamilModel petugasWithIbuHamilModel =
           PetugasWithIbuHamilModel.fromJson(responsedecode['data'][i]);
       listPetugasWithIbuHamils.add(petugasWithIbuHamilModel);
+    }
+    Map obj = responsedecode;
+    data = List<Map<String, dynamic>>.from(obj["data"]);
+    isLoading.value = false;
+  }
+
+  Future<void> showKeluargaForPetugas() async {
+    isLoading.value = true;
+    var response = await service.showKeluargaForPetugas();
+    var responsedecode = jsonDecode(response.body);
+
+    listPetugasWithKeluarga.clear();
+    data.clear();
+    for (var i = 0; i < responsedecode['data'].length; i++) {
+      PetugasWithKeluargaModel petugasWithKeluargaModel =
+          PetugasWithKeluargaModel.fromJson(responsedecode['data'][i]);
+      listPetugasWithKeluarga.add(petugasWithKeluargaModel);
     }
     Map obj = responsedecode;
     data = List<Map<String, dynamic>>.from(obj["data"]);

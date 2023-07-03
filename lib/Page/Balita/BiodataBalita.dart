@@ -34,7 +34,7 @@ class _BiodataBalitaState extends State<BiodataBalita> {
     detailKeluarga.tanggal_lahir.text = DateFormat('dd MMMM yyyy', "id").format(
         DateTime.parse(
             widget.balitaModel.detailKeluarga!.tanggalLahir.toString()));
-    detailKeluarga.agama.text =
+    detailKeluarga.agama_controller.text =
         widget.balitaModel.detailKeluarga!.agama.toString();
     detailKeluarga.no_telp.text =
         widget.balitaModel.detailKeluarga!.noTelp.toString();
@@ -50,7 +50,7 @@ class _BiodataBalitaState extends State<BiodataBalita> {
         widget.balitaModel.detailKeluarga!.statusPerkawinan.toString();
     detailKeluarga.status_keluarga =
         widget.balitaModel.detailKeluarga!.statusDalamKeluarga.toString();
-    detailKeluarga.pendidikan.text =
+    detailKeluarga.pendidikan_controller.text =
         widget.balitaModel.detailKeluarga!.pendidikan.toString();
 
     // umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
@@ -166,7 +166,7 @@ class _BiodataBalitaState extends State<BiodataBalita> {
                             ),
                             // helperText: "What's your name?",
                           ),
-                          controller: detailKeluarga.agama,
+                          controller: detailKeluarga.agama_controller,
                         ),
                         TextFormField(
                           // maxLength: 20,

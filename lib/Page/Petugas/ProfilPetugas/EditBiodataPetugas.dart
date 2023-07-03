@@ -32,12 +32,13 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
   // var desa = Get.put(DesaController());
   // var dusun = Get.put(DusunController());
   var daerahController = Get.put(DaerahController());
+  final GlobalKey<FormState> _form = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     bioPetugas.ShowPetugas().whenComplete(() {
-      print("bebas");
+      // print("bebas");
       if (bioPetugas.petugas.value.kabupatenId != null) {
         daerahController.fetchProvinsi(
             provinsi_id: int.parse(bioPetugas.petugas.value.provinsiId!));
@@ -103,113 +104,109 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                         padding: EdgeInsets.all(20),
                         margin: EdgeInsets.all(10),
                         color: Colors.white,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: bioPetugas.nama,
-                              maxLength: 200,
-                              decoration: const InputDecoration(
-                                labelText: 'Nama Lengkap',
-                                labelStyle: TextStyle(
-                                  color: Colors.blueGrey,
-                                ),
-
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                                // helperText: "What's your name?",
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            TextFormField(
-                              maxLength: 16,
-                              controller: bioPetugas.nik,
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                labelText: 'Nomor Induk Kependudukan',
-                                labelStyle: TextStyle(
-                                  color: Colors.blueGrey,
-                                ),
-                                // suffixIcon: Icon(
-                                //   Icons.format_list_numbered_rtl_sharp,
-                                // ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                                // helperText: 'Enter your email address',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            TextFormField(
-                              maxLength: 13,
-                              controller: bioPetugas.no_telp,
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                labelText: 'Nomor Telepon',
-                                labelStyle: TextStyle(
-                                  color: Colors.blueGrey,
-                                ),
-                                suffixIcon: Icon(
-                                  Icons.phone,
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                                // helperText: 'Enter your email address',
-                              ),
-                            ),
-                            TextFormField(
-                              controller: bioPetugas.tempat_lahir,
-                              maxLength: 50,
-                              decoration: const InputDecoration(
-                                labelText: 'Tempat Lahir',
-                                labelStyle: TextStyle(
-                                  color: Colors.blueGrey,
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                                // helperText: "What's your name?",
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                DateTime? pickedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(2100),
-                                );
-                                setState(() {
-                                  tanggal = bioPetugas.tanggal_lahir.text;
-                                  bioPetugas.tanggal_lahir.text =
-                                      DateFormat('y-M-d').format(pickedDate!);
-                                });
-                                tanggal =
-                                    DateFormat('y-M-d').format(pickedDate!);
-                                print("pickedDate: $tanggal");
-                              },
-                              child: TextFormField(
-                                controller: bioPetugas.tanggal_lahir,
-                                maxLength: 20,
-                                enabled: false,
+                        child: Form(
+                          key: _form,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: bioPetugas.nama,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  bioPetugas.nama.text = nameValue;
+                                  return null;
+                                },
+                                maxLength: 200,
                                 decoration: const InputDecoration(
-                                  labelText: 'Tanggal Lahir',
+                                  labelText: 'Nama Lengkap',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+
+                                  // helperText: "What's your name?",
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                maxLength: 16,
+                                controller: bioPetugas.nik,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  } else if (nameValue.length < 16) {
+                                    return 'Masukkan NIK dengan Benar';
+                                  }
+                                  bioPetugas.nik.text = nameValue;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Nomor Induk Kependudukan',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  // suffixIcon: Icon(
+                                  //   Icons.format_list_numbered_rtl_sharp,
+                                  // ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  // helperText: 'Enter your email address',
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                maxLength: 13,
+                                controller: bioPetugas.no_telp,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  bioPetugas.no_telp.text = nameValue;
+                                  return null;
+                                },
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  labelText: 'Nomor Telepon',
+                                  labelStyle: TextStyle(
+                                    color: Colors.blueGrey,
+                                  ),
+                                  suffixIcon: Icon(
+                                    Icons.phone,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  // helperText: 'Enter your email address',
+                                ),
+                              ),
+                              TextFormField(
+                                controller: bioPetugas.tempat_lahir,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  bioPetugas.tempat_lahir.text = nameValue;
+                                  return null;
+                                },
+                                maxLength: 50,
+                                decoration: const InputDecoration(
+                                  labelText: 'Tempat Lahir',
                                   labelStyle: TextStyle(
                                     color: Colors.blueGrey,
                                   ),
@@ -218,37 +215,81 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                       color: Colors.blueGrey,
                                     ),
                                   ),
-                                  suffixIcon: Icon(Icons.date_range),
                                   // helperText: "What's your name?",
                                 ),
-                                // onChanged: (value) {},
                               ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            LayoutBuilder(builder: (context, constraint) {
-                              List<String> itemStringList = [
-                                "Laki-Laki",
-                                "Perempuan"
-                              ];
-
-                              return FormField(
-                                initialValue: false,
-                                enabled: true,
-                                builder: (FormFieldState<bool> field) {
-                                  return InputDecorator(
-                                    decoration: InputDecoration(
-                                      labelText: "Jenis Kelamin",
-                                      errorText: field.errorText,
-                                      // helperText: "Your gender",
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime.now(),
+                                  );
+                                  setState(() {
+                                    tanggal = bioPetugas.tanggal_lahir.text;
+                                    bioPetugas.tanggal_lahir.text =
+                                        DateFormat('y-M-d').format(pickedDate!);
+                                  });
+                                  tanggal =
+                                      DateFormat('y-M-d').format(pickedDate!);
+                                  print("pickedDate: $tanggal");
+                                },
+                                child: TextFormField(
+                                  controller: bioPetugas.tanggal_lahir,
+                                  validator: (nameValue) {
+                                    if (nameValue!.isEmpty) {
+                                      return 'Mohon masukan data';
+                                    }
+                                    bioPetugas.tanggal_lahir.text = nameValue;
+                                    return null;
+                                  },
+                                  maxLength: 20,
+                                  enabled: false,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Tanggal Lahir',
+                                    labelStyle: TextStyle(
+                                      color: Colors.blueGrey,
                                     ),
-                                    child: DropdownButtonHideUnderline(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blueGrey,
+                                      ),
+                                    ),
+                                    suffixIcon: Icon(Icons.date_range),
+                                    // helperText: "What's your name?",
+                                  ),
+                                  // onChanged: (value) {},
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              LayoutBuilder(builder: (context, constraint) {
+                                List<String> itemStringList = [
+                                  "Laki-Laki",
+                                  "Perempuan",
+                                  "-"
+                                ];
+
+                                return FormField(
+                                  initialValue: false,
+                                  enabled: true,
+                                  builder: (FormFieldState<bool> field) {
+                                    return DropdownButtonHideUnderline(
                                       child: ButtonTheme(
                                         alignedDropdown: false,
-                                        child: DropdownButton<String>(
+                                        child: DropdownButtonFormField<String>(
                                           isExpanded: true,
-                                          value: bioPetugas.jenis_kelamin,
+                                          value: bioPetugas.petugas.value
+                                                      .jenisKelamin ==
+                                                  null
+                                              ? null
+                                              : bioPetugas
+                                                  .petugas.value.jenisKelamin,
                                           icon: Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 10.0),
@@ -277,9 +318,11 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                                 .bodyMedium!
                                                 .color,
                                           ),
-                                          underline: Container(
-                                            height: 0,
-                                            color: Colors.grey[300],
+                                          hint: Text("Pilih Jenis Kelamin"),
+                                          decoration: InputDecoration(
+                                            labelText: "Jenis Kelamin",
+                                            errorText: field.errorText,
+                                            // helperText: "Your gender",
                                           ),
                                           onChanged: (String? newValue) {
                                             setState(() {
@@ -306,544 +349,553 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                           }).toList(),
                                         ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  },
+                                );
+                              }),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Obx(() => daerahController.isLoading.value
+                              //     ? CircularProgressIndicator()
+                              //     : LayoutBuilder(builder: (context, constraint) {
+                              //         // List<String> itemStringList = ["Female", "Male"];
+
+                              //         return FormField(
+                              //           initialValue: false,
+                              //           enabled: true,
+                              //           builder: (FormFieldState<bool> field) {
+                              //             return InputDecorator(
+                              //               decoration: InputDecoration(
+                              //                 labelText: "Provinsi",
+                              //                 errorText: field.errorText,
+                              //                 // helperText: "Your gender",
+                              //               ),
+                              //               child: DropdownButtonHideUnderline(
+                              //                 child: ButtonTheme(
+                              //                   alignedDropdown: false,
+                              //                   child: DropdownButton<String?>(
+                              //                       isExpanded: true,
+                              //                       value: bioPetugas
+                              //                                   .petugas
+                              //                                   .value
+                              //                                   .provinsiId ==
+                              //                               null
+                              //                           ? null
+                              //                           : bioPetugas.petugas.value
+                              //                               .provinsiId
+                              //                               .toString(),
+                              //                       icon: Padding(
+                              //                         padding:
+                              //                             const EdgeInsets.only(
+                              //                                 right: 10.0),
+                              //                         child: Icon(
+                              //                           Icons
+                              //                               .arrow_drop_down_outlined,
+                              //                           size: 24.0,
+                              //                           color: Theme.of(context)
+                              //                               .textTheme
+                              //                               .bodyLarge!
+                              //                               .color,
+                              //                         ),
+                              //                       ),
+                              //                       iconSize: 16,
+                              //                       elevation: 16,
+                              //                       style: TextStyle(
+                              //                         fontSize: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .fontSize,
+                              //                         fontFamily:
+                              //                             Theme.of(context)
+                              //                                 .textTheme
+                              //                                 .bodyMedium!
+                              //                                 .fontFamily,
+                              //                         color: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .color,
+                              //                       ),
+                              //                       underline: Container(
+                              //                         height: 0,
+                              //                         color: Colors.grey[300],
+                              //                       ),
+                              //                       onChanged:
+                              //                           (String? newValue) {
+                              //                         setState(() {
+                              //                           bioPetugas.petugas.value
+                              //                                   .provinsiId =
+                              //                               newValue!;
+                              //                           daerahController
+                              //                               .fetchProvinsi(
+                              //                                   provinsi_id:
+                              //                                       int.parse(
+                              //                                           newValue!));
+                              // bioPetugas.petugas.value
+                              //     .kabupatenId = null;
+                              // bioPetugas.petugas.value
+                              //     .kecamatanId = null;
+                              // bioPetugas.petugas.value
+                              //     .desaId = null;
+                              // bioPetugas.petugas.value
+                              //     .dusunId = null;
+                              //                         });
+                              //                       },
+                              //                       hint: Text("Pilih Provinsi"),
+                              //                       items: [
+                              //                         for (var data
+                              //                             in daerahController
+                              //                                 .listProvinsi.value)
+                              //                           DropdownMenuItem(
+                              //                             child: new Text(
+                              //                               data.namaProvinsi!,
+                              //                             ),
+                              //                             value:
+                              //                                 data.id.toString(),
+                              //                           )
+                              //                       ]),
+                              //                 ),
+                              //               ),
+                              //             );
+                              //           },
+                              //         );
+                              //       })),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Obx(() => daerahController.isLoading.value
+                              //     ? CircularProgressIndicator()
+                              //     : LayoutBuilder(builder: (context, constraint) {
+                              //         // List<String> itemStringList = ["Female", "Male"];
+
+                              //         return FormField(
+                              //           initialValue: false,
+                              //           enabled: true,
+                              //           builder: (FormFieldState<bool> field) {
+                              //             return InputDecorator(
+                              //               decoration: InputDecoration(
+                              //                 labelText: "Kabupaten",
+                              //                 errorText: field.errorText,
+                              //                 // helperText: "Your gender",
+                              //               ),
+                              //               child: DropdownButtonHideUnderline(
+                              //                 child: ButtonTheme(
+                              //                   alignedDropdown: false,
+                              //                   child: DropdownButton<String>(
+                              //                       isExpanded: true,
+                              //                       value: bioPetugas
+                              //                                   .petugas
+                              //                                   .value
+                              //                                   .kabupatenId ==
+                              //                               null
+                              //                           ? null
+                              //                           : bioPetugas.petugas.value
+                              //                               .kabupatenId
+                              //                               .toString(),
+                              //                       icon: Padding(
+                              //                         padding:
+                              //                             const EdgeInsets.only(
+                              //                                 right: 10.0),
+                              //                         child: Icon(
+                              //                           Icons
+                              //                               .arrow_drop_down_outlined,
+                              //                           size: 24.0,
+                              //                           color: Theme.of(context)
+                              //                               .textTheme
+                              //                               .bodyLarge!
+                              //                               .color,
+                              //                         ),
+                              //                       ),
+                              //                       iconSize: 16,
+                              //                       elevation: 16,
+                              //                       style: TextStyle(
+                              //                         fontSize: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .fontSize,
+                              //                         fontFamily:
+                              //                             Theme.of(context)
+                              //                                 .textTheme
+                              //                                 .bodyMedium!
+                              //                                 .fontFamily,
+                              //                         color: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .color,
+                              //                       ),
+                              //                       underline: Container(
+                              //                         height: 0,
+                              //                         color: Colors.grey[300],
+                              //                       ),
+                              //                       onChanged:
+                              //                           (String? newValue) {
+                              //                         setState(() {
+                              //                           bioPetugas.petugas.value
+                              //                                   .kabupatenId =
+                              //                               newValue!;
+                              //                           daerahController
+                              //                               .fetchKabupaten(
+                              //                                   kabupaten_id:
+                              //                                       int.parse(
+                              //                                           newValue));
+                              //                           bioPetugas.petugas.value
+                              //                               .kecamatanId = null;
+                              //                           bioPetugas.petugas.value
+                              //                               .desaId = null;
+                              //                           bioPetugas.petugas.value
+                              //                               .dusunId = null;
+                              //                         });
+                              //                       },
+                              //                       hint: Text("Pilih Kabupaten"),
+                              //                       items: [
+                              //                         for (var data
+                              //                             in daerahController
+                              //                                 .listKabupaten
+                              //                                 .value)
+                              //                           DropdownMenuItem(
+                              //                             child: new Text(
+                              //                               data.namaKabupaten!,
+                              //                             ),
+                              //                             value:
+                              //                                 data.id.toString(),
+                              //                           )
+                              //                       ]),
+                              //                 ),
+                              //               ),
+                              //             );
+                              //           },
+                              //         );
+                              //       })),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Obx(() => daerahController.isLoading.value
+                              //     ? CircularProgressIndicator()
+                              //     : LayoutBuilder(builder: (context, constraint) {
+                              //         // List<String> itemStringList = ["Female", "Male"];
+
+                              //         return FormField(
+                              //           initialValue: false,
+                              //           enabled: true,
+                              //           builder: (FormFieldState<bool> field) {
+                              //             return InputDecorator(
+                              //               decoration: InputDecoration(
+                              //                 labelText: "Kecamatan",
+                              //                 errorText: field.errorText,
+                              //                 // helperText: "Your gender",
+                              //               ),
+                              //               child: DropdownButtonHideUnderline(
+                              //                 child: ButtonTheme(
+                              //                   alignedDropdown: false,
+                              //                   child: DropdownButton<String>(
+                              //                       isExpanded: true,
+                              //                       value: bioPetugas
+                              //                                   .petugas
+                              //                                   .value
+                              //                                   .kecamatanId ==
+                              //                               null
+                              //                           ? null
+                              //                           : bioPetugas.petugas.value
+                              //                               .kecamatanId
+                              //                               .toString(),
+                              //                       icon: Padding(
+                              //                         padding:
+                              //                             const EdgeInsets.only(
+                              //                                 right: 10.0),
+                              //                         child: Icon(
+                              //                           Icons
+                              //                               .arrow_drop_down_outlined,
+                              //                           size: 24.0,
+                              //                           color: Theme.of(context)
+                              //                               .textTheme
+                              //                               .bodyLarge!
+                              //                               .color,
+                              //                         ),
+                              //                       ),
+                              //                       iconSize: 16,
+                              //                       elevation: 16,
+                              //                       style: TextStyle(
+                              //                         fontSize: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .fontSize,
+                              //                         fontFamily:
+                              //                             Theme.of(context)
+                              //                                 .textTheme
+                              //                                 .bodyMedium!
+                              //                                 .fontFamily,
+                              //                         color: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .color,
+                              //                       ),
+                              //                       underline: Container(
+                              //                         height: 0,
+                              //                         color: Colors.grey[300],
+                              //                       ),
+                              //                       onChanged:
+                              //                           (String? newValue) {
+                              //                         setState(() {
+                              //                           bioPetugas.petugas.value
+                              //                                   .kecamatanId =
+                              //                               newValue!;
+                              //                           daerahController
+                              //                               .fetchKecamatan(
+                              //                                   kecamatan_id:
+                              //                                       int.parse(
+                              //                                           newValue));
+                              //                           bioPetugas.petugas.value
+                              //                               .desaId = null;
+                              //                           bioPetugas.petugas.value
+                              //                               .dusunId = null;
+                              //                         });
+                              //                       },
+                              //                       hint: Text("Pilih Kecamatan"),
+                              //                       items: [
+                              //                         for (var data
+                              //                             in daerahController
+                              //                                 .listKecamatan
+                              //                                 .value)
+                              //                           DropdownMenuItem(
+                              //                             child: new Text(
+                              //                               data.namaKecamatan!,
+                              //                             ),
+                              //                             value:
+                              //                                 data.id.toString(),
+                              //                           )
+                              //                       ]),
+                              //                 ),
+                              //               ),
+                              //             );
+                              //           },
+                              //         );
+                              //       })),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Obx(() => daerahController.isLoading.value
+                              //     ? CircularProgressIndicator()
+                              //     : LayoutBuilder(builder: (context, constraint) {
+                              //         // List<String> itemStringList = ["Female", "Male"];
+
+                              //         return FormField(
+                              //           initialValue: false,
+                              //           enabled: true,
+                              //           builder: (FormFieldState<bool> field) {
+                              //             return InputDecorator(
+                              //               decoration: InputDecoration(
+                              //                 labelText: "Desa",
+                              //                 errorText: field.errorText,
+                              //                 // helperText: "Your gender",
+                              //               ),
+                              //               child: DropdownButtonHideUnderline(
+                              //                 child: ButtonTheme(
+                              //                   alignedDropdown: false,
+                              //                   child: DropdownButton<String>(
+                              //                       isExpanded: true,
+                              //                       value: bioPetugas.petugas
+                              //                                   .value.desaId ==
+                              //                               null
+                              //                           ? null
+                              //                           : bioPetugas
+                              //                               .petugas.value.desaId
+                              //                               .toString(),
+                              //                       icon: Padding(
+                              //                         padding:
+                              //                             const EdgeInsets.only(
+                              //                                 right: 10.0),
+                              //                         child: Icon(
+                              //                           Icons
+                              //                               .arrow_drop_down_outlined,
+                              //                           size: 24.0,
+                              //                           color: Theme.of(context)
+                              //                               .textTheme
+                              //                               .bodyLarge!
+                              //                               .color,
+                              //                         ),
+                              //                       ),
+                              //                       iconSize: 16,
+                              //                       elevation: 16,
+                              //                       style: TextStyle(
+                              //                         fontSize: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .fontSize,
+                              //                         fontFamily:
+                              //                             Theme.of(context)
+                              //                                 .textTheme
+                              //                                 .bodyMedium!
+                              //                                 .fontFamily,
+                              //                         color: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .color,
+                              //                       ),
+                              //                       underline: Container(
+                              //                         height: 0,
+                              //                         color: Colors.grey[300],
+                              //                       ),
+                              //                       onChanged:
+                              //                           (String? newValue) {
+                              //                         setState(() {
+                              //                           bioPetugas.petugas.value
+                              //                               .desaId = newValue!;
+                              //                           daerahController.fetchDesa(
+                              //                               desa_id: int.parse(
+                              //                                   newValue));
+                              //                           bioPetugas.petugas.value
+                              //                               .dusunId = null;
+                              //                         });
+                              //                       },
+                              //                       items: [
+                              //                         for (var data
+                              //                             in daerahController
+                              //                                 .listDesa.value)
+                              //                           DropdownMenuItem(
+                              //                             child: new Text(
+                              //                               data.namaDesa!,
+                              //                             ),
+                              //                             value:
+                              //                                 data.id.toString(),
+                              //                           )
+                              //                       ]),
+                              //                 ),
+                              //               ),
+                              //             );
+                              //           },
+                              //         );
+                              //       })),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Obx(() => daerahController.isLoading.value
+                              //     ? CircularProgressIndicator()
+                              //     : LayoutBuilder(builder: (context, constraint) {
+                              //         // List<String> itemStringList = ["Female", "Male"];
+
+                              //         return FormField(
+                              //           initialValue: false,
+                              //           enabled: true,
+                              //           builder: (FormFieldState<bool> field) {
+                              //             return InputDecorator(
+                              //               decoration: InputDecoration(
+                              //                 labelText: "Dusun",
+                              //                 errorText: field.errorText,
+                              //                 // helperText: "Your gender",
+                              //               ),
+                              //               child: DropdownButtonHideUnderline(
+                              //                 child: ButtonTheme(
+                              //                   alignedDropdown: false,
+                              //                   child: DropdownButton<String>(
+                              //                       isExpanded: true,
+                              //                       value: bioPetugas.petugas
+                              //                                   .value.dusunId ==
+                              //                               null
+                              //                           ? null
+                              //                           : bioPetugas
+                              //                               .petugas.value.dusunId
+                              //                               .toString(),
+                              //                       icon: Padding(
+                              //                         padding:
+                              //                             const EdgeInsets.only(
+                              //                                 right: 10.0),
+                              //                         child: Icon(
+                              //                           Icons
+                              //                               .arrow_drop_down_outlined,
+                              //                           size: 24.0,
+                              //                           color: Theme.of(context)
+                              //                               .textTheme
+                              //                               .bodyLarge!
+                              //                               .color,
+                              //                         ),
+                              //                       ),
+                              //                       iconSize: 16,
+                              //                       elevation: 16,
+                              //                       style: TextStyle(
+                              //                         fontSize: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .fontSize,
+                              //                         fontFamily:
+                              //                             Theme.of(context)
+                              //                                 .textTheme
+                              //                                 .bodyMedium!
+                              //                                 .fontFamily,
+                              //                         color: Theme.of(context)
+                              //                             .textTheme
+                              //                             .bodyMedium!
+                              //                             .color,
+                              //                       ),
+                              //                       underline: Container(
+                              //                         height: 0,
+                              //                         color: Colors.grey[300],
+                              //                       ),
+                              //                       onChanged:
+                              //                           (String? newValue) {
+                              //                         setState(() {
+                              //                           bioPetugas.petugas.value
+                              //                               .dusunId = newValue!;
+                              //                         });
+                              //                       },
+                              //                       items: [
+                              //                         for (var data
+                              //                             in daerahController
+                              //                                 .listDusun.value)
+                              //                           DropdownMenuItem(
+                              //                             child: new Text(
+                              //                               data.namaDusun!,
+                              //                             ),
+                              //                             value:
+                              //                                 data.id.toString(),
+                              //                           )
+                              //                       ]),
+                              //                 ),
+                              //               ),
+                              //             );
+                              //           },
+                              //         );
+                              //       })),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                controller: bioPetugas.alamat,
+                                validator: (nameValue) {
+                                  if (nameValue!.isEmpty) {
+                                    return 'Mohon masukan data';
+                                  }
+                                  bioPetugas.alamat.text = nameValue;
+                                  return null;
                                 },
-                              );
-                            }),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
-                            // Obx(() => daerahController.isLoading.value
-                            //     ? CircularProgressIndicator()
-                            //     : LayoutBuilder(builder: (context, constraint) {
-                            //         // List<String> itemStringList = ["Female", "Male"];
-
-                            //         return FormField(
-                            //           initialValue: false,
-                            //           enabled: true,
-                            //           builder: (FormFieldState<bool> field) {
-                            //             return InputDecorator(
-                            //               decoration: InputDecoration(
-                            //                 labelText: "Provinsi",
-                            //                 errorText: field.errorText,
-                            //                 // helperText: "Your gender",
-                            //               ),
-                            //               child: DropdownButtonHideUnderline(
-                            //                 child: ButtonTheme(
-                            //                   alignedDropdown: false,
-                            //                   child: DropdownButton<String?>(
-                            //                       isExpanded: true,
-                            //                       value: bioPetugas
-                            //                                   .petugas
-                            //                                   .value
-                            //                                   .provinsiId ==
-                            //                               null
-                            //                           ? null
-                            //                           : bioPetugas.petugas.value
-                            //                               .provinsiId
-                            //                               .toString(),
-                            //                       icon: Padding(
-                            //                         padding:
-                            //                             const EdgeInsets.only(
-                            //                                 right: 10.0),
-                            //                         child: Icon(
-                            //                           Icons
-                            //                               .arrow_drop_down_outlined,
-                            //                           size: 24.0,
-                            //                           color: Theme.of(context)
-                            //                               .textTheme
-                            //                               .bodyLarge!
-                            //                               .color,
-                            //                         ),
-                            //                       ),
-                            //                       iconSize: 16,
-                            //                       elevation: 16,
-                            //                       style: TextStyle(
-                            //                         fontSize: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .fontSize,
-                            //                         fontFamily:
-                            //                             Theme.of(context)
-                            //                                 .textTheme
-                            //                                 .bodyMedium!
-                            //                                 .fontFamily,
-                            //                         color: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .color,
-                            //                       ),
-                            //                       underline: Container(
-                            //                         height: 0,
-                            //                         color: Colors.grey[300],
-                            //                       ),
-                            //                       onChanged:
-                            //                           (String? newValue) {
-                            //                         setState(() {
-                            //                           bioPetugas.petugas.value
-                            //                                   .provinsiId =
-                            //                               newValue!;
-                            //                           daerahController
-                            //                               .fetchProvinsi(
-                            //                                   provinsi_id:
-                            //                                       int.parse(
-                            //                                           newValue!));
-                            //                           bioPetugas.petugas.value
-                            //                               .kabupatenId = null;
-                            //                           bioPetugas.petugas.value
-                            //                               .kecamatanId = null;
-                            //                           bioPetugas.petugas.value
-                            //                               .desaId = null;
-                            //                           bioPetugas.petugas.value
-                            //                               .dusunId = null;
-                            //                         });
-                            //                       },
-                            //                       hint: Text("Pilih Provinsi"),
-                            //                       items: [
-                            //                         for (var data
-                            //                             in daerahController
-                            //                                 .listProvinsi.value)
-                            //                           DropdownMenuItem(
-                            //                             child: new Text(
-                            //                               data.namaProvinsi!,
-                            //                             ),
-                            //                             value:
-                            //                                 data.id.toString(),
-                            //                           )
-                            //                       ]),
-                            //                 ),
-                            //               ),
-                            //             );
-                            //           },
-                            //         );
-                            //       })),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
-                            // Obx(() => daerahController.isLoading.value
-                            //     ? CircularProgressIndicator()
-                            //     : LayoutBuilder(builder: (context, constraint) {
-                            //         // List<String> itemStringList = ["Female", "Male"];
-
-                            //         return FormField(
-                            //           initialValue: false,
-                            //           enabled: true,
-                            //           builder: (FormFieldState<bool> field) {
-                            //             return InputDecorator(
-                            //               decoration: InputDecoration(
-                            //                 labelText: "Kabupaten",
-                            //                 errorText: field.errorText,
-                            //                 // helperText: "Your gender",
-                            //               ),
-                            //               child: DropdownButtonHideUnderline(
-                            //                 child: ButtonTheme(
-                            //                   alignedDropdown: false,
-                            //                   child: DropdownButton<String>(
-                            //                       isExpanded: true,
-                            //                       value: bioPetugas
-                            //                                   .petugas
-                            //                                   .value
-                            //                                   .kabupatenId ==
-                            //                               null
-                            //                           ? null
-                            //                           : bioPetugas.petugas.value
-                            //                               .kabupatenId
-                            //                               .toString(),
-                            //                       icon: Padding(
-                            //                         padding:
-                            //                             const EdgeInsets.only(
-                            //                                 right: 10.0),
-                            //                         child: Icon(
-                            //                           Icons
-                            //                               .arrow_drop_down_outlined,
-                            //                           size: 24.0,
-                            //                           color: Theme.of(context)
-                            //                               .textTheme
-                            //                               .bodyLarge!
-                            //                               .color,
-                            //                         ),
-                            //                       ),
-                            //                       iconSize: 16,
-                            //                       elevation: 16,
-                            //                       style: TextStyle(
-                            //                         fontSize: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .fontSize,
-                            //                         fontFamily:
-                            //                             Theme.of(context)
-                            //                                 .textTheme
-                            //                                 .bodyMedium!
-                            //                                 .fontFamily,
-                            //                         color: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .color,
-                            //                       ),
-                            //                       underline: Container(
-                            //                         height: 0,
-                            //                         color: Colors.grey[300],
-                            //                       ),
-                            //                       onChanged:
-                            //                           (String? newValue) {
-                            //                         setState(() {
-                            //                           bioPetugas.petugas.value
-                            //                                   .kabupatenId =
-                            //                               newValue!;
-                            //                           daerahController
-                            //                               .fetchKabupaten(
-                            //                                   kabupaten_id:
-                            //                                       int.parse(
-                            //                                           newValue));
-                            //                           bioPetugas.petugas.value
-                            //                               .kecamatanId = null;
-                            //                           bioPetugas.petugas.value
-                            //                               .desaId = null;
-                            //                           bioPetugas.petugas.value
-                            //                               .dusunId = null;
-                            //                         });
-                            //                       },
-                            //                       hint: Text("Pilih Kabupaten"),
-                            //                       items: [
-                            //                         for (var data
-                            //                             in daerahController
-                            //                                 .listKabupaten
-                            //                                 .value)
-                            //                           DropdownMenuItem(
-                            //                             child: new Text(
-                            //                               data.namaKabupaten!,
-                            //                             ),
-                            //                             value:
-                            //                                 data.id.toString(),
-                            //                           )
-                            //                       ]),
-                            //                 ),
-                            //               ),
-                            //             );
-                            //           },
-                            //         );
-                            //       })),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
-                            // Obx(() => daerahController.isLoading.value
-                            //     ? CircularProgressIndicator()
-                            //     : LayoutBuilder(builder: (context, constraint) {
-                            //         // List<String> itemStringList = ["Female", "Male"];
-
-                            //         return FormField(
-                            //           initialValue: false,
-                            //           enabled: true,
-                            //           builder: (FormFieldState<bool> field) {
-                            //             return InputDecorator(
-                            //               decoration: InputDecoration(
-                            //                 labelText: "Kecamatan",
-                            //                 errorText: field.errorText,
-                            //                 // helperText: "Your gender",
-                            //               ),
-                            //               child: DropdownButtonHideUnderline(
-                            //                 child: ButtonTheme(
-                            //                   alignedDropdown: false,
-                            //                   child: DropdownButton<String>(
-                            //                       isExpanded: true,
-                            //                       value: bioPetugas
-                            //                                   .petugas
-                            //                                   .value
-                            //                                   .kecamatanId ==
-                            //                               null
-                            //                           ? null
-                            //                           : bioPetugas.petugas.value
-                            //                               .kecamatanId
-                            //                               .toString(),
-                            //                       icon: Padding(
-                            //                         padding:
-                            //                             const EdgeInsets.only(
-                            //                                 right: 10.0),
-                            //                         child: Icon(
-                            //                           Icons
-                            //                               .arrow_drop_down_outlined,
-                            //                           size: 24.0,
-                            //                           color: Theme.of(context)
-                            //                               .textTheme
-                            //                               .bodyLarge!
-                            //                               .color,
-                            //                         ),
-                            //                       ),
-                            //                       iconSize: 16,
-                            //                       elevation: 16,
-                            //                       style: TextStyle(
-                            //                         fontSize: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .fontSize,
-                            //                         fontFamily:
-                            //                             Theme.of(context)
-                            //                                 .textTheme
-                            //                                 .bodyMedium!
-                            //                                 .fontFamily,
-                            //                         color: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .color,
-                            //                       ),
-                            //                       underline: Container(
-                            //                         height: 0,
-                            //                         color: Colors.grey[300],
-                            //                       ),
-                            //                       onChanged:
-                            //                           (String? newValue) {
-                            //                         setState(() {
-                            //                           bioPetugas.petugas.value
-                            //                                   .kecamatanId =
-                            //                               newValue!;
-                            //                           daerahController
-                            //                               .fetchKecamatan(
-                            //                                   kecamatan_id:
-                            //                                       int.parse(
-                            //                                           newValue));
-                            //                           bioPetugas.petugas.value
-                            //                               .desaId = null;
-                            //                           bioPetugas.petugas.value
-                            //                               .dusunId = null;
-                            //                         });
-                            //                       },
-                            //                       hint: Text("Pilih Kecamatan"),
-                            //                       items: [
-                            //                         for (var data
-                            //                             in daerahController
-                            //                                 .listKecamatan
-                            //                                 .value)
-                            //                           DropdownMenuItem(
-                            //                             child: new Text(
-                            //                               data.namaKecamatan!,
-                            //                             ),
-                            //                             value:
-                            //                                 data.id.toString(),
-                            //                           )
-                            //                       ]),
-                            //                 ),
-                            //               ),
-                            //             );
-                            //           },
-                            //         );
-                            //       })),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
-                            // Obx(() => daerahController.isLoading.value
-                            //     ? CircularProgressIndicator()
-                            //     : LayoutBuilder(builder: (context, constraint) {
-                            //         // List<String> itemStringList = ["Female", "Male"];
-
-                            //         return FormField(
-                            //           initialValue: false,
-                            //           enabled: true,
-                            //           builder: (FormFieldState<bool> field) {
-                            //             return InputDecorator(
-                            //               decoration: InputDecoration(
-                            //                 labelText: "Desa",
-                            //                 errorText: field.errorText,
-                            //                 // helperText: "Your gender",
-                            //               ),
-                            //               child: DropdownButtonHideUnderline(
-                            //                 child: ButtonTheme(
-                            //                   alignedDropdown: false,
-                            //                   child: DropdownButton<String>(
-                            //                       isExpanded: true,
-                            //                       value: bioPetugas.petugas
-                            //                                   .value.desaId ==
-                            //                               null
-                            //                           ? null
-                            //                           : bioPetugas
-                            //                               .petugas.value.desaId
-                            //                               .toString(),
-                            //                       icon: Padding(
-                            //                         padding:
-                            //                             const EdgeInsets.only(
-                            //                                 right: 10.0),
-                            //                         child: Icon(
-                            //                           Icons
-                            //                               .arrow_drop_down_outlined,
-                            //                           size: 24.0,
-                            //                           color: Theme.of(context)
-                            //                               .textTheme
-                            //                               .bodyLarge!
-                            //                               .color,
-                            //                         ),
-                            //                       ),
-                            //                       iconSize: 16,
-                            //                       elevation: 16,
-                            //                       style: TextStyle(
-                            //                         fontSize: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .fontSize,
-                            //                         fontFamily:
-                            //                             Theme.of(context)
-                            //                                 .textTheme
-                            //                                 .bodyMedium!
-                            //                                 .fontFamily,
-                            //                         color: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .color,
-                            //                       ),
-                            //                       underline: Container(
-                            //                         height: 0,
-                            //                         color: Colors.grey[300],
-                            //                       ),
-                            //                       onChanged:
-                            //                           (String? newValue) {
-                            //                         setState(() {
-                            //                           bioPetugas.petugas.value
-                            //                               .desaId = newValue!;
-                            //                           daerahController.fetchDesa(
-                            //                               desa_id: int.parse(
-                            //                                   newValue));
-                            //                           bioPetugas.petugas.value
-                            //                               .dusunId = null;
-                            //                         });
-                            //                       },
-                            //                       items: [
-                            //                         for (var data
-                            //                             in daerahController
-                            //                                 .listDesa.value)
-                            //                           DropdownMenuItem(
-                            //                             child: new Text(
-                            //                               data.namaDesa!,
-                            //                             ),
-                            //                             value:
-                            //                                 data.id.toString(),
-                            //                           )
-                            //                       ]),
-                            //                 ),
-                            //               ),
-                            //             );
-                            //           },
-                            //         );
-                            //       })),
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
-                            // Obx(() => daerahController.isLoading.value
-                            //     ? CircularProgressIndicator()
-                            //     : LayoutBuilder(builder: (context, constraint) {
-                            //         // List<String> itemStringList = ["Female", "Male"];
-
-                            //         return FormField(
-                            //           initialValue: false,
-                            //           enabled: true,
-                            //           builder: (FormFieldState<bool> field) {
-                            //             return InputDecorator(
-                            //               decoration: InputDecoration(
-                            //                 labelText: "Dusun",
-                            //                 errorText: field.errorText,
-                            //                 // helperText: "Your gender",
-                            //               ),
-                            //               child: DropdownButtonHideUnderline(
-                            //                 child: ButtonTheme(
-                            //                   alignedDropdown: false,
-                            //                   child: DropdownButton<String>(
-                            //                       isExpanded: true,
-                            //                       value: bioPetugas.petugas
-                            //                                   .value.dusunId ==
-                            //                               null
-                            //                           ? null
-                            //                           : bioPetugas
-                            //                               .petugas.value.dusunId
-                            //                               .toString(),
-                            //                       icon: Padding(
-                            //                         padding:
-                            //                             const EdgeInsets.only(
-                            //                                 right: 10.0),
-                            //                         child: Icon(
-                            //                           Icons
-                            //                               .arrow_drop_down_outlined,
-                            //                           size: 24.0,
-                            //                           color: Theme.of(context)
-                            //                               .textTheme
-                            //                               .bodyLarge!
-                            //                               .color,
-                            //                         ),
-                            //                       ),
-                            //                       iconSize: 16,
-                            //                       elevation: 16,
-                            //                       style: TextStyle(
-                            //                         fontSize: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .fontSize,
-                            //                         fontFamily:
-                            //                             Theme.of(context)
-                            //                                 .textTheme
-                            //                                 .bodyMedium!
-                            //                                 .fontFamily,
-                            //                         color: Theme.of(context)
-                            //                             .textTheme
-                            //                             .bodyMedium!
-                            //                             .color,
-                            //                       ),
-                            //                       underline: Container(
-                            //                         height: 0,
-                            //                         color: Colors.grey[300],
-                            //                       ),
-                            //                       onChanged:
-                            //                           (String? newValue) {
-                            //                         setState(() {
-                            //                           bioPetugas.petugas.value
-                            //                               .dusunId = newValue!;
-                            //                         });
-                            //                       },
-                            //                       items: [
-                            //                         for (var data
-                            //                             in daerahController
-                            //                                 .listDusun.value)
-                            //                           DropdownMenuItem(
-                            //                             child: new Text(
-                            //                               data.namaDusun!,
-                            //                             ),
-                            //                             value:
-                            //                                 data.id.toString(),
-                            //                           )
-                            //                       ]),
-                            //                 ),
-                            //               ),
-                            //             );
-                            //           },
-                            //         );
-                            //       })),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            TextFormField(
-                              controller: bioPetugas.alamat,
-                              maxLength: 200,
-                              maxLines: 4,
-                              decoration: const InputDecoration(
-                                labelText: 'Alamat',
-                                labelStyle: TextStyle(
-                                  color: Colors.blueGrey,
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                                maxLength: 200,
+                                maxLines: 4,
+                                decoration: const InputDecoration(
+                                  labelText: 'Alamat',
+                                  labelStyle: TextStyle(
                                     color: Colors.blueGrey,
                                   ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  // helperText: "What's your address",
                                 ),
-                                // helperText: "What's your address",
+                                onChanged: (value) {},
                               ),
-                              onChanged: (value) {},
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blueGrey,
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blueGrey,
+                                ),
+                                onPressed: () {
+                                  if (_form.currentState!.validate()) {
+                                    bioPetugas.UpdatePetugas();
+                                  }
+                                },
+                                child: const Text("Save"),
                               ),
-                              onPressed: () {
-                                bioPetugas.UpdatePetugas();
-                              },
-                              child: const Text("Save"),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ))
               ]),

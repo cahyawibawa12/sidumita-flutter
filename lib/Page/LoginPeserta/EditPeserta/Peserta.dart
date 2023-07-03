@@ -20,6 +20,10 @@ class Peserta extends StatefulWidget {
 class _PesertaState extends State<Peserta> {
   var detailKeluarga = Get.put(DetailKeluargaController());
 
+  Future<void> _refresh(bool reload) async {
+    await Get.find<DetailKeluargaController>().showDetailKeluarga();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -39,34 +43,6 @@ class _PesertaState extends State<Peserta> {
             body: SafeArea(
               child: Column(children: <Widget>[
                 Column(children: [
-                  // Row(
-                  //         crossAxisAlignment: CrossAxisAlignment.center,
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           Container(
-                  //             padding: EdgeInsets.only(left: 10),
-                  //             child: CircleAvatar(
-                  //               radius: 55,
-                  //               backgroundImage:
-                  //                   AssetImage('assets/images/Logo.png'),
-                  //             ),
-                  //           ),
-                  //           Column(
-                  //             children: [
-                  //               Text(
-                  //                 "SIDUMITA",
-                  //                 style: GoogleFonts.nunitoSans(
-                  //                   textStyle: TextStyle(
-                  //                       fontSize: 50,
-                  //                       fontWeight: FontWeight.bold,
-                  //                       color: Colors.white),
-                  //                 ),
-                  //               ),
-                  //               Text("Sistem Informasi Ibu Hamil dan Balita"),
-                  //             ],
-                  //           )
-                  //         ],
-                  //       )
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Container(
                       child: Column(children: [
@@ -79,13 +55,16 @@ class _PesertaState extends State<Peserta> {
                                 color: Colors.white),
                           ),
                         ),
-                        Text("Sistem Informasi Ibu Hamil dan Balita"),
+                        Text(
+                          "Sistem Informasi Posyandu Ibu Hamil dan Balita",
+                          style: TextStyle(fontSize: 12),
+                        ),
                       ]),
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 10),
                       child: CircleAvatar(
-                        radius: 40,
+                        radius: 35,
                         backgroundImage: AssetImage('assets/images/Logo.png'),
                       ),
                     ),
@@ -114,81 +93,87 @@ class _PesertaState extends State<Peserta> {
                 Expanded(
                   child: Obx(() => detailKeluarga.isLoading.value
                       ? Center(child: CircularProgressIndicator())
-                      : ListView.builder(
-                          itemCount: detailKeluarga.listDetailKeluarga.length,
-                          physics: const ScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
-                            return Dismissible(
-                              key: UniqueKey(),
-                              onDismissed: (detail) {},
-                              confirmDismiss: (direction) async {
-                                bool confirm = false;
-                                await showDialog<void>(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text('Confirm'),
-                                      content: SingleChildScrollView(
-                                        child: ListBody(
-                                          children: const <Widget>[
-                                            Text(
-                                                'Are you sure you want to delete this item?'),
-                                          ],
-                                        ),
-                                      ),
-                                      actions: <Widget>[
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.grey[600],
-                                          ),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("No"),
-                                        ),
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.blueGrey,
-                                          ),
-                                          onPressed: () {
-                                            confirm = true;
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("Yes"),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                if (confirm) {
-                                  detailKeluarga.deleteDetailKeluarga(
-                                      detailKeluarga
-                                          .listDetailKeluarga[index].id!);
-                                  return Future.value(true);
-                                }
-                                return Future.value(false);
-                              },
-                              child: Card(
-                                child: ListTile(
-                                  title: Text(detailKeluarga
-                                      .listDetailKeluarga[index].namaLengkap!),
-                                  subtitle: Text(detailKeluarga
-                                      .listDetailKeluarga[index].nik!),
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => EditPeserta(
-                                                  detailKeluargaModel:
-                                                      detailKeluarga
-                                                              .listDetailKeluarga[
-                                                          index],
-                                                )));
-                                  },
-                                ),
-                              ),
-                            );
+                      : RefreshIndicator(
+                          onRefresh: () async {
+                            await _refresh(true);
                           },
+                          child: ListView.builder(
+                            itemCount: detailKeluarga.listDetailKeluarga.length,
+                            physics: AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              return Dismissible(
+                                key: UniqueKey(),
+                                onDismissed: (detail) {},
+                                confirmDismiss: (direction) async {
+                                  bool confirm = false;
+                                  await showDialog<void>(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Confirm'),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: const <Widget>[
+                                              Text(
+                                                  'Are you sure you want to delete this item?'),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.grey[600],
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text("No"),
+                                          ),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.blueGrey,
+                                            ),
+                                            onPressed: () {
+                                              confirm = true;
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text("Yes"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (confirm) {
+                                    detailKeluarga.deleteDetailKeluarga(
+                                        detailKeluarga
+                                            .listDetailKeluarga[index].id!);
+                                    return Future.value(true);
+                                  }
+                                  return Future.value(false);
+                                },
+                                child: Card(
+                                  child: ListTile(
+                                    title: Text(detailKeluarga
+                                        .listDetailKeluarga[index]
+                                        .namaLengkap!),
+                                    subtitle: Text(detailKeluarga
+                                        .listDetailKeluarga[index].nik!),
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => EditPeserta(
+                                                    detailKeluargaModel:
+                                                        detailKeluarga
+                                                                .listDetailKeluarga[
+                                                            index],
+                                                  )));
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         )),
                 ),
                 // Container(

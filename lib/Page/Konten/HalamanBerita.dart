@@ -291,7 +291,7 @@ class _HalamanBeritaState extends State<HalamanBerita> {
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w700,
-                                                            fontSize: 15),
+                                                            fontSize: 14),
                                                       ),
                                                     ],
                                                   ),

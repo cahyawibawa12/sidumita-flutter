@@ -259,8 +259,7 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                                                                     _) =>
                                                                 data.highValue,
                                                         opacity: 0.5,
-                                                        color:
-                                                            Colors.green[500]),
+                                                        color: Colors.red[500]),
                                                   ]);
                                             } else if (dataBeratIbu
                                                     .hasilStatusBeratIbu
@@ -311,7 +310,8 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                                                                     _) =>
                                                                 data.highValue,
                                                         opacity: 0.5,
-                                                        color: Colors.red[500]),
+                                                        color:
+                                                            Colors.green[500]),
                                                   ]);
                                             } else {
                                               return SfCartesianChart(
@@ -408,7 +408,7 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                                       ),
                                       Column(
                                         children: [
-                                          Text("Status:"),
+                                          Text("IMT Status:"),
                                           SizedBox(
                                             height: 10,
                                           ),
@@ -528,7 +528,7 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                                                   (ChartData data, _) =>
                                                       data.highValue,
                                               opacity: 0.5,
-                                              color: Colors.green[500]),
+                                              color: Colors.red[500]),
                                           SplineRangeAreaSeries<ChartData, num>(
                                               dataSource: overWeight,
                                               xValueMapper:
@@ -541,7 +541,7 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                                                   (ChartData data, _) =>
                                                       data.highValue,
                                               opacity: 0.5,
-                                              color: Colors.red[500]),
+                                              color: Colors.green[500]),
                                           SplineRangeAreaSeries<ChartData, num>(
                                               dataSource: obeseWeight,
                                               xValueMapper:
@@ -584,7 +584,7 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                                 ),
                                 Column(
                                   children: [
-                                    Text("Status:"),
+                                    Text("IMT Status:"),
                                     SizedBox(
                                       height: 10,
                                     ),

@@ -48,13 +48,13 @@ class PetugasModel {
 
   PetugasModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    nama = json['nama'];
-    jenisKelamin = json['jenis_kelamin'];
-    tempatLahir = json['tempat_lahir'];
-    tanggalLahir = json['tanggal_lahir'];
-    alamat = json['alamat'];
-    noTelp = json['no_telp'];
-    nik = json['nik'];
+    nama = json['nama'] ?? "kosong";
+    jenisKelamin = json['jenis_kelamin'] ?? "-";
+    tempatLahir = json['tempat_lahir'] ?? "-";
+    tanggalLahir = json['tanggal_lahir'] ?? "-";
+    alamat = json['alamat'] ?? "-";
+    noTelp = json['no_telp'] ?? "-";
+    nik = json['nik'] ?? "-";
     userId = json['user_id'];
     dusunId = json['dusun_id'];
     createdAt = json['created_at'];

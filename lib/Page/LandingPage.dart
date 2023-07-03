@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -11,6 +12,7 @@ import 'package:posyandu/Page/LandingLogin.dart';
 import 'package:posyandu/Page/LoginPage.dart';
 
 import 'package:posyandu/widget/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -31,7 +33,16 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     kontenController.ShowKonten();
+    // _loadUserData();
   }
+
+  // _loadUserData() async {
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   var user = jsonDecode(localStorage.getString('user')!);
+  //   var token = localStorage.getString('token');
+  //   Get.snackbar("Token", token.toString() + user.toString(),
+  //       duration: Duration(days: 1));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +85,9 @@ class _LandingPageState extends State<LandingPage> {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              width: 20,
-                            ),
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
                             IconButton(
                               onPressed: (() {
                                 Navigator.push(
@@ -265,7 +276,7 @@ class _LandingPageState extends State<LandingPage> {
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w700,
-                                                            fontSize: 15),
+                                                            fontSize: 14),
                                                       ),
                                                     ],
                                                   ),

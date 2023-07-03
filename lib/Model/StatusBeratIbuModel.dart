@@ -1,12 +1,20 @@
 class StatusBeratIbuModel {
   int? id;
+  String? beratBadan;
+  String? umurKandungan;
   double? imt;
   String? status;
   int? bbMinimal;
   int? bbMaksimal;
 
   StatusBeratIbuModel(
-      {this.id, this.imt, this.status, this.bbMinimal, this.bbMaksimal});
+      {this.id,
+      this.beratBadan,
+      this.umurKandungan,
+      this.imt,
+      this.status,
+      this.bbMinimal,
+      this.bbMaksimal});
 
   StatusBeratIbuModel.fromJson(Map<String, dynamic> json) {
     imt = json['imt'];

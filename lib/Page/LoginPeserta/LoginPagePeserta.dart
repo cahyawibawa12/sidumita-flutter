@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/Balita/HomePageBalita.dart';
+import 'package:posyandu/Page/EmailVerifPage.dart';
 import 'package:posyandu/Page/LandingPage.dart';
 import 'package:posyandu/Page/LoginPeserta/LandingLoginPeserta.dart';
 import 'package:posyandu/Page/LoginPeserta/RegisterPeserta.dart';
 import 'package:posyandu/Page/LupaPassPage.dart';
+import 'package:posyandu/Page/ResetPassword.dart';
 import 'package:posyandu/Service/AuthService.dart';
 import 'package:posyandu/widget/widgets.dart';
 import 'package:posyandu/globals.dart';
@@ -88,7 +90,7 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
                                 ),
                                 Text(
                                   "Sistem Informasi Posyandu Ibu Hamil dan Balita",
-                                  style: TextStyle(fontSize: 13),
+                                  style: TextStyle(fontSize: 11),
                                 ),
                               ],
                             )
@@ -275,7 +277,7 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['access_token']));
       localStorage.setString('user', json.encode(body['user']));
-      if (body['user']['role_id'] == 4) {
+      if (body['user']['role_id'] == 4 && body['user']['isValid'] == "1") {
         // Navigator.pushReplacement(
         //   context,
         //   new MaterialPageRoute(builder: (context) => LandinLoginPeserta()),
@@ -291,8 +293,8 @@ class _LoginPagePesertaState extends State<LoginPagePeserta> {
           new MaterialPageRoute(builder: (context) => LoginPagePeserta()),
         );
         Get.snackbar(
-          'User Tidak Sesuai',
-          "Mohon periksa email dan password",
+          'User Belum Tervalidasi',
+          "Mohon Menunggu Validasi",
           colorText: Colors.white,
           backgroundColor: Colors.red,
         );

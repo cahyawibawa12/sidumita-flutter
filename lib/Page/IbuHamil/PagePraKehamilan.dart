@@ -63,41 +63,71 @@ class _PagePraKehamilanState extends State<PagePraKehamilan> {
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
                               children: [
-                                TextFormField(
-                                  controller: ibuHamil.berat_pra,
-                                  keyboardType: TextInputType.number,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Berat Pra-Kehamilan',
-                                    hintText: '59',
-                                    labelStyle: TextStyle(
-                                      color: Colors.blueGrey,
-                                    ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Flexible(
+                                      child: TextFormField(
+                                        controller: ibuHamil.berat_pra,
+                                        keyboardType: TextInputType.number,
+                                        decoration: const InputDecoration(
+                                          labelText: 'Berat Pra-Kehamilan',
+                                          hintText: '59',
+                                          labelStyle: TextStyle(
+                                            color: Colors.blueGrey,
+                                          ),
 
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.blueGrey,
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.blueGrey,
+                                            ),
+                                          ),
+                                          // helperText: 'Enter your email address',
+                                        ),
                                       ),
                                     ),
-                                    // helperText: 'Enter your email address',
-                                  ),
+                                    SizedBox(
+                                      width: 50,
+                                    ),
+                                    Text(
+                                      "Kg",
+                                      style: TextStyle(fontSize: 15),
+                                    )
+                                  ],
                                 ),
-                                TextFormField(
-                                  controller: ibuHamil.tinggi_pra,
-                                  keyboardType: TextInputType.number,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Tinggi Pra-Kehamilan',
-                                    hintText: '159',
-                                    labelStyle: TextStyle(
-                                      color: Colors.blueGrey,
-                                    ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Flexible(
+                                      child: TextFormField(
+                                        controller: ibuHamil.tinggi_pra,
+                                        keyboardType: TextInputType.number,
+                                        decoration: const InputDecoration(
+                                          labelText: 'Tinggi Pra-Kehamilan',
+                                          hintText: '159',
+                                          labelStyle: TextStyle(
+                                            color: Colors.blueGrey,
+                                          ),
 
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.blueGrey,
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.blueGrey,
+                                            ),
+                                          ),
+                                          // helperText: 'Enter your email address',
+                                        ),
                                       ),
                                     ),
-                                    // helperText: 'Enter your email address',
-                                  ),
+                                    SizedBox(
+                                      width: 42,
+                                    ),
+                                    Text(
+                                      "Cm",
+                                      style: TextStyle(fontSize: 15),
+                                    )
+                                  ],
                                 ),
                                 SizedBox(
                                   height: 20,

@@ -40,6 +40,27 @@ class PetugasService {
     return response;
   }
 
+  Future<http.Response> showKeluargaForPetugas() async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(baseURL + 'petugas/with-keluarga');
+    http.Response response = await http.get(url, headers: setHeaders(token));
+    print(response.body);
+    return response;
+  }
+
+  Future<http.Response> showDetailKeluargaForPetugas(int keluarga_id) async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(
+        baseURL + 'petugas/detail-keluarga/' + keluarga_id.toString());
+    http.Response response = await http.get(url, headers: setHeaders(token));
+    print(response.body);
+    return response;
+  }
+
   Future<http.Response> updateMyPetugas(PetugasModel petugasModel) async {
     // SharedPreferences localStorage = await SharedPreferences.getInstance();
     // var token = localStorage.getString('token')?.replaceAll('"', "");

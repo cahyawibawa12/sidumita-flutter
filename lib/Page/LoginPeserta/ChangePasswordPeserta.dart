@@ -83,20 +83,29 @@ class _ChangePasswordPesertaState extends State<ChangePasswordPeserta> {
               child: Column(
                 children: [
                   TextFormField(
-                    controller: peserta.new_password,
-                    maxLength: 20,
-                    obscureText: _secureText,
-                    decoration: InputDecoration(
-                      hintText: "New Password",
-                      suffixIcon: IconButton(
-                        onPressed: showHideNew,
-                        icon: Icon(_secureText
-                            ? Icons.visibility_off
-                            : Icons.visibility),
+                      controller: peserta.new_password,
+                      maxLength: 20,
+                      obscureText: _secureText,
+                      decoration: InputDecoration(
+                        hintText: "New Password",
+                        suffixIcon: IconButton(
+                          onPressed: showHideNew,
+                          icon: Icon(_secureText
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        ),
                       ),
-                    ),
-                    // onChanged: (value) {},
-                  ),
+                      validator: (passwordValue) {
+                        if (passwordValue!.isEmpty) {
+                          return 'Mohon inputkan password anda';
+                        } else if (passwordValue.length < 8) {
+                          return 'Mohon input password minimal 8 karakter';
+                        }
+                        peserta.new_password.text = passwordValue;
+                        return null;
+                      }
+                      // onChanged: (value) {},
+                      ),
                   TextFormField(
                     controller: peserta.confirm_password,
                     validator: (value) {
