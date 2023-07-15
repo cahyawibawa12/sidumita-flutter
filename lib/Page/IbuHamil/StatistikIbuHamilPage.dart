@@ -490,14 +490,139 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                                                 fontSize: 20,
                                                 color: Colors.green),
                                           ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
+                                          // SizedBox(
+                                          //   height: 10,
+                                          // ),
                                         ],
                                       )
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () => showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title: Center(
+                                              child: Text('Cara Membaca IMT')),
+                                          content: Table(
+                                            border: TableBorder.all(),
+                                            columnWidths: const <int,
+                                                TableColumnWidth>{
+                                              0: FlexColumnWidth(),
+                                              1: FlexColumnWidth(),
+                                              2: FixedColumnWidth(30),
+                                            },
+                                            defaultVerticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            children: [
+                                              TableRow(
+                                                children: <Widget>[
+                                                  Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Center(
+                                                        child: Text("<18,5")),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Center(
+                                                        child: Text(
+                                                            "Underweight")),
+                                                  ),
+                                                  Container(
+                                                    height: 10,
+                                                    // width: 10,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ],
+                                              ),
+                                              TableRow(
+                                                children: <Widget>[
+                                                  Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Center(
+                                                        child: Text(
+                                                            "18.5 - 24.9")),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Center(
+                                                        child: Text("Normal")),
+                                                  ),
+                                                  Container(
+                                                    height: 10,
+                                                    color: Colors.red,
+                                                  ),
+                                                ],
+                                              ),
+                                              TableRow(
+                                                children: <Widget>[
+                                                  Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Center(
+                                                        child: Text(
+                                                            "25.0 - 29.9")),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Center(
+                                                        child:
+                                                            Text("Overweight")),
+                                                  ),
+                                                  Container(
+                                                    height: 10,
+                                                    color: Colors.green,
+                                                  ),
+                                                ],
+                                              ),
+                                              TableRow(
+                                                children: <Widget>[
+                                                  Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Center(
+                                                        child: Text(">= 30")),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Center(
+                                                        child: Text("Obese")),
+                                                  ),
+                                                  Container(
+                                                    height: 10,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          actions: <Widget>[
+                                            Center(
+                                              child: TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'OK'),
+                                                child: Text(
+                                                  'OK',
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      icon: Icon(Icons.help),
+                                      color: Colors.white,
+                                      iconSize: 30,
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),
@@ -672,6 +797,123 @@ class _StatistikIbuHamilPageState extends State<StatistikIbuHamilPage> {
                               ],
                             ),
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () => showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title:
+                                        Center(child: Text('Cara Membaca IMT')),
+                                    content: Table(
+                                      border: TableBorder.all(),
+                                      columnWidths: const <int,
+                                          TableColumnWidth>{
+                                        0: FlexColumnWidth(),
+                                        1: FlexColumnWidth(),
+                                        2: FixedColumnWidth(30),
+                                      },
+                                      defaultVerticalAlignment:
+                                          TableCellVerticalAlignment.middle,
+                                      children: [
+                                        TableRow(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              child:
+                                                  Center(child: Text("<18,5")),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              child: Center(
+                                                  child: Text("Underweight")),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                              // width: 10,
+                                              color: Colors.blue,
+                                            ),
+                                          ],
+                                        ),
+                                        TableRow(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              child: Center(
+                                                  child: Text("18.5 - 24.9")),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              child:
+                                                  Center(child: Text("Normal")),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                              color: Colors.red,
+                                            ),
+                                          ],
+                                        ),
+                                        TableRow(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              child: Center(
+                                                  child: Text("25.0 - 29.9")),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              child: Center(
+                                                  child: Text("Overweight")),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                              color: Colors.green,
+                                            ),
+                                          ],
+                                        ),
+                                        TableRow(
+                                          children: <Widget>[
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              child:
+                                                  Center(child: Text(">= 30")),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              child:
+                                                  Center(child: Text("Obese")),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                              color: Colors.grey,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    actions: <Widget>[
+                                      Center(
+                                        child: TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'OK'),
+                                          child: Text(
+                                            'OK',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                icon: Icon(Icons.help),
+                                color: Colors.white,
+                                iconSize: 30,
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),

@@ -451,6 +451,94 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                   ],
                                 ),
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () => showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: Center(
+                                            child: Text('Cara Membaca Grafik')),
+                                        content: Table(
+                                          border: TableBorder.all(),
+                                          columnWidths: const <int,
+                                              TableColumnWidth>{
+                                            0: FlexColumnWidth(),
+                                            1: FlexColumnWidth(),
+                                          },
+                                          defaultVerticalAlignment:
+                                              TableCellVerticalAlignment.middle,
+                                          children: [
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("> +2 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child:
+                                                          Text("Sangat Besar")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "-2 SD sampai dengan + 2 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("Normal")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("< -2 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child:
+                                                          Text("Sangat Kecil")),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        actions: <Widget>[
+                                          Center(
+                                            child: TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
+                                              child: Text(
+                                                'OK',
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    icon: Icon(Icons.help),
+                                    color: Colors.white,
+                                    iconSize: 30,
+                                  ),
+                                ],
+                              )
                             ],
                           )
                         ],
@@ -752,6 +840,94 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                   ],
                                 ),
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () => showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: Center(
+                                            child: Text('Cara Membaca Grafik')),
+                                        content: Table(
+                                          border: TableBorder.all(),
+                                          columnWidths: const <int,
+                                              TableColumnWidth>{
+                                            0: FlexColumnWidth(),
+                                            1: FlexColumnWidth(),
+                                          },
+                                          defaultVerticalAlignment:
+                                              TableCellVerticalAlignment.middle,
+                                          children: [
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("> +2 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child:
+                                                          Text("Sangat Besar")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "-2 SD sampai dengan + 2 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("Normal")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("< -2 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child:
+                                                          Text("Sangat Kecil")),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        actions: <Widget>[
+                                          Center(
+                                            child: TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
+                                              child: Text(
+                                                'OK',
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    icon: Icon(Icons.help),
+                                    color: Colors.white,
+                                    iconSize: 30,
+                                  ),
+                                ],
+                              )
                             ],
                           )
                         ],

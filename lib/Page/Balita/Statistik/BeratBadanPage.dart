@@ -310,6 +310,111 @@ class _BeratBadanPageState extends State<BeratBadanPage> {
                                   ],
                                 ),
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () => showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: Center(
+                                            child: Text('Cara Membaca Grafik')),
+                                        content: Table(
+                                          border: TableBorder.all(),
+                                          columnWidths: const <int,
+                                              TableColumnWidth>{
+                                            0: FlexColumnWidth(),
+                                            1: FlexColumnWidth(),
+                                          },
+                                          defaultVerticalAlignment:
+                                              TableCellVerticalAlignment.middle,
+                                          children: [
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("< -3 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "Berat badan sangat kurang")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "-3 SD sampai dengan < -2 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "Berat badan kurang")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "-2 SD sampai dengan < 1 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "Berat badan normal")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("> +1 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "Risiko berat badan lebih")),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        actions: <Widget>[
+                                          Center(
+                                            child: TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
+                                              child: Text(
+                                                'OK',
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    icon: Icon(Icons.help),
+                                    color: Colors.white,
+                                    iconSize: 30,
+                                  ),
+                                ],
+                              )
                             ],
                           )
                         ],
@@ -650,6 +755,111 @@ class _BeratBadanPageState extends State<BeratBadanPage> {
                                   },
                                 ),
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () => showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: Center(
+                                            child: Text('Cara Membaca Grafik')),
+                                        content: Table(
+                                          border: TableBorder.all(),
+                                          columnWidths: const <int,
+                                              TableColumnWidth>{
+                                            0: FlexColumnWidth(),
+                                            1: FlexColumnWidth(),
+                                          },
+                                          defaultVerticalAlignment:
+                                              TableCellVerticalAlignment.middle,
+                                          children: [
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("< -3 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "Berat badan sangat kurang")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "-3 SD sampai dengan < -2 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "Berat badan kurang")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "-2 SD sampai dengan < 1 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "Berat badan normal")),
+                                                ),
+                                              ],
+                                            ),
+                                            TableRow(
+                                              children: <Widget>[
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text("> +1 SD")),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Text(
+                                                          "Risiko berat badan lebih")),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        actions: <Widget>[
+                                          Center(
+                                            child: TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
+                                              child: Text(
+                                                'OK',
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    icon: Icon(Icons.help),
+                                    color: Colors.white,
+                                    iconSize: 30,
+                                  ),
+                                ],
+                              )
                             ],
                           )
                         ],
