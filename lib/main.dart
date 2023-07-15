@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Page/Balita/ButtonNavBarBalita.dart';
 import 'package:posyandu/Page/Balita/JadwalBalitaPage.dart';
@@ -14,6 +15,7 @@ import 'package:posyandu/Page/LoginPeserta/LandingLoginPeserta.dart';
 import 'package:posyandu/Page/LoginPeserta/LoginPagePeserta.dart';
 import 'package:posyandu/Page/LoginPeserta/RegisterPeserta.dart';
 import 'package:posyandu/Page/Petugas/HomePagePetugas.dart';
+import 'package:posyandu/widget/OnBoarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +31,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   print("Handling a background message: ${message.messageId}");
 }
+
+int introduction = 0;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +50,7 @@ Future<void> main() async {
       }
     }
   } else {
+    await initIntroduction();
     runApp(const MyApp());
   }
   await Firebase.initializeApp(
@@ -77,12 +82,25 @@ Future<void> main() async {
   });
 }
 
+Future initIntroduction() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  int? intro = prefs.getInt("introduction");
+  print('intro = $intro');
+  if (intro != null && intro == 1) {
+    return introduction = 1;
+  }
+  prefs.setInt('introduction', 1);
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
+    );
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -90,7 +108,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: LandingLogin(),
-      home: LandingPage(),
+      // home: LandingPage(),
+      home: introduction == 0 ? OnBoarding() : LandingPage(),
       // home: HomePagePetugas(),
     );
   }
