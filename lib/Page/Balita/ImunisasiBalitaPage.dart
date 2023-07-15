@@ -99,13 +99,22 @@ class _ImunisasiBalitaPageState extends State<ImunisasiBalitaPage> {
                                               .tanggalPemeriksaan
                                               .toString());
                                     } else {
-                                      return Text("Tanggal: " +
-                                          DateFormat('dd MMMM yyyy', "id")
-                                              .format(DateTime.parse(
-                                                  dataImunisasi
-                                                      .cekImunisasiBalita[index]
-                                                      .tanggalPemeriksaan
-                                                      .toString())));
+                                      try {
+                                        return Text("Tanggal: " +
+                                            DateFormat('dd MMMM yyyy', "id")
+                                                .format(DateTime.parse(
+                                                    dataImunisasi
+                                                        .cekImunisasiBalita[
+                                                            index]
+                                                        .tanggalPemeriksaan
+                                                        .toString())));
+                                      } on FormatException {
+                                        return Text('Tanggal: ' +
+                                            dataImunisasi
+                                                .cekImunisasiBalita[index]
+                                                .tanggalPemeriksaan
+                                                .toString());
+                                      }
                                     }
                                   }()),
                                   trailing: (() {

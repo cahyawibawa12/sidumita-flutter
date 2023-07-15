@@ -41,7 +41,7 @@ class _AnggotaKeluargaState extends State<AnggotaKeluarga> {
       child: Stack(
         children: [
           BackgroundImage(),
-          Expanded(
+          Positioned(
             child: Scaffold(
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(

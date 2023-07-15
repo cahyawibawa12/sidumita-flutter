@@ -178,6 +178,10 @@ class _RegisterPesertabyPetugasState extends State<RegisterPesertabyPetugas> {
                                         } else if (noKKValue.length < 16) {
                                           return 'Masukkan NIK dengan Benar';
                                         }
+                                        if (noKKValue.contains(",") ||
+                                            noKKValue.contains(".")) {
+                                          return 'Masukkan NIK dengan Benar';
+                                        }
                                         no_kk = noKKValue;
                                         return null;
                                       }),
@@ -841,13 +845,11 @@ class _RegisterPesertabyPetugasState extends State<RegisterPesertabyPetugas> {
     var res = await Network().auth(data, 'auth/register');
     var body = json.decode(res.body);
     if (body['success'] == true) {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('token', json.encode(body['access_token']));
-      localStorage.setString('user', json.encode(body['user']));
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => DaftarKeluarga()),
-      );
+      // SharedPreferences localStorage = await SharedPreferences.getInstance();
+      // localStorage.setString('token', json.encode(body['access_token']));
+      // localStorage.setString('user', json.encode(body['user']));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => DaftarKeluarga()));
       Get.snackbar(
         'Pendaftaran Berhasil',
         'Mohon Menunggu Konfirmasi',

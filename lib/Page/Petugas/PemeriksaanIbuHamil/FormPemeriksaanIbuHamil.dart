@@ -210,6 +210,9 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                                     if (nameValue!.isEmpty) {
                                       return 'Mohon masukan data';
                                     }
+                                    if (nameValue!.contains(",")) {
+                                      return 'Mohon Pakai Titik';
+                                    }
                                     pemeriksaanIbuHamilbyPetugas
                                         .tinggi_badanCtrl.text = nameValue;
                                     return null;
@@ -242,6 +245,9 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                                     if (nameValue!.isEmpty) {
                                       return 'Mohon masukan data';
                                     }
+                                    if (nameValue!.contains(",")) {
+                                      return 'Mohon Pakai Titik';
+                                    }
                                     pemeriksaanIbuHamilbyPetugas
                                         .lingkar_perutCtrl.text = nameValue;
                                     return null;
@@ -271,6 +277,9 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                                   validator: (nameValue) {
                                     if (nameValue!.isEmpty) {
                                       return 'Mohon masukan data';
+                                    }
+                                    if (nameValue!.contains(",")) {
+                                      return 'Mohon Pakai Titik';
                                     }
                                     pemeriksaanIbuHamilbyPetugas
                                         .denyut_nadiCtrl.text = nameValue;
@@ -308,6 +317,9 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                             validator: (nameValue) {
                               if (nameValue!.isEmpty) {
                                 return 'Mohon masukan data';
+                              }
+                              if (nameValue!.contains(",")) {
+                                return 'Mohon Pakai Titik';
                               }
                               pemeriksaanIbuHamilbyPetugas
                                   .denyut_jantung_bayiCtrl.text = nameValue;

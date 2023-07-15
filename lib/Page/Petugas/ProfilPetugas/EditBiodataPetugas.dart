@@ -145,6 +145,10 @@ class _EditBiodataPetugasState extends State<EditBiodataPetugas> {
                                   } else if (nameValue.length < 16) {
                                     return 'Masukkan NIK dengan Benar';
                                   }
+                                  if (nameValue.contains(",") ||
+                                      nameValue.contains(".")) {
+                                    return 'Masukkan NIK dengan Benar';
+                                  }
                                   bioPetugas.nik.text = nameValue;
                                   return null;
                                 },

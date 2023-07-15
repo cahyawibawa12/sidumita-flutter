@@ -14,6 +14,10 @@ class JadwalPosyandu extends StatefulWidget {
 class _JadwalPosyanduState extends State<JadwalPosyandu> {
   var controller = Get.put(JadwalController());
 
+  Future<void> _refresh(bool reload) async {
+    await Get.find<JadwalController>().getEvents();
+  }
+
   void initState() {
     controller.getEvents();
   }
@@ -30,25 +34,31 @@ class _JadwalPosyanduState extends State<JadwalPosyandu> {
             backgroundColor: Color(0xff34BE82),
           ),
           body: SafeArea(
-              child: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(children: [
-                Obx(
-                  () {
-                    if (controller.isLoading.value) {
-                      return Center(child: CircularProgressIndicator());
-                    } else {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height / 1.15,
-                        child: QTableCalendar(
-                          events: controller.events.value,
-                        ),
-                      );
-                    }
-                  },
-                )
-              ]),
+              child: RefreshIndicator(
+            onRefresh: () async {
+              await _refresh(true);
+            },
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(children: [
+                  Obx(
+                    () {
+                      if (controller.isLoading.value) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height / 1.15,
+                          child: QTableCalendar(
+                            events: controller.events.value,
+                          ),
+                        );
+                      }
+                    },
+                  )
+                ]),
+              ),
             ),
           )),
         )

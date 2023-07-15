@@ -22,12 +22,12 @@ class FormPemeriksaanBalita extends StatefulWidget {
 class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
   bool _checkBoxVal = true;
   var pemeriksaanBalitaByPetugas = Get.put(PemeriksaanBalitaController());
-  var dokterController = Get.put(DokterController());
+  // var dokterController = Get.put(DokterController());
   var vitaminController = Get.put(VitaminController());
   var umur = Get.put(DetailKeluargaController());
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   var bioPetugas = Get.put(PetugasController());
-  String? dokter_id;
+  // String? dokter_id;
 
   TextEditingController nama_lengkap = TextEditingController();
   // TextEditingController tanggal_pemeriksaan = TextEditingController();
@@ -42,7 +42,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
         .whenComplete(() => pemeriksaanBalitaByPetugas.umur_balita.text =
             umur.umurPeserta.value.usiaBulan!.toString());
 
-    dokterController.getDokter();
+    // dokterController.getDokter();
     vitaminController.getVitamin();
     bioPetugas.ShowPetugas();
   }
@@ -153,7 +153,7 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                         children: [
                           Flexible(
                             child: TextFormField(
-                              readOnly: true,
+                              readOnly: false,
                               controller:
                                   pemeriksaanBalitaByPetugas.umur_balita,
                               keyboardType: TextInputType.number,
@@ -196,6 +196,9 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                                     if (nameValue!.isEmpty) {
                                       return 'Mohon masukan data';
                                     }
+                                    if (nameValue!.contains(",")) {
+                                      return 'Mohon Pakai Titik';
+                                    }
                                     pemeriksaanBalitaByPetugas.berat.text =
                                         nameValue;
                                     return null;
@@ -228,6 +231,9 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                                   validator: (nameValue) {
                                     if (nameValue!.isEmpty) {
                                       return 'Mohon masukan data';
+                                    }
+                                    if (nameValue!.contains(",")) {
+                                      return 'Mohon Pakai Titik';
                                     }
                                     pemeriksaanBalitaByPetugas.tinggi.text =
                                         nameValue;
@@ -265,6 +271,9 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                                     if (nameValue!.isEmpty) {
                                       return 'Mohon masukan data';
                                     }
+                                    if (nameValue!.contains(",")) {
+                                      return 'Mohon Pakai Titik';
+                                    }
                                     pemeriksaanBalitaByPetugas
                                         .lingkar_kepala.text = nameValue;
                                     return null;
@@ -299,6 +308,9 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                                   validator: (nameValue) {
                                     if (nameValue!.isEmpty) {
                                       return 'Mohon masukan data';
+                                    }
+                                    if (nameValue!.contains(",")) {
+                                      return 'Mohon Pakai Titik';
                                     }
                                     pemeriksaanBalitaByPetugas
                                         .lingkar_lengan.text = nameValue;
@@ -398,89 +410,89 @@ class _FormPemeriksaanBalitaState extends State<FormPemeriksaanBalita> {
                       ),
                       // onChanged: (value) {},
                     ),
-                    Obx(() => dokterController.isLoading.value
-                        ? CircularProgressIndicator()
-                        : LayoutBuilder(builder: (context, constraint) {
-                            // List<String> itemStringList = ["Female", "Male"];
+                    // Obx(() => dokterController.isLoading.value
+                    //     ? CircularProgressIndicator()
+                    //     : LayoutBuilder(builder: (context, constraint) {
+                    //         // List<String> itemStringList = ["Female", "Male"];
 
-                            return FormField(
-                              initialValue: false,
-                              enabled: true,
-                              builder: (FormFieldState<bool> field) {
-                                return InputDecorator(
-                                  decoration: InputDecoration(
-                                    labelText: "Dokter",
-                                    errorText: field.errorText,
-                                    // helperText: "Your gender",
-                                  ),
-                                  child: DropdownButtonHideUnderline(
-                                    child: ButtonTheme(
-                                      alignedDropdown: false,
-                                      child: DropdownButton<String>(
-                                          isExpanded: true,
-                                          value: pemeriksaanBalitaByPetugas
-                                                      .dokter_id ==
-                                                  null
-                                              ? null
-                                              : pemeriksaanBalitaByPetugas
-                                                  .dokter_id
-                                                  .toString(),
-                                          icon: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 10.0),
-                                            child: Icon(
-                                              Icons.arrow_drop_down_outlined,
-                                              size: 24.0,
-                                              color: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge!
-                                                  .color,
-                                            ),
-                                          ),
-                                          iconSize: 16,
-                                          elevation: 16,
-                                          style: TextStyle(
-                                            fontSize: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontSize,
-                                            fontFamily: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .fontFamily,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .color,
-                                          ),
-                                          underline: Container(
-                                            height: 0,
-                                            color: Colors.grey[300],
-                                          ),
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              pemeriksaanBalitaByPetugas
-                                                      .dokter_id =
-                                                  int.parse(newValue!);
-                                            });
-                                          },
-                                          hint: Text("Pilih Dokter"),
-                                          items: [
-                                            for (var data in dokterController
-                                                .listDokter.value)
-                                              DropdownMenuItem(
-                                                child: new Text(
-                                                  data.namaDokter!,
-                                                ),
-                                                value: data.id.toString(),
-                                              )
-                                          ]),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          })),
+                    //         return FormField(
+                    //           initialValue: false,
+                    //           enabled: true,
+                    //           builder: (FormFieldState<bool> field) {
+                    //             return InputDecorator(
+                    //               decoration: InputDecoration(
+                    //                 labelText: "Dokter",
+                    //                 errorText: field.errorText,
+                    //                 // helperText: "Your gender",
+                    //               ),
+                    //               child: DropdownButtonHideUnderline(
+                    //                 child: ButtonTheme(
+                    //                   alignedDropdown: false,
+                    //                   child: DropdownButton<String>(
+                    //                       isExpanded: true,
+                    //                       value: pemeriksaanBalitaByPetugas
+                    //                                   .dokter_id ==
+                    //                               null
+                    //                           ? null
+                    //                           : pemeriksaanBalitaByPetugas
+                    //                               .dokter_id
+                    //                               .toString(),
+                    //                       icon: Padding(
+                    //                         padding: const EdgeInsets.only(
+                    //                             right: 10.0),
+                    //                         child: Icon(
+                    //                           Icons.arrow_drop_down_outlined,
+                    //                           size: 24.0,
+                    //                           color: Theme.of(context)
+                    //                               .textTheme
+                    //                               .bodyLarge!
+                    //                               .color,
+                    //                         ),
+                    //                       ),
+                    //                       iconSize: 16,
+                    //                       elevation: 16,
+                    //                       style: TextStyle(
+                    //                         fontSize: Theme.of(context)
+                    //                             .textTheme
+                    //                             .bodyMedium!
+                    //                             .fontSize,
+                    //                         fontFamily: Theme.of(context)
+                    //                             .textTheme
+                    //                             .bodyMedium!
+                    //                             .fontFamily,
+                    //                         color: Theme.of(context)
+                    //                             .textTheme
+                    //                             .bodyMedium!
+                    //                             .color,
+                    //                       ),
+                    //                       underline: Container(
+                    //                         height: 0,
+                    //                         color: Colors.grey[300],
+                    //                       ),
+                    //                       onChanged: (String? newValue) {
+                    //                         setState(() {
+                    //                           pemeriksaanBalitaByPetugas
+                    //                                   .dokter_id =
+                    //                               int.parse(newValue!);
+                    //                         });
+                    //                       },
+                    //                       hint: Text("Pilih Dokter"),
+                    //                       items: [
+                    //                         for (var data in dokterController
+                    //                             .listDokter.value)
+                    //                           DropdownMenuItem(
+                    //                             child: new Text(
+                    //                               data.namaDokter!,
+                    //                             ),
+                    //                             value: data.id.toString(),
+                    //                           )
+                    //                       ]),
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           },
+                    //         );
+                    //       })),
                     Obx(() => vitaminController.isLoading.value
                         ? CircularProgressIndicator()
                         : LayoutBuilder(builder: (context, constraint) {

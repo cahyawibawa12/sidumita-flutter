@@ -101,14 +101,27 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                   zoomPanBehavior:
                                                       _zoomPanBehavior,
                                                   // tooltipBehavior: _tooltipBehavior,
+                                                  legend:
+                                                      Legend(isVisible: true),
                                                   primaryXAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text: 'Umur(Bulan)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
                                                     interval: 1,
                                                   ),
                                                   primaryYAxis: NumericAxis(
+                                                      title: AxisTitle(
+                                                          text:
+                                                              'Berat Badan(Kg)',
+                                                          textStyle: TextStyle(
+                                                              fontSize: 10)),
                                                       interval: 0.5),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn3l,
+                                                      dataSource: chartBerat3l,
+                                                      color: Colors.black,
+                                                      name: "3",
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -117,7 +130,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn2l,
+                                                      color: Colors.red,
+                                                      name: "2",
+                                                      dataSource: chartBerat2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -126,7 +141,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn1l,
+                                                      color: Colors.yellow,
+                                                      name: "1",
+                                                      dataSource: chartBerat1l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -135,6 +152,8 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
+                                                      color: Colors.green,
+                                                      name: "0",
                                                       dataSource:
                                                           chartBeratNormall,
                                                       xValueMapper:
@@ -145,7 +164,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat1l,
+                                                      dataSource: chartBeratn1l,
+                                                      color: Colors.yellow,
+                                                      name: "-1",
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -154,7 +175,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat2l,
+                                                      color: Colors.red,
+                                                      name: "-2",
+                                                      dataSource: chartBeratn2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -163,7 +186,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat3l,
+                                                      color: Colors.black,
+                                                      name: "-3",
+                                                      dataSource: chartBeratn3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -177,14 +202,28 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:
                                                       _zoomPanBehavior,
+                                                  legend:
+                                                      Legend(isVisible: true),
+                                                  // tooltipBehavior: _tooltipBehavior,
                                                   primaryXAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text: 'Umur(Bulan)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
                                                     interval: 1,
                                                   ),
                                                   primaryYAxis: NumericAxis(
+                                                      title: AxisTitle(
+                                                          text:
+                                                              'Berat Badan(Kg)',
+                                                          textStyle: TextStyle(
+                                                              fontSize: 10)),
                                                       interval: 0.5),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn3p,
+                                                      color: Colors.black,
+                                                      name: "3",
+                                                      dataSource: chartBerat3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -193,7 +232,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn2p,
+                                                      color: Colors.red,
+                                                      name: "2",
+                                                      dataSource: chartBerat2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -202,7 +243,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn1p,
+                                                      color: Colors.yellow,
+                                                      name: "1",
+                                                      dataSource: chartBerat1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -211,6 +254,8 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
+                                                      color: Colors.green,
+                                                      name: "0",
                                                       dataSource:
                                                           chartBeratNormalp,
                                                       xValueMapper:
@@ -221,7 +266,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat1p,
+                                                      color: Colors.yellow,
+                                                      name: "-1",
+                                                      dataSource: chartBeratn1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -230,7 +277,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat2p,
+                                                      color: Colors.red,
+                                                      name: "-2",
+                                                      dataSource: chartBeratn2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -239,7 +288,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat3p,
+                                                      color: Colors.black,
+                                                      name: "-3",
+                                                      dataSource: chartBeratn3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -363,17 +414,36 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:
                                                       _zoomPanBehavior,
-                                                  // tooltipBehavior: _tooltipBehavior,
+                                                  legend:
+                                                      Legend(isVisible: true),
+                                                  tooltipBehavior:
+                                                      _tooltipBehavior,
                                                   primaryXAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text: 'Umur(Bulan)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
                                                     interval: 1,
                                                   ),
                                                   primaryYAxis: NumericAxis(
+                                                      title: AxisTitle(
+                                                          text:
+                                                              'Berat Badan(Kg)',
+                                                          textStyle: TextStyle(
+                                                              fontSize: 10)),
                                                       interval: 0.5),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
+                                                        color: Colors.blue[700],
+                                                        name: "Bulan:Berat",
+                                                        isVisibleInLegend:
+                                                            false,
+                                                        enableTooltip: true,
                                                         dataSource:
                                                             pemeriksaanbalita
                                                                 .data,
+                                                        xAxisName: "bulan",
+                                                        yAxisName: "kg",
                                                         xValueMapper: (Map data,
                                                                 _) =>
                                                             int.parse(data[
@@ -381,25 +451,26 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                         yValueMapper: (Map data,
                                                                 _) =>
                                                             data["berat_badan"],
-                                                        dataLabelMapper: (Map
-                                                                    data,
-                                                                _) =>
-                                                            data[
-                                                                "umur_balita"] +
-                                                            ': ' +
-                                                            data["berat_badan"]
-                                                                .toString(),
-                                                        dataLabelSettings:
-                                                            DataLabelSettings(
-                                                          // Renders the data label
-                                                          isVisible: true,
-                                                        ),
+                                                        // dataLabelMapper: (Map data,
+                                                        //         _) =>
+                                                        //     data["umur_balita"] +
+                                                        //     ': ' +
+                                                        //     data["berat_badan"]
+                                                        //         .toString(),
+                                                        // dataLabelSettings:
+                                                        //     DataLabelSettings(
+                                                        //   // Renders the data label
+                                                        //   isVisible: true,
+                                                        // ),
                                                         markerSettings:
                                                             MarkerSettings(
                                                                 isVisible:
                                                                     true)),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn3l,
+                                                      enableTooltip: false,
+                                                      color: Colors.black,
+                                                      name: "3",
+                                                      dataSource: chartBerat3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -408,7 +479,10 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn2l,
+                                                      enableTooltip: false,
+                                                      color: Colors.red,
+                                                      name: "2",
+                                                      dataSource: chartBerat2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -417,7 +491,10 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn1l,
+                                                      enableTooltip: false,
+                                                      color: Colors.yellow,
+                                                      name: "1",
+                                                      dataSource: chartBerat1l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -426,6 +503,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
+                                                      enableTooltip: false,
+                                                      color: Colors.green,
+                                                      name: "0",
                                                       dataSource:
                                                           chartBeratNormall,
                                                       xValueMapper:
@@ -436,7 +516,10 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat1l,
+                                                      enableTooltip: false,
+                                                      color: Colors.yellow,
+                                                      name: "-1",
+                                                      dataSource: chartBeratn1l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -445,7 +528,10 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat2l,
+                                                      enableTooltip: false,
+                                                      color: Colors.red,
+                                                      name: "-2",
+                                                      dataSource: chartBeratn2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -454,7 +540,10 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat3l,
+                                                      enableTooltip: false,
+                                                      color: Colors.black,
+                                                      name: "-3",
+                                                      dataSource: chartBeratn3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -466,15 +555,35 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                 );
                                               } else {
                                                 return SfCartesianChart(
+                                                  tooltipBehavior:
+                                                      _tooltipBehavior,
+                                                  legend:
+                                                      Legend(isVisible: true),
                                                   zoomPanBehavior:
                                                       _zoomPanBehavior,
                                                   primaryXAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text: 'Umur(Bulan)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
                                                     interval: 1,
                                                   ),
                                                   primaryYAxis: NumericAxis(
+                                                      title: AxisTitle(
+                                                          text:
+                                                              'Berat Badan(Kg)',
+                                                          textStyle: TextStyle(
+                                                              fontSize: 10)),
                                                       interval: 0.5),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
+                                                        isVisibleInLegend:
+                                                            false,
+                                                        color: Colors.blue[700],
+                                                        name: "Bulan:Berat",
+                                                        enableTooltip: true,
+                                                        xAxisName: "bulan",
+                                                        yAxisName: "kg",
                                                         dataSource:
                                                             pemeriksaanbalita
                                                                 .data,
@@ -485,21 +594,25 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                         yValueMapper: (Map data,
                                                                 _) =>
                                                             data["berat_badan"],
-                                                        dataLabelMapper: (Map
-                                                                    data,
-                                                                _) =>
-                                                            data[
-                                                                "umur_balita"] +
-                                                            ': ' +
-                                                            data["berat_badan"]
-                                                                .toString(),
-                                                        dataLabelSettings:
-                                                            DataLabelSettings(
-                                                          // Renders the data label
-                                                          isVisible: true,
-                                                        )),
+                                                        // dataLabelMapper: (Map data,
+                                                        //         _) =>
+                                                        //     data["umur_balita"] +
+                                                        //     ': ' +
+                                                        //     data["berat_badan"]
+                                                        //         .toString(),
+                                                        // dataLabelSettings:
+                                                        //     DataLabelSettings(
+                                                        //   // Renders the data label
+                                                        //   isVisible: true,
+                                                        // )
+                                                        markerSettings:
+                                                            MarkerSettings(
+                                                                isVisible:
+                                                                    true)),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn3p,
+                                                      color: Colors.black,
+                                                      name: "3",
+                                                      dataSource: chartBerat3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -508,7 +621,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn2p,
+                                                      color: Colors.red,
+                                                      name: "2",
+                                                      dataSource: chartBerat2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -517,7 +632,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBeratn1p,
+                                                      color: Colors.yellow,
+                                                      name: "1",
+                                                      dataSource: chartBerat1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -526,6 +643,8 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
+                                                      color: Colors.green,
+                                                      name: "0",
                                                       dataSource:
                                                           chartBeratNormalp,
                                                       xValueMapper:
@@ -536,7 +655,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat1p,
+                                                      color: Colors.yellow,
+                                                      name: "-1",
+                                                      dataSource: chartBeratn1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -545,7 +666,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat2p,
+                                                      color: Colors.red,
+                                                      name: "-2",
+                                                      dataSource: chartBeratn2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -554,7 +677,9 @@ class _BeratBadanPagePetugasState extends State<BeratBadanPagePetugas> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartBerat3p,
+                                                      color: Colors.black,
+                                                      name: "-3",
+                                                      dataSource: chartBeratn3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],

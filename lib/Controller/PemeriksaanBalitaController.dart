@@ -66,7 +66,7 @@ class PemeriksaanBalitaController extends GetxController
         vitaminId: responsedecode['data'][i]["vitamin_id"],
         balitaId: responsedecode['data'][i]["balita_id"],
         petugasKesehatanId: responsedecode['data'][i]["petugas_kesehatan_id"],
-        dokterId: responsedecode['data'][i]["dokter_id"],
+        dokterId: responsedecode['data'][i]["dokter_id"] ?? 0,
         createdAt: responsedecode['data'][i]["created_at"],
         updatedAt: responsedecode['data'][i]["updated_at"],
       );
@@ -102,7 +102,7 @@ class PemeriksaanBalitaController extends GetxController
     pemeriksaanBalitaByPetugas.value.keluhan = keluhan.text;
     pemeriksaanBalitaByPetugas.value.penanganan = penanganan.text;
     pemeriksaanBalitaByPetugas.value.vitaminId = vitamin_id;
-    pemeriksaanBalitaByPetugas.value.dokterId = dokter_id;
+    // pemeriksaanBalitaByPetugas.value.dokterId = dokter_id;
     pemeriksaanBalitaByPetugas.value.balitaId = balita_id;
 
     if (isVaksinCheck.value) {

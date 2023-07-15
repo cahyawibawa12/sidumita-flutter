@@ -174,6 +174,10 @@ class _LandinLoginPesertaState extends State<LandinLoginPeserta> {
                                         } else if (value.length < 16) {
                                           return 'Masukkan NIK dengan Benar';
                                         }
+                                        if (value.contains(",") ||
+                                            value.contains(".")) {
+                                          return 'Masukkan NIK dengan Benar';
+                                        }
                                         keluarga.nikKeluarga.text = value;
                                         return null;
                                       },

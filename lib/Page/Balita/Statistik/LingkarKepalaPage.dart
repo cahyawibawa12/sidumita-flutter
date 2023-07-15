@@ -21,6 +21,7 @@ class LingkarKepalaPage extends StatefulWidget {
 class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
   var pemeriksaanbalita = Get.put(PemeriksaanBalitaController());
   late ZoomPanBehavior _zoomPanBehavior;
+  late TooltipBehavior _tooltipBehavior;
   var umur = Get.put(DetailKeluargaController());
 
   @override
@@ -33,6 +34,7 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
       zoomMode: ZoomMode.x,
       enablePanning: true,
     );
+    _tooltipBehavior = TooltipBehavior(enable: true, duration: 1);
     // umur.GetUmur(widget.balitaModel.detailKeluarga!.id!);
   }
 
@@ -144,14 +146,35 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:
                                                       _zoomPanBehavior,
+                                                  legend:
+                                                      Legend(isVisible: true),
+                                                  tooltipBehavior:
+                                                      _tooltipBehavior,
                                                   primaryXAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text: 'Umur(Bulan)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
                                                     interval: 1,
                                                   ),
                                                   primaryYAxis: NumericAxis(
+                                                      title: AxisTitle(
+                                                          text:
+                                                              'Lingkar Kepala(Cm)',
+                                                          textStyle: TextStyle(
+                                                              fontSize: 10)),
                                                       interval: 0.5,
                                                       minimum: 28),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
+                                                        color: Colors.blue[700],
+                                                        name:
+                                                            "Bulan:Lingkar Kepala",
+                                                        isVisibleInLegend:
+                                                            false,
+                                                        enableTooltip: true,
+                                                        xAxisName: "Bulan",
+                                                        yAxisName: "Cm",
                                                         dataSource:
                                                             pemeriksaanbalita
                                                                 .data,
@@ -159,29 +182,30 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                                 _) =>
                                                             int.parse(data[
                                                                 "umur_balita"]),
-                                                        yValueMapper: (Map
-                                                                    data,
+                                                        yValueMapper: (Map data,
                                                                 _) =>
                                                             data[
                                                                 "lingkar_kepala"],
-                                                        dataLabelMapper: (Map data,
-                                                                _) =>
-                                                            data["umur_balita"] +
-                                                            ': ' +
-                                                            data["lingkar_kepala"]
-                                                                .toString(),
-                                                        dataLabelSettings:
-                                                            DataLabelSettings(
-                                                          // Renders the data label
-                                                          isVisible: true,
-                                                        ),
+                                                        // dataLabelMapper: (Map data,
+                                                        //         _) =>
+                                                        //     data["umur_balita"] +
+                                                        //     ': ' +
+                                                        //     data["lingkar_kepala"]
+                                                        //         .toString(),
+                                                        // dataLabelSettings:
+                                                        //     DataLabelSettings(
+                                                        //   // Renders the data label
+                                                        //   isVisible: true,
+                                                        // ),
                                                         markerSettings:
                                                             MarkerSettings(
                                                                 isVisible:
                                                                     true)),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan3l,
+                                                      color: Colors.black,
+                                                      name: "3",
+                                                      enableTooltip: false,
+                                                      dataSource: chartKepala3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -190,8 +214,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan2l,
+                                                      color: Colors.red,
+                                                      name: "2",
+                                                      enableTooltip: false,
+                                                      dataSource: chartKepala2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -200,8 +226,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan1l,
+                                                      dataSource: chartKepala1l,
+                                                      color: Colors.yellow,
+                                                      name: "1",
+                                                      enableTooltip: false,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -210,6 +238,9 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
+                                                      color: Colors.green,
+                                                      name: "0",
+                                                      enableTooltip: false,
                                                       dataSource:
                                                           chartKepalaNormall,
                                                       xValueMapper:
@@ -220,7 +251,11 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala1l,
+                                                      color: Colors.yellow,
+                                                      name: "-1",
+                                                      enableTooltip: false,
+                                                      dataSource:
+                                                          chartKepalan1l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -229,7 +264,11 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala2l,
+                                                      color: Colors.red,
+                                                      name: "-2",
+                                                      enableTooltip: false,
+                                                      dataSource:
+                                                          chartKepalan2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -238,7 +277,11 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala3l,
+                                                      color: Colors.black,
+                                                      name: "-3",
+                                                      enableTooltip: false,
+                                                      dataSource:
+                                                          chartKepalan3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -252,14 +295,35 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:
                                                       _zoomPanBehavior,
+                                                  legend:
+                                                      Legend(isVisible: true),
+                                                  tooltipBehavior:
+                                                      _tooltipBehavior,
                                                   primaryXAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text: 'Umur(Bulan)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
                                                     interval: 1,
                                                   ),
                                                   primaryYAxis: NumericAxis(
+                                                      title: AxisTitle(
+                                                          text:
+                                                              'Lingkar Kepala(Cm)',
+                                                          textStyle: TextStyle(
+                                                              fontSize: 10)),
                                                       interval: 0.5,
                                                       minimum: 28),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
+                                                        color: Colors.blue[700],
+                                                        name:
+                                                            "Bulan:Lingkar Kepala",
+                                                        isVisibleInLegend:
+                                                            false,
+                                                        enableTooltip: true,
+                                                        xAxisName: "Bulan",
+                                                        yAxisName: "Cm",
                                                         dataSource:
                                                             pemeriksaanbalita
                                                                 .data,
@@ -271,22 +335,28 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                                 _) =>
                                                             data[
                                                                 "lingkar_kepala"],
-                                                        dataLabelMapper: (Map
-                                                                    data,
-                                                                _) =>
-                                                            data[
-                                                                "umur_balita"] +
-                                                            ': ' +
-                                                            data["lingkar_kepala"]
-                                                                .toString(),
-                                                        dataLabelSettings:
-                                                            DataLabelSettings(
-                                                          // Renders the data label
-                                                          isVisible: true,
-                                                        )),
+                                                        // dataLabelMapper: (Map
+                                                        //             data,
+                                                        //         _) =>
+                                                        //     data[
+                                                        //         "umur_balita"] +
+                                                        //     ': ' +
+                                                        //     data["lingkar_kepala"]
+                                                        //         .toString(),
+                                                        // dataLabelSettings:
+                                                        //     DataLabelSettings(
+                                                        //   // Renders the data label
+                                                        //   isVisible: true,
+                                                        // )
+                                                        markerSettings:
+                                                            MarkerSettings(
+                                                                isVisible:
+                                                                    true)),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan3p,
+                                                      color: Colors.black,
+                                                      name: "-3",
+                                                      enableTooltip: false,
+                                                      dataSource: chartKepala3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -295,8 +365,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan2p,
+                                                      color: Colors.red,
+                                                      name: "2",
+                                                      enableTooltip: false,
+                                                      dataSource: chartKepala2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -305,8 +377,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan1p,
+                                                      color: Colors.yellow,
+                                                      name: "1",
+                                                      enableTooltip: false,
+                                                      dataSource: chartKepala1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -315,6 +389,9 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
+                                                      color: Colors.green,
+                                                      name: "0",
+                                                      enableTooltip: false,
                                                       dataSource:
                                                           chartKepalaNormalp,
                                                       xValueMapper:
@@ -325,7 +402,11 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala1p,
+                                                      color: Colors.yellow,
+                                                      name: "-1",
+                                                      enableTooltip: false,
+                                                      dataSource:
+                                                          chartKepalan1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -334,7 +415,11 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala2p,
+                                                      color: Colors.red,
+                                                      name: "-2",
+                                                      enableTooltip: false,
+                                                      dataSource:
+                                                          chartKepalan2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -343,7 +428,11 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala3p,
+                                                      color: Colors.black,
+                                                      name: "-3",
+                                                      enableTooltip: false,
+                                                      dataSource:
+                                                          chartKepalan3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -423,16 +512,28 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:
                                                       _zoomPanBehavior,
+                                                  legend:
+                                                      Legend(isVisible: true),
                                                   primaryXAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text: 'Umur(Bulan)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
                                                     interval: 1,
                                                   ),
                                                   primaryYAxis: NumericAxis(
+                                                      title: AxisTitle(
+                                                          text:
+                                                              'Lingkar Kepala(Cm)',
+                                                          textStyle: TextStyle(
+                                                              fontSize: 10)),
                                                       interval: 0.5,
                                                       minimum: 28),
                                                   series: <ChartSeries>[
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan3l,
+                                                      color: Colors.black,
+                                                      name: "3",
+                                                      dataSource: chartKepala3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -441,8 +542,9 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan2l,
+                                                      color: Colors.red,
+                                                      name: "2",
+                                                      dataSource: chartKepala2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -451,8 +553,9 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan1l,
+                                                      color: Colors.yellow,
+                                                      name: "1",
+                                                      dataSource: chartKepala1l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -461,6 +564,8 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
+                                                      color: Colors.green,
+                                                      name: "0",
                                                       dataSource:
                                                           chartKepalaNormall,
                                                       xValueMapper:
@@ -471,7 +576,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala1l,
+                                                      dataSource:
+                                                          chartKepalan1l,
+                                                      color: Colors.yellow,
+                                                      name: "-1",
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -480,7 +588,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala2l,
+                                                      color: Colors.red,
+                                                      name: "-2",
+                                                      dataSource:
+                                                          chartKepalan2l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -489,7 +600,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala3l,
+                                                      color: Colors.black,
+                                                      name: "-3",
+                                                      dataSource:
+                                                          chartKepalan3l,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -503,41 +617,53 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                 return SfCartesianChart(
                                                   zoomPanBehavior:
                                                       _zoomPanBehavior,
+                                                  legend:
+                                                      Legend(isVisible: true),
                                                   primaryXAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text: 'Umur(Bulan)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
                                                     interval: 1,
                                                   ),
                                                   primaryYAxis: NumericAxis(
+                                                      title: AxisTitle(
+                                                          text:
+                                                              'Lingkar Kepala(Cm)',
+                                                          textStyle: TextStyle(
+                                                              fontSize: 10)),
                                                       interval: 0.5,
                                                       minimum: 28),
                                                   series: <ChartSeries>[
+                                                    // LineSeries<Map, int>(
+                                                    //     dataSource:
+                                                    //         pemeriksaanbalita
+                                                    //             .data,
+                                                    //     xValueMapper: (Map data,
+                                                    //             _) =>
+                                                    //         int.parse(data[
+                                                    //             "umur_balita"]),
+                                                    //     yValueMapper: (Map data,
+                                                    //             _) =>
+                                                    //         data[
+                                                    //             "lingkar_kepala"],
+                                                    //     dataLabelMapper: (Map
+                                                    //                 data,
+                                                    //             _) =>
+                                                    //         data[
+                                                    //             "umur_balita"] +
+                                                    //         ': ' +
+                                                    //         data["lingkar_kepala"]
+                                                    //             .toString(),
+                                                    //     dataLabelSettings:
+                                                    //         DataLabelSettings(
+                                                    //       // Renders the data label
+                                                    //       isVisible: true,
+                                                    //     )),
                                                     LineSeries<Map, int>(
-                                                        dataSource:
-                                                            pemeriksaanbalita
-                                                                .data,
-                                                        xValueMapper: (Map data,
-                                                                _) =>
-                                                            int.parse(data[
-                                                                "umur_balita"]),
-                                                        yValueMapper: (Map data,
-                                                                _) =>
-                                                            data[
-                                                                "lingkar_kepala"],
-                                                        dataLabelMapper: (Map
-                                                                    data,
-                                                                _) =>
-                                                            data[
-                                                                "umur_balita"] +
-                                                            ': ' +
-                                                            data["lingkar_kepala"]
-                                                                .toString(),
-                                                        dataLabelSettings:
-                                                            DataLabelSettings(
-                                                          // Renders the data label
-                                                          isVisible: true,
-                                                        )),
-                                                    LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan3p,
+                                                      color: Colors.black,
+                                                      name: "3",
+                                                      dataSource: chartKepala3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -546,8 +672,9 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan2p,
+                                                      color: Colors.red,
+                                                      name: "2",
+                                                      dataSource: chartKepala2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -556,8 +683,9 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource:
-                                                          chartKepalan1p,
+                                                      color: Colors.yellow,
+                                                      name: "1",
+                                                      dataSource: chartKepala1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -566,6 +694,8 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
+                                                      color: Colors.green,
+                                                      name: "0",
                                                       dataSource:
                                                           chartKepalaNormalp,
                                                       xValueMapper:
@@ -576,7 +706,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala1p,
+                                                      color: Colors.yellow,
+                                                      name: "-1",
+                                                      dataSource:
+                                                          chartKepalan1p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -585,7 +718,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala2p,
+                                                      color: Colors.red,
+                                                      name: "-2",
+                                                      dataSource:
+                                                          chartKepalan2p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],
@@ -594,7 +730,10 @@ class _LingkarKepalaPageState extends State<LingkarKepalaPage> {
                                                               data["data"],
                                                     ),
                                                     LineSeries<Map, int>(
-                                                      dataSource: chartKepala3p,
+                                                      color: Colors.black,
+                                                      name: "-3",
+                                                      dataSource:
+                                                          chartKepalan3p,
                                                       xValueMapper:
                                                           (Map data, _) =>
                                                               data["umur"],

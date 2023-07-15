@@ -118,6 +118,10 @@ class _FormAnggotaKeluargaState extends State<FormAnggotaKeluarga> {
                                     } else if (nameValue.length < 16) {
                                       return 'Masukkan NIK dengan Benar';
                                     }
+                                    if (nameValue.contains(",") ||
+                                        nameValue.contains(".")) {
+                                      return 'Masukkan NIK dengan Benar';
+                                    }
                                     detailKeluarga.det_nik.text = nameValue;
                                     return null;
                                   }),

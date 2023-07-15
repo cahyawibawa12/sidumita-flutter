@@ -28,13 +28,13 @@ class _HomePagePetugasState extends State<HomePagePetugas> {
   String name = '';
   String email = '';
   var kontenController = Get.put(KontenController());
-  var bioPetugas = Get.put(PetugasController());
+  // var bioPetugas = Get.put(PetugasController());
 
   @override
   void initState() {
     super.initState();
     kontenController.ShowKonten();
-    bioPetugas.ShowPetugas();
+    // bioPetugas.ShowPetugas();
     _loadUserData();
   }
 

@@ -178,6 +178,10 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                         } else if (noKKValue.length < 16) {
                                           return 'Masukkan NIK dengan Benar';
                                         }
+                                        if (noKKValue.contains(",") ||
+                                            noKKValue.contains(".")) {
+                                          return 'Masukkan NIK dengan Benar';
+                                        }
                                         no_kk = noKKValue;
                                         return null;
                                       }),

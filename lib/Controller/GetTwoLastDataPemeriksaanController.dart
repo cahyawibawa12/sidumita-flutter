@@ -30,7 +30,7 @@ class GetTwoLastDataPemeriksaanBalitaController extends GetxController
         vitaminId: responsedecode['data'][i]["vitamin_id"],
         balitaId: responsedecode['data'][i]["balita_id"],
         petugasKesehatanId: responsedecode['data'][i]["petugas_kesehatan_id"],
-        dokterId: responsedecode['data'][i]["dokter_id"],
+        dokterId: responsedecode['data'][i]["dokter_id"] ?? 0,
         createdAt: responsedecode['data'][i]["created_at"],
         updatedAt: responsedecode['data'][i]["updated_at"],
       );

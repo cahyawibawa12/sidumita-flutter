@@ -6,9 +6,9 @@ class PetugasWithKeluargaModel {
   String? jumlah;
   String? userId;
   String? dusunId;
-  Null? createdAt;
-  Null? updatedAt;
-  Null? deletedAt;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
   String? namaDusun;
   String? desaId;
 
@@ -34,9 +34,9 @@ class PetugasWithKeluargaModel {
     jumlah = json['jumlah'];
     userId = json['user_id'].toString();
     dusunId = json['dusun_id'].toString();
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
+    createdAt = json['created_at'] ?? "-";
+    updatedAt = json['updated_at'] ?? "-";
+    deletedAt = json['deleted_at'] ?? "-";
     namaDusun = json['nama_dusun'];
     desaId = json['desa_id'].toString();
   }

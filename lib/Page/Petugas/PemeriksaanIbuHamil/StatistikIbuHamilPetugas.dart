@@ -157,13 +157,29 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                             return SfCartesianChart(
                                                 zoomPanBehavior:
                                                     _zoomPanBehavior,
+                                                tooltipBehavior:
+                                                    _tooltipBehavior,
                                                 primaryXAxis: NumericAxis(
+                                                  title: AxisTitle(
+                                                      text:
+                                                          'Umur Kandungan(Minggu)',
+                                                      textStyle: TextStyle(
+                                                          fontSize: 10)),
                                                   interval: 1,
                                                 ),
-                                                primaryYAxis:
-                                                    NumericAxis(interval: 1),
+                                                primaryYAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text:
+                                                            'Rekomendasi Berat(Kg)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
+                                                    interval: 1),
                                                 series: <CartesianSeries>[
                                                   LineSeries<Map, int>(
+                                                      name:
+                                                          "Umur Kandungan:Peningkatan Berat",
+                                                      isVisibleInLegend: false,
+                                                      enableTooltip: true,
                                                       dataSource:
                                                           dataBeratIbu.data,
                                                       xValueMapper: (Map data,
@@ -184,6 +200,7 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                                   SplineRangeAreaSeries<
                                                           ChartData, num>(
                                                       dataSource: underWeight,
+                                                      enableTooltip: false,
                                                       xValueMapper:
                                                           (ChartData data, _) =>
                                                               data.xValue,
@@ -204,15 +221,31 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                             return SfCartesianChart(
                                                 zoomPanBehavior:
                                                     _zoomPanBehavior,
+                                                tooltipBehavior:
+                                                    _tooltipBehavior,
                                                 primaryXAxis: NumericAxis(
+                                                  title: AxisTitle(
+                                                      text:
+                                                          'Umur Kandungan(Minggu)',
+                                                      textStyle: TextStyle(
+                                                          fontSize: 10)),
                                                   interval: 1,
                                                 ),
-                                                primaryYAxis:
-                                                    NumericAxis(interval: 1),
+                                                primaryYAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text:
+                                                            'Rekomendasi Berat Tambahan(Kg)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
+                                                    interval: 1),
                                                 series: <CartesianSeries>[
                                                   LineSeries<Map, int>(
                                                       dataSource:
                                                           dataBeratIbu.data,
+                                                      name:
+                                                          "Umur Kandungan:Peningkatan Berat",
+                                                      isVisibleInLegend: false,
+                                                      enableTooltip: true,
                                                       xValueMapper: (Map data,
                                                               _) =>
                                                           int.parse(data[
@@ -220,17 +253,18 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                                       yValueMapper: (Map data,
                                                               _) =>
                                                           data["berat_badan"],
-                                                      dataLabelSettings:
-                                                          DataLabelSettings(
-                                                        // Renders the data label
-                                                        isVisible: true,
-                                                      ),
+                                                      // dataLabelSettings:
+                                                      //     DataLabelSettings(
+                                                      //   // Renders the data label
+                                                      //   isVisible: true,
+                                                      // ),
                                                       markerSettings:
                                                           MarkerSettings(
                                                               isVisible: true)),
                                                   SplineRangeAreaSeries<
                                                           ChartData, num>(
                                                       dataSource: normalWeight,
+                                                      enableTooltip: false,
                                                       xValueMapper:
                                                           (ChartData data, _) =>
                                                               data.xValue,
@@ -251,13 +285,29 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                             return SfCartesianChart(
                                                 zoomPanBehavior:
                                                     _zoomPanBehavior,
+                                                tooltipBehavior:
+                                                    _tooltipBehavior,
                                                 primaryXAxis: NumericAxis(
+                                                  title: AxisTitle(
+                                                      text:
+                                                          'Umur Kandungan(Minggu)',
+                                                      textStyle: TextStyle(
+                                                          fontSize: 10)),
                                                   interval: 1,
                                                 ),
-                                                primaryYAxis:
-                                                    NumericAxis(interval: 1),
+                                                primaryYAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text:
+                                                            'Rekomendasi Berat Tambahan(Kg)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
+                                                    interval: 1),
                                                 series: <CartesianSeries>[
                                                   LineSeries<Map, int>(
+                                                      name:
+                                                          "Umur Kandungan:Peningkatan Berat",
+                                                      isVisibleInLegend: false,
+                                                      enableTooltip: true,
                                                       dataSource:
                                                           dataBeratIbu.data,
                                                       xValueMapper: (Map data,
@@ -278,6 +328,7 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                                   SplineRangeAreaSeries<
                                                           ChartData, num>(
                                                       dataSource: overWeight,
+                                                      enableTooltip: false,
                                                       xValueMapper:
                                                           (ChartData data, _) =>
                                                               data.xValue,
@@ -294,15 +345,31 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                             return SfCartesianChart(
                                                 zoomPanBehavior:
                                                     _zoomPanBehavior,
+                                                tooltipBehavior:
+                                                    _tooltipBehavior,
                                                 primaryXAxis: NumericAxis(
+                                                  title: AxisTitle(
+                                                      text:
+                                                          'Umur Kandungan(Minggu)',
+                                                      textStyle: TextStyle(
+                                                          fontSize: 10)),
                                                   interval: 1,
                                                 ),
-                                                primaryYAxis:
-                                                    NumericAxis(interval: 1),
+                                                primaryYAxis: NumericAxis(
+                                                    title: AxisTitle(
+                                                        text:
+                                                            'Rekomendasi Berat Tambahan(Kg)',
+                                                        textStyle: TextStyle(
+                                                            fontSize: 10)),
+                                                    interval: 1),
                                                 series: <CartesianSeries>[
                                                   LineSeries<Map, int>(
                                                       dataSource:
                                                           dataBeratIbu.data,
+                                                      name:
+                                                          "Umur Kandungan:Peningkatan Berat",
+                                                      isVisibleInLegend: false,
+                                                      enableTooltip: true,
                                                       xValueMapper: (Map data,
                                                               _) =>
                                                           int.parse(data[
@@ -321,6 +388,7 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                                   SplineRangeAreaSeries<
                                                           ChartData, num>(
                                                       dataSource: obeseWeight,
+                                                      enableTooltip: false,
                                                       xValueMapper:
                                                           (ChartData data, _) =>
                                                               data.xValue,
@@ -451,9 +519,17 @@ class _StatistikIbuHamilPetugasState extends State<StatistikIbuHamilPetugas> {
                                     child: SfCartesianChart(
                                       zoomPanBehavior: _zoomPanBehavior,
                                       primaryXAxis: NumericAxis(
+                                        title: AxisTitle(
+                                            text: 'Umur Kandungan(Minggu)',
+                                            textStyle: TextStyle(fontSize: 10)),
                                         interval: 1,
                                       ),
-                                      primaryYAxis: NumericAxis(interval: 1),
+                                      primaryYAxis: NumericAxis(
+                                          title: AxisTitle(
+                                              text: 'Rekomendasi Berat(Kg)',
+                                              textStyle:
+                                                  TextStyle(fontSize: 10)),
+                                          interval: 1),
                                       series: <CartesianSeries>[
                                         SplineRangeAreaSeries<ChartData, num>(
                                             dataSource: underWeight,
