@@ -74,4 +74,14 @@ class DetailKeluargaService {
     print(response.body);
     return response;
   }
+
+  Future<http.Response> showIbuHamilFromKeluarga() async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(baseURL + 'me/ibuhamils-from-keluarga');
+    http.Response response = await http.get(url, headers: setHeaders(token));
+    print(response.body);
+    return response;
+  }
 }

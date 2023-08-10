@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 import '../Page/LandingPage.dart';
@@ -13,8 +14,8 @@ class OnBoarding extends StatelessWidget {
     const bodyStyle = TextStyle(fontSize: 19.0);
 
     const pageDecoration = PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
-      bodyTextStyle: bodyStyle,
+      titleTextStyle: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700),
+      bodyTextStyle: TextStyle(fontSize: 18.0),
       bodyPadding: EdgeInsets.all(16),
       pageColor: Colors.white,
       imagePadding: EdgeInsets.zero,
@@ -23,37 +24,68 @@ class OnBoarding extends StatelessWidget {
       globalBackgroundColor: Colors.white,
       pages: [
         PageViewModel(
-          title: "Fractional shares",
+          title: "SIDUMITA",
           body:
-              "Instead of having to buy an entire share, invest any amount you want.",
-          image: Image.asset('assets/images/Logo.png'),
+              "Selamat Datang pada Sistem Informasi Posyandu Ibu Hamil dan Balita",
+          image: Image.asset('assets/images/Logo.png', scale: 2),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Learn as you go",
+          title: "Login User",
           body:
-              "Download the Stockpile app and master the market with our mini-lesson.",
-          image: Image.asset('assets/images/Logo.png'),
+              "Kalian dapat melakukan login dengan menekan icon pada bagian pojok kanan atas seperti pada gambar",
+          image: Image.asset('assets/images/login1.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-            title: "Kids and teens",
-            body:
-                "Kids and teens can track their stocks 24/7 and place trades that you approve.",
-            image: Image.asset('assets/images/Logo.png'),
-            decoration: pageDecoration,
-            footer: Padding(
-              padding: const EdgeInsets.all(50),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (builder) {
-                    return LandingPage();
-                  }));
-                },
-                child: Text("Get Started"),
-              ),
-            )),
+          title: "Role User",
+          body:
+              "Pada Aplikasi Mobile Sidumita terdapat 2 buah user, kalian dapat memilih masuk sebagai salah satunya",
+          image: Image.asset('assets/images/pilihan.png', scale: 1.5),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Pemeriksaan Balita dan Ibu Hamil",
+          body: "User melihat riwayat pemeriksaan balita maupun ibu hamil",
+          image: Image.asset('assets/images/list.png', scale: 1.8),
+          decoration: pageDecoration,
+        ),
+
+        // PageViewModel(
+        //   title: "Jadwal Posyandu",
+        //   body:
+        //       "User dapat melihat jadwal dari posyandu sekitar daerah tempat tinggal",
+        //   image: Image.asset('assets/images/jadwal_1.png', scale: 1.8),
+        //   decoration: pageDecoration,
+        // ),
+        PageViewModel(
+          title: "Statistik Pertumbuhan",
+          body:
+              "User dapat melihat statistik pertumbuhan baik balita maupun ibu hamil",
+          image: Image.asset('assets/images/chart.png', scale: 2),
+          decoration: pageDecoration,
+        ),
+        // PageViewModel(
+        //   title: "",
+        //   body: "",
+        //   image: Image.asset(
+        //     'assets/images/pilihan.png',
+        //     scale: 1.5,
+        //   ),
+        //   decoration: pageDecoration,
+        //   // footer: Padding(
+        //   //   padding: const EdgeInsets.all(50),
+        //   //   child: ElevatedButton(
+        //   //     onPressed: () {
+        //   //       Navigator.pushReplacement(context,
+        //   //           MaterialPageRoute(builder: (builder) {
+        //   //         return LandingPage();
+        //   //       }));
+        //   //     },
+        //   //     child: Text("Mulai"),
+        //   //   ),
+        //   // )
+        // ),
       ],
       onDone: () {
         Navigator.pushReplacement(context,
@@ -78,7 +110,7 @@ class OnBoarding extends StatelessWidget {
       dotsDecorator: DotsDecorator(
           size: Size(10, 10),
           color: Colors.grey,
-          activeSize: Size(22, 10),
+          activeSize: Size(15, 10),
           activeShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(25)))),
     );

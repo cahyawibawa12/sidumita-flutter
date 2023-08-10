@@ -34,7 +34,7 @@ class PetugasService {
     // SharedPreferences localStorage = await SharedPreferences.getInstance();
     // var token = localStorage.getString('token')?.replaceAll('"', "");
     var token = await getToken();
-    var url = Uri.parse(baseURL + 'petugas/with-ibu-hamil');
+    var url = Uri.parse(baseURL + 'detail-keluarga/petugas/ibu-hamil');
     http.Response response = await http.get(url, headers: setHeaders(token));
     print(response.body);
     return response;

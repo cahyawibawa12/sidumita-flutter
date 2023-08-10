@@ -3,6 +3,7 @@ import 'package:focus_detector_v2/focus_detector_v2.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/CekDataController.dart';
 import 'package:posyandu/Controller/PemeriksaanIbuHamilController.dart';
+import 'package:posyandu/Model/KehamilanModel.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanIbuHamil/DetailRiwayatIbuHamil.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanIbuHamil/FormPemeriksaanIbuHamil.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanIbuHamil/StatistikIbuHamilPetugas.dart';
@@ -10,9 +11,8 @@ import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:intl/intl.dart';
 
 class RiwayatPemeriksaanIbuHamil extends StatefulWidget {
-  RiwayatPemeriksaanIbuHamil(
-      {super.key, required this.petugasWithIbuHamilModel});
-  final Map petugasWithIbuHamilModel;
+  RiwayatPemeriksaanIbuHamil({super.key, required this.kehamilanModel});
+  KehamilanModel kehamilanModel;
 
   @override
   State<RiwayatPemeriksaanIbuHamil> createState() =>
@@ -28,14 +28,13 @@ class _RiwayatPemeriksaanIbuHamilState
   void initState() {
     super.initState();
     pemeriksaanibuhamil
-        .getPemeriksaanIbuHamil(
-            int.parse(widget.petugasWithIbuHamilModel["id"]))
+        .getPemeriksaanIbuHamil(int.parse(widget.kehamilanModel.id.toString()))
         .whenComplete(
       () {
         dataBeratIbu
-            .getBeratIbu(int.parse(widget.petugasWithIbuHamilModel["id"]));
+            .getBeratIbu(int.parse(widget.kehamilanModel.id.toString()));
         dataBeratIbu.statusBeratIbu(
-            ibu_hamil_id: int.parse(widget.petugasWithIbuHamilModel["id"]),
+            ibu_hamil_id: int.parse(widget.kehamilanModel.id.toString()),
             berat_badan: pemeriksaanibuhamil
                 .listPemeriksaanIbuHamil[0].beratBadan
                 .toString(),
@@ -51,7 +50,7 @@ class _RiwayatPemeriksaanIbuHamilState
     return FocusDetector(
       onFocusGained: () {
         pemeriksaanibuhamil.getPemeriksaanIbuHamil(
-            int.parse(widget.petugasWithIbuHamilModel["id"]));
+            int.parse(widget.kehamilanModel.id.toString()));
       },
       child: Stack(
         children: [
@@ -81,8 +80,7 @@ class _RiwayatPemeriksaanIbuHamilState
                               context,
                               MaterialPageRoute(
                                   builder: (context) => FormPemeriksaanIbuHamil(
-                                        petugasWithIbuHamilModel:
-                                            widget.petugasWithIbuHamilModel,
+                                        kehamilanModel: widget.kehamilanModel,
                                       )));
                         },
                         child: const Text("Tambah Data"),
@@ -99,8 +97,7 @@ class _RiwayatPemeriksaanIbuHamilState
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => StatistikIbuHamilPetugas(
-                                    petugasWithIbuHamilModel:
-                                        widget.petugasWithIbuHamilModel,
+                                    kehamilanModel: widget.kehamilanModel,
                                   )));
                         },
                         child: const Text("Statistik"),
@@ -205,8 +202,8 @@ class _RiwayatPemeriksaanIbuHamilState
                                                 .id)
                                         .then((value) => pemeriksaanibuhamil
                                             .getPemeriksaanIbuHamil(int.parse(
-                                                widget.petugasWithIbuHamilModel[
-                                                    "id"])));
+                                                widget.kehamilanModel.id
+                                                    .toString())));
                                     return Future.value(true);
                                   }
                                   return Future.value(false);

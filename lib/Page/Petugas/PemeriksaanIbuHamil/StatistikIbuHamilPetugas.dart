@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:posyandu/Controller/CekDataController.dart';
 import 'package:posyandu/Controller/PemeriksaanIbuHamilController.dart';
 import 'package:posyandu/Model/IbuHamilModel.dart';
+import 'package:posyandu/Model/KehamilanModel.dart';
 import 'package:posyandu/Page/Balita/Statistik/BeratBadanPage.dart';
 import 'package:posyandu/Page/Balita/Statistik/LingkarKepalaPage.dart';
 import 'package:posyandu/Page/Balita/Statistik/TinggiBadanPage.dart';
@@ -14,9 +15,9 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class StatistikIbuHamilPetugas extends StatefulWidget {
-  StatistikIbuHamilPetugas({super.key, required this.petugasWithIbuHamilModel});
+  StatistikIbuHamilPetugas({super.key, required this.kehamilanModel});
 
-  final Map petugasWithIbuHamilModel;
+  KehamilanModel kehamilanModel;
 
   @override
   State<StatistikIbuHamilPetugas> createState() =>

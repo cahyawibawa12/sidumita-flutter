@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/PetugasController.dart';
+import 'package:posyandu/Page/Petugas/PemeriksaanIbuHamil/KehamilanPage.dart';
 import 'package:posyandu/Page/Petugas/PemeriksaanIbuHamil/RiwayatPemeriksaanIbuHamil.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 
@@ -100,12 +101,21 @@ class _PemeriksaanIbuHamilPageState extends State<PemeriksaanIbuHamilPage> {
                                       title: Text(
                                           _foundUsers[index]['nama_lengkap']),
                                       subtitle: Text(
-                                          '${_foundUsers[index]["nama_dusun"].toString()}'),
+                                          '${_foundUsers[index]["nik"].toString()}'),
+                                      // onTap: () {
+                                      //   Navigator.of(context).push(
+                                      //       MaterialPageRoute(
+                                      //           builder: (context) =>
+                                      //               RiwayatPemeriksaanIbuHamil(
+                                      //                 petugasWithIbuHamilModel:
+                                      //                     _foundUsers[index],
+                                      //               )));
+                                      // },
                                       onTap: () {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    RiwayatPemeriksaanIbuHamil(
+                                                    KehamilanPage(
                                                       petugasWithIbuHamilModel:
                                                           _foundUsers[index],
                                                     )));

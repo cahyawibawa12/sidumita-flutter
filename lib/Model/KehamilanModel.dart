@@ -1,4 +1,4 @@
-class IbuHamilModel {
+class KehamilanModel {
   int? id;
   String? kehamilanKe;
   String? beratBadanPrakehamilan;
@@ -10,7 +10,7 @@ class IbuHamilModel {
   Null? deletedAt;
   DetailKeluarga? detailKeluarga;
 
-  IbuHamilModel(
+  KehamilanModel(
       {this.id,
       this.kehamilanKe,
       this.beratBadanPrakehamilan,
@@ -22,11 +22,11 @@ class IbuHamilModel {
       this.deletedAt,
       this.detailKeluarga});
 
-  IbuHamilModel.fromJson(Map<String, dynamic> json) {
+  KehamilanModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     kehamilanKe = json['kehamilan_ke'];
-    beratBadanPrakehamilan = json['berat_badan_prakehamilan'] ?? "0";
-    tinggiBadanPrakehamilan = json['tinggi_badan_prakehamilan'] ?? "0";
+    beratBadanPrakehamilan = json['berat_badan_prakehamilan'];
+    tinggiBadanPrakehamilan = json['tinggi_badan_prakehamilan'];
     tanggalPrakehamilan = json['tanggal_prakehamilan'];
     detailKeluargaId = json['detail_keluarga_id'];
     createdAt = json['created_at'];

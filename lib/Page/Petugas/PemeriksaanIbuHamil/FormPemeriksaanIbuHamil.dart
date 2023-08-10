@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Controller/PemeriksaanIbuHamilController.dart';
 import 'package:posyandu/Controller/PetugasController.dart';
+import 'package:posyandu/Model/KehamilanModel.dart';
 import 'package:posyandu/widget/BackgroundImage.dart';
 import 'package:intl/intl.dart';
 
 class FormPemeriksaanIbuHamil extends StatefulWidget {
-  FormPemeriksaanIbuHamil({super.key, required this.petugasWithIbuHamilModel});
+  FormPemeriksaanIbuHamil({super.key, required this.kehamilanModel});
 
-  final Map petugasWithIbuHamilModel;
+  KehamilanModel kehamilanModel;
 
   @override
   State<FormPemeriksaanIbuHamil> createState() =>
@@ -25,7 +26,8 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
   void initState() {
     super.initState();
     bioPetugas.ShowPetugas();
-    nama_lengkap.text = widget.petugasWithIbuHamilModel['nama_lengkap'];
+    nama_lengkap.text =
+        widget.kehamilanModel.detailKeluarga!.namaLengkap!.toString();
     pemeriksaanIbuHamilbyPetugas.tanggal_pemeriksaanCtrl.text =
         DateFormat('y-M-d').format(DateTime.now()).toString();
   }
@@ -422,7 +424,7 @@ class _FormPemeriksaanIbuHamilState extends State<FormPemeriksaanIbuHamil> {
                           pemeriksaanIbuHamilbyPetugas
                               .StorePemeriksaanIbuByPetugas(
                                   ibu_hamil_id: int.parse(
-                                      widget.petugasWithIbuHamilModel['id']));
+                                      widget.kehamilanModel.id.toString()));
                         }
                       },
                       child: const Text("Save"),

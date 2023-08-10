@@ -29,4 +29,27 @@ class IbuHamilService {
     print(response.body);
     return response;
   }
+
+  Future<http.Response> storeMyIbuHamil(IbuHamilModel ibuHamilModel) async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(baseURL + 'ibu-hamil');
+    http.Response response = await http.post(url,
+        headers: setHeaders(token), body: jsonEncode(ibuHamilModel.toJson()));
+    print(response.body);
+    return response;
+  }
+
+  Future<http.Response> showKehamilanIbuForPetugas(
+      int detail_keluarga_id) async {
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // var token = localStorage.getString('token')?.replaceAll('"', "");
+    var token = await getToken();
+    var url = Uri.parse(
+        baseURL + 'ibu-hamil/from-detail/' + detail_keluarga_id.toString());
+    http.Response response = await http.get(url, headers: setHeaders(token));
+    print(response.body);
+    return response;
+  }
 }

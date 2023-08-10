@@ -3,6 +3,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:posyandu/Model/KehamilanModel.dart';
 
 import 'package:posyandu/Model/PetugasModel.dart';
 import 'package:posyandu/Model/PetugasWithBalitaModel.dart';

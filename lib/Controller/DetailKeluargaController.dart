@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:posyandu/Model/DetailKeluargaModel.dart';
+import 'package:posyandu/Model/IbuHamilFromKeluargaModel.dart';
 import 'package:posyandu/Model/PetugasWithDetailKeluargaModel.dart';
 import 'package:posyandu/Model/UmurModel.dart';
 import 'package:posyandu/Service/DetailKeluargaService.dart';
@@ -14,6 +15,7 @@ class DetailKeluargaController extends GetxController implements GetxService {
   var detailKeluarga = DetailKeluargaModel().obs;
   var umurPeserta = UmurModel().obs;
   var listPetugasWithDetailKeluarga = <PetugasWithDetailKeluargaModel>[].obs;
+  var listIbuFromKeluarga = <IbuHamilFromKeluargaModel>[].obs;
   final servicePetugas = PetugasService();
   final service = DetailKeluargaService();
 
@@ -241,6 +243,19 @@ class DetailKeluargaController extends GetxController implements GetxService {
     }
     // Map obj = responsedecode;
     // data = List<Map<String, dynamic>>.from(obj["data"]);
+    isLoading.value = false;
+  }
+
+  Future<void> showIbuHamilFromKeluarga() async {
+    isLoading.value = true;
+    var response = await service.showIbuHamilFromKeluarga();
+    var responsedecode = jsonDecode(response.body);
+    listIbuFromKeluarga.clear();
+    for (var i = 0; i < responsedecode['data'].length; i++) {
+      IbuHamilFromKeluargaModel ibuHamilKeluargaModel =
+          IbuHamilFromKeluargaModel.fromJson(responsedecode['data'][i]);
+      listIbuFromKeluarga.add(ibuHamilKeluargaModel);
+    }
     isLoading.value = false;
   }
 }

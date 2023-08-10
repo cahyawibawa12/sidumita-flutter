@@ -5,6 +5,8 @@ import 'package:posyandu/Controller/IbuHamil.dart';
 import 'package:posyandu/Page/IbuHamil/ButtonNavBarIbuHamil.dart';
 import 'package:posyandu/Page/IbuHamil/PagePraKehamilan.dart';
 import 'package:focus_detector_v2/focus_detector_v2.dart';
+import 'package:posyandu/Page/LoginPeserta/EditPeserta/FormAnggotaPeserta.dart';
+import 'package:posyandu/Page/LoginPeserta/TambahIbuHamil.dart';
 import 'package:posyandu/widget/widgets.dart';
 
 class LandingIbuHamil extends StatefulWidget {
@@ -78,6 +80,26 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                           )
                         ],
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 64,
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.all(12.0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TambahIbuHamil()));
+                          },
+                          child: const Text("Tambah Data"),
+                        ),
+                      ),
                       Expanded(
                         child: Container(
                           padding: EdgeInsets.symmetric(
@@ -117,8 +139,13 @@ class _LandingIbuHamilState extends State<LandingIbuHamil> {
                                                       .detailKeluarga!
                                                       .namaLengkap
                                                       .toString()),
-                                                  // subtitle: Text(detailKeluarga
-                                                  //     .listDetailKeluarga[index].nik!),
+                                                  subtitle: Text(
+                                                      "Kehamilan ke " +
+                                                          ibuHamil
+                                                              .listIbuHamil[
+                                                                  index]
+                                                              .kehamilanKe
+                                                              .toString()),
                                                   onTap: () {
                                                     if (ibuHamil
                                                                 .listIbuHamil[

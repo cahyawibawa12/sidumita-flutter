@@ -1,11 +1,5 @@
 class PetugasWithIbuHamilModel {
   String? id;
-  String? beratBadanPrakehamilan;
-  String? tinggiBadanPrakehamilan;
-  String? detailKeluargaId;
-  String? createdAt;
-  String? updatedAt;
-  Null? deletedAt;
   String? namaLengkap;
   String? nik;
   String? jenisKelamin;
@@ -20,23 +14,12 @@ class PetugasWithIbuHamilModel {
   String? statusDalamKeluarga;
   String? kewarganegaraan;
   String? keluargaId;
-  String? noKartuKeluarga;
-  String? kepalaKeluarga;
-  String? alamat;
-  String? jumlah;
-  String? userId;
-  String? dusunId;
-  String? namaDusun;
-  String? desaId;
+  String? createdAt;
+  String? updatedAt;
+  Null? deletedAt;
 
   PetugasWithIbuHamilModel(
       {this.id,
-      this.beratBadanPrakehamilan,
-      this.tinggiBadanPrakehamilan,
-      this.detailKeluargaId,
-      this.createdAt,
-      this.updatedAt,
-      this.deletedAt,
       this.namaLengkap,
       this.nik,
       this.jenisKelamin,
@@ -51,23 +34,12 @@ class PetugasWithIbuHamilModel {
       this.statusDalamKeluarga,
       this.kewarganegaraan,
       this.keluargaId,
-      this.noKartuKeluarga,
-      this.kepalaKeluarga,
-      this.alamat,
-      this.jumlah,
-      this.userId,
-      this.dusunId,
-      this.namaDusun,
-      this.desaId});
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt});
 
   PetugasWithIbuHamilModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    beratBadanPrakehamilan = json['berat_badan_prakehamilan'];
-    tinggiBadanPrakehamilan = json['tinggi_badan_prakehamilan'];
-    detailKeluargaId = json['detail_keluarga_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
     namaLengkap = json['nama_lengkap'];
     nik = json['nik'];
     jenisKelamin = json['jenis_kelamin'];
@@ -82,25 +54,14 @@ class PetugasWithIbuHamilModel {
     statusDalamKeluarga = json['status_dalam_keluarga'];
     kewarganegaraan = json['kewarganegaraan'];
     keluargaId = json['keluarga_id'];
-    noKartuKeluarga = json['no_kartu_keluarga'];
-    kepalaKeluarga = json['kepala_keluarga'];
-    alamat = json['alamat'];
-    jumlah = json['jumlah'];
-    userId = json['user_id'];
-    dusunId = json['dusun_id'];
-    namaDusun = json['nama_dusun'];
-    desaId = json['desa_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['berat_badan_prakehamilan'] = this.beratBadanPrakehamilan;
-    data['tinggi_badan_prakehamilan'] = this.tinggiBadanPrakehamilan;
-    data['detail_keluarga_id'] = this.detailKeluargaId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
     data['nama_lengkap'] = this.namaLengkap;
     data['nik'] = this.nik;
     data['jenis_kelamin'] = this.jenisKelamin;
@@ -115,14 +76,9 @@ class PetugasWithIbuHamilModel {
     data['status_dalam_keluarga'] = this.statusDalamKeluarga;
     data['kewarganegaraan'] = this.kewarganegaraan;
     data['keluarga_id'] = this.keluargaId;
-    data['no_kartu_keluarga'] = this.noKartuKeluarga;
-    data['kepala_keluarga'] = this.kepalaKeluarga;
-    data['alamat'] = this.alamat;
-    data['jumlah'] = this.jumlah;
-    data['user_id'] = this.userId;
-    data['dusun_id'] = this.dusunId;
-    data['nama_dusun'] = this.namaDusun;
-    data['desa_id'] = this.desaId;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['deleted_at'] = this.deletedAt;
     return data;
   }
 }

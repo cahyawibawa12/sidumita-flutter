@@ -202,9 +202,9 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                         alamat = alamatValue;
                                         return null;
                                       }),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
+                                  // const SizedBox(
+                                  //   height: 30,
+                                  // ),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -219,95 +219,96 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                             enabled: true,
                                             builder:
                                                 (FormFieldState<bool> field) {
-                                              return InputDecorator(
-                                                decoration: InputDecoration(
-                                                  labelText: "Provinsi",
-                                                  errorText: field.errorText,
-                                                  // helperText: "Your gender",
-                                                ),
-                                                child:
-                                                    DropdownButtonHideUnderline(
-                                                  child: ButtonTheme(
-                                                    alignedDropdown: false,
-                                                    child: DropdownButton<
-                                                            String>(
-                                                        isExpanded: true,
-                                                        value:
-                                                            provinsi_id == null
-                                                                ? null
-                                                                : provinsi_id,
-                                                        icon: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 10.0),
-                                                          child: Icon(
-                                                            Icons
-                                                                .arrow_drop_down_outlined,
-                                                            size: 24.0,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyLarge!
-                                                                .color,
-                                                          ),
-                                                        ),
-                                                        iconSize: 16,
-                                                        elevation: 16,
-                                                        style: TextStyle(
-                                                          fontSize:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontSize,
-                                                          fontFamily:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontFamily,
+                                              return DropdownButtonHideUnderline(
+                                                child: ButtonTheme(
+                                                  alignedDropdown: false,
+                                                  child: DropdownButtonFormField<
+                                                          String>(
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: "Provinsi",
+                                                        errorText:
+                                                            field.errorText,
+                                                        // helperText: "Your gender",
+                                                      ),
+                                                      isExpanded: true,
+                                                      value: provinsi_id == null
+                                                          ? null
+                                                          : provinsi_id,
+                                                      icon: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 10.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .arrow_drop_down_outlined,
+                                                          size: 24.0,
                                                           color:
                                                               Theme.of(context)
                                                                   .textTheme
-                                                                  .bodyMedium!
+                                                                  .bodyLarge!
                                                                   .color,
                                                         ),
-                                                        underline: Container(
-                                                          height: 0,
-                                                          color:
-                                                              Colors.grey[300],
-                                                        ),
-                                                        onChanged:
-                                                            (String? newValue) {
-                                                          setState(() {
-                                                            provinsi_id =
-                                                                newValue!;
+                                                      ),
+                                                      iconSize: 16,
+                                                      elevation: 16,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontSize,
+                                                        fontFamily:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontFamily,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .color,
+                                                      ),
+                                                      // underline: Container(
+                                                      //   height: 0,
+                                                      //   color:
+                                                      //       Colors.grey[300],
+                                                      // ),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          provinsi_id =
+                                                              newValue!;
 
-                                                            kabupaten.fetchProvinsi(
-                                                                provinsi_id:
-                                                                    int.parse(
-                                                                        newValue!));
-                                                            kabupaten_id = null;
-                                                            kecamatan_id = null;
-                                                            desa_id = null;
-                                                            dusun_id = null;
-                                                          });
-                                                        },
-                                                        hint: Text(
-                                                            "Pilih Provinsi"),
-                                                        items: [
-                                                          for (var data
-                                                              in provinsi
-                                                                  .listProvinsi
-                                                                  .value)
-                                                            DropdownMenuItem(
-                                                              child: new Text(
-                                                                data.namaProvinsi!,
-                                                              ),
-                                                              value: data.id
-                                                                  .toString(),
-                                                            )
-                                                        ]),
-                                                  ),
+                                                          kabupaten.fetchProvinsi(
+                                                              provinsi_id:
+                                                                  int.parse(
+                                                                      newValue!));
+                                                          kabupaten_id = null;
+                                                          kecamatan_id = null;
+                                                          desa_id = null;
+                                                          dusun_id = null;
+                                                        });
+                                                      },
+                                                      validator: (value) =>
+                                                          value == null
+                                                              ? 'Mohon Masukan Data'
+                                                              : null,
+                                                      hint: Text(
+                                                          "Pilih Provinsi"),
+                                                      items: [
+                                                        for (var data
+                                                            in provinsi
+                                                                .listProvinsi
+                                                                .value)
+                                                          DropdownMenuItem(
+                                                            child: new Text(
+                                                              data.namaProvinsi!,
+                                                            ),
+                                                            value: data.id
+                                                                .toString(),
+                                                          )
+                                                      ]),
                                                 ),
                                               );
                                             },
@@ -327,94 +328,96 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                             enabled: true,
                                             builder:
                                                 (FormFieldState<bool> field) {
-                                              return InputDecorator(
-                                                decoration: InputDecoration(
-                                                  labelText: "Kabupaten",
-                                                  errorText: field.errorText,
-                                                  // helperText: "Your gender",
-                                                ),
-                                                child:
-                                                    DropdownButtonHideUnderline(
-                                                  child: ButtonTheme(
-                                                    alignedDropdown: false,
-                                                    child: DropdownButton<
-                                                            String>(
-                                                        isExpanded: true,
-                                                        value:
-                                                            kabupaten_id == null
-                                                                ? null
-                                                                : kabupaten_id,
-                                                        icon: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 10.0),
-                                                          child: Icon(
-                                                            Icons
-                                                                .arrow_drop_down_outlined,
-                                                            size: 24.0,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyLarge!
-                                                                .color,
-                                                          ),
-                                                        ),
-                                                        iconSize: 16,
-                                                        elevation: 16,
-                                                        style: TextStyle(
-                                                          fontSize:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontSize,
-                                                          fontFamily:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontFamily,
+                                              return DropdownButtonHideUnderline(
+                                                child: ButtonTheme(
+                                                  alignedDropdown: false,
+                                                  child: DropdownButtonFormField<
+                                                          String>(
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: "Kabupaten",
+                                                        errorText:
+                                                            field.errorText,
+                                                        // helperText: "Your gender",
+                                                      ),
+                                                      isExpanded: true,
+                                                      value:
+                                                          kabupaten_id == null
+                                                              ? null
+                                                              : kabupaten_id,
+                                                      icon: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 10.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .arrow_drop_down_outlined,
+                                                          size: 24.0,
                                                           color:
                                                               Theme.of(context)
                                                                   .textTheme
-                                                                  .bodyMedium!
+                                                                  .bodyLarge!
                                                                   .color,
                                                         ),
-                                                        underline: Container(
-                                                          height: 0,
-                                                          color:
-                                                              Colors.grey[300],
-                                                        ),
-                                                        onChanged:
-                                                            (String? newValue) {
-                                                          setState(() {
-                                                            kabupaten_id =
-                                                                newValue!;
+                                                      ),
+                                                      iconSize: 16,
+                                                      elevation: 16,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontSize,
+                                                        fontFamily:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontFamily,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .color,
+                                                      ),
+                                                      // underline: Container(
+                                                      //   height: 0,
+                                                      //   color:
+                                                      //       Colors.grey[300],
+                                                      // ),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          kabupaten_id =
+                                                              newValue!;
 
-                                                            kecamatan.fetchKabupaten(
-                                                                kabupaten_id:
-                                                                    int.parse(
-                                                                        newValue));
-                                                            kecamatan_id = null;
-                                                            desa_id = null;
-                                                            dusun_id = null;
-                                                          });
-                                                        },
-                                                        hint: Text(
-                                                            "Pilih Kabupaten"),
-                                                        items: [
-                                                          for (var data
-                                                              in kabupaten
-                                                                  .listKabupaten
-                                                                  .value)
-                                                            DropdownMenuItem(
-                                                              child: new Text(
-                                                                data.namaKabupaten!,
-                                                              ),
-                                                              value: data.id
-                                                                  .toString(),
-                                                            )
-                                                        ]),
-                                                  ),
+                                                          kecamatan.fetchKabupaten(
+                                                              kabupaten_id:
+                                                                  int.parse(
+                                                                      newValue));
+                                                          kecamatan_id = null;
+                                                          desa_id = null;
+                                                          dusun_id = null;
+                                                        });
+                                                      },
+                                                      validator: (value) =>
+                                                          value == null
+                                                              ? 'Mohon Masukan Data'
+                                                              : null,
+                                                      hint: Text(
+                                                          "Pilih Kabupaten"),
+                                                      items: [
+                                                        for (var data
+                                                            in kabupaten
+                                                                .listKabupaten
+                                                                .value)
+                                                          DropdownMenuItem(
+                                                            child: new Text(
+                                                              data.namaKabupaten!,
+                                                            ),
+                                                            value: data.id
+                                                                .toString(),
+                                                          )
+                                                      ]),
                                                 ),
                                               );
                                             },
@@ -434,94 +437,97 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                             enabled: true,
                                             builder:
                                                 (FormFieldState<bool> field) {
-                                              return InputDecorator(
-                                                decoration: InputDecoration(
-                                                  labelText: "Kecamatan",
-                                                  errorText: field.errorText,
-                                                  // helperText: "Your gender",
-                                                ),
-                                                child:
-                                                    DropdownButtonHideUnderline(
-                                                  child: ButtonTheme(
-                                                    alignedDropdown: false,
-                                                    child: DropdownButton<
-                                                            String>(
-                                                        isExpanded: true,
-                                                        value:
-                                                            kecamatan_id == null
-                                                                ? null
-                                                                : kecamatan_id,
-                                                        icon: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 10.0),
-                                                          child: Icon(
-                                                            Icons
-                                                                .arrow_drop_down_outlined,
-                                                            size: 24.0,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyLarge!
-                                                                .color,
-                                                          ),
-                                                        ),
-                                                        iconSize: 16,
-                                                        elevation: 16,
-                                                        style: TextStyle(
-                                                          fontSize:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontSize,
-                                                          fontFamily:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontFamily,
+                                              return DropdownButtonHideUnderline(
+                                                child: ButtonTheme(
+                                                  alignedDropdown: false,
+                                                  child: DropdownButtonFormField<
+                                                          String>(
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: "Kecamatan",
+                                                        errorText:
+                                                            field.errorText,
+                                                        // helperText: "Your gender",
+                                                      ),
+                                                      isExpanded: true,
+                                                      value:
+                                                          kecamatan_id == null
+                                                              ? null
+                                                              : kecamatan_id,
+                                                      icon: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 10.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .arrow_drop_down_outlined,
+                                                          size: 24.0,
                                                           color:
                                                               Theme.of(context)
                                                                   .textTheme
-                                                                  .bodyMedium!
+                                                                  .bodyLarge!
                                                                   .color,
                                                         ),
-                                                        underline: Container(
-                                                          height: 0,
-                                                          color:
-                                                              Colors.grey[300],
-                                                        ),
-                                                        onChanged:
-                                                            (String? newValue) {
-                                                          setState(() {
-                                                            kecamatan_id =
-                                                                newValue!;
+                                                      ),
+                                                      iconSize: 16,
+                                                      elevation: 16,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontSize,
+                                                        fontFamily:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontFamily,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .color,
+                                                      ),
 
-                                                            desa.fetchKecamatan(
-                                                                kecamatan_id:
-                                                                    int.parse(
-                                                                        newValue));
+                                                      // underline: Container(
+                                                      //   height: 0,
+                                                      //   color:
+                                                      //       Colors.grey[300],
+                                                      // ),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          kecamatan_id =
+                                                              newValue!;
 
-                                                            desa_id = null;
-                                                            dusun_id = null;
-                                                          });
-                                                        },
-                                                        hint: Text(
-                                                            "Pilih Kecamatan"),
-                                                        items: [
-                                                          for (var data
-                                                              in kecamatan
-                                                                  .listKecamatan
-                                                                  .value)
-                                                            DropdownMenuItem(
-                                                              child: new Text(
-                                                                data.namaKecamatan!,
-                                                              ),
-                                                              value: data.id
-                                                                  .toString(),
-                                                            )
-                                                        ]),
-                                                  ),
+                                                          desa.fetchKecamatan(
+                                                              kecamatan_id:
+                                                                  int.parse(
+                                                                      newValue));
+
+                                                          desa_id = null;
+                                                          dusun_id = null;
+                                                        });
+                                                      },
+                                                      validator: (value) =>
+                                                          value == null
+                                                              ? 'Mohon Masukan Data'
+                                                              : null,
+                                                      hint: Text(
+                                                          "Pilih Kecamatan"),
+                                                      items: [
+                                                        for (var data
+                                                            in kecamatan
+                                                                .listKecamatan
+                                                                .value)
+                                                          DropdownMenuItem(
+                                                            child: new Text(
+                                                              data.namaKecamatan!,
+                                                            ),
+                                                            value: data.id
+                                                                .toString(),
+                                                          )
+                                                      ]),
                                                 ),
                                               );
                                             },
@@ -541,88 +547,89 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                             enabled: true,
                                             builder:
                                                 (FormFieldState<bool> field) {
-                                              return InputDecorator(
-                                                decoration: InputDecoration(
-                                                  labelText: "Desa",
-                                                  errorText: field.errorText,
-                                                  // helperText: "Your gender",
-                                                ),
-                                                child:
-                                                    DropdownButtonHideUnderline(
-                                                  child: ButtonTheme(
-                                                    alignedDropdown: false,
-                                                    child: DropdownButton<
-                                                            String>(
-                                                        isExpanded: true,
-                                                        value: desa_id == null
-                                                            ? null
-                                                            : desa_id,
-                                                        icon: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 10.0),
-                                                          child: Icon(
-                                                            Icons
-                                                                .arrow_drop_down_outlined,
-                                                            size: 24.0,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyLarge!
-                                                                .color,
-                                                          ),
-                                                        ),
-                                                        iconSize: 16,
-                                                        elevation: 16,
-                                                        style: TextStyle(
-                                                          fontSize:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontSize,
-                                                          fontFamily:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontFamily,
+                                              return DropdownButtonHideUnderline(
+                                                child: ButtonTheme(
+                                                  alignedDropdown: false,
+                                                  child: DropdownButtonFormField<
+                                                          String>(
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText: "Desa",
+                                                        errorText:
+                                                            field.errorText,
+                                                        // helperText: "Your gender",
+                                                      ),
+                                                      isExpanded: true,
+                                                      value: desa_id == null
+                                                          ? null
+                                                          : desa_id,
+                                                      icon: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 10.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .arrow_drop_down_outlined,
+                                                          size: 24.0,
                                                           color:
                                                               Theme.of(context)
                                                                   .textTheme
-                                                                  .bodyMedium!
+                                                                  .bodyLarge!
                                                                   .color,
                                                         ),
-                                                        underline: Container(
-                                                          height: 0,
-                                                          color:
-                                                              Colors.grey[300],
-                                                        ),
-                                                        onChanged:
-                                                            (String? newValue) {
-                                                          setState(() {
-                                                            desa_id = newValue!;
+                                                      ),
+                                                      iconSize: 16,
+                                                      elevation: 16,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontSize,
+                                                        fontFamily:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontFamily,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .color,
+                                                      ),
+                                                      // underline: Container(
+                                                      //   height: 0,
+                                                      //   color:
+                                                      //       Colors.grey[300],
+                                                      // ),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          desa_id = newValue!;
 
-                                                            dusun.fetchDesa(
-                                                                desa_id: int.parse(
-                                                                    newValue));
+                                                          dusun.fetchDesa(
+                                                              desa_id: int.parse(
+                                                                  newValue));
 
-                                                            dusun_id = null;
-                                                          });
-                                                        },
-                                                        hint:
-                                                            Text("Pilih Desa"),
-                                                        items: [
-                                                          for (var data in desa
-                                                              .listDesa.value)
-                                                            DropdownMenuItem(
-                                                              child: new Text(
-                                                                data.namaDesa!,
-                                                              ),
-                                                              value: data.id
-                                                                  .toString(),
-                                                            )
-                                                        ]),
-                                                  ),
+                                                          dusun_id = null;
+                                                        });
+                                                      },
+                                                      validator: (value) =>
+                                                          value == null
+                                                              ? 'Mohon Masukan Data'
+                                                              : null,
+                                                      hint: Text("Pilih Desa"),
+                                                      items: [
+                                                        for (var data in desa
+                                                            .listDesa.value)
+                                                          DropdownMenuItem(
+                                                            child: new Text(
+                                                              data.namaDesa!,
+                                                            ),
+                                                            value: data.id
+                                                                .toString(),
+                                                          )
+                                                      ]),
                                                 ),
                                               );
                                             },
@@ -642,83 +649,76 @@ class _RegisterPesertaState extends State<RegisterPeserta> {
                                             enabled: true,
                                             builder:
                                                 (FormFieldState<bool> field) {
-                                              return InputDecorator(
-                                                decoration: InputDecoration(
-                                                  labelText: "Dusun",
-                                                  errorText: field.errorText,
-                                                  // helperText: "Your gender",
-                                                ),
-                                                child:
-                                                    DropdownButtonHideUnderline(
-                                                  child: ButtonTheme(
-                                                    alignedDropdown: false,
-                                                    child: DropdownButton<
-                                                            String>(
-                                                        isExpanded: true,
-                                                        value: dusun_id == null
-                                                            ? null
-                                                            : dusun_id,
-                                                        icon: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 10.0),
-                                                          child: Icon(
-                                                            Icons
-                                                                .arrow_drop_down_outlined,
-                                                            size: 24.0,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyLarge!
-                                                                .color,
-                                                          ),
-                                                        ),
-                                                        iconSize: 16,
-                                                        elevation: 16,
-                                                        style: TextStyle(
-                                                          fontSize:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontSize,
-                                                          fontFamily:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .fontFamily,
+                                              return DropdownButtonHideUnderline(
+                                                child: ButtonTheme(
+                                                  alignedDropdown: false,
+                                                  child: DropdownButtonFormField<
+                                                          String>(
+                                                      isExpanded: true,
+                                                      value: dusun_id == null
+                                                          ? null
+                                                          : dusun_id,
+                                                      icon: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 10.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .arrow_drop_down_outlined,
+                                                          size: 24.0,
                                                           color:
                                                               Theme.of(context)
                                                                   .textTheme
-                                                                  .bodyMedium!
+                                                                  .bodyLarge!
                                                                   .color,
                                                         ),
-                                                        underline: Container(
-                                                          height: 0,
-                                                          color:
-                                                              Colors.grey[300],
-                                                        ),
-                                                        onChanged:
-                                                            (String? newValue) {
-                                                          setState(() {
-                                                            dusun_id =
-                                                                newValue!;
-                                                          });
-                                                        },
-                                                        hint:
-                                                            Text("Pilih Dusun"),
-                                                        items: [
-                                                          for (var data in dusun
-                                                              .listDusun.value)
-                                                            DropdownMenuItem(
-                                                              child: new Text(
-                                                                data.namaDusun!,
-                                                              ),
-                                                              value: data.id
-                                                                  .toString(),
-                                                            )
-                                                        ]),
-                                                  ),
+                                                      ),
+                                                      iconSize: 16,
+                                                      elevation: 16,
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontSize,
+                                                        fontFamily:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium!
+                                                                .fontFamily,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .color,
+                                                      ),
+                                                      // underline: Container(
+                                                      //   height: 0,
+                                                      //   color:
+                                                      //       Colors.grey[300],
+                                                      // ),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          dusun_id = newValue!;
+                                                        });
+                                                      },
+                                                      hint: Text("Pilih Dusun"),
+                                                      validator: (value) =>
+                                                          value == null
+                                                              ? 'Mohon Masukan Data'
+                                                              : null,
+                                                      items: [
+                                                        for (var data in dusun
+                                                            .listDusun.value)
+                                                          DropdownMenuItem(
+                                                            child: new Text(
+                                                              data.namaDusun!,
+                                                            ),
+                                                            value: data.id
+                                                                .toString(),
+                                                          )
+                                                      ]),
                                                 ),
                                               );
                                             },
